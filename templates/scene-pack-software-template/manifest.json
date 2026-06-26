@@ -1,0 +1,52 @@
+{
+  "pack_id": "example.scene-pack",
+  "version": "1.0.0",
+  "pack_type": "domain_work_pack",
+  "manifest_version": "v3",
+  "security_profile": {
+    "candidate_only": true,
+    "non_formal": true,
+    "requires_base_gate": true,
+    "requires_receipt_candidate": true,
+    "default_provider_mode": "disabled",
+    "no_real_send": true,
+    "no_real_execute": true,
+    "no_real_model_call": true,
+    "isolated_namespace": "example_scene_pack_ns"
+  },
+  "required_capabilities": [
+    "truzhen.model.analysis",
+    "truzhen.communication.draft",
+    "truzhen.execution.intent"
+  ],
+  "gates": {
+    "state_transition_gate": "base_gate",
+    "communication_send_gate": "base_send_gate",
+    "execution_gate": "base_execution_gate"
+  },
+  "receipt_policy": {
+    "ledger_group": "project_workflows",
+    "append_only": true,
+    "requires_witness": true
+  },
+  "ui_surface_slots": [
+    "pack.dashboard",
+    "pack.object.list",
+    "pack.object.detail",
+    "pack.flow.canvas",
+    "pack.task.panel",
+    "pack.candidate.card",
+    "pack.receipt.timeline",
+    "transaction.capsule"
+  ],
+  "forbidden_artifacts": [
+    "node_modules",
+    "dist",
+    "build",
+    ".vite",
+    "*.db",
+    "*.sqlite",
+    "*.log",
+    "*.jsonl"
+  ]
+}

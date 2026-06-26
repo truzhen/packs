@@ -1,0 +1,113 @@
+{
+  "flow_id": "smart-home-owner-project-ops-flow",
+  "title": "智能家居老板项目经营完整周期",
+  "version": "1.0.0",
+  "nodes": [
+    {
+      "id": "intake",
+      "type": "input.user_need",
+      "title": "项目机会/客户需求录入"
+    },
+    {
+      "id": "project_object",
+      "type": "object.business_schema",
+      "title": "智能家居项目事务建模"
+    },
+    {
+      "id": "frappe_snapshot",
+      "type": "capability.invoke",
+      "title": "读取 Frappe 项目/客户快照",
+      "candidate_type": "ExternalSnapshotCandidate"
+    },
+    {
+      "id": "manager_advice",
+      "type": "collaboration.advice",
+      "title": "项目经理下一步经营建议",
+      "slot_ref": "smart_home_project_manager",
+      "candidate_type": "AdviceCandidate"
+    },
+    {
+      "id": "milestone_plan",
+      "type": "flow.stage_task_candidate",
+      "title": "里程碑/采购/施工任务候选"
+    },
+    {
+      "id": "customer_draft",
+      "type": "gateway.communication_draft",
+      "title": "客户沟通草稿候选"
+    },
+    {
+      "id": "frappe_write_candidate",
+      "type": "capability.invoke",
+      "title": "Frappe 项目写回候选",
+      "candidate_type": "ProviderWriteCandidate"
+    },
+    {
+      "id": "owner_gate",
+      "type": "policy.gate_config",
+      "title": "Owner/Base 项目经营确认门",
+      "gate_policy": {
+        "required_gate": "smart_home_project_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "receipt_archive",
+      "type": "receipt.link",
+      "title": "项目回执归档"
+    },
+    {
+      "id": "done",
+      "type": "flow.end",
+      "title": "项目阶段收口"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "intake",
+      "target": "project_object"
+    },
+    {
+      "id": "e2",
+      "source": "project_object",
+      "target": "frappe_snapshot"
+    },
+    {
+      "id": "e3",
+      "source": "frappe_snapshot",
+      "target": "manager_advice"
+    },
+    {
+      "id": "e4",
+      "source": "manager_advice",
+      "target": "milestone_plan"
+    },
+    {
+      "id": "e5",
+      "source": "milestone_plan",
+      "target": "customer_draft"
+    },
+    {
+      "id": "e6",
+      "source": "customer_draft",
+      "target": "frappe_write_candidate"
+    },
+    {
+      "id": "e7",
+      "source": "frappe_write_candidate",
+      "target": "owner_gate"
+    },
+    {
+      "id": "e8",
+      "source": "owner_gate",
+      "target": "receipt_archive",
+      "condition": "approved"
+    },
+    {
+      "id": "e9",
+      "source": "receipt_archive",
+      "target": "done"
+    }
+  ]
+}

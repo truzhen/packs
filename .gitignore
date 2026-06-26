@@ -1,0 +1,13 @@
+.DS_Store
+*.sqlite
+*.db
+*.log
+*.jsonl
+go.work
+truzhen.work
+__pycache__/
+*.pyc
+node_modules/
+dist/
+build/
+.vite/

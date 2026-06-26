@@ -1,0 +1,29 @@
+{
+  "capabilities_required": [
+    {
+      "capability_ref": "truzhen.capability.scheduling",
+      "purpose": "按区域/人力/工时排期，给出可选上门时间窗候选",
+      "gateway": "capability",
+      "required_gate": "base_gate"
+    },
+    {
+      "capability_ref": "truzhen.capability.quote",
+      "purpose": "按品类/面积/人力出报价候选",
+      "gateway": "capability",
+      "required_gate": "base_gate"
+    },
+    {
+      "capability_ref": "truzhen.communication.draft",
+      "purpose": "拟客户服务确认与上门时间通知草稿（不直接发送）",
+      "gateway": "communication",
+      "required_gate": "base_send_gate"
+    },
+    {
+      "capability_ref": "truzhen.execution.intent",
+      "purpose": "派工上门执行意图（受控，不直接执行）",
+      "gateway": "execution",
+      "required_gate": "base_execution_gate"
+    }
+  ],
+  "note": "能力经 04 能力中心解析 + invoke 产 CapabilityInvocationCandidate；provider 未接通时诚实 provider_missing / not_ready，不假成功。"
+}

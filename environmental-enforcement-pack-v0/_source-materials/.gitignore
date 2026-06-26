@@ -1,0 +1,6 @@
+# 星哥投放的权威法规/标准原始资料区（PDF/Word/txt/md/链接清单等）。
+# 原始资料不进 Git（体积+版权+forbidden_artifacts），只留本 .gitignore 与 README 占位。
+# 真真据此整理出的结构化内容会写进 pack 的 knowledge/ 目录（那部分进 Git）。
+*
+!.gitignore
+!README.md

@@ -1,0 +1,121 @@
+{
+  "pack_id": "pack_housekeeping_ops_v0",
+  "version": "0.1.0",
+  "name": "家政公司日常运营 Pack（客户服务全生命周期）",
+  "description": "家政/保洁公司的客户服务全生命周期场景荚：从受理咨询 → 顾问出方案 → 质检质询 → 排期报价 → 派工任务主权确认 → 上门执行 → 服务回执 → 归档进历史项目。所有正式动作经 Owner + Base Gate 裁定并产 Receipt。",
+  "author": "Truzhen Pack Studio (用户视角制作)",
+  "pack_type": "domain_work_pack",
+  "manifest_version": "v3",
+  "target_industry": "家政服务 / 保洁 / 上门服务",
+  "target_audience": "家政公司调度、客服、质检、上门服务团队",
+  "flow_spec_ref": "scene_flow_spec:housekeeping-cs-lifecycle@1.0.0",
+  "security_profile": {
+    "candidate_only": true,
+    "non_formal": true,
+    "requires_base_gate": true,
+    "requires_receipt_candidate": true,
+    "default_provider_mode": "disabled",
+    "no_real_send": true,
+    "no_real_execute": true,
+    "no_real_model_call": true,
+    "isolated_namespace": "housekeeping_ops_ns"
+  },
+  "role_slots": [
+    {
+      "slot_id": "housekeeping_consultant",
+      "responsibility": "家政顾问：依据客户需求出服务方案与建议（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack:housekeeping_consultant@1.0.0"
+    },
+    {
+      "slot_id": "quality_auditor",
+      "responsibility": "质检挑剔视角：质询方案与报价的合理性、风险与遗漏（Proposer）",
+      "node_type": "challenge",
+      "default_role_pack_ref": "role_pack:quality_auditor@1.0.0"
+    }
+  ],
+  "capabilities_required": ["truzhen.capability.scheduling", "truzhen.capability.quote", "truzhen.communication.draft", "truzhen.execution.intent", "truzhen.receipt.generation"],
+  "required_capabilities": ["truzhen.capability.scheduling", "truzhen.capability.quote", "truzhen.communication.draft", "truzhen.execution.intent"],
+  "gates": {
+    "state_transition_gate": "base_gate",
+    "communication_send_gate": "base_send_gate",
+    "execution_gate": "base_execution_gate"
+  },
+  "gate_flags": ["dispatch_confirm", "quote_send_confirm", "onsite_execution_confirm", "formal_memory_confirm"],
+  "receipt_policy": {
+    "ledger_group": "housekeeping_customer_service",
+    "append_only": true,
+    "requires_witness": true
+  },
+  "person_strategy": {
+    "summary": "判人策略：顾问/质检为 Proposer（只出方案与质询，无正式裁定权）；派工、报价对外发送、上门执行、归档进正式历史属高风险正式动作，一律回 Owner + Base Gate 裁定，不得由角色 agent 自决。",
+    "proposer_roles": ["housekeeping_consultant", "quality_auditor"],
+    "high_risk_actions_return_to_owner": ["dispatch_confirm", "quote_send_confirm", "onsite_execution_confirm", "formal_memory_confirm"],
+    "delegation_allowed": false
+  },
+  "formalization_requirement": {
+    "summary": "判事策略：受理咨询、出方案、质询均为候选态（candidate_only/non_formal）；唯有派工任务、对外报价发送、上门执行、服务回执归档需经 Owner 主权确认 + Base Gate 裁定后才正式化为 FormalTask / DispatchPlan / Receipt。裁定权在 Base，不在场景包。",
+    "formalizes": ["FormalTask", "DispatchPlan", "CommunicationSend", "FormalReceipt"],
+    "decided_by": "owner_plus_base_gate"
+  },
+  "provider_requirements": [
+    {
+      "requirement_id": "provider-housekeeping-scheduling",
+      "capability": "truzhen.capability.scheduling",
+      "gateway_class": "11-execution-gateway",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked_not_ready"
+    },
+    {
+      "requirement_id": "provider-housekeeping-quote-send",
+      "capability": "truzhen.communication.draft",
+      "gateway_class": "10-communication-gateway",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked_not_ready"
+    },
+    {
+      "requirement_id": "provider-housekeeping-onsite-execution",
+      "capability": "truzhen.execution.intent",
+      "gateway_class": "11-execution-gateway",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked_not_ready"
+    }
+  ],
+  "notification_command_report_routes": {
+    "notification": ["owner_dashboard", "pack.candidate.card"],
+    "command_candidate": ["pack.task.panel", "dispatch_confirm_card"],
+    "report": ["candidate_review", "receipt_ledger", "pack.receipt.timeline"]
+  },
+  "report_routes": ["candidate_review", "receipt_ledger"],
+  "evidence_requirements": {
+    "summary": "证据要求：每个正式动作（派工/报价发送/上门执行/归档）必须绑定可在 03 反查的 Receipt，OwnerActionEvidence = Owner 确认点击；执行类动作另需 11 网关产出执行回执。",
+    "requires_receipt_ref": true,
+    "requires_owner_action_evidence": true,
+    "receipt_lookup_module": "03-receipt-ledger"
+  },
+  "multi_role_comparison": {
+    "summary": "多角色对照为显式流程节点（advice 顾问出方案 → challenge 质检质询对照 → owner_gate 确认），禁 runtime 内隐藏 agent 间回路；对照结果呈现给 Owner 裁定。",
+    "explicit_nodes": ["housekeeping_consultant(advice)", "quality_auditor(challenge)"],
+    "hidden_agent_loops_forbidden": true
+  },
+  "moat_justification": {
+    "question": "用户能否一句话让最强模型直接做出同样结果？",
+    "passes_moat": true,
+    "valid_reasons": ["real_system_gated_integration", "domain_approval_compliance_policy", "auditable_evidence_receipt", "explicit_multi_role_comparison_plus_sovereign_gate", "transaction_object_lifecycle_replay"],
+    "rationale": "家政客户服务全生命周期依赖真实排期/派工/沟通系统的门控集成、派工与上门的合规审批、可审计 Receipt 回执、顾问与质检的显式对照门控，以及事务对象从受理到归档的生命周期回放——不是单次 prompt 可替代的文本生成。"
+  },
+  "ui_surface_slots": [
+    "pack.dashboard",
+    "pack.object.list",
+    "pack.object.detail",
+    "pack.flow.canvas",
+    "pack.task.panel",
+    "pack.candidate.card",
+    "pack.receipt.timeline",
+    "transaction.capsule"
+  ],
+  "forbidden_artifacts": ["node_modules", "dist", "build", ".vite", "*.db", "*.sqlite", "*.log", "*.jsonl"]
+}

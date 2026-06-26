@@ -1,0 +1,20 @@
+{
+  "role_slots": [
+    {
+      "slot_id": "smart_home_project_manager",
+      "responsibility": "以智能家居项目经理身份梳理客户需求、项目里程碑、风险和下一步候选（Proposer）",
+      "required_role": "智能家居项目经理",
+      "default_role_pack_ref": "role_pack://smart-home-project-manager",
+      "slice_scope_policy": "transaction_scoped_project_delivery",
+      "node_type": "advice"
+    }
+  ],
+  "bindings": [
+    {
+      "slot_id": "smart_home_project_manager",
+      "agent_ref": "role_pack://smart-home-project-manager",
+      "role_pack_id": "role_pack://smart-home-project-manager",
+      "required_role": "智能家居项目经理"
+    }
+  ]
+}

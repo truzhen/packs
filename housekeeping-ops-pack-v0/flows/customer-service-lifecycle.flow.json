@@ -1,0 +1,50 @@
+{
+  "flow_id": "housekeeping-cs-lifecycle",
+  "title": "家政公司客户服务全生命周期",
+  "version": "1.0.0",
+  "nodes": [
+    { "id": "start", "type": "start", "title": "开始：客户来电/在线咨询" },
+    { "id": "intake_inquiry", "type": "business_object", "title": "受理客户保洁咨询（建客户服务对象）", "gateway": "business_object" },
+    { "id": "consultant_advice", "type": "advice", "title": "家政顾问出服务方案建议", "gateway": "model", "slot_ref": "housekeeping_consultant" },
+    { "id": "quality_challenge", "type": "challenge", "title": "质检以挑剔视角质询方案与报价", "gateway": "model", "slot_ref": "quality_auditor" },
+    {
+      "id": "compare_gate",
+      "type": "compare_gate",
+      "title": "顾问建议 vs 质检质询对照确认门（Owner 裁定）",
+      "gate_policy": { "required_gate": "sovereign_gate", "pending_owner_confirmation": true }
+    },
+    { "id": "quote_capability", "type": "capability", "title": "排期与报价能力出候选报价", "gateway": "capability" },
+    {
+      "id": "dispatch_task",
+      "type": "task",
+      "title": "整理派工与报价单（需主权确认）",
+      "gateway": "task",
+      "gate_policy": { "required_gate": "sovereign_gate", "pending_owner_confirmation": true }
+    },
+    {
+      "id": "owner_approval",
+      "type": "human_approval",
+      "title": "Owner 审批派工与报价",
+      "gate_policy": { "required_gate": "sovereign_gate", "pending_owner_confirmation": true }
+    },
+    { "id": "notify_customer", "type": "communication", "title": "向客户发送服务确认与上门时间", "gateway": "communication" },
+    { "id": "onsite_service", "type": "execution", "title": "派工上门执行保洁服务", "gateway": "execution" },
+    { "id": "close_receipt", "type": "receipt", "title": "生成服务完成回执", "gateway": "receipt" },
+    { "id": "end", "type": "end", "title": "结束：客户服务归档进历史项目" },
+    { "id": "close_rejected", "type": "end", "title": "退回归档：Owner 打回派工，事务以退回终态归档" }
+  ],
+  "edges": [
+    { "id": "e1", "source": "start", "target": "intake_inquiry" },
+    { "id": "e2", "source": "intake_inquiry", "target": "consultant_advice" },
+    { "id": "e3", "source": "consultant_advice", "target": "quality_challenge" },
+    { "id": "e4", "source": "quality_challenge", "target": "compare_gate" },
+    { "id": "e4b", "source": "compare_gate", "target": "quote_capability", "condition": "approved" },
+    { "id": "e5", "source": "quote_capability", "target": "dispatch_task" },
+    { "id": "e6", "source": "dispatch_task", "target": "owner_approval" },
+    { "id": "e7", "source": "owner_approval", "target": "notify_customer", "condition": "approved" },
+    { "id": "e7r", "source": "owner_approval", "target": "close_rejected", "condition": "rejected" },
+    { "id": "e8", "source": "notify_customer", "target": "onsite_service" },
+    { "id": "e9", "source": "onsite_service", "target": "close_receipt" },
+    { "id": "e10", "source": "close_receipt", "target": "end" }
+  ]
+}

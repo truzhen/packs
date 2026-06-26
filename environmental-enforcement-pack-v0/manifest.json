@@ -1,0 +1,99 @@
+{
+  "pack_id": "pack_environmental_enforcement_v0",
+  "pack_ref": "scene_pack://environmental-enforcement-flow",
+  "version": "1.0.0",
+  "name": "环保执法证据链 Pack（全领域）",
+  "template_family": "合规审查执法证据链型",
+  "description": "面向生态环境执法人员的全领域执法证据链场景荚：覆盖水/大气/固废/危废/噪声/土壤/生态/核辐射污染领域 + 行政处罚程序、证据规则、行刑衔接与执法风险防范。知识库基于权威资料（生态环境法典 + 执法指南 + 案例精析）真实导入。从线索受理 → 立案 → 现场检查取证 → 证据三性审查 → 执法精英与挑剔律师多角色对照 → 处置推演 → 责令改正/处罚/移送 → 文书草稿 → Owner 主权确认 + Base Gate 裁定 → Receipt 归档。所有正式动作经 Owner + Base Gate 裁定并产 Receipt。",
+  "author": "Truzhen Pack Studio",
+  "pack_type": "domain_work_pack",
+  "manifest_version": "v3",
+  "target_industry": "生态环境执法 / 环境监察 / 综合行政执法（环保领域）",
+  "target_audience": "生态环境部门执法人员、环境监察机构、综合执法队环保条线",
+  "flow_spec_ref": "scene_flow_spec:environmental-enforcement-flow@1.0.0",
+  "flow_file": "flows/environmental-enforcement-flow.flow.json",
+  "role_slots_file": "role-slots/role-slots.json",
+  "capabilities_file": "capabilities/capabilities.json",
+  "knowledge_scopes_manifest": "knowledge/knowledge-scopes.json",
+  "knowledge_index": "knowledge/knowledge-index.json",
+  "security_profile": {
+    "candidate_only": true,
+    "non_formal": true,
+    "requires_base_gate": true,
+    "requires_receipt_candidate": true,
+    "default_provider_mode": "disabled",
+    "no_real_send": true,
+    "no_real_execute": true,
+    "no_real_model_call": false,
+    "isolated_namespace": "environmental_enforcement_ns"
+  },
+  "role_slots": [
+    {"slot_id": "enforcement_elite", "responsibility": "执法精英：违法事实候选、法律依据候选、补证建议（Proposer）", "node_type": "advice", "default_role_pack_ref": "role_pack://enforcement-elite"},
+    {"slot_id": "critical_lawyer", "responsibility": "挑剔律师：质询证据三性与程序瑕疵（Proposer）", "node_type": "challenge", "default_role_pack_ref": "role_pack://critical-lawyer"}
+  ],
+  "capabilities_required": ["document_ocr", "legal_document_drafting", "outbound_legal_document_delivery", "enforcement_action_execution", "online_monitoring_data_fetch"],
+  "required_capabilities": ["legal_document_drafting"],
+  "gates": {
+    "evidence_review_gate": "ai_judgment_gate",
+    "role_compare_gate": "role_compare_gate",
+    "enforcement_doc_gate": "enforcement_doc_gate",
+    "state_transition_gate": "base_gate"
+  },
+  "gate_flags": ["evidence_review_confirm", "role_compare_confirm", "disposition_confirm", "enforcement_doc_confirm", "doc_delivery_confirm", "enforcement_execution_confirm"],
+  "receipt_policy": {"ledger_group": "environmental_enforcement", "append_only": true, "requires_witness": true},
+  "person_strategy": {
+    "summary": "判人策略：执法精英与挑剔律师均为 Proposer（只出候选与质询，无正式裁定权）；行政处罚决定、责令改正、查封扣押、文书外发、移送公安等高风险正式动作，一律回 Owner + Base Gate 裁定，不得由角色 agent 自决，委托不替代 Owner/Base。",
+    "proposer_roles": ["enforcement_elite", "critical_lawyer"],
+    "high_risk_actions_return_to_owner": ["disposition_confirm", "enforcement_doc_confirm", "doc_delivery_confirm", "enforcement_execution_confirm", "transfer_for_prosecution"],
+    "delegation_allowed": false
+  },
+  "formalization_requirement": {
+    "summary": "判事策略：线索受理、现场检查候选、证据归集、违法事实/法律依据候选、律师质询均为候选态（candidate_only/non_formal）；唯有行政处罚决定、责令改正、查封扣押、文书送达、移送公安、Receipt 归档需经 Owner 主权确认 + Base Gate 裁定后才正式化。裁定权在 Base，不在场景包。适用法条按案发时点（as_of）择法（如生态环境法典 2026-08-15 起施行）。",
+    "formalizes": ["FormalEnforcementDecision", "CorrectionOrder", "PenaltyDecision", "DocumentDelivery", "ProsecutionTransfer", "FormalReceipt"],
+    "decided_by": "owner_plus_base_gate"
+  },
+  "provider_requirements": [
+    {"requirement_id": "doc_ocr", "capability": "document_ocr", "gateway_class": "execution", "risk_class": "medium", "binding": "registry_to_gateway_to_base", "fallback_policy": "manual_handoff"},
+    {"requirement_id": "legal_doc_draft", "capability": "legal_document_drafting", "gateway_class": "model", "risk_class": "medium", "binding": "registry_to_gateway_to_base", "fallback_policy": "blocked"},
+    {"requirement_id": "doc_delivery", "capability": "outbound_legal_document_delivery", "gateway_class": "communication", "risk_class": "high", "binding": "registry_to_gateway_to_base", "fallback_policy": "manual_handoff"},
+    {"requirement_id": "enforcement_exec", "capability": "enforcement_action_execution", "gateway_class": "execution", "risk_class": "high", "binding": "registry_to_gateway_to_base", "fallback_policy": "blocked"},
+    {"requirement_id": "monitoring_data_fetch", "capability": "online_monitoring_data_fetch", "gateway_class": "execution", "risk_class": "low", "binding": "registry_to_gateway_to_base", "fallback_policy": "provider_missing"}
+  ],
+  "knowledge_scopes": [
+    "knowledge_scope://environmental/code",
+    "knowledge_scope://environmental/legal-basis",
+    "knowledge_scope://environmental/guide-overview",
+    "knowledge_scope://environmental/pollution-source-overview",
+    "knowledge_scope://environmental/water",
+    "knowledge_scope://environmental/air",
+    "knowledge_scope://environmental/solid-waste",
+    "knowledge_scope://environmental/radiation",
+    "knowledge_scope://environmental/noise",
+    "knowledge_scope://environmental/eia-permit",
+    "knowledge_scope://environmental/ecology",
+    "knowledge_scope://environmental/penalty",
+    "knowledge_scope://environmental/criminal",
+    "knowledge_scope://environmental/risk",
+    "knowledge_scope://environmental/cases",
+    "knowledge_scope://environmental/index"
+  ],
+  "notification_command_report_routes": {
+    "notification": ["owner_review_inbox", "enforcement_case_transaction_timeline"],
+    "command_candidate": ["order_correction", "draft_penalty_decision", "request_supplementary_evidence", "seal_and_detain_candidate", "transfer_for_prosecution_candidate"],
+    "report": ["enforcement_case_transaction_timeline", "owner_review_inbox", "receipt_ledger"]
+  },
+  "multi_role_comparison": {
+    "summary": "多角色对照为显式流程节点（fact_advice/legal_advice 执法精英出候选 → lawyer_challenge 挑剔律师质询 → compare 对照确认门 Owner 裁定），禁 runtime 内隐藏 agent 间回路。",
+    "explicit_nodes": ["fact_advice(enforcement_elite/advice)", "legal_advice(enforcement_elite/advice)", "lawyer_challenge(critical_lawyer/challenge)", "compare(compare_gate)"],
+    "hidden_agent_loops_forbidden": true
+  },
+  "moat_justification": {
+    "question": "用户能否一句话让最强模型直接做出同样结果？",
+    "passes_moat": true,
+    "valid_reasons": ["real_system_integration", "domain_approval_compliance", "auditable_evidence_receipt", "multi_role_compare_sovereign", "transaction_lifecycle_replay"],
+    "rationale": "环保执法需：① 真实系统门控（取证 OCR/文书外发/执法动作经 Registry→Gateway→Base）② 行政审批合规（责令改正/处罚/移送的法定程序与裁量基准）③ 可审计证据与回执（证据三性+全过程记录+Receipt 回放）④ 执法精英与挑剔律师显式多角色对照+主权门控 ⑤ 案件事务对象生命周期回放（立案→取证→裁定→执行→归档可回溯）。一句话最强模型给不出受真实主权闸门控、可问责、可回放的执法结果。"
+  },
+  "ui_surface_slots": ["pod", "object", "capsule", "candidate", "execution", "receipt", "setting"],
+  "knowledge_disclaimer": "本 pack 的 knowledge/ 内容来自 Owner 提供的权威资料（生态环境法典/执法指南/案例精析）真实导入，每条以 verification_status=pending_human_review 入库；正式执法适用前必须经法务/业务专家逐条核验，并以现行有效的官方法律法规与标准原文为准。正式裁定权在 Owner + Base Gate。",
+  "forbidden_artifacts": ["node_modules", "dist", "build", ".vite", "*.db", "*.sqlite", "*.log", "*.jsonl"]
+}

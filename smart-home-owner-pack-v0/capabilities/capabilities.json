@@ -1,0 +1,31 @@
+{
+  "provider_requirements": [
+    {
+      "requirement_id": "frappe_project_snapshot",
+      "capability": "project_external_snapshot",
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "fallback_policy": "provider_missing",
+      "provider_family": "frappe",
+      "description": "读取 Frappe 项目快照（只读候选），provider 未接通返回 provider_missing。"
+    },
+    {
+      "requirement_id": "frappe_customer_snapshot",
+      "capability": "customer_relationship_snapshot",
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "fallback_policy": "provider_missing",
+      "provider_family": "frappe",
+      "description": "读取 Frappe 客户关系快照（只读候选）。"
+    },
+    {
+      "requirement_id": "frappe_project_write_candidate",
+      "capability": "project_milestone_write_candidate",
+      "gateway_class": "execution",
+      "risk_class": "medium",
+      "fallback_policy": "blocked",
+      "provider_family": "frappe",
+      "description": "Frappe 项目里程碑写回候选，必须经 Owner 主权确认 + Base Gate。"
+    }
+  ]
+}

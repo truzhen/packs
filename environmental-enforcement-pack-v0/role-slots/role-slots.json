@@ -1,0 +1,24 @@
+{
+  "role_slots": [
+    {
+      "slot_id": "enforcement_elite",
+      "responsibility": "以执法精英身份提出违法事实候选、法律依据候选与补证建议（Proposer）",
+      "required_role": "执法精英",
+      "default_role_pack_ref": "role_pack://enforcement-elite",
+      "slice_scope_policy": "transaction_scoped_enforcement_evidence",
+      "node_type": "advice"
+    },
+    {
+      "slot_id": "critical_lawyer",
+      "responsibility": "以挑剔律师身份质询证据链三性与执法程序瑕疵，找被复议/诉讼推翻的薄弱点（Proposer）",
+      "required_role": "挑剔律师",
+      "default_role_pack_ref": "role_pack://critical-lawyer",
+      "slice_scope_policy": "transaction_scoped_enforcement_evidence",
+      "node_type": "challenge"
+    }
+  ],
+  "bindings": [
+    {"slot_id": "enforcement_elite", "agent_ref": "enforcement_elite", "role_pack_id": "role_pack://enforcement-elite", "required_role": "执法精英"},
+    {"slot_id": "critical_lawyer", "agent_ref": "critical_lawyer", "role_pack_id": "role_pack://critical-lawyer", "required_role": "挑剔律师"}
+  ]
+}

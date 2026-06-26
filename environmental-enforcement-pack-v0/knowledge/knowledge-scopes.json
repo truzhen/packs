@@ -1,0 +1,171 @@
+{
+  "scene_ref": "scene://environmental-enforcement",
+  "default_mount_policy": "mount_on_pack_enable",
+  "scopes": [
+    {
+      "scope_ref": "knowledge_scope://environmental/air",
+      "display_name": "大气污染源执法知识域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop"
+      ],
+      "source_dir": "knowledge/air"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/cases",
+      "display_name": "环保执法案例库域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "case"
+      ],
+      "source_dir": "knowledge/cases"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/code",
+      "display_name": "生态环境法典与法律法规域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "law_article"
+      ],
+      "source_dir": "knowledge/code"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/criminal",
+      "display_name": "行刑衔接（两法衔接）域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "law_article"
+      ],
+      "source_dir": "knowledge/criminal"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/ecology",
+      "display_name": "自然生态保护执法域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop"
+      ],
+      "source_dir": "knowledge/ecology"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/eia-permit",
+      "display_name": "建设项目与排污许可域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop"
+      ],
+      "source_dir": "knowledge/eia-permit"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/guide-overview",
+      "display_name": "执法概述与改革域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop"
+      ],
+      "source_dir": "knowledge/guide-overview"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/index",
+      "display_name": "法条速查与违法行为分类索引域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "index"
+      ],
+      "source_dir": "knowledge/index"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/legal-basis",
+      "display_name": "执法依据与法规体系域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "law_article"
+      ],
+      "source_dir": "knowledge/legal-basis"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/noise",
+      "display_name": "噪声污染源执法知识域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop"
+      ],
+      "source_dir": "knowledge/noise"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/penalty",
+      "display_name": "行政处罚程序与裁量域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "law_article"
+      ],
+      "source_dir": "knowledge/penalty"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/pollution-source-overview",
+      "display_name": "污染源执法概述域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop"
+      ],
+      "source_dir": "knowledge/pollution-source-overview"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/radiation",
+      "display_name": "核安全与放射性执法知识域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop"
+      ],
+      "source_dir": "knowledge/radiation"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/risk",
+      "display_name": "执法风险防范域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop"
+      ],
+      "source_dir": "knowledge/risk"
+    },
+    {
+      "scope_ref": "knowledge_scope://environmental/water",
+      "display_name": "水污染源执法知识域",
+      "scene_ref": "scene://environmental-enforcement",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop"
+      ],
+      "source_dir": "knowledge/water"
+    }
+  ]
+}

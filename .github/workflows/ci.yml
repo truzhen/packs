@@ -1,0 +1,57 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  pack-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: json-valid（所有 JSON 合法性）
+        run: python3 -c "import json,glob;[json.load(open(f)) for f in glob.glob('**/*.json',recursive=True)];print('JSON 合法')"
+      - name: manifest-governance（场景荚 manifest 主权六件事核心字段）
+        run: |
+          python3 - <<'PY'
+          import json, glob, sys
+          # 主权核心字段（三类 pack 都须有）：判人 / 判事 / 护城河。
+          core = ["person_strategy", "formalization_requirement", "moat_justification"]
+          bad, warn = [], []
+          for f in sorted(glob.glob("*/manifest.json")):
+              m = json.load(open(f))
+              if "pack_ref" not in m and "pack_id" not in m:
+                  bad.append((f, "缺 pack 标识(pack_ref/pack_id)"))
+              miss = [k for k in core if k not in m]
+              if miss:
+                  bad.append((f, "缺主权核心字段 %s" % miss))
+              if "template_family" not in m:
+                  warn.append("%s 缺 template_family（早期 schema，建议升级）" % f)
+          for w in warn:
+              print("::warning::%s" % w)
+          if bad:
+              for f, msg in bad:
+                  print("::error::%s %s" % (f, msg))
+              sys.exit(1)
+          print("manifest 主权核心字段齐全")
+          PY
+      - name: install-scripts-syntax（装入/卸载脚本语法）
+        run: |
+          scripts=$(find . -name install.py -o -name uninstall.py)
+          if [ -n "$scripts" ]; then echo "$scripts" | xargs python3 -m py_compile && echo "脚本语法 OK"; else echo "无装入脚本"; fi
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

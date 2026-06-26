@@ -1,0 +1,50 @@
+[pack]
+id = "example.scene-pack"
+name = "企业级长周期项目管理 Scene Pack"
+version = "1.0.0"
+author = "Truzhen Pack Studio"
+type = "domain_work_pack"
+description = "提供完整的长周期项目推进流程，包含创建业务对象、DAG 流程调度、任务优先队列治理、受控 Gateway 下发及 append-only 回执 Ledger 管理。"
+
+[safety]
+candidate_only = true
+non_formal = true
+real_send_default = false
+real_execute_default = false
+real_model_call_default = false
+requires_base_gate = true
+requires_receipt_candidate = true
+runs_in_sandbox = true
+strict_occ_check = true
+receipt_append_only = true
+
+[concurrency]
+immutable_spec = true
+run_id_isolation = true
+namespace_isolation = true
+
+[ui]
+render_engine = "truzhen_declarative_surface"
+allowed_slots = [
+  "pack.dashboard",
+  "pack.object.list",
+  "pack.object.detail",
+  "pack.flow.canvas",
+  "pack.task.panel",
+  "pack.candidate.card",
+  "pack.receipt.timeline",
+  "transaction.capsule",
+]
+default_slots = [
+  "pack.dashboard",
+  "pack.object.list",
+  "pack.object.detail",
+  "pack.flow.canvas",
+  "pack.task.panel",
+  "pack.candidate.card",
+  "pack.receipt.timeline"
+]
+
+[adapter]
+default_mode = "disabled"
+allow_raw_secret = false
