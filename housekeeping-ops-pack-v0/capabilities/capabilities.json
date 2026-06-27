@@ -25,5 +25,31 @@
       "required_gate": "base_execution_gate"
     }
   ],
-  "note": "能力经 04 能力中心解析 + invoke 产 CapabilityInvocationCandidate；provider 未接通时诚实 provider_missing / not_ready，不假成功。"
+  "provider_requirements": [
+    {
+      "requirement_id": "provider-housekeeping-scheduling",
+      "capability": "truzhen.capability.scheduling",
+      "gateway_class": "11-execution-gateway",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked_not_ready"
+    },
+    {
+      "requirement_id": "provider-housekeeping-quote-send",
+      "capability": "truzhen.communication.draft",
+      "gateway_class": "10-communication-gateway",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked_not_ready"
+    },
+    {
+      "requirement_id": "provider-housekeeping-onsite-execution",
+      "capability": "truzhen.execution.intent",
+      "gateway_class": "11-execution-gateway",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked_not_ready"
+    }
+  ],
+  "note": "能力经 04 能力中心解析 + invoke 产 CapabilityInvocationCandidate；provider 未接通时诚实 provider_missing / not_ready，不假成功。provider_requirements 经 Registry→Gateway→Base 绑定，loader / install.py 据此声明 ProviderRequirement（与 manifest 顶层 provider_requirements 同源）。"
 }

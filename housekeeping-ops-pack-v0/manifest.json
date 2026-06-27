@@ -1,7 +1,9 @@
 {
   "pack_id": "pack_housekeeping_ops_v0",
+  "pack_ref": "scene_pack://housekeeping-ops",
   "version": "0.1.0",
   "name": "家政公司日常运营 Pack（客户服务全生命周期）",
+  "template_family": "客户服务全生命周期型",
   "description": "家政/保洁公司的客户服务全生命周期场景荚：从受理咨询 → 顾问出方案 → 质检质询 → 排期报价 → 派工任务主权确认 → 上门执行 → 服务回执 → 归档进历史项目。所有正式动作经 Owner + Base Gate 裁定并产 Receipt。",
   "author": "Truzhen Pack Studio (用户视角制作)",
   "pack_type": "domain_work_pack",
@@ -9,6 +11,9 @@
   "target_industry": "家政服务 / 保洁 / 上门服务",
   "target_audience": "家政公司调度、客服、质检、上门服务团队",
   "flow_spec_ref": "scene_flow_spec:housekeeping-cs-lifecycle@1.0.0",
+  "flow_file": "flows/customer-service-lifecycle.flow.json",
+  "role_slots_file": "role-slots/role-slots.json",
+  "capabilities_file": "capabilities/capabilities.json",
   "security_profile": {
     "candidate_only": true,
     "non_formal": true,
@@ -104,7 +109,7 @@
   "moat_justification": {
     "question": "用户能否一句话让最强模型直接做出同样结果？",
     "passes_moat": true,
-    "valid_reasons": ["real_system_gated_integration", "domain_approval_compliance_policy", "auditable_evidence_receipt", "explicit_multi_role_comparison_plus_sovereign_gate", "transaction_object_lifecycle_replay"],
+    "valid_reasons": ["real_system_integration", "domain_approval_compliance", "auditable_evidence_receipt", "multi_role_compare_sovereign", "transaction_lifecycle_replay"],
     "rationale": "家政客户服务全生命周期依赖真实排期/派工/沟通系统的门控集成、派工与上门的合规审批、可审计 Receipt 回执、顾问与质检的显式对照门控，以及事务对象从受理到归档的生命周期回放——不是单次 prompt 可替代的文本生成。"
   },
   "ui_surface_slots": [
