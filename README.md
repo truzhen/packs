@@ -2,7 +2,7 @@
 
 > Truzhen 主权事务操作层的**领域工作包仓**：可独立加载 / 卸载 / 分发的场景荚（Domain Work Pack），面向契约、不含基座实现。
 
-`github.com/truzhen/packs` 是 Truzhen 三仓架构的**包层**。每个包把一个行业的高手经验编译成受主权闸门约束的领域治理资产——**声明**判人 / 判事策略、门控流程、真实系统 Provider 绑定、证据与回执要求，由作者在本行业自分销。正式裁定权在 Owner + Base Gate，**包不持有主权**，AI 永远是 Proposer。
+`github.com/truzhen/packs` 是 Truzhen 五落点架构的**包层**。每个包把一个行业的高手经验编译成受主权闸门约束的领域治理资产——**声明**判人 / 判事策略、门控流程、真实系统 Provider 绑定、证据与回执要求，由作者在本行业自分销。正式裁定权在 Owner + Base Gate，**包不持有主权**，AI 永远是 Proposer。
 
 ## 依赖方向（单向不可逆）
 
@@ -13,13 +13,19 @@
 └─────────────────────┘                └──────────────────────┘           └─────────────────────┘
 ```
 
-包**面向契约**编写，物理上 import 不到基座内部；基座通过文件夹包加载器 / 各包 `install.py` 经真实 lifecycle 端点装入。三仓须**平级**放在同一父目录。
+包**面向契约**编写，物理上 import 不到基座内部；基座通过文件夹包加载器 / 各包 `install.py` 经真实 lifecycle 端点装入。`truzhenos`、`truzhen-contracts`、`truzhen-packs`、`truzhen-software` 与 client repo 默认**平级**放在 `/Users/li/Documents/`。
 
 ## 三类 Pack（不得发明第四种）
 
 - **场景荚（Domain Work Pack / Scene Pack）**：可交付的领域治理资产，声明六件事（判事 / 判人 / 门控流程 / Provider 绑定 / 通知-命令-回报路由 / 多角色对照），**不持 Base 主权**。本仓主体。
-- **能力荚（Capability Pack）**：能力描述符。
-- **角色荚（Role Pack）**：智能体人格 / 口吻 / 决策习惯 / 模型策略，绑定到任意 Role Slot。
+- **能力荚（Capability Pack）**：能力描述符 / ProviderRequirement。执行 provider 本体归 `truzhenos` 或外部 provider / `truzhen-software`，不写进本仓。
+- **角色荚（Role Pack）**：智能体人格 / 口吻 / 决策习惯 / 模型策略，绑定到任意 Role Slot。本仓可随场景荚携带角色包数据。
+
+## 当前包状态（2026-06-29）
+
+- `environmental-enforcement-pack-v0/`：完整文件夹包，含 install/uninstall、15 知识域、角色包。
+- `smart-home-owner-pack-v0/`：完整文件夹包，含 install/uninstall、项目经理角色包、Frappe ProviderRequirement。
+- `housekeeping-ops-pack-v0/`：已升级为可装入文件夹包，含 `pack_ref` / `template_family` / flow / capabilities / role-slots / 2 角色包 / `install.py`；`knowledge/` 与 `uninstall.py` 仍待补，不得标成完整知识包。
 
 ## 文件夹包标准结构
 
@@ -29,7 +35,7 @@
   flows/*.flow.json      # GateFlowSpec 门控流程图
   role-slots/            # Role Slot 声明
   role-packs/            # 绑定的角色包
-  capabilities/          # 能力需求
+  capabilities/          # 能力需求 / ProviderRequirement 引用，不放 provider 实现
   knowledge/             # 领域知识（knowledge-scopes.json + knowledge-index.json + 各 .md，权威资料结构化）
   _source-materials/     # Owner 投放的原始资料区（不进 Git，只留 .gitignore + README 占位）
   install.py / uninstall.py  # 经基座真实 lifecycle 端点装入 / 卸载
