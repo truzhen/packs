@@ -32,3 +32,11 @@
 | 面向 truzhenos | 本仓只放数据和安装脚本；基座负责 Base Gate、Receipt、Gateway、runtime、loader。 |
 | 面向 truzhen-software | ProviderRequirement 只声明需要什么 provider；Baserow / Frappe / OCR / IM / sidecar 的真实安装、端口、runtime profile 归 `truzhen-software`。 |
 | 面向 client repo | Pack UI 只声明 Surface / visual unit 意图；具体 Web/Desktop/移动渲染归 client repo。 |
+| 面向 truzhen-cloud | 官方云市场 listing、订单、支付回调、License / Entitlement、Pack 文件分发运行状态和官方云端网页归 `truzhen-cloud`；本仓只保留 Pack 本体和可商品化引用字段。 |
+
+## 云边界红线
+
+- 不保存 `payment_webhook`、`license_server`、`entitlement_db`、`cloud_secret`、`admin_secret`。
+- 不把订单、支付状态、License、Entitlement 写成 Pack 真相。
+- 不承载官方云端 server、官方云端网页或云端部署脚本。
+- 需要云市场发布时，只写 Pack 元数据和发布引用，由 `truzhen-cloud` 持有发布状态和回执。
