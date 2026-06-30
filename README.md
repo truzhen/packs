@@ -17,11 +17,14 @@
 
 官方云市场的 `PackListing`、审核发布、价格、支付、License / Entitlement、Release 与下载分发服务归 `truzhen-cloud`。本仓 manifest 可以提供展示候选字段，但不得把商品状态、授权状态或支付状态当成本仓事实。
 
+官方云服务、云市场商品运营状态、订单、支付回调、License / Entitlement 真相、Pack 文件分发运行面和官方云端网页归 `/Users/li/Documents/truzhen-cloud`。本仓只声明 Pack 本体、工作台、能力需求和可被商品化引用的元数据，不保存订单、License、支付状态或云端 server 实现。
+
 ## 三类 Pack（不得发明第四种）
 
 - **场景荚（Domain Work Pack / Scene Pack）**：可交付的领域治理资产，声明六件事（判事 / 判人 / 门控流程 / Provider 绑定 / 通知-命令-回报路由 / 多角色对照），**不持 Base 主权**。本仓主体。
 - **能力荚（Capability Pack）**：能力描述符 / ProviderRequirement。执行 provider 本体归 `truzhenos` 或外部 provider / `truzhen-software`，不写进本仓。
 - **角色荚（Role Pack）**：智能体人格 / 口吻 / 决策习惯 / 模型策略，绑定到任意 Role Slot。本仓可随场景荚携带角色包数据。
+- **商品化引用**：Pack 可以声明市场展示元数据和商品化引用，但订单、支付、License、Entitlement 和分发运行状态归 `truzhen-cloud`，不归本仓。
 
 ## 当前包状态（2026-06-29）
 
