@@ -2,7 +2,7 @@
 
 > Truzhen 主权事务操作层的**领域工作包仓**：可独立加载 / 卸载 / 分发的场景荚（Domain Work Pack），面向契约、不含基座实现。
 
-`github.com/truzhen/packs` 是 Truzhen 五落点架构的**包层**。每个包把一个行业的高手经验编译成受主权闸门约束的领域治理资产——**声明**判人 / 判事策略、门控流程、真实系统 Provider 绑定、证据与回执要求，由作者在本行业自分销。正式裁定权在 Owner + Base Gate，**包不持有主权**，AI 永远是 Proposer。
+`github.com/truzhen/packs` 是 Truzhen 六仓协同架构的**包层**。每个包把一个行业的高手经验编译成受主权闸门约束的领域治理资产——**声明**判人 / 判事策略、门控流程、真实系统 Provider 绑定、证据与回执要求，由作者在本行业自分销或提交官方云市场。正式裁定权在 Owner + Base Gate，**包不持有主权**，AI 永远是 Proposer。
 
 ## 依赖方向（单向不可逆）
 
@@ -13,7 +13,9 @@
 └─────────────────────┘                └──────────────────────┘           └─────────────────────┘
 ```
 
-包**面向契约**编写，物理上 import 不到基座内部；基座通过文件夹包加载器 / 各包 `install.py` 经真实 lifecycle 端点装入。`truzhenos`、`truzhen-contracts`、`truzhen-packs`、`truzhen-software` 与 client repo 默认**平级**放在 `/Users/li/Documents/`。
+包**面向契约**编写，物理上 import 不到基座内部；基座通过文件夹包加载器 / 各包 `install.py` 经真实 lifecycle 端点装入。`truzhenos`、`truzhen-contracts`、`truzhen-packs`、`truzhen-software`、`truzhen-cloud` 与 client repo 默认**平级**放在 `/Users/li/Documents/`。
+
+官方云市场的 `PackListing`、审核发布、价格、支付、License / Entitlement、Release 与下载分发服务归 `truzhen-cloud`。本仓 manifest 可以提供展示候选字段，但不得把商品状态、授权状态或支付状态当成本仓事实。
 
 ## 三类 Pack（不得发明第四种）
 

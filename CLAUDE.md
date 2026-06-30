@@ -1,12 +1,12 @@
 # CLAUDE.md — truzhen-packs
 
-本文件供 Claude Code / Agent 在 `/Users/li/Documents/truzhen-packs` 工作时快速加载。**完整纪律以 `AGENTS.md` 为准**；本文件只做提炼和导航。
+本仓是 Truzhen 六仓协同架构的**包层**（`github.com/truzhen/packs`，开放）。本文件供 Claude Code / Agent 在 `/Users/li/Documents/truzhen-packs` 工作时快速加载。**完整纪律以 `AGENTS.md` 为准**；本文件只做提炼和导航。
 
 > 文档语言：中文为主；英文只用于专有名词、命令、文件名、路径、协议名、API 字段和代码标识。
 
 ## 1. 仓库定位
 
-`truzhen-packs` 是 Truzhen 的**包层 / Pack 资产仓**，开放仓，面向 `truzhen-contracts` 契约，不 import 基座内部实现。
+`truzhen-packs` 是 Truzhen 的**包层 / Pack 资产仓**，开放仓，面向 `truzhen-contracts` 契约，不 import 基座内部实现。包把一个行业的高手经验编译成受主权闸门约束的领域治理资产；官方云市场的商品、支付、License / Entitlement 与下载分发真相归 `truzhen-cloud`。
 
 本仓承载：
 

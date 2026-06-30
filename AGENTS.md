@@ -1,6 +1,6 @@
 # AGENTS.md — truzhen-packs
 
-本文件是 `/Users/li/Documents/truzhen-packs` 的 Agent 工作纪律入口。本仓是 Truzhen 五落点架构中的**包层 / Pack 仓**（`github.com/truzhen/packs`，开放仓），承载可独立加载、卸载、分发的行业工作台与治理资产。
+本文件是 `/Users/li/Documents/truzhen-packs` 的 Agent 工作纪律入口。本仓是 Truzhen 六仓协同架构中的**包层 / Pack 仓**（`github.com/truzhen/packs`，开放仓），承载可独立加载、卸载、参与分发的行业工作台与治理资产；官方云市场的商品状态、审核、支付、License / Entitlement 和分发服务真相归 `truzhen-cloud`。
 
 根原则：**Pack 只声明和编排，不持 Base 主权，不实现 Provider，不绕过 Gateway，不直接产生正式事实。**
 
@@ -20,7 +20,7 @@
 
 `truzhen-packs` 是 Pack 资产仓，不是基座、不是运行时、不是 Provider 仓、不是前端产品仓。
 
-### 1.1 五落点关系
+### 1.1 六仓协作关系
 
 ```text
 truzhenos（基座私有实现；旧 truzhenv3 已冻结）
@@ -48,6 +48,7 @@ truzhen-packs（本仓：Pack 资产，面向契约）
 - 不保存正式业务对象、正式任务、正式记忆、正式回执或用户运行态数据库。
 - 不实现前端组件、AppShell、移动端、Tauri 壳或真实 UI 渲染。
 - 不保存 raw secret、真实凭据、token、账号密码、terminal_sn、激活码或生产端点密钥。
+- 不保存云市场订单、支付状态、正式 `PackListing`、License / Entitlement 或下载分发运行状态（真相归 `truzhen-cloud`）。
 
 ## 2. 三类 Pack 固定边界
 
