@@ -1,29 +1,75 @@
 # CLAUDE.md — truzhen-packs
 
-本仓是 Truzhen 五落点架构的**包层**（`github.com/truzhen/packs`，开放）。供 Claude Code / Agent 在本仓工作时加载。**完整纪律见 `AGENTS.md`。**
+本文件供 Claude Code / Agent 在 `/Users/li/Documents/truzhen-packs` 工作时快速加载。**完整纪律以 `AGENTS.md` 为准**；本文件只做提炼和导航。
 
-> 文档纪律：中文为主，英文只用于专有名词、命令、文件名、路径、代码标识。
+> 文档语言：中文为主；英文只用于专有名词、命令、文件名、路径、协议名、API 字段和代码标识。
 
-## 这是什么
+## 1. 仓库定位
 
-可独立加载 / 卸载 / 分发的领域工作包（场景荚）。每个包是自包含文件夹（manifest + flow + role-packs + knowledge + install.py），**面向 `truzhen-contracts` 契约**，物理上 import 不到基座内部。包把一个行业的高手经验编译成受主权闸门约束的领域治理资产，由作者在本行业自分销。
+`truzhen-packs` 是 Truzhen 的**包层 / Pack 资产仓**，开放仓，面向 `truzhen-contracts` 契约，不 import 基座内部实现。
 
-## 铁律（改任何文件前先记住）
+本仓承载：
 
-1. **包不持 Base 主权**：包只**声明**领域治理策略需求（判人 / 判事 / 门控流程 / Provider 绑定 / 证据 / 回执），正式裁定权在 Owner + Base Gate。AI 永远是 Proposer。
-2. **真凭据绝不进仓**：API key / token / 口令 / terminal_sn / 激活码绝不进本开放仓。
-3. **原始资料不进 Git**：`_source-materials/` 只留 `.gitignore` + `README` 占位；结构化内容进 `knowledge/`。
-4. **三类 Pack 封顶**：场景荚 / 能力荚 / 角色荚，不发明第四种。
-5. **护城河必过**：「用户能否一句话让最强模型直接做出同样结果？」能 → 不合格降级为 prompt / 模板；不能（需真实系统门控 / 领域审批合规 / 可审计证据回执 / 显式多角色对照 / 事务生命周期回放）→ 合格。
+- 场景荚 / `Domain Work Pack` / `Scene Pack`
+- 角色荚 / `Role Pack`
+- 能力荚引用 / `Capability Pack` 的 ProviderRequirement
+- 结构化知识与 Pack 装入 / 卸载脚本
+- 作者端模板
 
-## 验证命令
+本仓不承载：
+
+- Base Gate、Receipt、Gateway、Memory、Model、Communication、Execution 的基座实现
+- Provider / sidecar / MCP Server / 外部软件执行体
+- 前端组件、AppShell 或真实 UI 渲染
+- raw secret、运行态数据库、日志、构建产物
+
+## 2. 三条铁律
+
+1. **Pack 不持 Base 主权**：Pack 只声明判人、判事、门控、ProviderRequirement、证据和回执口径；正式裁定权在 Owner + Base Gate。
+2. **AI 永远是 Proposer**：Role Pack、Agent、模型只产候选、草稿、质询和风险提示；不得声称已批准、已执行、已发送或已写正式记忆。
+3. **真实动作必须穿 Gateway + Receipt**：真实模型、真实记忆、真实沟通、真实执行、真实市场动作归基座受控链路；未接通只能 `blocked / provider_missing / not_ready`，不得假成功。
+
+## 3. 三类 Pack 封顶
+
+- `Domain Work Pack / Scene Pack`：垂直职业工作台定义，组织对象、流程、角色、能力、Surface 和治理策略。
+- `Capability Pack`：能力契约和风险声明；本仓只声明需求，不实现 provider。
+- `Role Pack`：行业角色人格、口吻、决策习惯、模型策略和权限边界。
+
+不得发明第四种 Pack。新需求先判断是现有 Pack 的 mode、template、slot、provider requirement，还是应归基座 / contracts / provider 仓。
+
+## 4. 开工必读
+
+每个新任务先读：
+
+1. `AGENTS.md`
+2. `README.md`
+3. `MODULES.md`
+4. 当前 pack 的 `README.md`、`manifest.json`、flow、role-slots、role-packs、capabilities、install / uninstall 脚本
+
+需要参考基座范式时，只读 `/Users/li/Documents/truzhenv3` 根治理文件；需要修改或测试基座仓时，必须先获 Owner 重新授权。
+
+## 5. 当前包导航
+
+见 `MODULES.md`。当前主要资产：
+
+- `environmental-enforcement-pack-v0/`：环保执法证据链 Pack，知识型完整包。
+- `smart-home-owner-pack-v0/`：智能家居老板项目经营 Pack，无知识库。
+- `housekeeping-ops-pack-v0/`：家政客户服务全生命周期 Pack，可装入，`knowledge/` 和 `uninstall.py` 待补。
+- `templates/`：作者端模板，不参与 enabled pack 分发。
+
+## 6. 验证命令
 
 ```sh
+git status --short --branch
 python3 -c "import json,glob;[json.load(open(f)) for f in glob.glob('**/*.json',recursive=True)];print('JSON 合法')"
-find . -name install.py -o -name uninstall.py | xargs -r python3 -m py_compile
-# 端到端装入见 AGENTS.md §4
+find . -name install.py -o -name uninstall.py | xargs -r python3 -m py_compile && echo "脚本语法 OK"
+git ls-files | rg '(^|/)(__pycache__|node_modules|dist|build|\.vite)(/|$)|\.(db|sqlite|log|jsonl|pyc)$' || true
 ```
 
-## 子包导航
+端到端装入必须有隔离基座 devserver：
 
-见 `MODULES.md`。
+```sh
+TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 <pack>/install.py
+```
+
+没有 devserver 铁证时，不得声称 E2E 通过。
