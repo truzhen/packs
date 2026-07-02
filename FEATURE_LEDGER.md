@@ -20,9 +20,9 @@
 
 | 项 | 值 |
 |---|---|
-| 维护日期 | 2026-06-30（06-30 快照 salvage 于 2026-07-02 land；此后主线新增：六仓治理对齐、solid-waste scope 漂移已修、云边界红线，均见 `MODULES.md`） |
-| 当前主线 | `origin/main` / `main` at `11d6434`（`docs: strengthen packs governance docs`） |
-| 当前分支 | `codex/feature-ledger-refresh-20260630` |
+| 维护日期 | 2026-07-02（六仓 ledger 同步刷新；主线新增：六仓治理对齐、solid-waste scope 漂移已修、云边界红线、家政包 uninstall 闭环，均见 `MODULES.md`） |
+| 当前主线 | `origin/main` / `main` at `bdcafce`（`feat(housekeeping): WP-B6 uninstall.py 卸载闭环`） |
+| 当前分支 | `docs/ledger-refresh-20260702` |
 | 本仓定位 | Pack 资产仓：只声明和编排，不持 Base 主权，不实现 Provider，不绕过 Gateway |
 | 生命周期档位 | 整仓处于 `已实现 -> 已接线` 之间；单个 Pack 按下表区分成熟度 |
 
@@ -43,7 +43,7 @@
 |---|---|---:|---:|---:|---:|---:|---:|---|
 | `environmental-enforcement-pack-v0/` | 生态环境执法证据链 Domain Work Pack；含线索、立案、取证、证据三性、双角色对照、文书 / 处置候选、知识库和装卸载脚本 | 61 | 48 | 8 | 3 | 8419 | 1.2 MiB | 🟡 完整文件夹包主体已具备；知识域存在 `solid-waste` 索引漂移，法律知识仍需人工核验 |
 | `smart-home-owner-pack-v0/` | 智能家居老板项目经营 Pack；以项目经理角色和 Frappe ProviderRequirement 组织项目快照、里程碑、采购、施工和写回候选 | 9 | 1 | 5 | 2 | 890 | 37.3 KiB | ✅ 完整文件夹包，无知识库 |
-| `housekeeping-ops-pack-v0/` | 家政 / 保洁客户服务全生命周期 Pack；含咨询受理、顾问方案、质检质询、排期报价、派工、通知和归档候选 | 11 | 2 | 6 | 3 | 1237 | 72.9 KiB | 🟡 可装入 / 可卸载，仍缺 `knowledge/` |
+| `housekeeping-ops-pack-v0/` | 家政 / 保洁客户服务全生命周期 Pack；含咨询受理、顾问方案、质检质询、排期报价、派工、通知和归档候选 | 12 | 3 | 6 | 3 | 1278 | 76 KiB | 🟡 可装入 / 可卸载（WP-B6 `uninstall.py` 已补），仍缺 `knowledge/` |
 | `templates/` | Pack 作者端软件工程模板，提供 manifest、docs、objects、flows、views、policies、software、tests 等骨架 | 18 | 16 | 1 | 0 | 650 | 32.5 KiB | ✅ 模板，不参与 enabled pack 分发 |
 | 根治理文件 | `AGENTS.md`、`CLAUDE.md`、`README.md`、`MODULES.md`、`FEATURE_LEDGER.md`、CI / license / go.mod / ignore 规则 | 9 | 5 | 0 | 0 | 987 | 55.0 KiB | ✅ 治理入口已建立 |
 
