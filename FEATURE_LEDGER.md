@@ -3,19 +3,19 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
-## 0. 本轮派活卡（环保执法 pack 用户视角全链路实测收口）
+## 0. 本轮派活卡（智能家居服务商 pack 用户视角全链路实测收口，第二轮）
 
 | 维度 | 结论 |
 |---|---|
-| 我要做的事 | 环保执法 pack 用户视角全链路实测（P0-P7）收口：出最终测试报告，本仓账本转正登记本轮完善+实测结论 |
-| 真实客户 / 场景证据 | Owner 2026-07-02 原话直接指令「用三制作台读取并加载环保执法 pack、修改完善、创建执法行动、与秘书长互动完成执法，遇到问题解决问题」；pack 知识来自 Owner 权威资料 752 条真实导入 |
-| 真相源 | 主任务登记表 `/Users/li/Documents/过程文档/envpack-live-20260702/logs/main-task-register.md`（Owner 裁定 / 阶段状态 / ISSUE 台账 001-022 / Land 记录）+ 各阶段 user-log / behavior-matrix / ui-audit |
-| 仓库 / 层归属 | 本仓（truzhen-packs 包层）只登记 pack 完善+实测结论；修复 land 归 client / truzhenos，回执真相归基座 03 |
-| 风险颜色 | 绿：文档账本转正 + 报告新增，不改契约、不改 manifest、不改脚本、不改 Pack 行为 |
+| 我要做的事 | 智能家居服务商 pack 用户视角全链路实测（SH-P0~P7）收口：出第二轮最终测试报告，本仓账本登记本轮实测结论 |
+| 真实客户 / 场景证据 | Owner 2026-07-02 授权第一轮环保 pack 收口后**自动启动第二轮**，对象=智能家居服务商 pack（第一现金流样板，与环保护城河标杆对照）；剧本=王先生全屋智能灯组离线售后工单经营 |
+| 真相源 | 主任务登记表 `/Users/li/Documents/过程文档/smarthomepack-live-20260703/logs/main-task-register.md`（阶段状态 SH-P0~P7 / SH-ISSUE-01~10 台账 / Land 记录）+ 各阶段 sh-p1~p4 / sh-final user-log / behavior-matrix / issues |
+| 仓库 / 层归属 | 本仓（truzhen-packs 包层）只登记 pack 实测结论；修复 land 归 client / truzhenos，回执真相归基座 03 |
+| 风险颜色 | 绿：文档账本 + 报告新增，不改契约、不改 manifest、不改脚本、不改 Pack 行为 |
 | 是否改契约 | 否 |
 | 不允许碰的边界 | 只改本仓新 worktree 内文件与报告，不碰其它仓；不改 provider、不改真实装入 / 卸载、不提交 raw source materials / 运行产物 |
 | 验收方式 | Markdown diff、JSON 合法性、报告事实与 main-task-register 一致 |
-| 状态 | ✅ 完成 — 本轮实测三方结构一日跑完 P0-P7，P2 UI 全回环 PASS + 执法 run 至 lawyer_challenge（送达 provider_missing 受控拒绝）+ 五单 03 回执反查 + 行为审计 131 脚本零直连；packs 批 7 内容完善已 land `283849c`（隔离 E2E registry 0→1→0 铁证 `718b0baa`）。橙色项 10 条只出方案待 Owner 裁（含 P4-09 引擎不消费 GatePolicy 主权红线）。报告：`/Users/li/Documents/truzhen-packs/docs/reports/env-pack-user-simulation-e2e-report-20260703.md` |
+| 状态 | ✅ 完成 — 本轮三方结构一日跑完 SH-P0~P7（P2 语义翻转：本 pack 一开始即 enabled@1.0.0，回环还原）。停用→启用回环 UI PASS（新回执 `5f10877e` replayed=false，018 回归✓）+ 王先生工单五阶段真模型 Qwen3.6-35B 流式对话闭环 + 候选回填终验 PASS（完整 ref `4662a9d3` 03 反查 recorded）+ 送达 provider_missing 受控拒绝无假发送 + 020 P4-09 越门未复现 + 行为审计 99 脚本零直连。修复 land：client `8dd8de3→538c55a→82bbc71→3f2b91c`（批 1-3 共 17 commits，779 测绿）、truzhenos `2ea6f59→764bc97`（按 tx 拉候选只读 GET，EGR verify ok）。橙色两轮合并去重（第一轮 10 项 + 第二轮 6 类）只出方案待 Owner 裁。**pack 内容 install.py 残留清理本轮未做，记 backlog（§6）**。报告：`/Users/li/Documents/truzhen-packs/docs/reports/smarthome-pack-user-simulation-e2e-report-20260703.md` |
 
 ## 1. 当前基线
 
@@ -55,12 +55,13 @@
 | Pack 仓治理边界 | 明确本仓是包层，不是基座、运行时、Provider、前端产品仓 | ✅ | `AGENTS.md`、`CLAUDE.md`、`README.md`、`MODULES.md` | Pack 只声明和编排 |
 | 三类 Pack 封顶 | 固定 `Domain Work Pack`、`Capability Pack`、`Role Pack` 三类 | ✅ | `AGENTS.md`、`README.md` | 不发明第四种 Pack |
 | 环保执法 Pack | 高风险合规 / 执法证据链样板，带知识库、双角色对照和 install / uninstall | 🟡 | `environmental-enforcement-pack-v0/` | 法律 / 监管知识默认 `pending_human_review`。**2026-07-02/03 用户视角全链路实测收口**：批 7 已 land `283849c`（9 阶段节点补一线执法 stage_guide、manifest 门槛与 capabilities 对齐、15 知识域零漂移、solid-waste 索引漂移已在 950e16d 收口）；隔离 devserver E2E registry 0→1→0 铁证回执 `718b0baa`；前端 UI 完整停用→启用回环 PASS（真回执 `608291f0`）；执法 run 至 `lawyer_challenge`，送达 `provider_missing` 受控拒绝无假成功。实测结论与报告：`docs/reports/env-pack-user-simulation-e2e-report-20260703.md` |
-| 智能家居老板 Pack | 长周期项目交付样板，声明 Frappe 读写候选与项目经理角色 | ✅ | `smart-home-owner-pack-v0/` | Frappe 只是 ProviderRequirement，不是真相源 |
+| 智能家居老板 Pack | 长周期项目交付样板，声明 Frappe 读写候选与项目经理角色 | ✅ | `smart-home-owner-pack-v0/` | Frappe 只是 ProviderRequirement，不是真相源。**2026-07-03 用户视角全链路实测收口（第二轮）**：registry 实测本 pack 一开始即 `enabled@1.0.0`（occ=0，P2 语义翻转），前端 UI 完整**停用→启用回环还原**（真回执 `5f10877e` replayed=false，018 唯一幂等键回归✓，刷新终态还原 enabled@1.0.0）；王先生灯组离线售后工单五阶段真模型 Qwen3.6-35B live 流式对话闭环，Frappe provider 三态诚实（frappe_snapshot 无假读、送达 provider_missing 受控拒绝无假发送）、020 P4-09 越 owner_gate 未复现；候选回填终验 PASS（完整回执 `4662a9d3` 03 反查 recorded）。实测结论与报告：`docs/reports/smarthome-pack-user-simulation-e2e-report-20260703.md`。**install.py 环保残留（docstring 首行 + knowledge tags）待清=backlog（§6，第二轮计划 §7 列的完善候选，本轮 SH-P3 受阻未做）** |
 | 家政运营 Pack | 客服全生命周期样板，可装入 / 卸载、可声明角色 / 能力 / flow | 🟡 | `housekeeping-ops-pack-v0/` | 不能标完整知识包；卸载脚本只停用 Pack，不删除历史对象、候选或回执 |
 | Pack lifecycle 胶水脚本 | 通过基座 devserver lifecycle 端点装入 / 卸载 | 🟡 | 各 pack `install.py` / `uninstall.py` | 无隔离 devserver 铁证时，不声称 E2E 通过 |
 | 结构化知识 | 将可分发资料组织为 `knowledge-scopes.json`、`knowledge-index.json` 和 Markdown | 🟡 | 当前仅环保执法 Pack 完整具备 | 知识启用归基座 09；停用只改变可见性，不删除正式知识 |
 | 作者端模板 | 给未来 Pack 作者提供工程骨架 | ✅ | `templates/scene-pack-software-template/` | 不是已发布 Pack，不参与 enabled 分发 |
 | 环保执法 Pack 用户视角实测 | P0-P7 三方结构（用户智能体+组织者+truzhen-monitor）一日跑完全链路验收，发现问题→修问题 | ✅ 已验收 | `docs/reports/env-pack-user-simulation-e2e-report-20260703.md`；`/Users/li/Documents/过程文档/envpack-live-20260702/logs/`（各阶段 user-log / behavior-matrix / ui-audit / issues + shots/audit 10 屏 after） | 本轮=已验收；各修复已接线→已验收（client 37 commits/730 测全绿、truzhenos EGR 绿、packs 隔离 E2E 0→1→0）；ISSUE 台账 001-022，橙色 10 项只出方案待 Owner 裁（P4-09 引擎不消费 GatePolicy=主权红线，最高优先） |
+| 智能家居老板 Pack 用户视角实测 | SH-P0~P7 三方结构（用户智能体+组织者+truzhen-monitor）一日跑完全链路验收（第二轮，第一现金流样板），发现问题→修问题 | ✅ 已验收 | `docs/reports/smarthome-pack-user-simulation-e2e-report-20260703.md`；`/Users/li/Documents/过程文档/smarthomepack-live-20260703/logs/`（sh-p1~p4 / sh-final user-log / behavior-matrix / issues + shots/audit 4 屏 after） | 本轮=已验收；各修复已接线→已验收（client 批 1-3 共 17 commits / 779 测绿、truzhenos 按 tx 拉候选只读 GET EGR 绿）；SH-ISSUE 台账 01-10，橙色两轮合并去重（第一轮 10 + 第二轮 6 类）只出方案待 Owner 裁；install.py 环保残留清理未做=backlog |
 
 ## 5. 已校正的进度口径
 
@@ -86,6 +87,7 @@
 | P1 | 全仓 | 建立自动结构审计脚本 | 当前验证命令写在治理文档中，未形成仓内统一脚本 | 一条命令覆盖 JSON、脚本语法、forbidden artifacts、manifest 结构审计 |
 | P1 | 全仓 | 补 Pack 体量 / 成熟度变更登记纪律 | 本文件刚建立，后续新增 / 删除 / 重命名 pack 时需同步维护 | README、MODULES、FEATURE_LEDGER 与目标 pack README / manifest 同步更新 |
 | P2 | `environmental-enforcement-pack-v0/` | 知识来源与人工核验持续维护 | 高风险法律知识体量最大，需防止 scope / index 漂移 | knowledge scopes、index、文件路径一致；高风险知识保持 `pending_human_review` |
+| P1 | `smart-home-owner-pack-v0/` | install.py 环保残留清理 | 2026-07-03 第二轮实测 SH-P3 受阻于制作台缺陷（SH-ISSUE-04/05/06），未清 install.py：docstring 首行仍写「环保执法 Pack」（复制未改）、knowledge batch `tags` 硬编码「环保执法」（本 pack 无知识库不走该行，属残留）；第二轮计划 §7 第 1 项列为完善候选 | docstring 首行改「智能家居老板项目经营 Pack」、tags 改通用或按 pack 声明取值；隔离 devserver install/uninstall E2E registry 0→1→0 |
 | 🟡 | 全仓 | devserver E2E 验收记录 | 环保执法 pack 本轮已有隔离 devserver E2E 铁证（registry 0→1→0，回执 `718b0baa`）；其余 pack 仍待记录 | 记录 registry 0→1、enabled version、Role Pack enabled、SlotBinding、KnowledgeMount、Receipt |
 
 ## 7. 维护规程
