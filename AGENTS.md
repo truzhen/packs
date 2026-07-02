@@ -14,7 +14,7 @@
 4. `MODULES.md`：当前包清单、成熟度、标准结构和边界。
 5. 任务涉及的 pack 目录下 `README.md`、`manifest.json`、`flows/*.flow.json`、`role-slots/role-slots.json`、`role-packs/*.json`、`capabilities/capabilities.json`、`install.py` / `uninstall.py`。
 
-需要核对基座治理范式、契约或运行端点时，只读参考相邻基座仓根治理文件，例如 `/Users/li/Documents/truzhenv3/AGENTS.md`、`/Users/li/Documents/truzhenv3/V3_GOVERNANCE.md`、`/Users/li/Documents/truzhenv3/MODULES.md`。凡需修改、测试、提交或推送当前仓以外的仓库，必须先说明目标仓、原因、影响范围，并获得 Owner 重新明确授权。
+需要核对基座治理范式、契约或运行端点时，只读参考相邻基座仓根治理文件，例如 `/Users/li/Documents/truzhenos/AGENTS.md`、`/Users/li/Documents/truzhenos/V3_GOVERNANCE.md`、`/Users/li/Documents/truzhenos/MODULES.md`（旧 `truzhenv3` 已封棺冻结，只作历史参考）。凡需修改、测试、提交或推送当前仓以外的仓库，必须先说明目标仓、原因、影响范围，并获得 Owner 重新明确授权。
 
 ## 1. 本仓定位
 
@@ -23,7 +23,7 @@
 ### 1.1 五落点关系
 
 ```text
-truzhenos / truzhenv3（基座私有实现）
+truzhenos（基座私有实现；旧 truzhenv3 已冻结）
         implements
 truzhen-contracts（纯接口 / 类型 / Schema）
         faces

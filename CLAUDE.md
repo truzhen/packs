@@ -46,7 +46,7 @@
 3. `MODULES.md`
 4. 当前 pack 的 `README.md`、`manifest.json`、flow、role-slots、role-packs、capabilities、install / uninstall 脚本
 
-需要参考基座范式时，只读 `/Users/li/Documents/truzhenv3` 根治理文件；需要修改或测试基座仓时，必须先获 Owner 重新授权。
+需要参考基座范式时，只读 `/Users/li/Documents/truzhenos` 根治理文件（旧 `truzhenv3` 已封棺冻结）；需要修改或测试基座仓时，必须先获 Owner 重新授权。
 
 ## 5. 当前包导航
 
