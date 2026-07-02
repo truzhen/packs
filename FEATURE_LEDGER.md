@@ -3,18 +3,19 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
-## 0. 本轮派活卡
+## 0. 本轮派活卡（环保执法 pack 用户视角全链路实测收口）
 
 | 维度 | 结论 |
 |---|---|
-| 我要做的事 | 建立根目录 `FEATURE_LEDGER.md`，登记当前 Pack 模块、体量、进度口径和待完善项 |
-| 真实客户 / 场景证据 | Owner 明确要求更新 truzhen-packs 根目录开发过程登记清单 |
-| 真相源 | 本仓文件结构、`AGENTS.md`、`README.md`、`MODULES.md`、各 pack `manifest.json` 与 tracked 文件统计 |
-| 仓库 / 层归属 | 仅 `truzhen-packs` 包层资产仓 |
-| 风险颜色 | 绿：文档账本新增，不改契约、不改 manifest、不改脚本、不改 Pack 行为 |
+| 我要做的事 | 环保执法 pack 用户视角全链路实测（P0-P7）收口：出最终测试报告，本仓账本转正登记本轮完善+实测结论 |
+| 真实客户 / 场景证据 | Owner 2026-07-02 原话直接指令「用三制作台读取并加载环保执法 pack、修改完善、创建执法行动、与秘书长互动完成执法，遇到问题解决问题」；pack 知识来自 Owner 权威资料 752 条真实导入 |
+| 真相源 | 主任务登记表 `/Users/li/Documents/过程文档/envpack-live-20260702/logs/main-task-register.md`（Owner 裁定 / 阶段状态 / ISSUE 台账 001-022 / Land 记录）+ 各阶段 user-log / behavior-matrix / ui-audit |
+| 仓库 / 层归属 | 本仓（truzhen-packs 包层）只登记 pack 完善+实测结论；修复 land 归 client / truzhenos，回执真相归基座 03 |
+| 风险颜色 | 绿：文档账本转正 + 报告新增，不改契约、不改 manifest、不改脚本、不改 Pack 行为 |
 | 是否改契约 | 否 |
-| 不允许碰的边界 | 不改基座仓、不改 provider、不改真实装入 / 卸载、不提交 raw source materials / 运行产物 |
-| 验收方式 | Markdown diff、JSON 合法性、脚本语法、禁入产物扫描、Pack 结构审计 |
+| 不允许碰的边界 | 只改本仓新 worktree 内文件与报告，不碰其它仓；不改 provider、不改真实装入 / 卸载、不提交 raw source materials / 运行产物 |
+| 验收方式 | Markdown diff、JSON 合法性、报告事实与 main-task-register 一致 |
+| 状态 | ✅ 完成 — 本轮实测三方结构一日跑完 P0-P7，P2 UI 全回环 PASS + 执法 run 至 lawyer_challenge（送达 provider_missing 受控拒绝）+ 五单 03 回执反查 + 行为审计 131 脚本零直连；packs 批 7 内容完善已 land `283849c`（隔离 E2E registry 0→1→0 铁证 `718b0baa`）。橙色项 10 条只出方案待 Owner 裁（含 P4-09 引擎不消费 GatePolicy 主权红线）。报告：`/Users/li/Documents/truzhen-packs/docs/reports/env-pack-user-simulation-e2e-report-20260703.md` |
 
 ## 1. 当前基线
 
@@ -53,12 +54,13 @@
 |---|---|---|---|---|
 | Pack 仓治理边界 | 明确本仓是包层，不是基座、运行时、Provider、前端产品仓 | ✅ | `AGENTS.md`、`CLAUDE.md`、`README.md`、`MODULES.md` | Pack 只声明和编排 |
 | 三类 Pack 封顶 | 固定 `Domain Work Pack`、`Capability Pack`、`Role Pack` 三类 | ✅ | `AGENTS.md`、`README.md` | 不发明第四种 Pack |
-| 环保执法 Pack | 高风险合规 / 执法证据链样板，带知识库、双角色对照和 install / uninstall | 🟡 | `environmental-enforcement-pack-v0/` | 法律 / 监管知识默认 `pending_human_review`；当前 `solid-waste` scope 声明与 knowledge scopes 索引不一致，不能声称结构完全闭环 |
+| 环保执法 Pack | 高风险合规 / 执法证据链样板，带知识库、双角色对照和 install / uninstall | 🟡 | `environmental-enforcement-pack-v0/` | 法律 / 监管知识默认 `pending_human_review`。**2026-07-02/03 用户视角全链路实测收口**：批 7 已 land `283849c`（9 阶段节点补一线执法 stage_guide、manifest 门槛与 capabilities 对齐、15 知识域零漂移、solid-waste 索引漂移已在 950e16d 收口）；隔离 devserver E2E registry 0→1→0 铁证回执 `718b0baa`；前端 UI 完整停用→启用回环 PASS（真回执 `608291f0`）；执法 run 至 `lawyer_challenge`，送达 `provider_missing` 受控拒绝无假成功。实测结论与报告：`docs/reports/env-pack-user-simulation-e2e-report-20260703.md` |
 | 智能家居老板 Pack | 长周期项目交付样板，声明 Frappe 读写候选与项目经理角色 | ✅ | `smart-home-owner-pack-v0/` | Frappe 只是 ProviderRequirement，不是真相源 |
 | 家政运营 Pack | 客服全生命周期样板，可装入 / 卸载、可声明角色 / 能力 / flow | 🟡 | `housekeeping-ops-pack-v0/` | 不能标完整知识包；卸载脚本只停用 Pack，不删除历史对象、候选或回执 |
 | Pack lifecycle 胶水脚本 | 通过基座 devserver lifecycle 端点装入 / 卸载 | 🟡 | 各 pack `install.py` / `uninstall.py` | 无隔离 devserver 铁证时，不声称 E2E 通过 |
 | 结构化知识 | 将可分发资料组织为 `knowledge-scopes.json`、`knowledge-index.json` 和 Markdown | 🟡 | 当前仅环保执法 Pack 完整具备 | 知识启用归基座 09；停用只改变可见性，不删除正式知识 |
 | 作者端模板 | 给未来 Pack 作者提供工程骨架 | ✅ | `templates/scene-pack-software-template/` | 不是已发布 Pack，不参与 enabled 分发 |
+| 环保执法 Pack 用户视角实测 | P0-P7 三方结构（用户智能体+组织者+truzhen-monitor）一日跑完全链路验收，发现问题→修问题 | ✅ 已验收 | `docs/reports/env-pack-user-simulation-e2e-report-20260703.md`；`/Users/li/Documents/过程文档/envpack-live-20260702/logs/`（各阶段 user-log / behavior-matrix / ui-audit / issues + shots/audit 10 屏 after） | 本轮=已验收；各修复已接线→已验收（client 37 commits/730 测全绿、truzhenos EGR 绿、packs 隔离 E2E 0→1→0）；ISSUE 台账 001-022，橙色 10 项只出方案待 Owner 裁（P4-09 引擎不消费 GatePolicy=主权红线，最高优先） |
 
 ## 5. 已校正的进度口径
 
@@ -79,12 +81,12 @@
 |---|---|---|---|---|
 | ✅ | `housekeeping-ops-pack-v0/` | 补 `uninstall.py` | 2026-07-02 已补齐；脚本经 Base gated-action prepare / confirm 后调用 lifecycle disable | 卸载只停用 Pack，不删除历史对象、候选或 Receipt；脚本语法通过 |
 | P0 | `housekeeping-ops-pack-v0/` | 补 `knowledge/` 或明确无知识库版本 | 当前无 `knowledge-scopes.json` / `knowledge-index.json` | README / manifest / MODULES 口径一致；若补知识，scope / index / Markdown 一致 |
-| P0 | `environmental-enforcement-pack-v0/` | 收口 `solid-waste` 知识域漂移 | `manifest.json` 声明 `knowledge_scope://environmental/solid-waste`，但 `knowledge/knowledge-scopes.json` 缺该 scope，且当前无 `knowledge/solid-waste/` 目录 | Owner 裁定是补 `solid-waste` scope + 知识文件，还是从 manifest 移除该知识域；结构审计必须转绿 |
+| ✅ | `environmental-enforcement-pack-v0/` | 收口 `solid-waste` 知识域漂移 | 已在 `950e16d` 从 manifest 删除无事实支撑的 `solid-waste` 知识域声明，对齐 15 域现状；2026-07-02/03 实测复核知识域零漂移 | 结构审计已转绿；15 知识域一致 |
 | P1 | `templates/scene-pack-software-template/` | 模板 manifest 贴近当前 Domain Work Pack schema | 当前模板 manifest 与真实 pack manifest 不是同一成熟结构 | 模板包含六件事、ProviderRequirement、moat、role slots、flow、knowledge 占位说明 |
 | P1 | 全仓 | 建立自动结构审计脚本 | 当前验证命令写在治理文档中，未形成仓内统一脚本 | 一条命令覆盖 JSON、脚本语法、forbidden artifacts、manifest 结构审计 |
 | P1 | 全仓 | 补 Pack 体量 / 成熟度变更登记纪律 | 本文件刚建立，后续新增 / 删除 / 重命名 pack 时需同步维护 | README、MODULES、FEATURE_LEDGER 与目标 pack README / manifest 同步更新 |
 | P2 | `environmental-enforcement-pack-v0/` | 知识来源与人工核验持续维护 | 高风险法律知识体量最大，需防止 scope / index 漂移 | knowledge scopes、index、文件路径一致；高风险知识保持 `pending_human_review` |
-| P2 | 全仓 | devserver E2E 验收记录 | 当前仓可静态验证；真实装入需相邻基座 devserver | 记录 registry 0→1、enabled version、Role Pack enabled、SlotBinding、KnowledgeMount、Receipt |
+| 🟡 | 全仓 | devserver E2E 验收记录 | 环保执法 pack 本轮已有隔离 devserver E2E 铁证（registry 0→1→0，回执 `718b0baa`）；其余 pack 仍待记录 | 记录 registry 0→1、enabled version、Role Pack enabled、SlotBinding、KnowledgeMount、Receipt |
 
 ## 7. 维护规程
 
