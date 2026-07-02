@@ -30,7 +30,7 @@
 
 - `environmental-enforcement-pack-v0/`：完整文件夹包，含 install/uninstall、15 知识域、角色包。
 - `smart-home-owner-pack-v0/`：完整文件夹包，含 install/uninstall、项目经理角色包、Frappe ProviderRequirement。
-- `housekeeping-ops-pack-v0/`：已升级为可装入文件夹包，含 `pack_ref` / `template_family` / flow / capabilities / role-slots / 2 角色包 / `install.py`；`knowledge/` 与 `uninstall.py` 仍待补，不得标成完整知识包。
+- `housekeeping-ops-pack-v0/`：已升级为可装入 / 可卸载文件夹包，含 `pack_ref` / `template_family` / flow / capabilities / role-slots / 2 角色包 / `install.py` / `uninstall.py`；`knowledge/` 仍待补，不得标成完整知识包。
 
 ## 文件夹包标准结构
 

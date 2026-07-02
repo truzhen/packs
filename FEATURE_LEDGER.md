@@ -43,7 +43,7 @@
 |---|---|---:|---:|---:|---:|---:|---:|---|
 | `environmental-enforcement-pack-v0/` | 生态环境执法证据链 Domain Work Pack；含线索、立案、取证、证据三性、双角色对照、文书 / 处置候选、知识库和装卸载脚本 | 61 | 48 | 8 | 3 | 8419 | 1.2 MiB | 🟡 完整文件夹包主体已具备；知识域存在 `solid-waste` 索引漂移，法律知识仍需人工核验 |
 | `smart-home-owner-pack-v0/` | 智能家居老板项目经营 Pack；以项目经理角色和 Frappe ProviderRequirement 组织项目快照、里程碑、采购、施工和写回候选 | 9 | 1 | 5 | 2 | 890 | 37.3 KiB | ✅ 完整文件夹包，无知识库 |
-| `housekeeping-ops-pack-v0/` | 家政 / 保洁客户服务全生命周期 Pack；含咨询受理、顾问方案、质检质询、排期报价、派工、通知和归档候选 | 10 | 2 | 6 | 2 | 1126 | 68.8 KiB | 🟡 可装入，缺 `knowledge/` 与 `uninstall.py` |
+| `housekeeping-ops-pack-v0/` | 家政 / 保洁客户服务全生命周期 Pack；含咨询受理、顾问方案、质检质询、排期报价、派工、通知和归档候选 | 11 | 2 | 6 | 3 | 1237 | 72.9 KiB | 🟡 可装入 / 可卸载，仍缺 `knowledge/` |
 | `templates/` | Pack 作者端软件工程模板，提供 manifest、docs、objects、flows、views、policies、software、tests 等骨架 | 18 | 16 | 1 | 0 | 650 | 32.5 KiB | ✅ 模板，不参与 enabled pack 分发 |
 | 根治理文件 | `AGENTS.md`、`CLAUDE.md`、`README.md`、`MODULES.md`、`FEATURE_LEDGER.md`、CI / license / go.mod / ignore 规则 | 9 | 5 | 0 | 0 | 987 | 55.0 KiB | ✅ 治理入口已建立 |
 
@@ -55,7 +55,7 @@
 | 三类 Pack 封顶 | 固定 `Domain Work Pack`、`Capability Pack`、`Role Pack` 三类 | ✅ | `AGENTS.md`、`README.md` | 不发明第四种 Pack |
 | 环保执法 Pack | 高风险合规 / 执法证据链样板，带知识库、双角色对照和 install / uninstall | 🟡 | `environmental-enforcement-pack-v0/` | 法律 / 监管知识默认 `pending_human_review`；当前 `solid-waste` scope 声明与 knowledge scopes 索引不一致，不能声称结构完全闭环 |
 | 智能家居老板 Pack | 长周期项目交付样板，声明 Frappe 读写候选与项目经理角色 | ✅ | `smart-home-owner-pack-v0/` | Frappe 只是 ProviderRequirement，不是真相源 |
-| 家政运营 Pack | 客服全生命周期样板，可装入、可声明角色 / 能力 / flow | 🟡 | `housekeeping-ops-pack-v0/` | 不能标完整知识包或完整可卸载闭环 |
+| 家政运营 Pack | 客服全生命周期样板，可装入 / 卸载、可声明角色 / 能力 / flow | 🟡 | `housekeeping-ops-pack-v0/` | 不能标完整知识包；卸载脚本只停用 Pack，不删除历史对象、候选或回执 |
 | Pack lifecycle 胶水脚本 | 通过基座 devserver lifecycle 端点装入 / 卸载 | 🟡 | 各 pack `install.py` / `uninstall.py` | 无隔离 devserver 铁证时，不声称 E2E 通过 |
 | 结构化知识 | 将可分发资料组织为 `knowledge-scopes.json`、`knowledge-index.json` 和 Markdown | 🟡 | 当前仅环保执法 Pack 完整具备 | 知识启用归基座 09；停用只改变可见性，不删除正式知识 |
 | 作者端模板 | 给未来 Pack 作者提供工程骨架 | ✅ | `templates/scene-pack-software-template/` | 不是已发布 Pack，不参与 enabled 分发 |
@@ -73,11 +73,11 @@
 | 把 install 脚本存在等同于 E2E 通过 | 只有隔离基座 devserver 装入、enabled version、SlotBinding、KnowledgeMount、Receipt 证据齐全时才算 E2E |
 | 把候选写成正式动作 | Pack 只能产候选、声明约束或提供上下文；正式动作必须 Owner + Base Gate |
 
-## 6. 待开发 / 待完善项
+## 6. 待开发 / 待完善 / 已收口项
 
 | 优先级 | 归属 | 待完善项 | 当前缺口 | 验收口径 |
 |---|---|---|---|---|
-| P0 | `housekeeping-ops-pack-v0/` | 补 `uninstall.py` | 当前只有 `install.py` 和 legacy seed 脚本，不能形成完整卸载闭环 | 卸载经基座 Base Gate / lifecycle disable，历史 Receipt 不删除；脚本语法通过 |
+| ✅ | `housekeeping-ops-pack-v0/` | 补 `uninstall.py` | 2026-07-02 已补齐；脚本经 Base gated-action prepare / confirm 后调用 lifecycle disable | 卸载只停用 Pack，不删除历史对象、候选或 Receipt；脚本语法通过 |
 | P0 | `housekeeping-ops-pack-v0/` | 补 `knowledge/` 或明确无知识库版本 | 当前无 `knowledge-scopes.json` / `knowledge-index.json` | README / manifest / MODULES 口径一致；若补知识，scope / index / Markdown 一致 |
 | P0 | `environmental-enforcement-pack-v0/` | 收口 `solid-waste` 知识域漂移 | `manifest.json` 声明 `knowledge_scope://environmental/solid-waste`，但 `knowledge/knowledge-scopes.json` 缺该 scope，且当前无 `knowledge/solid-waste/` 目录 | Owner 裁定是补 `solid-waste` scope + 知识文件，还是从 manifest 移除该知识域；结构审计必须转绿 |
 | P1 | `templates/scene-pack-software-template/` | 模板 manifest 贴近当前 Domain Work Pack schema | 当前模板 manifest 与真实 pack manifest 不是同一成熟结构 | 模板包含六件事、ProviderRequirement、moat、role slots、flow、knowledge 占位说明 |

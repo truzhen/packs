@@ -39,3 +39,12 @@ go test -race -count=1 -run TestHousekeepingOpsPackEndToEnd ./backend/tests/devs
 ```
 
 测试读取本目录 `flows/customer-service-lifecycle.flow.json` 作为真实运行的流程图纸，经 `devserver.NewHandler`（与正式 devserver 二进制同一组合根）驱动全生命周期。测试报告见 `docs/测试报告.md`。
+
+## 加载 / 卸载
+
+```sh
+TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18080 python3 housekeeping-ops-pack-v0/install.py
+TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18080 python3 housekeeping-ops-pack-v0/uninstall.py
+```
+
+卸载脚本先经 Base gated-action prepare / confirm 取得真签发的 `decision_ref/run_id/nonce`，再调用 Pack Studio lifecycle disable。卸载只停用当前 Pack，不删除历史事务对象、候选或 03 回执。

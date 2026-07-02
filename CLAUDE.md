@@ -54,7 +54,7 @@
 
 - `environmental-enforcement-pack-v0/`：环保执法证据链 Pack，知识型完整包。
 - `smart-home-owner-pack-v0/`：智能家居老板项目经营 Pack，无知识库。
-- `housekeeping-ops-pack-v0/`：家政客户服务全生命周期 Pack，可装入，`knowledge/` 和 `uninstall.py` 待补。
+- `housekeeping-ops-pack-v0/`：家政客户服务全生命周期 Pack，可装入 / 卸载，`knowledge/` 待补。
 - `templates/`：作者端模板，不参与 enabled pack 分发。
 
 ## 6. 验证命令
