@@ -14,6 +14,30 @@ Pack 声明 -> 基座 lifecycle enabled -> Scene Runtime 解释 -> Candidate -> 
 
 Pack 不直接生成 Formal Record，不直接执行 provider，不直接写基座数据库。
 
+## Truzhen 底层逻辑指向
+
+权威总纲：`/Users/li/Documents/truzhen-contracts/TRUZHEN_PHILOSOPHY.md`（远端 `github.com/truzhen/contracts` 根目录同名文件）。本仓是总纲里的“人类经验蒸馏与售卖平台”落点：Pack 把行业高手的经验、红线、流程和能力需求写成可安装边界，让 AI 在边界内生成候选，而不是让 AI 自己拥有主权。
+
+### 本仓映射表
+
+| 总纲原则 | 本仓落点 | 边界 |
+| --- | --- | --- |
+| Pack 是人类提供主权的工作流边界 | `manifest.json`、flow、role-slots、role-packs、capabilities | Pack 只声明和编排，不裁定、不执行、不写正式事实。 |
+| 红黄绿按责任后果划，不按技术难度划 | `person_strategy`、`formalization_requirement`、`gates`、risk / fallback policy | 行业红线由真实场景和行业作者经验决定，最终仍受 Owner + Base Gate 约束。 |
+| Pack 边界从真实客户中长出来 | Pack README、manifest、验收报告、`FEATURE_LEDGER.md` | 不先在纸面设计完整职业宇宙，再找客户验证。 |
+| Provider 是能力需求，不是 Pack 内实现 | `provider_requirements`、`capabilities/capabilities.json` | Frappe、OCR、IM、Baserow 等只能声明需求；真实 provider 归 `truzhen-software` / 基座 Gateway。 |
+| AI / Role Pack 永远是 Proposer | `role-packs/*.json`、多角色对照、质询节点 | 角色只提建议、草稿、质询和风险，不批准、不发送、不执行。 |
+| 可售卖的是可复用经验资产 | folder pack、知识域、护城河、市场元数据候选 | 正式商品、价格、订单、License / Entitlement 和分发状态归 `truzhen-cloud`。 |
+
+### 禁止误读清单
+
+- 不得把总纲读成“Pack 越大越完整”；抽象层级高不是成就，真实客户用起来才是成功标准。
+- 不得发明第四种 Pack；新需求先判断归 Domain Work Pack、Capability Pack、Role Pack，还是应迁往基座、contracts、software、cloud 或 client。
+- 不得把 Pack manifest、flow、角色包或 install 脚本写成 OwnerDecision、Base Gate、Receipt 或正式执行结果。
+- 不得让 AI 未经 Owner 确认就使自己起草的风险分级、治理规则或 manifest 变成有效规则。
+- 不得把 provider `ready`、脚本存在、mock 成功或说明文字当成真实产品接线；未接通只能写 `blocked / provider_missing / not_ready`。
+- 不得把高风险法律、财务、医疗、合同等知识写成正式适用结论；默认要有来源、人工核验和责任边界。
+
 ## 2. 当前包清单
 
 | 包 | pack 标识 | template_family | 成熟度 | 职责 |
