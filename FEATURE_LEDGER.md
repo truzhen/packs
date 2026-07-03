@@ -80,7 +80,7 @@
 
 | 优先级 | 归属 | 待完善项 | 当前缺口 | 验收口径 |
 |---|---|---|---|---|
-| ✅ | `housekeeping-ops-pack-v0/` | 补 `uninstall.py` | 2026-07-02 已补齐；脚本经 Base gated-action prepare / confirm 后调用 lifecycle disable | 卸载只停用 Pack，不删除历史对象、候选或 Receipt；脚本语法通过 |
+| ✅ | `housekeeping-ops-pack-v0/` | 补 `uninstall.py` | 2026-07-02 已补齐；脚本调 lifecycle disable 可逆停用（只改可见性/运行访问权，自动留痕，不走 Base Gate——Owner 2026-07-03「门禁 vs 留痕」裁定：可逆停用不产生对外不良影响） | 卸载只停用 Pack，不删除历史对象、候选或 Receipt；脚本语法通过 |
 | P0 | `housekeeping-ops-pack-v0/` | 补 `knowledge/` 或明确无知识库版本 | 当前无 `knowledge-scopes.json` / `knowledge-index.json` | README / manifest / MODULES 口径一致；若补知识，scope / index / Markdown 一致 |
 | ✅ | `environmental-enforcement-pack-v0/` | 收口 `solid-waste` 知识域漂移 | 已在 `950e16d` 从 manifest 删除无事实支撑的 `solid-waste` 知识域声明，对齐 15 域现状；2026-07-02/03 实测复核知识域零漂移 | 结构审计已转绿；15 知识域一致 |
 | P1 | `templates/scene-pack-software-template/` | 模板 manifest 贴近当前 Domain Work Pack schema | 当前模板 manifest 与真实 pack manifest 不是同一成熟结构 | 模板包含六件事、ProviderRequirement、moat、role slots、flow、knowledge 占位说明 |
