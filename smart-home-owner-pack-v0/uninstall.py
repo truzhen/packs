@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-环保执法 Pack —— 从正在运行的 Truzhen devserver 卸载（可卸载）。
+智能家居老板项目经营 Pack —— 从正在运行的 Truzhen devserver 卸载（可卸载）。
 
 走真实 lifecycle/disable 端点：先经 Base gated-action prepare→confirm 取得真签发的
 decision_ref/run_id/nonce（停用与启用同纪律，禁自铸），再 disable。pack 停用会经
 driveDisableMounts 级联卸载知识域。已产生的案件对象与回执在 03 仍可反查（卸载≠删历史）。
 
 用法：
-  python3 packs/environmental-enforcement-pack-v0/uninstall.py
+  python3 packs/smart-home-owner-pack-v0/uninstall.py
 """
 import json
 import os
@@ -68,7 +68,7 @@ def main():
     # 1. Base 签发 disable decision
     code, body = call("POST", "/v3/base/gated-actions/prepare", {
         "action_type": "pack_disable", "target_ref": pack_ref,
-        "content_summary": "停用环保执法 pack：" + pack_ref,
+        "content_summary": "停用智能家居项目经营 pack：" + pack_ref,
         "impact_summary": "停用场景包并级联卸载其知识域；历史回执保留可反查",
         "transaction_ref": "transaction://pack-disable:" + pack_ref + "@" + version})
     if code != 200:
@@ -85,7 +85,7 @@ def main():
 
     # 2. disable
     code, body = call("POST", "/v3/pack-studio/lifecycle/disable", {
-        "pack_ref": pack_ref, "owner_ref": OWNER, "reason": "Owner 卸载环保执法 pack",
+        "pack_ref": pack_ref, "owner_ref": OWNER, "reason": "Owner 卸载智能家居项目经营 pack",
         "decision_ref": iss["decision_ref"], "run_id": iss.get("run_id", ""), "nonce": iss.get("nonce", ""),
         "owner_action_evidence_ref": "owner_action_evidence://pack-disable/" + pack_ref})
     if code != 200:

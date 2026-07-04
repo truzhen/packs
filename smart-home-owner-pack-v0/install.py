@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-环保执法 Pack —— 装入正在运行的 Truzhen devserver（可加载）。
+智能家居老板项目经营 Pack —— 装入正在运行的 Truzhen devserver（可加载）。
 
 走的是前端/产品种子完全相同的真实 lifecycle 端点（canvas → 06 同步 → lifecycle
 draft/readiness/promote/confirm → 角色包 lifecycle → 绑槽 → 09 知识库批量入库 +
 Base 签发 approve decision + approve），全程产 03 receipt，不手写裸塞、不绕主权链。
 
-前置：先在本 worktree 起 devserver（且已从 server.go 摘除环保自动 seed）：
+前置：先在本 worktree 起 devserver（且已从 server.go 摘除智能家居项目经营自动 seed）：
   go run ./backend/cmd/devserver        # 默认 127.0.0.1:18080
 然后：
-  python3 packs/environmental-enforcement-pack-v0/install.py
+  python3 packs/smart-home-owner-pack-v0/install.py
 
 幂等：已启用的场景包/角色包/绑定会跳过；知识批量入库按内容去重。
 """
@@ -162,7 +162,7 @@ def main():
         routes = manifest.get("notification_command_report_routes", {})
         draft = {
             "pack_ref": pack_ref, "version": install_version, "title": manifest["name"],
-            "template_family": manifest.get("template_family", "合规审查执法证据链型"),
+            "template_family": manifest.get("template_family", "长周期项目交付型"),
             "flow_id": flow_id,
             "role_slots": [{"slot_id": s["slot_id"], "responsibility": s["responsibility"],
                             "required_role": s["required_role"], "default_role_pack_ref": s["default_role_pack_ref"],
@@ -374,7 +374,7 @@ def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
     batch = {
         "owner_id": OWNER, "scope": "Formal",
         "transaction_ref": "transaction://pack-knowledge:" + pack_version_ref,
-        "scene_ref": scene_ref, "tags": ["pack 知识库", "环保执法"],
+        "scene_ref": scene_ref, "tags": ["pack 知识库", "智能家居项目经营"],
         "owner_action_evidence_ref": "owner_action_evidence://pack-knowledge/" + pack_ref + "/import",
         "policy_snapshot_ref": "policy_snapshot://pack-knowledge/import",
         "source_files": source_files, "pack_ref": pack_ref, "pack_version_ref": pack_version_ref,
