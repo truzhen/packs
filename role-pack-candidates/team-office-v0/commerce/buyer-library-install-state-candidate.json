@@ -1,0 +1,179 @@
+{
+  "library_candidate_ref": "buyer-library-install-state-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "display_name": "团队办公室角色包买家已购库与安装状态候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "cloud_library_truth_source": "truzhen-cloud",
+  "local_install_truth_source": "truzhenos",
+  "gui_truth_source": "truzhen-client-web-desktop",
+  "package_contents_truth_source": "truzhen-packs",
+  "scope": "声明买家已购库、订单详情、本地包管理和团队设置 tab 如何从购买态推进到下载、安装、可替换和重新安装；不保存正式订单、支付、License、Entitlement、下载链接或安装事实。",
+  "buyer_library_surfaces": [
+    "cloud_purchased_library",
+    "buyer_order_detail",
+    "local_pack_manager",
+    "team_settings_role_tab"
+  ],
+  "required_inputs": [
+    "listing_draft_ref",
+    "sandbox_order_ref",
+    "sandbox_payment_receipt_ref",
+    "entitlement_ref",
+    "download_receipt_ref",
+    "artifact_sha256",
+    "install_preflight_receipt_ref",
+    "install_receipt_ref",
+    "enabled_role_pack_version_ref",
+    "team_ref",
+    "team_settings_catalog_ref"
+  ],
+  "library_states": [
+    {
+      "state_id": "purchased_available",
+      "truth_source": "truzhen-cloud",
+      "user_visible_status": "已购买，可查看授权与下载入口",
+      "entry_condition": "sandbox order is paid and entitlement is issued",
+      "required_evidence": "sandbox_order_receipt_ref + sandbox_payment_receipt_ref + entitlement_receipt_ref"
+    },
+    {
+      "state_id": "download_ready",
+      "truth_source": "truzhen-cloud",
+      "user_visible_status": "可下载，需校验 entitlement",
+      "entry_condition": "entitlement is valid for buyer team and release is available",
+      "required_evidence": "entitlement_validation_receipt_ref + signed_download_ref"
+    },
+    {
+      "state_id": "downloaded_verified",
+      "truth_source": "truzhen-cloud + truzhenos",
+      "user_visible_status": "已下载并通过 hash 校验",
+      "entry_condition": "download receipt exists and local artifact hash matches uploaded artifact hash",
+      "required_evidence": "download_receipt_ref + download_artifact_hash_receipt + local_hash_verification_receipt_ref"
+    },
+    {
+      "state_id": "install_available",
+      "truth_source": "truzhenos",
+      "user_visible_status": "可安装到本地团队环境",
+      "entry_condition": "install preflight inputs are complete and entitlement is still valid",
+      "required_evidence": "install_preflight_receipt_ref + entitlement_validation_receipt_ref"
+    },
+    {
+      "state_id": "installed_enabled",
+      "truth_source": "truzhenos",
+      "user_visible_status": "已安装并启用角色包版本",
+      "entry_condition": "local install finishes with enabled role pack version",
+      "required_evidence": "install_receipt_ref + enabled_role_pack_version_ref + role_pack_schema_validation_receipt_ref"
+    },
+    {
+      "state_id": "team_settings_replaceable",
+      "truth_source": "truzhenos",
+      "user_visible_status": "可在团队设置角色 tab 中选择替换",
+      "entry_condition": "team settings installed role catalog refreshes after install receipt",
+      "required_evidence": "team_settings_catalog_refresh_receipt_ref + team_settings_catalog_ref"
+    },
+    {
+      "state_id": "reinstall_available",
+      "truth_source": "truzhenos",
+      "user_visible_status": "可重新安装同版本或恢复本地安装",
+      "entry_condition": "entitlement is valid and previous receipts remain queryable",
+      "required_evidence": "entitlement_validation_receipt_ref + previous_install_receipt_ref + reinstall_plan_candidate_ref"
+    },
+    {
+      "state_id": "entitlement_revoked_blocked",
+      "truth_source": "truzhen-cloud + truzhenos",
+      "user_visible_status": "授权已撤回，下载 / 新安装 / 重新安装被阻断",
+      "entry_condition": "refund, chargeback, entitlement expiry or release revocation is recorded",
+      "required_evidence": "entitlement_revocation_receipt_ref + buyer_visible_revocation_notice_ref"
+    }
+  ],
+  "gui_action_matrix": [
+    {
+      "action_id": "download_from_library",
+      "entry_surface": "cloud_purchased_library",
+      "backend_evidence_required": "entitlement_validation_receipt_ref + download_receipt_ref + artifact_hash_receipt",
+      "blocked_reason_if_unavailable": "entitlement_missing_or_release_unavailable"
+    },
+    {
+      "action_id": "install_to_local_team",
+      "entry_surface": "local_pack_manager",
+      "backend_evidence_required": "install_preflight_receipt_ref + install_receipt_ref + enabled_role_pack_version_ref",
+      "blocked_reason_if_unavailable": "artifact_hash_mismatch_or_entitlement_invalid"
+    },
+    {
+      "action_id": "open_team_settings_replace",
+      "entry_surface": "team_settings_role_tab",
+      "backend_evidence_required": "team_settings_catalog_ref + owner_gate_decision_ref_if_binding_requested",
+      "blocked_reason_if_unavailable": "install_receipt_missing_or_catalog_stale"
+    },
+    {
+      "action_id": "reinstall_same_version",
+      "entry_surface": "local_pack_manager",
+      "backend_evidence_required": "previous_install_receipt_ref + reinstall_plan_candidate_ref + new_install_receipt_ref",
+      "blocked_reason_if_unavailable": "entitlement_revoked_or_artifact_hash_unverified"
+    },
+    {
+      "action_id": "rollback_binding_to_previous",
+      "entry_surface": "team_settings_role_tab",
+      "backend_evidence_required": "owner_gate_decision_ref + rollback_binding_receipt_ref + history_not_rewritten_receipt",
+      "blocked_reason_if_unavailable": "owner_gate_missing"
+    },
+    {
+      "action_id": "view_receipts",
+      "entry_surface": "buyer_order_detail",
+      "backend_evidence_required": "cloud_receipt_refs + local_install_receipt_refs + team_binding_receipt_refs",
+      "blocked_reason_if_unavailable": "receipt_chain_missing"
+    }
+  ],
+  "completion_gate": {
+    "receipt_chain_complete": "required",
+    "entitlement_valid": "required",
+    "artifact_hash_verified": "required",
+    "install_receipt_present": "required",
+    "team_settings_catalog_refreshed": "required"
+  },
+  "negative_cases": {
+    "library_visible_without_purchase": {
+      "expected_status": "blocked_purchase_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "buyer_library_block_receipt_purchase_missing"
+    },
+    "download_without_entitlement": {
+      "expected_status": "blocked_entitlement_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "buyer_library_block_receipt_entitlement_missing"
+    },
+    "install_from_unverified_hash": {
+      "expected_status": "blocked_artifact_hash_unverified",
+      "truth_source": "truzhenos",
+      "expected_evidence": "local_install_block_receipt_hash_unverified"
+    },
+    "show_replaceable_without_install_receipt": {
+      "expected_status": "blocked_install_receipt_required",
+      "truth_source": "truzhenos",
+      "expected_evidence": "team_settings_catalog_block_receipt_install_missing"
+    },
+    "reinstall_after_entitlement_revoked": {
+      "expected_status": "blocked_entitlement_revoked",
+      "truth_source": "truzhenos",
+      "expected_evidence": "reinstall_block_receipt_entitlement_revoked"
+    },
+    "hide_refund_revocation_reason": {
+      "expected_status": "blocked_buyer_visible_reason_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "buyer_library_block_receipt_revocation_reason_missing"
+    }
+  },
+  "forbidden": [
+    "store_order_truth_in_truzhen_packs",
+    "store_payment_truth_in_truzhen_packs",
+    "store_entitlement_truth_in_truzhen_packs",
+    "show_unpurchased_as_owned",
+    "install_without_entitlement",
+    "team_settings_replace_without_owner_gate",
+    "claim_gui_download_equals_install",
+    "delete_existing_receipts_on_reinstall",
+    "delete_historical_receipts_after_refund"
+  ],
+  "non_completion_clause": "本文件只是买家已购库与安装状态候选，不代表真实已购库、下载、安装、重新安装或团队设置可替换列表已经接通。真实完成必须由 client GUI、truzhen-cloud 和 truzhenos 产生可关联回执。"
+}

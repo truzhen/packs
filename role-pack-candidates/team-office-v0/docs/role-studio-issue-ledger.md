@@ -1,0 +1,53 @@
+# 角色制作台问题台账
+
+当前仅建立候选资产样本。GUI 创建、保存、导出、上传、购买、下载和安装路径尚未接线，不能声称用户视角 E2E 通过。
+
+| issue_id | 发现阶段 | 归属仓 | 风险色 | 状态 | 说明 |
+|---|---|---|---|---|---|
+| ROLE-STUDIO-BOOTSTRAP-001 | P3 候选导出 | `truzhen-packs` | 绿 | 已建立候选资产 | 团队办公室角色候选集已落本仓，供后续 GUI / 后端 / 云端接线验证。 |
+| ROLE-STUDIO-GUI-001 | P1-P2 | client | 黄 | 待授权 | 需要用户视角智能体通过 GUI 创建秘书长和五顾问。 |
+| ROLE-STUDIO-BE-001 | P2-P5 | `truzhenos` | 黄 | 待授权 | 需要 RolePackCandidate、TeamRoleSlotBindingCandidate、Owner Gate 和 Receipt。 |
+| ROLE-STUDIO-TEAM-CATALOG-001 | P5-P11 | client / `truzhenos` | 黄 | 已建立目录候选 | `bindings/team-settings-installed-role-catalog-candidate.json` 已定义安装后角色进入团队设置 tab 可替换列表的输入、刷新策略和阻断条件；真实 GUI 刷新和回执待跨仓授权。 |
+| ROLE-STUDIO-CLOUD-001 | P11 | `truzhen-cloud` | 橙 | 待授权 | 需要 upload draft、sandbox purchase、entitlement、download 和 install 链路。 |
+| ROLE-STUDIO-GUI-SCENARIO-001 | P2-P11 | client / `truzhenos` / `truzhen-cloud` | 黄 | 已建立候选场景 | `tests/gui-user-agent-scenarios.json` 已定义用户视角智能体 GUI 场景和证据要求；真实截图、页面状态和回执待跨仓接线后采集。 |
+| ROLE-STUDIO-GUI-SCRIPT-001 | P2-P11 | client / `truzhenos` / `truzhen-cloud` | 黄 | 已建立执行脚本候选 | `tests/gui-user-agent-execution-script-candidate.json` 已定义用户视角智能体 GUI 有序步骤、动作类型、页面状态、证据槽和负例脚本；真实执行待跨仓授权。 |
+| ROLE-STUDIO-GUI-EVIDENCE-001 | P2-P11 | client / `truzhenos` / `truzhen-cloud` | 黄 | 已建立证据协议 | `tests/gui-evidence-capture-protocol.json` 已定义用户视角 GUI 证据采集字段、脱敏、链路关联和缺口回填；真实证据待跨仓执行时采集。 |
+| ROLE-STUDIO-ASSET-RIGHTS-001 | P6-P11 | `truzhenos` / `truzhen-cloud` / provider | 橙 | 已建立授权证据候选 | `appearance/secretary-appearance-asset-rights-candidate.json` 已定义秘书长音色 / VRM asset ref、授权证据、市场审核、安装预检和阻断负例；真实授权状态待跨仓 / provider 授权后验证。 |
+| ROLE-STUDIO-READINESS-001 | P2-P11 | client / `truzhenos` / `truzhen-cloud` / contracts | 橙 | 已建立证据矩阵 | `tests/product-readiness-evidence-matrix.json` 已定义商品化完成证据 gates；所有 gate 当前均为 `pending_cross_repo_execution`，不得在本仓改成已通过。 |
+| ROLE-STUDIO-GOAL-EVIDENCE-001 | P0-P11 | client / `truzhenos` / `truzhen-cloud` / acceptance / Owner | 橙 | 已建立目标完成证据地图 | `tests/role-studio-goal-completion-evidence-map-candidate.json` 已把活跃目标拆成 8 个权威证据要求，并把商品化上线批准与 P11 证据验收清单列为完成声明前置门；当前仍缺真实 GUI、云端、安装、团队绑定、独立验收和 Owner go/no-go 回执。 |
+| ROLE-STUDIO-COMMERCE-EXEC-001 | P10-P11 | client / `truzhenos` / `truzhen-cloud` | 橙 | 已建立执行包 | `tests/commercialization-execution-packet.json` 已定义发布者 / 购买者商品化全链路执行阶段、证据要求和负例阻断；真实执行待跨仓授权。 |
+| ROLE-STUDIO-PAYMENT-STATE-001 | P11 | `truzhen-cloud` / client | 橙 | 已建立支付状态机候选 | `commerce/order-payment-state-machine-candidate.json` 已定义 sandbox 订单、支付、失败、退款、chargeback、entitlement 发放 / 撤销和真实支付红线；真实状态待跨仓授权。 |
+| ROLE-STUDIO-AFTERSALES-001 | P11 | `truzhen-cloud` / client | 橙 | 已建立售后策略候选 | `commerce/support-refund-revocation-policy-candidate.json` 已定义售后入口、退款、entitlement 撤回、发布撤回通知、历史回执保留和负例阻断；真实支持、退款和撤回待跨仓授权。 |
+| ROLE-STUDIO-BUYER-LIBRARY-001 | P11 | `truzhen-cloud` / `truzhenos` / client | 橙 | 已建立买家库状态候选 | `commerce/buyer-library-install-state-candidate.json` 已定义已购库、下载、安装、重新安装、团队设置可替换和撤销阻断状态；真实 GUI、云端和安装回执待跨仓授权。 |
+| ROLE-STUDIO-PUBLISHER-SETTLEMENT-001 | P11 | `truzhen-cloud` | 橙 | 已建立发布者结算候选 | `commerce/publisher-account-settlement-policy-candidate.json` 已定义发布者身份、定价审批、结算、税务 / 发票和上线门槛；真实发布者认证、收款、结算和发票待跨仓授权。 |
+| ROLE-STUDIO-TERMS-PRIVACY-001 | P11 | `truzhen-cloud` / `truzhenos` / client | 橙 | 已建立条款隐私候选 | `commerce/commercial-terms-privacy-policy-candidate.json` 已定义购买前条款接受、隐私告知、数据归属、候选输出免责声明和上线阻断条件；真实条款接受、隐私展示、订单个人数据、购买回执和运行态数据待跨仓授权验证。 |
+| ROLE-STUDIO-BUNDLE-LAYOUT-001 | P3-P11 | `truzhenos` / `truzhen-cloud` | 橙 | 已建立打包规格候选 | `commerce/artifact-bundle-layout-candidate.json` 已定义候选包文件范围、确定性打包、哈希、签名请求和上传请求；真实 bundle 构建和云端签名待跨仓授权。 |
+| ROLE-STUDIO-INSTALL-COMPAT-001 | P11 | client / `truzhenos` / `truzhen-cloud` | 橙 | 已建立兼容矩阵 | `commerce/install-compatibility-matrix.json` 已定义下载后安装、升级、回滚和重新启用的版本 / 授权 / 槽位 / 签名 / hash 检查；真实验证待跨仓授权。 |
+| ROLE-STUDIO-DOWNLOAD-INSTALL-ACCESS-001 | P11 | `truzhen-cloud` / `truzhenos` / client | 橙 | 已建立访问控制矩阵 | `commerce/download-install-access-matrix.json` 已定义未购买、sandbox 已购、退款撤销、授权过期、版本下架 / 撤回、artifact hash 不一致和缺 Owner Gate 的下载 / 安装阻断；真实 GUI 与回执待跨仓授权。 |
+| ROLE-STUDIO-MARKET-REVIEW-001 | P11 | `truzhen-cloud` | 橙 | 已建立审核候选 | `commerce/marketplace-review-submission-candidate.json` 已定义云市场审核提交所需 listing、价格 / 许可、素材授权、支持 / 退款、审核清单和阻断条件；真实提交审核待跨仓授权。 |
+| ROLE-STUDIO-GO-LIVE-APPROVAL-001 | P11 | client / `truzhenos` / `truzhen-cloud` / acceptance | 橙 | 已建立上线批准候选 | `commerce/commercial-go-live-approval-candidate.json` 已定义商品化上线批准总门、下载 / 安装访问控制矩阵硬门、跨仓证据、Owner 裁定、真实支付 / 生产发布阻断和回滚计划；真实 GUI、云端、安装与独立验收证据待跨仓授权。 |
+| ROLE-STUDIO-RECEIPT-CHAIN-001 | P10-P11 | client / `truzhenos` / `truzhen-cloud` | 橙 | 已建立回执链候选 | `commerce/commercial-receipt-chain-candidate.json` 已定义上传、审核、购买、entitlement、下载、安装、绑定和运行使用的回执关联键与断链阻断条件；真实回执链待跨仓授权采集。 |
+| ROLE-STUDIO-INSTALL-PREFLIGHT-001 | P11 | `truzhenos` / `truzhen-cloud` / client | 橙 | 已建立预检候选 | `install/install-preflight-request-candidate.json` 已定义下载后安装前 entitlement、hash、签名、schema、禁入产物、槽位、asset ref 和 Owner Gate 检查；真实预检回执待跨仓授权。 |
+| ROLE-STUDIO-E2E-RECORD-001 | P10-P11 | client / `truzhenos` / `truzhen-cloud` / contracts | 橙 | 已建立记录包 | `tests/e2e-evidence-run-record.json` 已定义真实跨仓 E2E 运行时要填写的阶段证据槽、负例证据槽、授权状态和完成门；当前全部 `not_run`。 |
+| ROLE-STUDIO-EVIDENCE-GATE-001 | P10-P11 | client / `truzhenos` / `truzhen-cloud` / acceptance | 橙 | 已建立证据门槛候选 | `tests/commercial-evidence-gate-candidate.json` 已定义每阶段最小证据记录、跨仓关联键、独立验收签收和负例阻断要求；真实证据与验收签收待跨仓授权采集。 |
+| ROLE-STUDIO-SANDBOX-ENV-001 | P10-P11 | client / `truzhenos` / `truzhen-cloud` | 橙 | 已建立 sandbox 环境候选 | `tests/sandbox-environment-readiness-candidate.json` 已定义云端 sandbox、买卖双方、支付桩、签名下载、本地安装目标和团队设置入口的 ref-only 前置条件；真实环境就绪待跨仓授权验证。 |
+| ROLE-STUDIO-OBSERVABILITY-001 | P10-P11 | client / `truzhenos` / `truzhen-cloud` | 橙 | 已建立诊断候选 | `tests/commercial-observability-diagnostics-candidate.json` 已定义 GUI、云端、安装和团队绑定的 trace、日志、指标、告警、脱敏和回执关联要求；真实诊断接线待跨仓授权。 |
+| ROLE-STUDIO-COMPLETION-AUDIT-001 | P0-P11 | client / `truzhenos` / `truzhen-cloud` / acceptance | 橙 | 已建立完成审计候选 | `tests/normal-commercialization-completion-audit-candidate.json` 已按 Owner 目标逐条映射当前候选证据与缺失权威证据；真实全链路完成仍待跨仓授权、GUI 截图、云端回执、安装回执、团队绑定回执和独立验收签收。 |
+| ROLE-STUDIO-GO-NO-GO-001 | P0-P11 | client / `truzhenos` / `truzhen-cloud` / contracts / acceptance / Owner | 橙 | 已建立 go/no-go 门禁候选 | `tests/commercial-go-no-go-gate-candidate.json` 已消费执行队列、跨仓证据台账、P11 证据包、下载 / 安装访问控制矩阵、链路核验器和上线批准；当前状态为 `blocked_not_ready_for_commercial_go_live`。 |
+| ROLE-STUDIO-READINESS-VERIFIER-001 | P0-P11 | client / `truzhenos` / `truzhen-cloud` / contracts / acceptance / Owner | 橙 | 已建立 readiness verifier 候选 | `tests/commercial-readiness-verifier-candidate.json` 已汇总未授权阶段、证据回写计数、前后端验收缺口、下载 / 安装访问控制矩阵和终端门状态；真实 GUI、云端、安装、团队绑定、独立验收和 Owner go/no-go 回执齐备前仍为 `blocked_not_commercial_ready`。 |
+| ROLE-STUDIO-P11-EVIDENCE-BINDER-001 | P10-P11 | client / `truzhenos` / `truzhen-cloud` / acceptance | 橙 | 已建立证据接入绑定器 | `tests/p11-evidence-ingestion-binder-candidate.json` 已定义真实 GUI 步骤、云回执、安装回执、团队绑定、负例和独立验收到 P11 验证记录的绑定规则；真实证据接入仍待跨仓授权执行。 |
+| ROLE-STUDIO-P11-RUNBOOK-001 | P11 | client / `truzhenos` / `truzhen-cloud` / contracts / acceptance | 橙 | 已建立 sandbox 执行 runbook | `tests/p11-sandbox-execution-runbook-candidate.json` 已定义 Owner 授权后 P11 sandbox 商品化 GUI / 云 / 安装执行顺序、目标仓、证据输出、hash 连续性、回滚和禁区；真实执行仍待 Owner 授权。 |
+| ROLE-STUDIO-P11-PREFLIGHT-GATE-001 | P11 | client / `truzhenos` / `truzhen-cloud` / Owner | 橙 | 已建立开跑前预检门 | `tests/p11-sandbox-preflight-gate-candidate.json` 已定义 P11 sandbox 开跑前 Owner 授权、云端 sandbox、支付桩、签名下载、本地安装目标和团队设置入口的预检阻断条件；真实通过仍待跨仓授权后回填权威证据。 |
+| ROLE-STUDIO-P11-RUN-REQUEST-001 | P11 | client / `truzhenos` / `truzhen-cloud` / contracts / acceptance / Owner | 橙 | 已建立执行请求候选 | `tests/p11-sandbox-run-request-candidate.json` 已定义授权后 P11 sandbox 十阶段执行请求、四类参与主体、GUI-only 控制、证据输出、生产晋级控制和红色禁区；当前不可执行，真实通过仍待 Owner 授权、预检门、GUI 截图和权威回执。 |
+| ROLE-STUDIO-P11-CHECKLIST-001 | P11 | client / `truzhenos` / `truzhen-cloud` / acceptance / Owner | 橙 | 已建立证据验收检查清单 | `tests/p11-evidence-acceptance-checklist-candidate.json` 已定义上传、购买、下载、安装、团队设置替换、负例、独立验收和 Owner go/no-go 的逐阶段验收条件；真实通过仍待跨仓执行后回填权威证据。 |
+| ROLE-STUDIO-P11-EVIDENCE-PACKAGE-001 | P11 | client / `truzhenos` / `truzhen-cloud` / acceptance / Owner | 橙 | 已建立最终证据包模板 | `tests/p11-commercial-go-live-evidence-package-template.json` 已定义 GUI 证据索引、回执索引、hash 连续性、负例、独立验收、Owner go / no-go 和最终上线裁定的收口结构；真实证据包仍待跨仓授权执行后填写。 |
+| ROLE-STUDIO-PROD-PROMOTION-001 | P11 | client / `truzhenos` / `truzhen-cloud` / acceptance / Owner | 橙 | 已建立生产晋级门候选 | `commerce/commercial-production-promotion-gate-candidate.json` 已定义 P11 证据包、下载 / 安装访问控制矩阵、独立验收、Owner go/no-go、生产发布、真实支付和生产签名下载的晋级条件；当前仍阻断生产上架、真实支付和生产下载。 |
+| ROLE-STUDIO-XREPO-AUTH-INTAKE-001 | P0-P11 | client / `truzhenos` / `truzhen-cloud` / contracts / `truzhen-packs` | 橙 | 已建立 Owner 授权证据接入口 | `integration/owner-authorization-evidence-intake-candidate.json` 已定义授权原文、逐仓范围、允许动作、红色禁区、证据输出、过期条件和未授权工作闸门；当前状态为 `missing_owner_authorization`。 |
+| ROLE-STUDIO-XREPO-QUEUE-001 | P0-P11 | client / `truzhenos` / `truzhen-cloud` / contracts / acceptance | 橙 | 已建立跨仓执行队列 | `integration/commercial-cross-repo-execution-queue-candidate.json` 已把授权 intake、contracts、后端回执、用户视角 GUI、云端 sandbox、安装绑定、负例观测和独立验收拆为顺序阶段；当前未授权、不可启动。 |
+| ROLE-STUDIO-XREPO-EVIDENCE-LEDGER-001 | P0-P11 | client / `truzhenos` / `truzhen-cloud` / contracts / acceptance / `truzhen-packs` | 橙 | 已建立跨仓执行证据台账 | `docs/commercial-cross-repo-evidence-ledger.json` 已为 8 个商品化阶段固定 `evidence_id`、目标仓、待填证据位置、写回目标和阻断条件；当前所有行仍为 `pending_authorization`，不能替代真实回执。 |
+| ROLE-STUDIO-TC-COVERAGE-001 | P0-P11 | client / `truzhenos` / `truzhen-cloud` / contracts / acceptance / `truzhen-packs` | 橙 | 已建立测试用例覆盖矩阵 | `tests/role-studio-test-case-coverage-matrix-candidate.json` 已把计划第 8 节 24 个 `TC-*` 映射到 GUI 证据、权威回执 / blocked 证据、目标仓和阻断状态；当前所有行仍缺真实 GUI 与权威回执。 |
+| ROLE-STUDIO-XREPO-CARDS-001 | P10-P11 | client / `truzhenos` / `truzhen-cloud` / contracts | 橙 | 已建立执行卡 | `integration/cross-repo-execution-cards.json` 已定义授权后每个目标仓的施工范围、验证命令、证据输出和禁区；未获授权前不得跨仓改动。 |
+| ROLE-STUDIO-XREPO-READINESS-001 | P10-P11 | client / `truzhenos` / `truzhen-cloud` / contracts | 橙 | 已建立执行就绪包 | `integration/cross-repo-execution-readiness-package.json` 已汇总目标仓路径、状态命令、允许动作、阶段顺序、证据输出和 Owner 授权问题；仍不是授权或执行记录。 |
+| ROLE-STUDIO-INTEGRATION-001 | P2-P11 | client / `truzhenos` / `truzhen-cloud` | 橙 | 已建立候选映射 | `integration/frontend-backend-contract-map.json` 已定义前端商品阶段 surface 与后端候选 / Gate / Receipt / 云端证据的接线映射；真实前后端接口、截图和回执待跨仓授权后验证。 |
+| ROLE-STUDIO-API-CONTRACT-001 | P10-P11 | client / `truzhenos` / `truzhen-cloud` | 橙 | 已建立 API 契约候选 | `integration/commercial-api-contract-candidate.json` 已定义上传、审核、购买、支付、entitlement、下载、安装和团队设置刷新的候选 request / response / 回执 / 幂等键 / 错误态；真实接口实现待跨仓授权。 |
+| ROLE-STUDIO-USAGE-001 | P7 | client / `truzhenos` | 黄 | 已建立使用候选 | `usage/team-office-runtime-usage-candidate.json` 已定义团队办公室运行使用场景；真实 GUI 会话、角色调用轨迹和运行回执待跨仓接线后采集。 |

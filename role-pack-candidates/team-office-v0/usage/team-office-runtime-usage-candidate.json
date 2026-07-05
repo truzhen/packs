@@ -1,0 +1,138 @@
+{
+  "usage_candidate_ref": "runtime-usage-candidate://team-office-role-pack-v0",
+  "display_name": "团队办公室角色包运行使用候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "runtime_truth_source": "truzhenos",
+  "gui_truth_source": "truzhen-client-web-desktop",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "purpose": "约束角色包安装后在团队办公室中的实际使用方式：秘书长调度五顾问，所有输出保持候选态，正式任务、记忆、发送或执行必须经 Owner Gate。",
+  "required_installed_roles": [
+    "role_pack://team-office-secretary-general",
+    "role_pack://team-office-strategy-advisor",
+    "role_pack://team-office-product-advisor",
+    "role_pack://team-office-operations-advisor",
+    "role_pack://team-office-finance-advisor",
+    "role_pack://team-office-legal-risk-advisor"
+  ],
+  "required_team_slots": [
+    "team_office.secretary_general",
+    "team_office.advisor.strategy",
+    "team_office.advisor.product",
+    "team_office.advisor.operations",
+    "team_office.advisor.finance",
+    "team_office.advisor.legal_risk"
+  ],
+  "usage_scenarios": [
+    {
+      "scenario_id": "secretary_orchestrates_five_advisors",
+      "entry_surface": "Team Office Conversation",
+      "output_status": "candidate_only",
+      "steps": [
+        "open team office conversation from GUI",
+        "select installed team office role set",
+        "type a business question",
+        "secretary general summarizes goal and calls five advisors",
+        "observe advisor turns and secretary summary"
+      ],
+      "required_evidence": [
+        "gui_screenshot",
+        "runtime_receipt_candidate_ref",
+        "secretary_turn_candidate_ref",
+        "advisor_call_trace_candidate_ref"
+      ],
+      "success_assertions": [
+        "secretary uses installed role pack",
+        "all five advisor slots are addressed",
+        "no formal task is created before Owner Gate"
+      ]
+    },
+    {
+      "scenario_id": "advisors_return_candidate_outputs",
+      "entry_surface": "Team Office Conversation",
+      "output_status": "candidate_only",
+      "steps": [
+        "ask for strategy, product, operations, finance and legal risk review",
+        "observe each advisor output",
+        "verify every output is marked candidate-only"
+      ],
+      "required_evidence": [
+        "gui_screenshot",
+        "runtime_receipt_candidate_ref",
+        "five_advisor_output_candidate_refs"
+      ],
+      "success_assertions": [
+        "advisor outputs are suggestions or challenges only",
+        "formal_authority remains none",
+        "no direct external action is offered as complete"
+      ]
+    },
+    {
+      "scenario_id": "capability_invocation_uses_role_context",
+      "entry_surface": "Capability Pack Workbench",
+      "output_status": "candidate_only",
+      "steps": [
+        "open capability pack workbench",
+        "choose sample team research capability role requirement",
+        "invoke capability in GUI with team office role context",
+        "observe capability invocation candidate"
+      ],
+      "required_evidence": [
+        "gui_screenshot",
+        "runtime_receipt_candidate_ref",
+        "capability_invocation_candidate_ref",
+        "role_requirement_ref"
+      ],
+      "success_assertions": [
+        "capability references role requirement only",
+        "role pack body is not copied into capability pack",
+        "capability invocation remains candidate-only"
+      ]
+    },
+    {
+      "scenario_id": "owner_gate_before_formalization",
+      "entry_surface": "Team Office Conversation",
+      "output_status": "candidate_only",
+      "steps": [
+        "ask secretary to create a task or send a message",
+        "observe candidate generation",
+        "open Owner Gate confirmation",
+        "do not confirm and verify no formal record is created"
+      ],
+      "required_evidence": [
+        "gui_screenshot",
+        "runtime_receipt_candidate_ref",
+        "owner_gate_pending_state",
+        "no_formal_record_before_owner_gate"
+      ],
+      "success_assertions": [
+        "formalization is gated",
+        "candidate and formal records are separated",
+        "history receipts are not rewritten"
+      ]
+    }
+  ],
+  "negative_cases": {
+    "formal_task_without_owner_gate": {
+      "expected_status": "blocked_owner_gate_required",
+      "truth_source": "truzhenos",
+      "expected_evidence": "formal_task_block_receipt_candidate_ref"
+    },
+    "direct_execution_from_role": {
+      "expected_status": "blocked_execution_gateway_required",
+      "truth_source": "truzhenos",
+      "expected_evidence": "execution_block_receipt_candidate_ref"
+    },
+    "memory_write_without_gate": {
+      "expected_status": "blocked_memory_gate_required",
+      "truth_source": "truzhenos",
+      "expected_evidence": "memory_block_receipt_candidate_ref"
+    },
+    "send_message_without_gate": {
+      "expected_status": "blocked_communication_gate_required",
+      "truth_source": "truzhenos",
+      "expected_evidence": "communication_block_receipt_candidate_ref"
+    }
+  },
+  "non_completion_clause": "本文件只声明运行使用候选。未产生 GUI 截图、运行回执、角色调用轨迹和负例 blocked 回执前，不得声称团队办公室角色包已经可用或已通过运行 E2E。"
+}

@@ -1,0 +1,449 @@
+{
+  "map_ref": "pack-studio-goal-completion-evidence-map://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "display_name": "短视频能力 Pack 制作台商用目标完成证据地图候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "completion_status": "not_achieved_requires_p12_p18_cross_repo_evidence",
+  "can_mark_goal_complete": false,
+  "coverage_verifiers_without_runtime_receipts_can_mark_goal_complete": false,
+  "machine_go_live_summary_without_slice_receipts_can_mark_goal_complete": false,
+  "go_no_go_candidate_without_owner_base_receipts_can_mark_goal_complete": false,
+  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/gui-capability-pack-workbench-github-oss-test-plan-20260704.md",
+  "source_commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+  "source_commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json",
+  "source_post_run_gate_coverage_verifier": "docs/commercial-post-run-gate-coverage-verifier.json",
+  "source_forbidden_action_coverage_verifier": "docs/commercial-forbidden-action-coverage-verifier.json",
+  "source_authorization_attempt_coverage_verifier": "docs/commercial-authorization-attempt-coverage-verifier.json",
+  "source_next_authorization_start_guard": "docs/commercial-next-authorization-start-guard.json",
+  "source_execution_readiness_guard_coverage_verifier": "docs/commercial-execution-readiness-guard-coverage-verifier.json",
+  "machine_go_live_evidence_package": "docs/commercial-go-live-evidence-package.json",
+  "source_machine_evidence_package_coverage_verifier": "docs/commercial-machine-go-live-evidence-package-coverage-verifier.json",
+  "source_independent_acceptance_signoff_matrix": "docs/commercial-independent-acceptance-signoff-matrix.json",
+  "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
+  "source_commercial_evidence_contract_index": "docs/commercial-evidence-contract-index.json",
+  "source_frontend_backend_acceptance": "docs/commercial-frontend-backend-acceptance-contract.json",
+  "source_cross_repo_execution_queue": "docs/commercial-cross-repo-execution-queue.json",
+  "next_required_authorization": "p12_safe_lifecycle_sample",
+  "next_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "latest_rejected_authorization_attempt": {
+    "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+    "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",
+    "target_slice_key": "p12_safe_lifecycle_sample",
+    "rejection_reason": "authorization_card_mismatch_p11_not_p12",
+    "required_p12_phrase_matched": false,
+    "can_treat_as_owner_authorization": false,
+    "can_mark_goal_complete_after_attempt": false
+  },
+  "purpose": "把当前活跃目标拆成可验收的前端、后端、生命周期、GUI、Code Assistant、Provider、云市场、禁入动作和 Owner/Base Gate 证据条件，防止用候选资产或 P11 预检冒充商用完成。",
+  "active_goal_requirements": [
+    {
+      "requirement_id": "frontend_capability_pack_studio_complete",
+      "goal_keyword": "前端能力 Pack 制作台商用工作流完整",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-client-web-desktop GUI acceptance receipts"
+      ],
+      "required_authoritative_evidence": [
+        "P13/P15 GUI 操作证据、截图或可复跑 smoke 记录，证明用户能完成能力 Pack 制作台关键流程"
+      ],
+      "current_candidate_evidence": [
+        "docs/commercial-frontend-backend-acceptance-contract.json"
+      ],
+      "missing_authoritative_evidence": [
+        "未取得 P13/P15 前端仓授权执行后的 GUI 证据"
+      ],
+      "blocking_reasons": [
+        "p13_p15_cross_repo_authorization_missing"
+      ]
+    },
+    {
+      "requirement_id": "backend_capability_pack_studio_complete",
+      "goal_keyword": "后端能力 Pack 制作台商用接口完整",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhenos backend capability studio tests and receipts"
+      ],
+      "required_authoritative_evidence": [
+        "P12/P13/P15 后端接口回归和 lifecycle 端点证据"
+      ],
+      "current_candidate_evidence": [
+        "docs/commercial-readiness-verifier.json"
+      ],
+      "missing_authoritative_evidence": [
+        "未取得 P12-P15 后端仓授权执行后的测试回执"
+      ],
+      "blocking_reasons": [
+        "p12_p15_cross_repo_authorization_missing"
+      ]
+    },
+    {
+      "requirement_id": "safe_lifecycle_enabled_path",
+      "goal_keyword": "lifecycle 安全样本可启用路径存在",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "Owner + Base Gate + Gateway + Receipt"
+      ],
+      "required_authoritative_evidence": [
+        "P12 安全样本从候选、安装草稿、启用前置检查到 Receipt 的闭环证据"
+      ],
+      "current_candidate_evidence": [
+        "docs/p12-safe-lifecycle-evidence-contract.json"
+      ],
+      "missing_authoritative_evidence": [
+        "P12 未授权执行，缺少 lifecycle 成功样本和正式回执"
+      ],
+      "blocking_reasons": [
+        "p12_safe_lifecycle_sample_missing"
+      ]
+    },
+    {
+      "requirement_id": "three_short_video_candidates_gui",
+      "goal_keyword": "三候选短视频场景 GUI 走通",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "GUI walkthrough evidence ledger"
+      ],
+      "required_authoritative_evidence": [
+        "MoneyPrinterTurbo、Pixelle-Video、social-auto-upload 三个候选场景的 GUI 走查证据"
+      ],
+      "current_candidate_evidence": [
+        "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json"
+      ],
+      "missing_authoritative_evidence": [
+        "未取得 P15 授权后的三候选 GUI 操作证据"
+      ],
+      "blocking_reasons": [
+        "p15_gui_walkthrough_evidence_missing"
+      ]
+    },
+    {
+      "requirement_id": "controlled_code_assistant_run",
+      "goal_keyword": "受控 Code Assistant 胶水代码运行完成",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "Execution Gateway run receipt"
+      ],
+      "required_authoritative_evidence": [
+        "P16 受控 Code Assistant run request、执行结果、PatchCandidate 和审查证据"
+      ],
+      "current_candidate_evidence": [
+        "docs/p16-controlled-code-assistant-run-evidence-contract.json"
+      ],
+      "missing_authoritative_evidence": [
+        "本批禁止真实 Codex CLI，缺少受控执行回执"
+      ],
+      "blocking_reasons": [
+        "real_codex_cli_run_forbidden_in_current_batch"
+      ]
+    },
+    {
+      "requirement_id": "provider_adapter_readiness",
+      "goal_keyword": "Provider adapter readiness 已验证",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "external provider repository or provider readiness endpoint"
+      ],
+      "required_authoritative_evidence": [
+        "P17 Provider adapter 候选、readiness 响应、blocked/not_ready 语义和禁入动作证据"
+      ],
+      "current_candidate_evidence": [
+        "docs/p17-provider-adapter-candidate-evidence-contract.json"
+      ],
+      "missing_authoritative_evidence": [
+        "本批不改 software，缺少 Provider adapter 权威接线证据"
+      ],
+      "blocking_reasons": [
+        "provider_adapter_readiness_evidence_missing"
+      ]
+    },
+    {
+      "requirement_id": "cloud_market_sandbox",
+      "goal_keyword": "云市场沙箱链路已验证",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-cloud sandbox evidence and entitlement receipts"
+      ],
+      "required_authoritative_evidence": [
+        "P18 云市场沙箱 listing、entitlement、安装入口和无生产支付证据"
+      ],
+      "current_candidate_evidence": [
+        "docs/p18-cloud-market-sandbox-evidence-contract.json"
+      ],
+      "missing_authoritative_evidence": [
+        "本批不改 cloud，缺少云市场沙箱权威证据"
+      ],
+      "blocking_reasons": [
+        "cloud_market_sandbox_evidence_missing"
+      ]
+    },
+    {
+      "requirement_id": "gui_api_receipt_traceability",
+      "goal_keyword": "GUI/API/Receipt 三方对账已验证",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "docs/commercial-frontend-backend-acceptance-contract.json#gui_api_receipt_traceability_matrix",
+        "truzhenos endpoint or ReadModel receipts",
+        "truzhen-client-web-desktop GUI evidence"
+      ],
+      "required_authoritative_evidence": [
+        "候选 bundle、delivery 状态、readiness issue、promote/confirm 控件、商用 verifier 面板和三候选 GUI walkthrough 均逐项对上后端 endpoint / ReadModel 与 Receipt / Candidate 引用"
+      ],
+      "current_candidate_evidence": [
+        "docs/commercial-frontend-backend-acceptance-contract.json#gui_api_receipt_traceability_matrix"
+      ],
+      "missing_authoritative_evidence": [
+        "未取得跨仓授权后的 GUI 操作、后端 endpoint / ReadModel 与 Receipt / Candidate 引用逐项对账证据"
+      ],
+      "blocking_reasons": [
+        "gui_api_receipt_traceability_evidence_missing"
+      ]
+    },
+    {
+      "requirement_id": "forbidden_actions_proven_false",
+      "goal_keyword": "禁入动作已被证明未发生",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "artifact scan, GUI evidence, execution logs and gateway receipts"
+      ],
+      "required_authoritative_evidence": [
+        "raw secret、第三方 OSS 执行、社媒登录上传、生产支付和生产 License 的终态检查均为 false"
+      ],
+      "current_candidate_evidence": [
+        "docs/commercial-go-no-go-gate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "禁入动作终态检查仍为 pending，未形成完整机器证据"
+      ],
+      "blocking_reasons": [
+        "forbidden_action_terminal_checks_pending"
+      ]
+    },
+    {
+      "requirement_id": "forbidden_action_coverage_verified",
+      "goal_keyword": "禁入动作覆盖关系完整",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "commercial forbidden action coverage verifier plus terminal evidence checks"
+      ],
+      "required_authoritative_evidence": [
+        "commercial-forbidden-action-coverage-verifier 覆盖 raw secret、第三方 OSS、社媒登录上传、candidate-only、cloud truth、生产支付和生产 License 的全部终态检查，并且所有终态检查结果均为 false"
+      ],
+      "current_candidate_evidence": [
+        "docs/commercial-forbidden-action-coverage-verifier.json"
+      ],
+      "missing_authoritative_evidence": [
+        "coverage verifier 仍为 blocked_pending_forbidden_action_terminal_evidence，缺少 P12-P18 授权执行后的终态 false 证据"
+      ],
+      "blocking_reasons": [
+        "forbidden_action_coverage_verifier_pending"
+      ]
+    },
+    {
+      "requirement_id": "owner_base_gate_receipts_bound",
+      "goal_keyword": "Owner/Base Gate 回执已绑定",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "Owner + Base Gate + Gateway + Receipt"
+      ],
+      "required_authoritative_evidence": [
+        "所有高风险动作的 Owner/Base Gate 决策、Gateway 执行和 Receipt 可反查"
+      ],
+      "current_candidate_evidence": [
+        "docs/commercial-cross-repo-execution-queue.json"
+      ],
+      "missing_authoritative_evidence": [
+        "缺少 Owner/Base Gate 正式回执绑定"
+      ],
+      "blocking_reasons": [
+        "owner_base_gate_receipts_missing"
+      ]
+    },
+    {
+      "requirement_id": "commercial_go_no_go_passed",
+      "goal_keyword": "commercial go/no-go 已通过",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "commercial go/no-go gate candidate plus Owner signoff"
+      ],
+      "required_authoritative_evidence": [
+        "commercial-readiness-verifier 和 commercial-go-no-go-gate 全部通过，并取得 Owner 商用放行"
+      ],
+      "current_candidate_evidence": [
+        "docs/commercial-go-no-go-gate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "当前 go/no-go 状态为 blocked_not_ready_for_commercial_go_live"
+      ],
+      "blocking_reasons": [
+        "commercial_go_no_go_gate_blocked"
+      ]
+    },
+    {
+      "requirement_id": "post_run_gate_coverage_verified",
+      "goal_keyword": "P12-P18 后验收门覆盖关系完整",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "commercial post-run gate coverage verifier plus post-run evidence acceptance gates"
+      ],
+      "required_authoritative_evidence": [
+        "commercial-post-run-gate-coverage-verifier 覆盖 P12-P18 每个必经切片，并且所有 post-run evidence acceptance gate 已通过"
+      ],
+      "current_candidate_evidence": [
+        "docs/commercial-post-run-gate-coverage-verifier.json"
+      ],
+      "missing_authoritative_evidence": [
+        "coverage verifier 仍为 blocked_pending_all_post_run_gates_passed，缺少 P12-P18 授权执行后的后验收门通过证据"
+      ],
+      "blocking_reasons": [
+        "post_run_gate_coverage_verifier_pending"
+      ]
+    },
+    {
+      "requirement_id": "machine_go_live_evidence_package_verified",
+      "goal_keyword": "商用最终机器证据包已验证",
+      "current_status": "blocked_not_commercial_ready",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "docs/commercial-go-live-evidence-package.json",
+        "docs/commercial-go-no-go-gate.json"
+      ],
+      "required_authoritative_evidence": [
+        "机器证据包必须绑定 P12-P18 分片证据、硬门来源、证据写回门和 Owner/Base Receipt 门，且 go/no-go completion rule 明确通过"
+      ],
+      "current_candidate_evidence": [
+        "docs/commercial-go-live-evidence-package.json"
+      ],
+      "missing_authoritative_evidence": [
+        "当前机器证据包仍为 blocked_not_commercial_ready，缺少 P12-P18 授权、证据写回和 Owner/Base Receipt"
+      ],
+      "blocking_reasons": [
+        "machine_go_live_evidence_package_blocked"
+      ]
+    },
+    {
+      "requirement_id": "independent_acceptance_signoff_matrix",
+      "goal_keyword": "商用独立验收签收矩阵已通过",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "independent reviewer signoff evidence",
+        "Owner + Base Gate + Gateway + Receipt"
+      ],
+      "required_authoritative_evidence": [
+        "每一行独立 reviewer 身份、验收结论、artifact refs 和证据 refs 已记录，且不可由自测、测试绿灯或人工摘要替代"
+      ],
+      "current_candidate_evidence": [
+        "docs/commercial-independent-acceptance-signoff-matrix.json"
+      ],
+      "missing_authoritative_evidence": [
+        "当前 independent acceptance signoff matrix 仍为 blocked_pending_independent_acceptance_evidence"
+      ],
+      "blocking_reasons": [
+        "independent_acceptance_signoff_missing"
+      ]
+    }
+  ],
+  "goal_completion_barriers": [
+    "p12_p18_cross_repo_authorization_missing",
+    "frontend_backend_commercial_evidence_missing",
+    "gui_api_receipt_traceability_evidence_missing",
+    "provider_adapter_readiness_evidence_missing",
+    "cloud_market_sandbox_evidence_missing",
+    "post_run_gate_coverage_verifier_pending",
+    "forbidden_action_coverage_verifier_pending",
+    "authorization_attempt_coverage_verifier_pending",
+    "next_authorization_start_guard_closed",
+    "execution_readiness_guard_coverage_verifier_pending",
+    "machine_evidence_package_coverage_verifier_pending",
+    "machine_go_live_evidence_package_blocked",
+    "independent_acceptance_signoff_missing",
+    "pack_studio_issue_ledger_open",
+    "owner_base_gate_receipts_missing",
+    "commercial_go_no_go_gate_blocked"
+  ],
+  "completion_claim_policy": {
+    "completion_claim_allowed": false,
+    "required_before_goal_complete": [
+      "all_active_goal_requirements_verified",
+      "commercial_readiness_verifier_passed",
+      "commercial_go_no_go_gate_passed",
+      "post_run_gate_coverage_verifier_passed",
+      "forbidden_action_coverage_verifier_passed",
+      "authorization_attempt_coverage_verifier_passed",
+      "next_authorization_start_guard_open",
+      "execution_readiness_guard_coverage_verifier_passed",
+      "machine_evidence_package_coverage_verifier_passed",
+      "machine_go_live_evidence_package_verified",
+      "all_authoritative_runtime_receipts_bound",
+      "frontend_backend_runtime_receipts_bound",
+      "p12_p18_slice_receipts_bound",
+      "coverage_verifiers_backed_by_terminal_evidence",
+      "pack_studio_issue_ledger_closed",
+      "gui_api_receipt_traceability_verified",
+      "independent_acceptance_signoff_matrix_passed",
+      "all_p12_p18_evidence_writebacks_completed",
+      "owner_base_gate_receipts_bound",
+      "pack_studio_issue_resolution_evidence_schema_verified"
+    ],
+    "forbidden_completion_claims": [
+      "do_not_claim_frontend_backend_commercial_complete_from_candidate_docs",
+      "do_not_claim_commercial_ready_from_p11_preflight_only",
+      "do_not_claim_code_assistant_run_complete_without_execution_gateway_receipt"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "p11_preflight_only",
+    "candidate_assets_only",
+    "post_run_gate_coverage_verifier_pending",
+    "forbidden_action_coverage_verifier_pending",
+    "authorization_attempt_coverage_verifier_pending",
+    "next_authorization_start_guard_pending",
+    "execution_readiness_guard_coverage_verifier_pending",
+    "machine_evidence_package_coverage_verifier_pending",
+    "machine_go_live_evidence_package_blocked",
+    "coverage_verifiers_without_runtime_receipts",
+    "machine_go_live_summary_without_slice_receipts",
+    "go_no_go_candidate_without_owner_base_receipts",
+    "frontend_backend_contract_without_runtime_receipts",
+    "frontend_screenshot_without_api_receipt_trace",
+    "backend_test_without_gui_api_trace",
+    "network_summary_without_receipt_lookup",
+    "independent_acceptance_signoff_missing",
+    "self_attestation_without_independent_reviewer",
+    "green_tests_without_independent_review",
+    "pack_studio_issue_ledger_open",
+    "authorization_cards_without_owner_authorization",
+    "tests_in_packs_only_without_cross_repo_frontend_backend_evidence",
+    "no_real_codex_cli_run_in_current_batch",
+    "manual_resolution_note_without_authoritative_refs",
+    "closed_status_without_resolution_evidence_refs",
+    "tests_without_gui_or_receipt_evidence"
+  ],
+  "substitution_rejection_policy": {
+    "coverage_verifiers_without_runtime_receipts": "not_completion_evidence",
+    "machine_go_live_summary_without_slice_receipts": "not_completion_evidence",
+    "go_no_go_candidate_without_owner_base_receipts": "not_completion_evidence",
+    "frontend_backend_contract_without_runtime_receipts": "not_completion_evidence",
+    "frontend_screenshot_without_api_receipt_trace": "not_completion_evidence",
+    "backend_test_without_gui_api_trace": "not_completion_evidence",
+    "network_summary_without_receipt_lookup": "not_completion_evidence",
+    "independent_acceptance_signoff_missing": "not_completion_evidence",
+    "self_attestation_without_independent_reviewer": "not_completion_evidence",
+    "green_tests_without_independent_review": "not_completion_evidence"
+  },
+  "non_completion_clause": "当前只能说明短视频能力 Pack 制作台的商用证据地图候选已建立，不能说明 Pack 制作台前端、后端功能已完善到可商用。"
+}

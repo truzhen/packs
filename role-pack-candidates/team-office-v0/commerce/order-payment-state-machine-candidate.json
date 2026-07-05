@@ -1,0 +1,218 @@
+{
+  "state_machine_ref": "order-payment-state-machine-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "listing_candidate_ref": "pack-listing-candidate://team-office-role-pack-v0",
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "display_name": "团队办公室角色包订单 / 支付状态机候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "commerce_truth_source": "truzhen-cloud",
+  "package_contents_truth_source": "truzhen-packs",
+  "real_payment_policy": "blocked_until_owner_authorizes",
+  "scope": "声明 sandbox 商品购买时的订单、支付、失败、退款、chargeback、entitlement 发放和撤销状态机；不保存真实订单、支付、付款方式、License、Entitlement 或下载链接。",
+  "states": [
+    {
+      "state_id": "listing_draft_ready",
+      "status": "candidate_ready_for_sandbox_order",
+      "truth_source": "truzhen-cloud",
+      "entry_surface": "Cloud Listing Draft",
+      "evidence_required": [
+        "listing_draft_state_ref",
+        "cloud_upload_receipt"
+      ],
+      "next_allowed": [
+        "sandbox_order_created"
+      ]
+    },
+    {
+      "state_id": "sandbox_order_created",
+      "status": "candidate_order_created",
+      "truth_source": "truzhen-cloud",
+      "entry_surface": "Cloud Product Page",
+      "evidence_required": [
+        "sandbox_order_state_ref",
+        "sandbox_order_receipt"
+      ],
+      "next_allowed": [
+        "sandbox_payment_pending",
+        "payment_failed"
+      ]
+    },
+    {
+      "state_id": "sandbox_payment_pending",
+      "status": "candidate_payment_pending",
+      "truth_source": "truzhen-cloud",
+      "entry_surface": "Sandbox Checkout",
+      "evidence_required": [
+        "sandbox_payment_state_ref",
+        "payment_intent_receipt"
+      ],
+      "next_allowed": [
+        "sandbox_payment_paid",
+        "payment_failed"
+      ]
+    },
+    {
+      "state_id": "sandbox_payment_paid",
+      "status": "candidate_payment_paid_sandbox_only",
+      "truth_source": "truzhen-cloud",
+      "entry_surface": "Sandbox Checkout",
+      "evidence_required": [
+        "sandbox_payment_receipt",
+        "real_payment_block_policy_receipt"
+      ],
+      "next_allowed": [
+        "entitlement_issued",
+        "refund_succeeded",
+        "chargeback_received"
+      ]
+    },
+    {
+      "state_id": "entitlement_issued",
+      "status": "candidate_entitlement_issued",
+      "truth_source": "truzhen-cloud",
+      "entry_surface": "License / Entitlement Service",
+      "evidence_required": [
+        "entitlement_receipt",
+        "license_scope_state_ref"
+      ],
+      "next_allowed": [
+        "download_signed_artifact",
+        "refund_succeeded",
+        "chargeback_received"
+      ]
+    },
+    {
+      "state_id": "payment_failed",
+      "status": "blocked_payment_failed",
+      "truth_source": "truzhen-cloud",
+      "entry_surface": "Sandbox Checkout",
+      "evidence_required": [
+        "payment_failed_receipt",
+        "user_visible_failure_reason"
+      ],
+      "next_allowed": [
+        "sandbox_payment_pending"
+      ]
+    },
+    {
+      "state_id": "refund_succeeded",
+      "status": "blocked_entitlement_revocation_required",
+      "truth_source": "truzhen-cloud",
+      "entry_surface": "Refund Flow",
+      "evidence_required": [
+        "refund_receipt",
+        "entitlement_revocation_required_state_ref"
+      ],
+      "next_allowed": [
+        "entitlement_revoked"
+      ]
+    },
+    {
+      "state_id": "chargeback_received",
+      "status": "blocked_entitlement_revocation_required",
+      "truth_source": "truzhen-cloud",
+      "entry_surface": "Payment Risk Review",
+      "evidence_required": [
+        "chargeback_receipt",
+        "entitlement_revocation_required_state_ref"
+      ],
+      "next_allowed": [
+        "entitlement_revoked"
+      ]
+    },
+    {
+      "state_id": "entitlement_revoked",
+      "status": "blocked_future_download_and_install",
+      "truth_source": "truzhen-cloud",
+      "entry_surface": "License / Entitlement Service",
+      "evidence_required": [
+        "entitlement_revocation_receipt",
+        "download_install_block_state_ref"
+      ],
+      "next_allowed": []
+    }
+  ],
+  "transitions": [
+    {
+      "transition_id": "create_sandbox_order",
+      "from": "listing_draft_ready",
+      "to": "sandbox_order_created",
+      "truth_source": "truzhen-cloud",
+      "required_evidence": "listing_draft_ref + sandbox_order_receipt"
+    },
+    {
+      "transition_id": "mark_sandbox_payment_paid",
+      "from": "sandbox_payment_pending",
+      "to": "sandbox_payment_paid",
+      "truth_source": "truzhen-cloud",
+      "required_evidence": "sandbox_payment_receipt + no_real_payment_capture_receipt"
+    },
+    {
+      "transition_id": "issue_entitlement_after_paid",
+      "from": "sandbox_payment_paid",
+      "to": "entitlement_issued",
+      "truth_source": "truzhen-cloud",
+      "required_evidence": "sandbox_payment_receipt + entitlement_receipt"
+    },
+    {
+      "transition_id": "fail_payment",
+      "from": "sandbox_payment_pending",
+      "to": "payment_failed",
+      "truth_source": "truzhen-cloud",
+      "required_evidence": "payment_failed_receipt + readable_failure_reason"
+    },
+    {
+      "transition_id": "refund_revokes_entitlement",
+      "from": "refund_succeeded",
+      "to": "entitlement_revoked",
+      "truth_source": "truzhen-cloud",
+      "required_evidence": "refund_receipt + entitlement_revocation_receipt"
+    },
+    {
+      "transition_id": "chargeback_revokes_entitlement",
+      "from": "chargeback_received",
+      "to": "entitlement_revoked",
+      "truth_source": "truzhen-cloud",
+      "required_evidence": "chargeback_receipt + entitlement_revocation_receipt"
+    }
+  ],
+  "negative_cases": {
+    "real_payment_without_owner_authorization": {
+      "expected_status": "blocked_real_payment_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "payment_block_receipt_owner_authorization_missing"
+    },
+    "payment_success_without_order": {
+      "expected_status": "blocked_order_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "payment_block_receipt_order_missing"
+    },
+    "entitlement_without_paid_receipt": {
+      "expected_status": "blocked_paid_receipt_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "entitlement_block_receipt_paid_receipt_missing"
+    },
+    "refund_without_revocation": {
+      "expected_status": "blocked_entitlement_revocation_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "refund_block_receipt_revocation_missing"
+    },
+    "store_payment_truth_in_packs": {
+      "expected_status": "blocked_cloud_truth_leak",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "review_block_receipt_payment_truth_in_pack"
+    }
+  },
+  "forbidden": [
+    "store_order_truth_in_truzhen_packs",
+    "store_payment_truth_in_truzhen_packs",
+    "store_payment_method_in_truzhen_packs",
+    "store_license_truth_in_truzhen_packs",
+    "store_entitlement_truth_in_truzhen_packs",
+    "real_payment_capture_without_owner_authorization",
+    "issue_entitlement_without_paid_sandbox_receipt",
+    "refund_without_entitlement_revocation"
+  ],
+  "non_completion_clause": "本文件只是订单 / 支付状态机候选，不代表云端订单、sandbox 支付、退款、chargeback、License、Entitlement 或下载已经运行。真实状态必须由 truzhen-cloud 持有并产生可反查回执。"
+}

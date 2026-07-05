@@ -1,0 +1,82 @@
+{
+  "contract_ref": "p16-controlled-code-assistant-run-evidence-contract://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p16_controlled_code_assistant_run",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "pending_authorization",
+  "depends_on": [
+    "p12_safe_lifecycle_sample",
+    "p13_gui_lifecycle_panel",
+    "p15_gui_walkthrough_three_candidates"
+  ],
+  "required_repositories": [
+    "truzhenos",
+    "truzhen-client-web-desktop",
+    "truzhen-packs"
+  ],
+  "required_execution_evidence": [
+    {
+      "evidence_id": "owner_base_gate_approved_11_run_request",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "11 Gateway request/decision/receipt evidence proving Code Assistant run starts only after Owner/Base Gate",
+      "expected_command": "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+    },
+    {
+      "evidence_id": "patch_candidate_created_no_auto_apply",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "run result evidence containing PatchCandidate refs, artifact refs and execution receipt while no patch is applied automatically",
+      "expected_command": "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+    },
+    {
+      "evidence_id": "gui_displays_run_receipt_and_candidate_refs",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI test or smoke evidence showing run receipt, PatchCandidate refs and review-required state",
+      "expected_command": "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx src/components/pack-lifecycle/CodeAssistantPackPanel.test.tsx"
+    }
+  ],
+  "required_forbidden_action_checks": [
+    {
+      "evidence_id": "third_party_oss_not_executed",
+      "current_status": "pending_authorization",
+      "evidence_required": "run ledger proving Code Assistant did not install or execute MoneyPrinterTurbo, Pixelle-Video or social-auto-upload"
+    },
+    {
+      "evidence_id": "no_social_login_upload",
+      "current_status": "pending_authorization",
+      "evidence_required": "run and GUI logs proving no social platform login, cookie access, upload or publish happened"
+    },
+    {
+      "evidence_id": "no_auto_apply_no_formal_enable",
+      "current_status": "pending_authorization",
+      "evidence_required": "PatchCandidate intake/review evidence showing no auto apply, no install and no enabled pointer"
+    }
+  ],
+  "completion_gate": {
+    "can_mark_slice_complete": false,
+    "required_status_before_completion": "p12_p13_p15_complete_and_controlled_run_receipt_patch_candidate_forbidden_checks_passed_and_owner_authorization_recorded_and_pack_studio_issue_ledger_closed_and_all_evidence_ids_written_and_all_evidence_refs_recorded_and_forbidden_action_checks_written_and_independent_verification_passed_and_owner_base_gate_receipts_bound",
+    "required_before_completion": [
+      "p16_post_run_evidence_acceptance_gate_passed",
+      "controlled_11_gateway_run_receipt_bound",
+      "isolated_patch_candidate_artifacts_bound"
+    ],
+    "commercial_status_after_slice_only": "not_commercial_ready",
+    "next_required_slice": "p17_provider_adapter_candidate",
+    "required_evidence_writeback_plan_source": "docs/p16-execution-readiness-package.json#evidence_writeback_plan",
+    "evidence_writeback_plan_must_complete": true,
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "blocking_owner_base_gate": "owner_base_gate_receipts_missing"
+  },
+  "non_sufficient_evidence": [
+    "evidence_writeback_incomplete",
+    "owner_base_gate_receipts_missing",
+    "static_glue_code_without_11_gateway_receipt",
+    "owner_local_codex_cli_login_without_controlled_run",
+    "manual_patch_candidate_file_without_gateway_receipt",
+    "p8_run_request_candidate_without_11_receipt"
+  ]
+}

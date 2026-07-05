@@ -1,0 +1,78 @@
+{
+  "contract_ref": "p15-three-candidate-gui-walkthrough-evidence-contract://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p15_gui_walkthrough_three_candidates",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "pending_authorization",
+  "depends_on": [
+    "p13_gui_lifecycle_panel"
+  ],
+  "required_repositories": [
+    "truzhen-client-web-desktop",
+    "truzhenos",
+    "truzhen-packs"
+  ],
+  "candidate_pack_refs": [
+    "capability-pack://short-video-draft-generation",
+    "capability-pack://short-video-composition-orchestration",
+    "capability-pack://short-video-social-publish-draft"
+  ],
+  "required_frontend_evidence": [
+    {
+      "evidence_id": "three_candidates_have_gui_screenshots",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "at least one screenshot per short-video candidate pack showing the制作台 path and lifecycle/blocked state",
+      "expected_command": "manual GUI walkthrough or Playwright/browser smoke with saved screenshots"
+    },
+    {
+      "evidence_id": "clicked_steps_and_network_summaries_recorded",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "walkthrough ledger records click sequence, endpoint, request/response summary and artifact refs for all three candidates",
+      "expected_command": "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenv3worktree/truzhenos-mod-04-capability-pack-studio-short-video-oss GOWORK=off npm run smoke:frontend-behavior"
+    }
+  ],
+  "required_backend_evidence": [
+    {
+      "evidence_id": "blocked_reasons_match_backend_lifecycle",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "backend/API evidence that GUI blocked reasons correspond to candidate-only, provider_missing or lifecycle preflight results",
+      "expected_command": "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+    }
+  ],
+  "required_forbidden_action_checks": [
+    {
+      "evidence_id": "no_codex_cli_run",
+      "current_status": "pending_authorization",
+      "evidence_required": "walkthrough logs showing no Code Assistant run occurred in P15"
+    },
+    {
+      "evidence_id": "no_third_party_oss_execution",
+      "current_status": "pending_authorization",
+      "evidence_required": "logs and artifact scan showing MoneyPrinterTurbo, Pixelle-Video and social-auto-upload were not executed"
+    },
+    {
+      "evidence_id": "no_social_login_upload_or_formal_enable",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI/network evidence showing no social login, no upload/publish and no formal enable occurred"
+    }
+  ],
+  "completion_gate": {
+    "can_mark_slice_complete": false,
+    "required_status_before_completion": "p13_complete_and_all_three_candidate_walkthrough_evidence_passed_and_owner_authorization_recorded_and_pack_studio_issue_ledger_closed_and_all_evidence_ids_written_and_all_evidence_refs_recorded_and_forbidden_action_checks_written_and_independent_verification_passed_and_owner_base_gate_receipts_bound",
+    "commercial_status_after_slice_only": "not_commercial_ready",
+    "next_required_slice": "p16_controlled_code_assistant_run",
+    "required_evidence_writeback_plan_source": "docs/p15-execution-readiness-package.json#evidence_writeback_plan",
+    "evidence_writeback_plan_must_complete": true,
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "blocking_owner_base_gate": "owner_base_gate_receipts_missing"
+  },
+  "non_sufficient_evidence": [
+    "evidence_writeback_incomplete",
+    "owner_base_gate_receipts_missing"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "scope_ref": "p18-cross-repo-authorization-scope://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p18_cloud_market_sandbox",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "pending_owner_authorization",
+  "authorization_truth_source": "Owner explicit authorization in the current thread or a signed authorization card; not inferred from plan text",
+  "authorized_repositories": [
+    {
+      "repo": "truzhen-cloud",
+      "path": "/Users/li/Documents/truzhen-cloud",
+      "allowed_actions": [
+        "modify",
+        "test"
+      ],
+      "scope": "Sandbox listing, review, License / Entitlement, download fixture and tests only"
+    },
+    {
+      "repo": "truzhen-client-web-desktop",
+      "path": "/Users/li/.config/superpowers/worktrees/truzhen-client-web-desktop/capability-pack-studio-short-video-gui",
+      "allowed_actions": [
+        "modify",
+        "test"
+      ],
+      "scope": "Sandbox market / download / install preflight display only"
+    },
+    {
+      "repo": "truzhenos",
+      "path": "/Users/li/Documents/truzhenv3worktree/truzhenos-mod-04-capability-pack-studio-short-video-oss",
+      "allowed_actions": [
+        "modify",
+        "test"
+      ],
+      "scope": "Entitlement check before lifecycle only"
+    },
+    {
+      "repo": "truzhen-packs",
+      "path": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+      "allowed_actions": [
+        "document",
+        "candidate_asset_maintenance",
+        "test"
+      ],
+      "scope": "P18 cloud sandbox ledger and candidate refs only"
+    }
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software"
+  ],
+  "forbidden_actions": [
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "real_payment",
+    "production_release",
+    "production_license",
+    "cloud_listing_truth_stored_in_packs"
+  ],
+  "required_authorization_phrase_contains": [
+    "授权按 P18 授权卡",
+    "truzhen-cloud、truzhen-client-web-desktop 与 truzhenos",
+    "在 truzhen-packs 写入云市场 sandbox 证据",
+    "不改 contracts、software",
+    "不真实支付",
+    "不生产发布",
+    "不执行第三方 OSS",
+    "不登录或上传社媒"
+  ],
+  "current_authorization_evidence": {
+    "status": "missing",
+    "owner_thread_quote_required": true,
+    "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md",
+    "evidence_intake_contract": "docs/p18-owner-authorization-evidence-intake.json",
+    "must_be_recorded_before_cross_repo_work": true
+  }
+}

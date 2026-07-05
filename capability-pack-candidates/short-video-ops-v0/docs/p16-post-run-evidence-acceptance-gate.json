@@ -1,0 +1,128 @@
+{
+  "gate_ref": "post-run-evidence-acceptance-gate://short-video-ops-v0/p16-controlled-code-assistant-run",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "slice_key": "p16_controlled_code_assistant_run",
+  "gate_status": "blocked_pending_p16_execution_evidence",
+  "can_mark_p16_complete": false,
+  "can_unlock_p17": false,
+  "can_mark_commercial_ready": false,
+  "static_glue_code_alone_can_mark_p16_complete": false,
+  "owner_local_codex_cli_login_alone_can_mark_p16_complete": false,
+  "manual_patch_candidate_file_alone_can_unlock_p17": false,
+  "previous_slice": "p15_gui_walkthrough_three_candidates",
+  "next_slice": "p17_provider_adapter_candidate",
+  "evidence_contract": "docs/p16-controlled-code-assistant-run-evidence-contract.json",
+  "evidence_ledger": "docs/code-assistant-controlled-run-ledger.md",
+  "execution_readiness_package": "docs/p16-execution-readiness-package.json",
+  "next_slice_execution_readiness_package": "docs/p17-execution-readiness-package.json",
+  "commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+  "commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json",
+  "commercial_evidence_writeback_gate_source": "commercial_go_no_go_gate.evidence_writeback_gate",
+  "acceptance_requirements": [
+    {
+      "evidence_id": "owner_base_gate_approved_11_run_request",
+      "source_group": "required_execution_evidence",
+      "current_status": "pending_execution_evidence",
+      "required_before_p16_complete": true,
+      "blocks_p17": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p16-controlled-code-assistant-run-evidence-contract.json#required_execution_evidence.owner_base_gate_approved_11_run_request"
+    },
+    {
+      "evidence_id": "patch_candidate_created_no_auto_apply",
+      "source_group": "required_execution_evidence",
+      "current_status": "pending_execution_evidence",
+      "required_before_p16_complete": true,
+      "blocks_p17": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p16-controlled-code-assistant-run-evidence-contract.json#required_execution_evidence.patch_candidate_created_no_auto_apply"
+    },
+    {
+      "evidence_id": "gui_displays_run_receipt_and_candidate_refs",
+      "source_group": "required_execution_evidence",
+      "current_status": "pending_execution_evidence",
+      "required_before_p16_complete": true,
+      "blocks_p17": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p16-controlled-code-assistant-run-evidence-contract.json#required_execution_evidence.gui_displays_run_receipt_and_candidate_refs"
+    },
+    {
+      "evidence_id": "third_party_oss_not_executed",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_execution_evidence",
+      "required_before_p16_complete": true,
+      "blocks_p17": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p16-controlled-code-assistant-run-evidence-contract.json#required_forbidden_action_checks.third_party_oss_not_executed"
+    },
+    {
+      "evidence_id": "no_social_login_upload",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_execution_evidence",
+      "required_before_p16_complete": true,
+      "blocks_p17": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p16-controlled-code-assistant-run-evidence-contract.json#required_forbidden_action_checks.no_social_login_upload"
+    },
+    {
+      "evidence_id": "no_auto_apply_no_formal_enable",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_execution_evidence",
+      "required_before_p16_complete": true,
+      "blocks_p17": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p16-controlled-code-assistant-run-evidence-contract.json#required_forbidden_action_checks.no_auto_apply_no_formal_enable"
+    }
+  ],
+  "current_blockers": [
+    "p16_cross_repo_execution_not_run",
+    "owner_authorization_missing",
+    "p15_post_run_evidence_acceptance_gate_not_passed",
+    "owner_base_gate_receipts_missing",
+    "evidence_writeback_incomplete",
+    "independent_verification_missing"
+  ],
+  "required_before_p16_complete": [
+    "all_evidence_ids_written",
+    "all_evidence_refs_recorded",
+    "forbidden_action_checks_written",
+    "independent_verification_passed",
+    "owner_base_gate_receipts_bound",
+    "commercial_evidence_writeback_gate_updated",
+    "p16_post_run_evidence_acceptance_gate_passed",
+    "controlled_11_gateway_run_receipt_bound",
+    "isolated_patch_candidate_artifacts_bound"
+  ],
+  "non_sufficient_evidence": [
+    "authorization_card_without_owner_evidence",
+    "run_request_without_owner_base_gate_receipt",
+    "patch_candidate_without_no_auto_apply_evidence",
+    "manual_ledger_without_machine_evidence",
+    "post_run_gate_candidate_only",
+    "static_glue_code_without_11_gateway_receipt",
+    "owner_local_codex_cli_login_without_controlled_run",
+    "manual_patch_candidate_file_without_gateway_receipt",
+    "p8_run_request_candidate_without_11_receipt"
+  ],
+  "substitution_rejection_policy": {
+    "static_glue_code_without_11_gateway_receipt": "not_completion_evidence",
+    "owner_local_codex_cli_login_without_controlled_run": "not_completion_evidence",
+    "manual_patch_candidate_file_without_gateway_receipt": "not_completion_evidence",
+    "p8_run_request_candidate_without_11_receipt": "not_completion_evidence"
+  },
+  "non_completion_clause": "This gate records the future post-run acceptance requirements for P16. It is not authorization, a real Codex CLI run, execution evidence, a Base receipt, a P17 unlock, provider readiness proof, or commercial readiness proof."
+}

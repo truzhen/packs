@@ -1,0 +1,134 @@
+{
+  "matrix_ref": "download-install-access-matrix://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "display_name": "团队办公室角色包下载 / 安装访问控制矩阵候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "commerce_truth_source": "truzhen-cloud",
+  "install_truth_source": "truzhenos",
+  "package_contents_truth_source": "truzhen-packs",
+  "scope": "声明买家从云端商品页下载角色包，以及下载后本地安装 / 团队设置替换前的访问状态、授权检查、阻断原因和证据要求；不保存真实订单、支付、License、Entitlement、下载链接或安装事实。",
+  "entry_surfaces": [
+    "cloud_purchased_page",
+    "signed_download",
+    "local_pack_manager",
+    "team_settings_role_tab"
+  ],
+  "access_states": [
+    {
+      "state_id": "unpaid_user",
+      "truth_source": "truzhen-cloud",
+      "download_status": "blocked_entitlement_missing",
+      "install_status": "blocked_entitlement_missing",
+      "download_evidence": "download_block_receipt_entitlement_missing",
+      "install_evidence": "install_preflight_block_receipt_entitlement_missing",
+      "user_visible_reason": "未购买或授权缺失，不能下载或安装该角色包。"
+    },
+    {
+      "state_id": "sandbox_paid_entitled_user",
+      "truth_source": "truzhen-cloud + truzhenos",
+      "download_status": "allowed_candidate_signed_download",
+      "install_status": "allowed_candidate_install_preflight",
+      "download_evidence": "sandbox_payment_receipt + entitlement_receipt + signed_download_receipt",
+      "install_evidence": "entitlement_verification_receipt + artifact_hash_verification_receipt + install_preflight_receipt",
+      "user_visible_reason": "sandbox 已购且授权有效，可下载签名包；本地安装仍需预检和团队绑定 Owner Gate。"
+    },
+    {
+      "state_id": "refund_revoked_entitlement",
+      "truth_source": "truzhen-cloud",
+      "download_status": "blocked_entitlement_revoked",
+      "install_status": "blocked_entitlement_revoked",
+      "download_evidence": "refund_or_revocation_receipt",
+      "install_evidence": "install_preflight_block_receipt_entitlement_revoked",
+      "user_visible_reason": "订单退款或授权撤销后，后续下载和安装都必须被阻断。"
+    },
+    {
+      "state_id": "expired_entitlement",
+      "truth_source": "truzhen-cloud + truzhenos",
+      "download_status": "blocked_entitlement_expired",
+      "install_status": "blocked_entitlement_expired",
+      "download_evidence": "download_block_receipt_entitlement_expired",
+      "install_evidence": "install_preflight_block_receipt_entitlement_expired",
+      "user_visible_reason": "授权已过期，不能继续下载或安装。"
+    },
+    {
+      "state_id": "unpublished_or_revoked_version",
+      "truth_source": "truzhen-cloud",
+      "download_status": "blocked_release_not_available",
+      "install_status": "blocked_release_revoked",
+      "download_evidence": "release_unpublished_or_revoked_receipt",
+      "install_evidence": "install_preflight_block_receipt_release_revoked",
+      "user_visible_reason": "商品版本已下架或撤回，不能下载；本地安装必须在云端版本校验时阻断。"
+    },
+    {
+      "state_id": "artifact_hash_mismatch",
+      "truth_source": "truzhen-cloud + truzhenos",
+      "download_status": "blocked_artifact_hash_mismatch",
+      "install_status": "blocked_artifact_hash_mismatch",
+      "download_evidence": "download_artifact_hash_mismatch_receipt",
+      "install_evidence": "install_preflight_block_receipt_artifact_hash_mismatch",
+      "user_visible_reason": "下载包 hash 与上传 / manifest 记录不一致，不能交付或安装。"
+    }
+  ],
+  "download_gate": {
+    "truth_source": "truzhen-cloud",
+    "entitlement_required": "true",
+    "release_available_required": "true",
+    "signature_required": "true",
+    "artifact_hash_required": "true",
+    "real_payment_policy": "sandbox_only_until_owner_authorizes_real_payment",
+    "receipt_required": "true"
+  },
+  "install_gate": {
+    "truth_source": "truzhenos",
+    "entitlement_verification": "required",
+    "artifact_hash_verification": "required",
+    "schema_validation": "required",
+    "forbidden_artifact_scan": "required",
+    "owner_gate_for_team_binding": "required",
+    "receipt_required": "required"
+  },
+  "negative_cases": {
+    "unpaid_download": {
+      "expected_status": "blocked_entitlement_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "download_block_receipt_entitlement_missing"
+    },
+    "refund_after_purchase_download": {
+      "expected_status": "blocked_entitlement_revoked",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "refund_revocation_download_block_receipt"
+    },
+    "expired_entitlement_install": {
+      "expected_status": "blocked_entitlement_expired",
+      "truth_source": "truzhenos",
+      "expected_evidence": "install_preflight_block_receipt_entitlement_expired"
+    },
+    "version_unpublished_download": {
+      "expected_status": "blocked_release_not_available",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "release_unavailable_download_block_receipt"
+    },
+    "artifact_hash_mismatch_install": {
+      "expected_status": "blocked_artifact_hash_mismatch",
+      "truth_source": "truzhenos",
+      "expected_evidence": "install_preflight_block_receipt_artifact_hash_mismatch"
+    },
+    "team_binding_without_owner_gate": {
+      "expected_status": "blocked_owner_gate_required",
+      "truth_source": "truzhenos",
+      "expected_evidence": "team_binding_block_receipt_owner_gate_missing"
+    }
+  },
+  "forbidden": [
+    "download_without_entitlement",
+    "download_unsigned_artifact",
+    "download_revoked_release",
+    "install_without_entitlement_verification",
+    "install_with_artifact_hash_mismatch",
+    "bind_team_role_without_owner_gate",
+    "store_order_payment_license_or_entitlement_truth_in_truzhen_packs"
+  ],
+  "non_completion_clause": "本文件只是下载 / 安装访问控制矩阵候选，不代表云端下载、退款、授权失效、版本下架或本地安装阻断已经通过。真实通过必须由 GUI、truzhen-cloud 和 truzhenos 产生对应回执、截图和 hash 证据。"
+}

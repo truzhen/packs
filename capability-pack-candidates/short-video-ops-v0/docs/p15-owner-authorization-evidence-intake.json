@@ -1,0 +1,51 @@
+{
+  "intake_ref": "owner-authorization-evidence-intake://short-video-ops-v0/p15-gui-walkthrough-three-candidates",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p15_gui_walkthrough_three_candidates",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "missing_owner_authorization",
+  "authorization_scope_contract": "docs/p15-cross-repo-authorization-scope.json",
+  "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-cross-repo-execution-authorization-20260704.md",
+  "authorization_truth_source": "Owner explicit authorization in the current thread or signed authorization card; not inferred from plan text or previous slice authorization.",
+  "required_owner_quote_contains": [
+    "授权按 P15 授权卡",
+    "测试 truzhen-client-web-desktop 与 truzhenos",
+    "在 truzhen-packs 写入 GUI 实操证据",
+    "不改 contracts、software、cloud",
+    "不运行真实 Codex CLI",
+    "不执行第三方 OSS",
+    "不登录或上传社媒"
+  ],
+  "authorized_repositories": [
+    "truzhen-client-web-desktop",
+    "truzhenos",
+    "truzhen-packs"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "run_real_codex_cli",
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "store_browser_cookie",
+    "formal_enable_claim"
+  ],
+  "current_authorization_evidence": {
+    "status": "missing",
+    "owner_thread_quote_required": true,
+    "owner_thread_quote": "",
+    "recorded_by": "",
+    "recorded_at": "",
+    "evidence_ref": ""
+  },
+  "cross_repo_work_gate": {
+    "can_start_cross_repo_work": false,
+    "required_status_before_cross_repo_work": "owner_authorization_recorded_and_scope_matched",
+    "must_record_before_cross_repo_work": true
+  }
+}

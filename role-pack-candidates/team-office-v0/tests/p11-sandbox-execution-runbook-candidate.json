@@ -1,0 +1,473 @@
+{
+  "runbook_ref": "p11-sandbox-execution-runbook://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包 P11 sandbox 商品化执行 runbook 候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "runbook_status": "pending_owner_authorization",
+  "source_plan_ref": "docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "gui_execution_script_ref": "tests/gui-user-agent-execution-script-candidate.json",
+  "evidence_ingestion_binder_ref": "tests/p11-evidence-ingestion-binder-candidate.json",
+  "evidence_acceptance_checklist_ref": "tests/p11-evidence-acceptance-checklist-candidate.json",
+  "sandbox_readiness_ref": "tests/sandbox-environment-readiness-candidate.json",
+  "sandbox_preflight_gate_ref": "tests/p11-sandbox-preflight-gate-candidate.json",
+  "sandbox_run_request_ref": "tests/p11-sandbox-run-request-candidate.json",
+  "cross_repo_readiness_ref": "integration/cross-repo-execution-readiness-package.json",
+  "owner_authorization_evidence_intake_ref": "integration/owner-authorization-evidence-intake-candidate.json",
+  "p11_acceptance_gate_ref": "tests/p11-normal-commercialization-acceptance-gate-candidate.json",
+  "p11_verification_record_ref": "tests/p11-normal-commercialization-verification-record-template.json",
+  "commercial_api_contract_ref": "integration/commercial-api-contract-candidate.json",
+  "commercial_receipt_schema_ref": "commerce/commercial-distribution-receipt-schema-candidate.json",
+  "commercial_receipt_chain_ref": "commerce/commercial-receipt-chain-candidate.json",
+  "purpose": "Owner 授权跨仓 sandbox 后，按用户视角 GUI 路径执行角色制作、候选包导出、云草稿上传、审核候选、sandbox 购买、entitlement、签名下载、本地安装、团队设置替换、运行使用、负例阻断和独立验收，并把证据接入 P11 验证记录。本文不是授权记录，也不是执行成功记录。",
+  "authorization_policy": {
+    "explicit_owner_authorization_required_before_cross_repo_run": true,
+    "sandbox_only": true,
+    "real_payment_blocked": true,
+    "production_publish_blocked": true,
+    "no_push_or_merge_without_separate_authorization": true,
+    "organizer_role": "coordinate_record_and_route_issues_only",
+    "owner_authorization_record_required": "docs/plans/role-pack-studio-cross-repo-execution-authorization-20260704.md"
+  },
+  "target_repositories": [
+    {
+      "repo_id": "truzhen-client-web-desktop",
+      "absolute_path": "/Users/li/Documents/truzhen-client-web-desktop",
+      "allowed_actions": [
+        "read_current_gui_routes",
+        "run_user_view_gui_smoke",
+        "capture_redacted_screenshots",
+        "record_page_state_refs"
+      ],
+      "status_command": "git status --short --branch",
+      "evidence_outputs": [
+        "gui_operation_log",
+        "redacted_screenshot_index",
+        "page_state_index",
+        "frontend_error_trace_refs"
+      ],
+      "forbidden_actions": [
+        "direct_api_call_as_user_action",
+        "store_payment_token",
+        "store_signed_download_url",
+        "push_or_merge_without_separate_authorization"
+      ]
+    },
+    {
+      "repo_id": "truzhenos",
+      "absolute_path": "/Users/li/Documents/truzhenos",
+      "allowed_actions": [
+        "read_role_candidate_and_binding_contracts",
+        "run_install_preflight_in_sandbox",
+        "collect_install_receipt_refs",
+        "collect_team_binding_receipt_refs"
+      ],
+      "status_command": "git status --short --branch",
+      "evidence_outputs": [
+        "candidate_bundle_export_receipt",
+        "install_preflight_receipts",
+        "enabled_role_pack_version_ref",
+        "team_binding_receipt_refs",
+        "runtime_candidate_output_receipt"
+      ],
+      "forbidden_actions": [
+        "write_formal_task_without_owner_gate",
+        "rewrite_existing_receipts",
+        "delete_user_data",
+        "push_or_merge_without_separate_authorization"
+      ]
+    },
+    {
+      "repo_id": "truzhen-cloud",
+      "absolute_path": "/Users/li/Documents/truzhen-cloud",
+      "allowed_actions": [
+        "run_sandbox_upload_listing_draft",
+        "run_sandbox_order_payment",
+        "issue_sandbox_entitlement",
+        "issue_signed_download_ref"
+      ],
+      "status_command": "git status --short --branch",
+      "evidence_outputs": [
+        "cloud_upload_receipt",
+        "listing_draft_ref",
+        "sandbox_order_receipt",
+        "sandbox_payment_receipt",
+        "entitlement_receipt",
+        "download_receipt"
+      ],
+      "forbidden_actions": [
+        "real_payment_capture",
+        "production_publish",
+        "store_cloud_access_token_in_packs",
+        "push_or_merge_without_separate_authorization"
+      ]
+    },
+    {
+      "repo_id": "truzhen-contracts",
+      "absolute_path": "/Users/li/Documents/truzhen-contracts",
+      "allowed_actions": [
+        "read_only_schema_check",
+        "record_no_contract_change_if_compatible",
+        "open_contract_impact_issue_if_incompatible"
+      ],
+      "status_command": "git status --short --branch",
+      "evidence_outputs": [
+        "schema_compatibility_note",
+        "contract_impact_issue_ref",
+        "no_contract_change_record"
+      ],
+      "forbidden_actions": [
+        "modify_schema_without_owner_authorization",
+        "publish_contract_version",
+        "push_or_merge_without_separate_authorization"
+      ]
+    }
+  ],
+  "execution_sequence": [
+    {
+      "stage_id": "preflight_authorization_and_status",
+      "stage_order": 1,
+      "actor": "organizer_coordinator_recorder",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-cloud",
+        "truzhen-contracts"
+      ],
+      "gui_step_refs": [
+        "open_role_studio"
+      ],
+      "required_authoritative_evidence": [
+        "owner_cross_repo_authorization_record",
+        "per_repo_git_status_output",
+        "sandbox_environment_readiness_record"
+      ],
+      "pass_condition": "Owner 明确授权目标仓、允许动作、证据输出和红色禁区；每仓 status 已记录。",
+      "fail_fast_if_missing": "缺 Owner 授权或任一目标仓 status 时停止，不进入 GUI 执行。",
+      "output_record_refs": [
+        "cross_repo_readiness_ref",
+        "p11_sandbox_run_preflight_record"
+      ]
+    },
+    {
+      "stage_id": "role_candidate_bundle_export",
+      "stage_order": 2,
+      "actor": "publisher_user_view_gui_agent",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "gui_step_refs": [
+        "create_secretary_candidate",
+        "create_five_advisor_candidates",
+        "select_secretary_voice_vrm",
+        "create_capability_role_reference",
+        "export_candidate_bundle"
+      ],
+      "required_authoritative_evidence": [
+        "gui_screenshot_role_creation",
+        "candidate_bundle_export_receipt",
+        "artifact_manifest_ref",
+        "bundle_tree_sha256",
+        "forbidden_artifact_scan_receipt"
+      ],
+      "pass_condition": "用户视角 GUI 创建 6 个角色候选并导出 candidate bundle，所有角色保持 candidate_only / non_formal。",
+      "fail_fast_if_missing": "缺 GUI 证据、候选回执、bundle_tree_sha256 或禁入产物扫描时停止。",
+      "output_record_refs": [
+        "e2e_run_record.stage_records.publisher_export_candidate_bundle",
+        "p11_verification_record.role_candidate_bundle_export"
+      ]
+    },
+    {
+      "stage_id": "cloud_upload_listing_draft",
+      "stage_order": 3,
+      "actor": "publisher_user_view_gui_agent",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "gui_step_refs": [
+        "upload_cloud_listing_draft"
+      ],
+      "required_authoritative_evidence": [
+        "cloud_upload_receipt",
+        "listing_draft_ref",
+        "truzhen-cloud_uploaded_artifact_sha256",
+        "bundle_tree_sha256_match_receipt",
+        "gui_screenshot_cloud_upload"
+      ],
+      "pass_condition": "GUI 上传到云草稿成功，云端 upload receipt 与本仓 bundle_tree_sha256 匹配。",
+      "fail_fast_if_missing": "缺 cloud upload receipt、listing draft 或 hash match 时停止。",
+      "output_record_refs": [
+        "commercial_receipt_chain.upload_receipt_ref",
+        "p11_verification_record.cloud_upload_listing_draft"
+      ]
+    },
+    {
+      "stage_id": "marketplace_review_candidate",
+      "stage_order": 4,
+      "actor": "publisher_user_view_gui_agent",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "gui_step_refs": [
+        "submit_marketplace_review_candidate"
+      ],
+      "required_authoritative_evidence": [
+        "truzhen-cloud_review_candidate_receipt",
+        "review_state_ref",
+        "production_publish_block_receipt",
+        "asset_rights_review_receipt",
+        "gui_screenshot_marketplace_review"
+      ],
+      "pass_condition": "云端审核候选状态可见，生产发布仍 blocked，素材授权边界可查。",
+      "fail_fast_if_missing": "缺审核候选回执、生产发布阻断或素材授权证据时停止。",
+      "output_record_refs": [
+        "p11_verification_record.marketplace_review_candidate",
+        "cloud_commerce_ledger.review_candidate"
+      ]
+    },
+    {
+      "stage_id": "sandbox_order_payment_entitlement",
+      "stage_order": 5,
+      "actor": "buyer_user_view_gui_agent",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "gui_step_refs": [
+        "sandbox_purchase"
+      ],
+      "required_authoritative_evidence": [
+        "truzhen-cloud_sandbox_order_receipt",
+        "truzhen-cloud_sandbox_payment_receipt",
+        "license_ref",
+        "entitlement_ref",
+        "terms_acceptance_receipt",
+        "real_payment_block_policy_receipt",
+        "gui_screenshot_sandbox_purchase"
+      ],
+      "pass_condition": "sandbox 订单、支付、License / Entitlement 回执齐全，真实扣款保持 blocked。",
+      "fail_fast_if_missing": "缺订单、支付、entitlement 或真实支付阻断证据时停止。",
+      "output_record_refs": [
+        "commercial_receipt_chain.sandbox_payment_receipt_ref",
+        "p11_verification_record.sandbox_order_payment_entitlement"
+      ]
+    },
+    {
+      "stage_id": "entitled_signed_download",
+      "stage_order": 6,
+      "actor": "buyer_user_view_gui_agent",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "gui_step_refs": [
+        "download_purchased_artifact"
+      ],
+      "required_authoritative_evidence": [
+        "truzhen-cloud_download_receipt",
+        "signed_download_ref",
+        "entitlement_ref",
+        "download_artifact_sha256",
+        "artifact_hash_matches_upload",
+        "gui_screenshot_entitled_download"
+      ],
+      "pass_condition": "已购用户通过 GUI 下载签名 artifact，download hash 与 upload hash 一致。",
+      "fail_fast_if_missing": "缺 download receipt、entitlement 或 hash match 时停止。",
+      "output_record_refs": [
+        "commercial_receipt_chain.download_receipt_ref",
+        "p11_verification_record.entitled_signed_download"
+      ]
+    },
+    {
+      "stage_id": "local_install_enabled_version",
+      "stage_order": 7,
+      "actor": "buyer_user_view_gui_agent",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "gui_step_refs": [
+        "install_downloaded_role_pack"
+      ],
+      "required_authoritative_evidence": [
+        "gui_screenshot_local_install",
+        "entitlement_verification_receipt",
+        "artifact_hash_verification_receipt",
+        "install_receipt",
+        "enabled_role_pack_version_ref",
+        "role_pack_schema_validation_receipt"
+      ],
+      "pass_condition": "本地安装先校验 entitlement、hash 和 schema，再生成 install receipt 与 enabled version。",
+      "fail_fast_if_missing": "缺 install_receipt、hash 校验或 enabled version 时停止。",
+      "output_record_refs": [
+        "commercial_receipt_chain.install_receipt_ref",
+        "p11_verification_record.local_install_enabled_version"
+      ]
+    },
+    {
+      "stage_id": "post_install_team_binding_runtime",
+      "stage_order": 8,
+      "actor": "buyer_user_view_gui_agent",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "gui_step_refs": [
+        "replace_team_roles_after_install",
+        "run_team_office_runtime_use"
+      ],
+      "required_authoritative_evidence": [
+        "gui_screenshot_team_settings_role_tab",
+        "owner_gate_decision_receipt",
+        "team_binding_receipt",
+        "runtime_candidate_output_receipt",
+        "history_not_rewritten_receipt"
+      ],
+      "pass_condition": "已安装角色出现在团队设置 tab，可替换秘书长和五顾问；替换经 Owner Gate 并产出 team binding receipt。",
+      "fail_fast_if_missing": "缺 team_binding_receipt、Owner Gate 或 runtime candidate-only 证据时停止。",
+      "output_record_refs": [
+        "commercial_receipt_chain.team_binding_receipt_ref",
+        "p11_verification_record.post_install_team_binding_runtime"
+      ]
+    },
+    {
+      "stage_id": "negative_cases",
+      "stage_order": 9,
+      "actor": "buyer_user_view_gui_agent",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud",
+        "truzhenos"
+      ],
+      "gui_step_refs": [
+        "run_negative_cases"
+      ],
+      "required_authoritative_evidence": [
+        "download_without_entitlement_blocked_receipt",
+        "artifact_hash_mismatch_blocked_receipt",
+        "expired_entitlement_install_blocked_receipt",
+        "team_binding_without_owner_gate_blocked_receipt",
+        "real_payment_without_owner_authorization_blocked_receipt",
+        "production_publish_without_owner_authorization_blocked_receipt"
+      ],
+      "pass_condition": "所有负例通过 GUI 触发并产生 blocked_receipt 与可读原因。",
+      "fail_fast_if_missing": "任何负例缺 blocked_receipt 或显示为成功即判 failed_requires_issue。",
+      "output_record_refs": [
+        "p11_verification_record.negative_case_result_rows",
+        "p0_p11_blocker_register"
+      ]
+    },
+    {
+      "stage_id": "independent_acceptance_and_owner_go_no_go",
+      "stage_order": 10,
+      "actor": "independent_acceptance_agent",
+      "target_repos": [
+        "truzhen-packs",
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-cloud"
+      ],
+      "gui_step_refs": [
+        "run_negative_cases"
+      ],
+      "required_authoritative_evidence": [
+        "independent_acceptance_signoff",
+        "all_stage_receipts_verified",
+        "hash_continuity_report",
+        "owner_go_no_go_decision",
+        "no_open_p0_p11_blockers"
+      ],
+      "pass_condition": "独立验收签收所有阶段、hash 连续性和负例阻断，Owner 给出 go/no-go 裁定。",
+      "fail_fast_if_missing": "缺独立验收或 Owner 裁定时不得声明正常商品化通过。",
+      "output_record_refs": [
+        "p11_verification_record.final_decision",
+        "normal_commercialization_completion_audit"
+      ]
+    },
+    {
+      "stage_id": "production_promotion_controls",
+      "stage_order": 11,
+      "actor": "organizer_coordinator_recorder",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-cloud"
+      ],
+      "gui_step_refs": [
+        "review_production_promotion_gate",
+        "submit_production_go_live_request",
+        "enable_real_payment_after_owner_approval",
+        "enable_production_signed_download",
+        "publish_production_listing"
+      ],
+      "required_authoritative_evidence": [
+        "production_promotion_gate_pass_receipt",
+        "owner_go_no_go_decision_ref",
+        "production_go_live_request_receipt",
+        "real_payment_enable_request_receipt",
+        "production_signed_download_enable_receipt",
+        "production_listing_publish_request_receipt",
+        "production_install_observability_receipt"
+      ],
+      "pass_condition": "commercial-production-promotion-gate 通过，Owner go/no-go 裁定允许生产晋级，生产发布、真实支付启用、生产签名下载和生产安装观测均有独立 production receipt。",
+      "fail_fast_if_missing": "缺任一 production receipt、Owner go/no-go 或 production promotion gate pass receipt 时不得生产发布、不得真实支付、不得声明正常商品化完成。",
+      "output_record_refs": [
+        "p11_go_live_evidence_package.production_promotion_receipts",
+        "commercial_receipt_chain.production_promotion_receipts",
+        "normal_commercialization_completion_audit.production_promotion_gate"
+      ]
+    }
+  ],
+  "evidence_output_package": {
+    "raw_evidence_not_stored_in_truzhen_packs": true,
+    "required_output_records": [
+      "p11_verification_record",
+      "e2e_run_record",
+      "receipt_index",
+      "screenshot_index",
+      "hash_continuity_report",
+      "negative_case_report",
+      "independent_acceptance_signoff",
+      "owner_go_no_go_decision",
+      "production_promotion_receipts"
+    ],
+    "storage_policy": "执行仓保存截图、日志和回执原文；truzhen-packs 只接收脱敏 ref、hash、摘要和 issue 链接。",
+    "redaction_required_for": [
+      "payment",
+      "signed_download",
+      "cloud_token",
+      "identity",
+      "voice_or_vrm_asset"
+    ]
+  },
+  "hash_continuity_check": {
+    "required": true,
+    "bundle_tree_sha256_source": "commerce/artifact-bundle-digest-candidate.json",
+    "upload_receipt_ref": "truzhen-cloud_upload_receipt",
+    "download_receipt_ref": "truzhen-cloud_download_receipt",
+    "install_receipt_ref": "truzhenos_install_receipt",
+    "mismatch_result": "failed_requires_issue"
+  },
+  "rollback_and_cleanup_policy": {
+    "sandbox_cleanup_only": true,
+    "do_not_delete_receipts": true,
+    "do_not_rewrite_team_history": true,
+    "cleanup_requires_receipt": true,
+    "production_data_cleanup_forbidden": true
+  },
+  "forbidden": [
+    "direct_api_call_as_user_action",
+    "manual_json_edit_as_success",
+    "real_payment_capture",
+    "production_publish",
+    "raw_voice_or_vrm_upload",
+    "store_secret_or_signed_url",
+    "claim_complete_without_independent_acceptance",
+    "claim_cloud_success_without_install_receipt"
+  ],
+  "non_completion_clause": "本 runbook 只是授权后 sandbox 执行说明，不是授权书、执行日志、云上传回执、支付回执、下载回执、安装回执或团队绑定回执。未产生并复核这些证据前，不得声称角色制作、使用、上传、购买、下载、安装或正常商品化全链路畅通。"
+}

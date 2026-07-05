@@ -1,0 +1,184 @@
+{
+  "gate_ref": "p11-sandbox-preflight-gate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包 P11 sandbox 开跑前预检门候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "gate_status": "not_ready_requires_authorization_and_environment_evidence",
+  "can_start_p11_sandbox_run": false,
+  "source_sandbox_environment_readiness": "tests/sandbox-environment-readiness-candidate.json",
+  "source_owner_authorization_intake": "integration/owner-authorization-evidence-intake-candidate.json",
+  "source_execution_queue": "integration/commercial-cross-repo-execution-queue-candidate.json",
+  "source_runbook": "tests/p11-sandbox-execution-runbook-candidate.json",
+  "source_cross_repo_readiness_package": "integration/cross-repo-execution-readiness-package.json",
+  "source_p11_evidence_acceptance_checklist": "tests/p11-evidence-acceptance-checklist-candidate.json",
+  "purpose": "在 P11 sandbox 商品化实操开始前，强制核对 Owner 授权、云端 sandbox、买卖双方身份、支付桩、artifact 存储、签名下载、本地安装目标、团队设置入口和生产端点禁入。本文只定义开跑前预检门，不执行 GUI、云端、支付、下载或安装。",
+  "preflight_gate_checks": [
+    {
+      "check_id": "owner_authorization_recorded",
+      "truth_source": "Owner",
+      "current_status": "missing_authoritative_evidence",
+      "can_start_p11_sandbox_run": false,
+      "required_authoritative_evidence": [
+        "owner_authorization_receipt_or_thread_record",
+        "per_repo_allowed_actions_receipt",
+        "forbidden_actions_ack_receipt"
+      ],
+      "blocking_if_missing": [
+        "owner_authorization_missing",
+        "per_repo_allowed_actions_missing"
+      ]
+    },
+    {
+      "check_id": "cloud_sandbox_reachable",
+      "truth_source": "truzhen-cloud",
+      "current_status": "missing_authoritative_evidence",
+      "can_start_p11_sandbox_run": false,
+      "required_authoritative_evidence": [
+        "cloud_sandbox_health_receipt",
+        "cloud_sandbox_endpoint_ref",
+        "production_endpoint_absent_scan"
+      ],
+      "blocking_if_missing": [
+        "cloud_sandbox_health_receipt_missing",
+        "production_endpoint_absent_scan_missing"
+      ]
+    },
+    {
+      "check_id": "publisher_identity_sandbox",
+      "truth_source": "truzhen-cloud",
+      "current_status": "missing_authoritative_evidence",
+      "can_start_p11_sandbox_run": false,
+      "required_authoritative_evidence": [
+        "publisher_sandbox_identity_receipt",
+        "publisher_personal_data_absent_scan"
+      ],
+      "blocking_if_missing": [
+        "publisher_sandbox_identity_receipt_missing"
+      ]
+    },
+    {
+      "check_id": "buyer_identity_sandbox",
+      "truth_source": "truzhen-cloud",
+      "current_status": "missing_authoritative_evidence",
+      "can_start_p11_sandbox_run": false,
+      "required_authoritative_evidence": [
+        "buyer_sandbox_identity_receipt",
+        "buyer_personal_data_absent_scan"
+      ],
+      "blocking_if_missing": [
+        "buyer_sandbox_identity_receipt_missing"
+      ]
+    },
+    {
+      "check_id": "sandbox_payment_stub_ready",
+      "truth_source": "truzhen-cloud",
+      "current_status": "missing_authoritative_evidence",
+      "can_start_p11_sandbox_run": false,
+      "required_authoritative_evidence": [
+        "sandbox_payment_stub_receipt",
+        "no_real_payment_method_scan"
+      ],
+      "blocking_if_missing": [
+        "sandbox_payment_stub_receipt_missing",
+        "no_real_payment_method_scan_missing"
+      ]
+    },
+    {
+      "check_id": "artifact_storage_ready",
+      "truth_source": "truzhen-cloud",
+      "current_status": "missing_authoritative_evidence",
+      "can_start_p11_sandbox_run": false,
+      "required_authoritative_evidence": [
+        "artifact_storage_readiness_receipt",
+        "bundle_tree_sha256_policy_receipt"
+      ],
+      "blocking_if_missing": [
+        "artifact_storage_readiness_receipt_missing",
+        "bundle_tree_sha256_policy_missing"
+      ]
+    },
+    {
+      "check_id": "signed_download_ready",
+      "truth_source": "truzhen-cloud",
+      "current_status": "missing_authoritative_evidence",
+      "can_start_p11_sandbox_run": false,
+      "required_authoritative_evidence": [
+        "signed_download_service_readiness_receipt",
+        "signed_download_secret_absent_scan"
+      ],
+      "blocking_if_missing": [
+        "signed_download_service_readiness_receipt_missing",
+        "signed_download_secret_absent_scan_missing"
+      ]
+    },
+    {
+      "check_id": "local_install_target_ready",
+      "truth_source": "truzhenos",
+      "current_status": "missing_authoritative_evidence",
+      "can_start_p11_sandbox_run": false,
+      "required_authoritative_evidence": [
+        "isolated_local_install_target_receipt",
+        "forbidden_artifact_scan"
+      ],
+      "blocking_if_missing": [
+        "isolated_local_install_target_receipt_missing",
+        "forbidden_artifact_scan_missing"
+      ]
+    },
+    {
+      "check_id": "team_settings_role_tab_ready",
+      "truth_source": "truzhen-client-web-desktop",
+      "current_status": "missing_authoritative_evidence",
+      "can_start_p11_sandbox_run": false,
+      "required_authoritative_evidence": [
+        "team_settings_role_tab_screenshot",
+        "team_settings_route_ref_receipt"
+      ],
+      "blocking_if_missing": [
+        "team_settings_role_tab_screenshot_missing",
+        "team_settings_route_ref_missing"
+      ]
+    },
+    {
+      "check_id": "no_production_endpoint_loaded",
+      "truth_source": "multi_repo",
+      "current_status": "missing_authoritative_evidence",
+      "can_start_p11_sandbox_run": false,
+      "required_authoritative_evidence": [
+        "production_endpoint_absent_scan",
+        "production_publish_channel_block_receipt"
+      ],
+      "blocking_if_missing": [
+        "production_endpoint_absent_scan_missing",
+        "production_publish_channel_block_receipt_missing"
+      ]
+    }
+  ],
+  "start_policy": {
+    "can_start_now": false,
+    "required_before_start": [
+      "owner_authorization_recorded",
+      "all_sandbox_environment_bindings_verified",
+      "no_production_endpoint_loaded",
+      "no_real_payment_method_loaded",
+      "preflight_gate_recorded"
+    ],
+    "non_sufficient_evidence": [
+      "candidate_file_presence_only",
+      "organizer_summary_without_receipts",
+      "single_repo_test_without_cloud_health",
+      "manual_config_claim_without_scan"
+    ]
+  },
+  "forbidden_payloads": [
+    "cloud_access_token",
+    "payment_method_secret",
+    "signed_download_secret",
+    "production_endpoint",
+    "raw_identity_document",
+    "browser_cookie",
+    "real_payment_method"
+  ],
+  "non_completion_clause": "本预检门当前不可开跑。只有 Owner 授权、每个目标仓 status、sandbox 环境回执、禁入扫描和团队设置入口截图齐备后，才能进入 P11 用户视角 GUI / 云端 / 安装实操。"
+}

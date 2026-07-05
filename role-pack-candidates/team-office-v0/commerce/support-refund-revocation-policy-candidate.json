@@ -1,0 +1,138 @@
+{
+  "policy_candidate_ref": "support-refund-revocation-policy-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "listing_candidate_ref": "pack-listing-candidate://team-office-role-pack-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "commerce_truth_source": "truzhen-cloud",
+  "support_truth_source": "truzhen-cloud",
+  "package_contents_truth_source": "truzhen-packs",
+  "real_payment_policy": "blocked_until_owner_authorizes",
+  "scope": "声明团队办公室角色包商品化后的支持、退款和授权撤销候选边界；不保存正式支持工单、退款、授权或云端订单事实。",
+  "support_policy": {
+    "support_channel_required": true,
+    "support_channel_surface": "cloud_listing_support_contact_surface",
+    "response_sla_policy": "owner_defined_before_real_listing",
+    "evidence_required": "support_request_receipt + user_visible_support_channel"
+  },
+  "refund_policy": {
+    "sandbox_refund_supported": true,
+    "entitlement_revocation_required": true,
+    "historical_receipts_policy": "do_not_delete_historical_receipts",
+    "refund_window_policy": "owner_defined_before_real_listing",
+    "refund_decision_truth_source": "truzhen-cloud",
+    "evidence_required": "refund_request_receipt + refund_decision_receipt + entitlement_revocation_receipt"
+  },
+  "revocation_policy": {
+    "block_future_download": true,
+    "block_new_install": true,
+    "preserve_installed_history": true,
+    "notice_required": true,
+    "revocation_truth_source": "truzhen-cloud",
+    "revocation_reason_policy": "owner_visible_reason_required_before_blocking_future_access",
+    "evidence_required": "revocation_receipt + user_visible_notice_ref + download_install_block_receipt"
+  },
+  "buyer_notice_policy": {
+    "requires_owner_visible_notice": true,
+    "support_contact_surface": "cloud_listing_support_contact_surface",
+    "refund_terms_surface": "cloud_listing_refund_terms_surface",
+    "revocation_reason_surface": "cloud_purchased_product_revocation_notice_surface"
+  },
+  "pre_purchase_disclosure_policy": {
+    "must_show_before_purchase": true,
+    "buyer_acknowledgement_required": true,
+    "required_surfaces": [
+      "cloud_listing_support_contact_surface",
+      "cloud_listing_refund_terms_surface",
+      "cloud_listing_revocation_notice_surface",
+      "cloud_listing_candidate_role_disclaimer_surface"
+    ],
+    "blocking_status_if_missing": "blocked_commercial_purchase_disclosures_missing",
+    "expected_evidence": "pre_purchase_disclosure_ack_receipt_ref"
+  },
+  "states": [
+    {
+      "state_id": "support_request_opened",
+      "status": "candidate_support_request_opened",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "support_request_receipt"
+    },
+    {
+      "state_id": "refund_requested",
+      "status": "candidate_refund_requested",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "refund_request_receipt"
+    },
+    {
+      "state_id": "refund_approved",
+      "status": "candidate_refund_approved",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "refund_approval_receipt"
+    },
+    {
+      "state_id": "refund_rejected",
+      "status": "candidate_refund_rejected",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "refund_rejection_receipt + readable_reason"
+    },
+    {
+      "state_id": "entitlement_revocation_pending",
+      "status": "blocked_until_entitlement_revoked",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "refund_or_revocation_decision_receipt + entitlement_revocation_request_ref"
+    },
+    {
+      "state_id": "entitlement_revoked",
+      "status": "blocked_future_download_and_install",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "entitlement_revocation_receipt + download_install_block_receipt"
+    },
+    {
+      "state_id": "release_revoked_notice_sent",
+      "status": "candidate_notice_sent",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "release_revocation_notice_receipt + buyer_notice_ref"
+    }
+  ],
+  "negative_cases": {
+    "missing_support_channel": {
+      "expected_status": "blocked_support_channel_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "support_policy_block_receipt"
+    },
+    "refund_without_entitlement_revocation": {
+      "expected_status": "blocked_entitlement_revocation_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "refund_block_receipt_revocation_missing"
+    },
+    "delete_historical_receipts_after_refund": {
+      "expected_status": "blocked_receipt_deletion_forbidden",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "receipt_preservation_violation_receipt"
+    },
+    "silent_release_revocation": {
+      "expected_status": "blocked_revocation_notice_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "revocation_notice_block_receipt"
+    },
+    "store_support_ticket_truth_in_packs": {
+      "expected_status": "blocked_wrong_truth_source",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "truth_source_boundary_block_receipt"
+    },
+    "purchase_without_support_refund_revocation_disclosure": {
+      "expected_status": "blocked_commercial_purchase_disclosures_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "pre_purchase_disclosure_block_receipt"
+    }
+  },
+  "forbidden": [
+    "store_support_ticket_truth_in_truzhen_packs",
+    "store_refund_truth_in_truzhen_packs",
+    "delete_historical_receipts_after_refund",
+    "silent_release_revocation",
+    "real_payment_capture_without_owner_authorization",
+    "production_refund_without_cloud_receipt"
+  ],
+  "non_completion_clause": "本文件只是售后、退款和授权撤销策略候选，不代表支持工单、退款、撤销、通知或云端阻断已经运行。真实状态必须由 truzhen-cloud 持有并产生可反查回执。"
+}

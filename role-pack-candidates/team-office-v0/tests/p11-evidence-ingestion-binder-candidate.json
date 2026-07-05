@@ -1,0 +1,531 @@
+{
+  "binder_ref": "p11-evidence-ingestion-binder://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包 P11 证据接入绑定器候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "binder_status": "not_run_requires_real_evidence",
+  "p11_sandbox_run_request_ref": "tests/p11-sandbox-run-request-candidate.json",
+  "gui_execution_script_ref": "tests/gui-user-agent-execution-script-candidate.json",
+  "e2e_run_record_ref": "tests/e2e-evidence-run-record.json",
+  "p11_verification_record_template": "tests/p11-normal-commercialization-verification-record-template.json",
+  "commercial_distribution_schema_ref": "commerce/commercial-distribution-receipt-schema-candidate.json",
+  "commercial_evidence_gate_ref": "tests/commercial-evidence-gate-candidate.json",
+  "source_cloud_listing_candidate": "commerce/cloud-listing-candidate.json",
+  "source_artifact_manifest": "commerce/artifact-manifest.json",
+  "source_artifact_bundle_digest": "commerce/artifact-bundle-digest-candidate.json",
+  "source_release_candidate_package": "commerce/release-candidate-package.json",
+  "source_install_runtime_activation_map": "install/install-runtime-activation-map-candidate.json",
+  "source_execution_queue": "integration/commercial-cross-repo-execution-queue-candidate.json",
+  "phase_dependency_verification_record_target": "p11_phase_dependency_result",
+  "role_studio_lineage_verification_record_target": "role_studio_lineage_result",
+  "download_install_access_verification_record_target": "download_install_access_result",
+  "download_artifact_delivery_verification_record_target": "download_artifact_delivery_result",
+  "marketplace_listing_review_verification_record_target": "marketplace_listing_review_result",
+  "cloud_upload_listing_verification_record_target": "cloud_upload_listing_result",
+  "purpose": "定义真实跨仓执行后，如何把用户视角 GUI 步骤证据、云端回执、本地安装回执、团队绑定回执、负例阻断、独立验收和 Owner go/no-go 裁定绑定到 P11 正常商品化验证记录。本文只声明接入规则，不保存截图、签名 URL、支付凭据、云 token 或真实回执正文。",
+  "ingestion_policy": {
+    "user_agents_gui_only": true,
+    "organizer_may_record_only": true,
+    "no_manual_json_success": true,
+    "no_backend_only_success": true,
+    "redaction_required": true,
+    "no_secret_payload_storage": true,
+    "required_source_records": [
+      "gui_step_evidence_records",
+      "cloud_receipt_records",
+      "cloud_upload_listing_records",
+      "install_receipt_records",
+      "p11_phase_dependency_records",
+      "marketplace_listing_review_records",
+      "role_studio_lineage_records",
+      "download_artifact_delivery_records",
+      "download_install_access_records",
+      "negative_case_records",
+      "independent_acceptance_record",
+      "owner_go_no_go_decision",
+      "purchase_entitlement_records"
+    ],
+    "allowed_payload_shape": "refs_hashes_redacted_screenshot_paths_and_receipt_summaries_only",
+    "forbidden_payloads": [
+      "raw_payment_token",
+      "signed_download_url_secret",
+      "cloud_access_token",
+      "raw_voice_asset",
+      "raw_vrm_asset",
+      "identity_document",
+      "production_payment_method"
+    ]
+  },
+  "gui_step_to_verification_map": [
+    {
+      "step_id": "open_role_studio",
+      "step_order": 1,
+      "verification_stage_id": "pre_p11_role_creation_prerequisite",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-OPEN-001"
+    },
+    {
+      "step_id": "create_secretary_candidate",
+      "step_order": 2,
+      "verification_stage_id": "pre_p11_role_creation_prerequisite",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "role_candidate_receipt_ref",
+        "candidate_only_state"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-SECRETARY-001"
+    },
+    {
+      "step_id": "create_five_advisor_candidates",
+      "step_order": 3,
+      "verification_stage_id": "pre_p11_role_creation_prerequisite",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "five_advisor_candidate_refs",
+        "candidate_only_state"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-ADVISORS-001"
+    },
+    {
+      "step_id": "select_secretary_voice_vrm",
+      "step_order": 4,
+      "verification_stage_id": "pre_p11_role_creation_prerequisite",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "voice_asset_ref",
+        "vrm_asset_ref",
+        "provider_readiness_receipt_ref"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-APPEARANCE-001"
+    },
+    {
+      "step_id": "create_capability_role_reference",
+      "step_order": 5,
+      "verification_stage_id": "pre_p11_capability_reference_prerequisite",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "capability_role_requirement_receipt_ref",
+        "incompatible_role_block_receipt_ref"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-CAP-REF-001"
+    },
+    {
+      "step_id": "export_candidate_bundle",
+      "step_order": 6,
+      "verification_stage_id": "role_candidate_bundle_export",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "bundle_export_receipt_ref",
+        "artifact_manifest_ref",
+        "bundle_tree_sha256",
+        "forbidden_artifact_scan_receipt"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-EXPORT-001"
+    },
+    {
+      "step_id": "upload_cloud_listing_draft",
+      "step_order": 7,
+      "verification_stage_id": "cloud_upload_listing_draft",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "cloud_receipt_ref",
+        "cloud_upload_receipt_ref",
+        "listing_draft_ref",
+        "artifact_hash_match"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-UPLOAD-001"
+    },
+    {
+      "step_id": "submit_marketplace_review_candidate",
+      "step_order": 8,
+      "verification_stage_id": "marketplace_review_candidate",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "cloud_receipt_ref",
+        "review_state_ref",
+        "production_publish_block_receipt_ref"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-REVIEW-001"
+    },
+    {
+      "step_id": "sandbox_purchase",
+      "step_order": 9,
+      "verification_stage_id": "sandbox_order_payment_entitlement",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "cloud_receipt_ref",
+        "sandbox_order_ref",
+        "sandbox_payment_receipt_ref",
+        "entitlement_ref",
+        "real_payment_block_policy"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-PURCHASE-001"
+    },
+    {
+      "step_id": "download_purchased_artifact",
+      "step_order": 10,
+      "verification_stage_id": "entitled_signed_download",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "cloud_receipt_ref",
+        "download_receipt_ref",
+        "signed_download_ref",
+        "entitlement_ref",
+        "artifact_sha256",
+        "artifact_hash_match"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-DOWNLOAD-001"
+    },
+    {
+      "step_id": "install_downloaded_role_pack",
+      "step_order": 11,
+      "verification_stage_id": "local_install_enabled_version",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "download_receipt_ref",
+        "install_receipt_ref",
+        "entitlement_verification_ref",
+        "artifact_hash_verification_ref",
+        "enabled_role_pack_version"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-INSTALL-001"
+    },
+    {
+      "step_id": "replace_team_roles_after_install",
+      "step_order": 12,
+      "verification_stage_id": "post_install_team_binding_runtime",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "install_receipt_ref",
+        "team_settings_catalog_refresh_receipt_ref",
+        "six_replaceable_role_refs",
+        "enabled_role_pack_version_refs",
+        "slot_mapping_refs",
+        "team_binding_receipt_ref",
+        "owner_gate_decision_ref",
+        "history_not_rewritten_evidence"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-BINDING-001"
+    },
+    {
+      "step_id": "run_team_office_runtime_use",
+      "step_order": 13,
+      "verification_stage_id": "post_install_team_binding_runtime",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "runtime_receipt_candidate_ref",
+        "secretary_candidate_output_ref",
+        "five_advisor_candidate_output_refs"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-RUNTIME-001"
+    },
+    {
+      "step_id": "run_negative_cases",
+      "step_order": 14,
+      "verification_stage_id": "negative_cases_and_independent_acceptance",
+      "result_binding_status": "not_run",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "truth_source",
+        "timestamp",
+        "blocked_reason",
+        "blocked_receipt_ref",
+        "actual_block_status"
+      ],
+      "missing_evidence_issue_id": "ROLE-STUDIO-P11-INGEST-NEGATIVE-001"
+    }
+  ],
+  "receipt_correlation_rules": {
+    "bundle_hash_must_match_upload_download_install": true,
+    "required_correlation_keys": [
+      "candidate_set_ref",
+      "artifact_ref",
+      "artifact_manifest_ref",
+      "bundle_tree_sha256",
+      "correlation_id",
+      "upload_receipt_ref",
+      "cloud_upload_receipt_ref",
+      "download_receipt_ref",
+      "install_receipt_ref",
+      "team_binding_receipt_ref",
+      "role_pack_ref_set_hash",
+      "sandbox_order_ref",
+      "license_ref",
+      "entitlement_ref",
+      "listing_draft_ref",
+      "marketplace_review_candidate_ref",
+      "release_ref",
+      "download_artifact_sha256",
+      "signed_download_ref",
+      "install_artifact_sha256"
+    ],
+    "chain_policy": "后续阶段必须引用同一 candidate_set_ref、artifact_ref、bundle_tree_sha256 和 correlation_id；云上传、下载、本地安装与团队绑定不得断链。",
+    "mismatch_result": "failed_requires_issue"
+  },
+  "phase_dependency_ingestion": {
+    "phase_dependency_links_ref": "integration/commercial-cross-repo-execution-queue-candidate.json#p11_phase_dependency_links",
+    "missing_dependency_result": "blocked_previous_phase_evidence_missing",
+    "output_record_field": "p11_phase_dependency_result",
+    "expected_phase_dependency_count": 9,
+    "all_phase_handoffs_required": true,
+    "same_correlation_id_required": true,
+    "same_bundle_tree_sha256_required": true,
+    "required_evidence_slots": [
+      "run_request_phase_id",
+      "depends_on_phase_ids",
+      "required_previous_receipts",
+      "previous_receipt_ref",
+      "bundle_tree_sha256",
+      "correlation_id",
+      "dependency_status"
+    ]
+  },
+  "role_studio_lineage_ingestion": {
+    "output_record_field": "role_studio_lineage_result",
+    "package_section": "role_studio_lineage_report",
+    "source_refs": [
+      "commerce/commercial-receipt-chain-candidate.json",
+      "usage/team-office-runtime-usage-candidate.json",
+      "install/install-runtime-activation-map-candidate.json",
+      "bindings/team-settings-installed-role-catalog-candidate.json"
+    ],
+    "required_evidence_slots": [
+      "candidate_set_ref",
+      "bundle_tree_sha256",
+      "six_role_pack_refs",
+      "role_pack_ref_set_hash",
+      "export_receipt_ref",
+      "cloud_upload_receipt_ref",
+      "download_receipt_ref",
+      "install_receipt_ref",
+      "team_binding_receipt_ref",
+      "runtime_session_ref",
+      "same_six_role_pack_refs_from_export_to_runtime"
+    ],
+    "missing_lineage_result": "blocked_missing_authoritative_evidence",
+    "mismatch_result": "failed_requires_issue"
+  },
+  "download_install_access_ingestion": {
+    "output_record_field": "download_install_access_result",
+    "package_section": "download_install_access_matrix_report",
+    "source_refs": [
+      "commerce/download-install-access-matrix.json",
+      "commerce/license-entitlement-policy-candidate.json",
+      "commerce/buyer-library-install-state-candidate.json",
+      "install/install-preflight-request-candidate.json"
+    ],
+    "required_evidence_slots": [
+      "unpaid_download_block_receipt_ref",
+      "refund_revoked_download_block_receipt_ref",
+      "authorization_expired_download_install_block_receipt_ref",
+      "version_unpublished_or_revoked_download_install_block_receipt_ref",
+      "artifact_hash_mismatch_install_block_receipt_ref",
+      "entitlement_verification_receipt_ref",
+      "release_state_ref",
+      "download_artifact_sha256",
+      "install_artifact_sha256",
+      "user_visible_reason_refs"
+    ],
+    "missing_access_matrix_result": "blocked_missing_authoritative_evidence",
+    "mismatch_result": "failed_requires_issue"
+  },
+  "download_artifact_delivery_ingestion": {
+    "output_record_field": "download_artifact_delivery_result",
+    "package_section": "download_artifact_delivery_report",
+    "source_refs": [
+      "commerce/buyer-library-install-state-candidate.json",
+      "commerce/license-entitlement-policy-candidate.json",
+      "commerce/artifact-bundle-digest-candidate.json",
+      "commerce/release-candidate-package.json",
+      "commerce/commercial-receipt-chain-candidate.json"
+    ],
+    "required_evidence_slots": [
+      "entitlement_ref",
+      "entitlement_check_receipt_ref",
+      "download_receipt_ref",
+      "signed_download_ref",
+      "download_artifact_sha256",
+      "bundle_tree_sha256",
+      "download_artifact_hash_receipt_ref"
+    ],
+    "missing_download_delivery_result": "blocked_missing_authoritative_evidence",
+    "mismatch_result": "failed_requires_issue"
+  },
+  "cloud_upload_listing_ingestion": {
+    "output_record_field": "cloud_upload_listing_result",
+    "package_section": "cloud_upload_listing_report",
+    "source_refs": [
+      "commerce/cloud-listing-candidate.json",
+      "commerce/artifact-manifest.json",
+      "commerce/artifact-bundle-digest-candidate.json",
+      "commerce/release-candidate-package.json"
+    ],
+    "required_evidence_slots": [
+      "candidate_set_ref",
+      "bundle_tree_sha256",
+      "artifact_manifest_ref",
+      "cloud_upload_receipt_ref",
+      "listing_draft_ref",
+      "listing_draft_receipt_ref",
+      "uploaded_artifact_sha256",
+      "artifact_hash_match_receipt_ref",
+      "forbidden_artifact_scan_receipt_ref"
+    ],
+    "missing_cloud_upload_listing_result": "blocked_missing_authoritative_evidence",
+    "mismatch_result": "failed_requires_issue"
+  },
+  "marketplace_listing_review_ingestion": {
+    "output_record_field": "marketplace_listing_review_result",
+    "package_section": "marketplace_listing_review_compliance_report",
+    "source_refs": [
+      "commerce/cloud-listing-candidate.json",
+      "commerce/marketplace-review-submission-candidate.json",
+      "commerce/support-refund-revocation-policy-candidate.json",
+      "commerce/commercial-terms-privacy-policy-candidate.json",
+      "commerce/publisher-account-settlement-policy-candidate.json"
+    ],
+    "required_evidence_slots": [
+      "listing_draft_ref",
+      "listing_draft_receipt_ref",
+      "marketplace_review_candidate_ref",
+      "marketplace_review_candidate_receipt_ref",
+      "pre_purchase_disclosure_ack_receipt_ref",
+      "terms_privacy_acceptance_receipt_ref",
+      "publisher_identity_verification_receipt_ref",
+      "pricing_approval_receipt_ref",
+      "production_publish_block_receipt_ref",
+      "asset_rights_review_receipt_ref"
+    ],
+    "missing_marketplace_review_result": "blocked_missing_authoritative_evidence",
+    "mismatch_result": "failed_requires_issue"
+  },
+  "status_transition_rules": {
+    "initial_status": "not_run",
+    "allowed_final_statuses": [
+      "passed_verified",
+      "blocked_missing_authoritative_evidence",
+      "failed_requires_issue"
+    ],
+    "required_before_passed_verified": [
+      "all_gui_steps_have_evidence",
+      "all_required_receipts_present",
+      "p11_execution_queue_phase_dependencies_verified",
+      "cloud_upload_listing_verified",
+      "marketplace_listing_review_compliance_verified",
+      "role_studio_lineage_verified",
+      "download_artifact_delivery_verified",
+      "download_install_access_matrix_verified",
+      "bundle_hash_continuity_verified",
+      "all_negative_cases_blocked_verified",
+      "independent_acceptance_signed",
+      "owner_go_no_go_decision_recorded",
+      "purchase_entitlement_verified"
+    ],
+    "missing_required_evidence_result": "blocked_missing_authoritative_evidence",
+    "contradictory_evidence_result": "failed_requires_issue",
+    "candidate_json_only_result": "blocked_missing_authoritative_evidence"
+  },
+  "output_record_bindings": {
+    "verification_record_output": "tests/p11-normal-commercialization-verification-record-template.json",
+    "blocker_register_output": "tests/p0-p11-commercialization-blocker-register-candidate.json",
+    "chain_verifier_output": "tests/commercial-chain-verifier-candidate.json",
+    "normal_audit_output": "tests/normal-commercialization-completion-audit-candidate.json",
+    "product_readiness_output": "tests/product-readiness-evidence-matrix.json"
+  },
+  "non_completion_clause": "本绑定器只是证据接入规则。没有真实用户视角 GUI 证据、truzhen-cloud 回执、truzhenos 安装 / 绑定回执、负例 blocked 回执、独立验收和 Owner go/no-go 裁定前，不得声称角色制作、使用、上传、购买、下载、安装或正常商品化全链路已经畅通。",
+  "purchase_entitlement_verification_record_target": "purchase_entitlement_result",
+  "purchase_entitlement_ingestion": {
+    "output_record_field": "purchase_entitlement_result",
+    "package_section": "purchase_entitlement_report",
+    "source_refs": [
+      "commerce/order-payment-state-machine-candidate.json",
+      "commerce/license-entitlement-policy-candidate.json",
+      "commerce/buyer-library-install-state-candidate.json"
+    ],
+    "required_evidence_slots": [
+      "sandbox_order_ref",
+      "sandbox_order_receipt_ref",
+      "sandbox_payment_receipt_ref",
+      "no_real_payment_capture_receipt",
+      "real_payment_block_policy_receipt",
+      "license_ref",
+      "entitlement_ref",
+      "entitlement_team_scope_verification_receipt_ref",
+      "buyer_library_state_ref",
+      "payment_failed_block_receipt_ref",
+      "refund_or_chargeback_revocation_receipt_ref"
+    ],
+    "missing_purchase_result": "blocked_missing_authoritative_evidence",
+    "mismatch_result": "failed_requires_issue"
+  }
+}

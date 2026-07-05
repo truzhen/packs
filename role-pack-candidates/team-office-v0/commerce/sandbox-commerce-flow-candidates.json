@@ -1,0 +1,84 @@
+{
+  "flow_candidate_ref": "commerce-flow-candidate://team-office-role-pack-v0/sandbox",
+  "display_name": "团队办公室角色包 sandbox 商品化流程候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "commerce_truth_source": "truzhen-cloud",
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "artifact_manifest": "commerce/artifact-manifest.json",
+  "real_payment_policy": "blocked_until_owner_authorizes",
+  "stages": [
+    {
+      "stage": "upload_draft",
+      "status": "candidate_pending",
+      "truth_source": "truzhen-cloud",
+      "evidence_ref": "evidence://cloud-upload/team-office-role-pack-v0/draft-pending",
+      "required_input": "role-pack-candidates/team-office-v0/commerce/artifact-manifest.json"
+    },
+    {
+      "stage": "review_candidate",
+      "status": "candidate_pending",
+      "truth_source": "truzhen-cloud",
+      "evidence_ref": "evidence://cloud-review/team-office-role-pack-v0/review-pending",
+      "required_input": "pack-listing-candidate://team-office-role-pack-v0"
+    },
+    {
+      "stage": "sandbox_order",
+      "status": "candidate_pending",
+      "truth_source": "truzhen-cloud",
+      "evidence_ref": "evidence://cloud-order/team-office-role-pack-v0/sandbox-order-pending",
+      "required_input": "sandbox buyer identity + listing draft"
+    },
+    {
+      "stage": "sandbox_payment",
+      "status": "candidate_pending",
+      "truth_source": "truzhen-cloud",
+      "evidence_ref": "evidence://cloud-payment/team-office-role-pack-v0/sandbox-payment-pending",
+      "required_input": "sandbox order, no real payment capture"
+    },
+    {
+      "stage": "entitlement_issue",
+      "status": "candidate_pending",
+      "truth_source": "truzhen-cloud",
+      "evidence_ref": "evidence://cloud-entitlement/team-office-role-pack-v0/entitlement-pending",
+      "required_input": "sandbox payment success receipt"
+    },
+    {
+      "stage": "download_signed_artifact",
+      "status": "candidate_pending",
+      "truth_source": "truzhen-cloud",
+      "evidence_ref": "evidence://cloud-download/team-office-role-pack-v0/download-pending",
+      "required_input": "valid entitlement + artifact hash"
+    },
+    {
+      "stage": "local_install_via_truzhenos",
+      "status": "candidate_pending",
+      "truth_source": "truzhenos",
+      "evidence_ref": "evidence://truzhenos-install/team-office-role-pack-v0/install-pending",
+      "required_input": "downloaded artifact + hash verification + Owner Gate"
+    }
+  ],
+  "negative_cases": {
+    "without_entitlement": {
+      "expected_status": "blocked_entitlement_missing",
+      "truth_source": "truzhen-cloud",
+      "evidence_ref": "evidence://cloud-download/team-office-role-pack-v0/blocked-entitlement-missing"
+    },
+    "artifact_hash_mismatch": {
+      "expected_status": "blocked_artifact_hash_mismatch",
+      "truth_source": "truzhenos",
+      "evidence_ref": "evidence://truzhenos-install/team-office-role-pack-v0/blocked-hash-mismatch"
+    },
+    "real_payment_without_owner_authorization": {
+      "expected_status": "blocked_real_payment_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "evidence_ref": "evidence://cloud-payment/team-office-role-pack-v0/blocked-real-payment"
+    }
+  },
+  "forbidden": [
+    "store_payment_truth_in_truzhen_packs",
+    "store_license_truth_in_truzhen_packs",
+    "real_payment_capture_without_owner_authorization",
+    "production_listing_publish_without_owner_authorization"
+  ]
+}

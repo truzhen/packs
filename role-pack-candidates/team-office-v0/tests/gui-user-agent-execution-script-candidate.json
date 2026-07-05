@@ -1,0 +1,326 @@
+{
+  "execution_script_ref": "gui-user-agent-execution-script-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包用户视角 GUI 执行脚本候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "script_status": "not_run_requires_cross_repo_gui",
+  "actor_role": "user_view_gui_agent",
+  "coordinator_role": "organizer_coordinator_recorder",
+  "operation_mode": "gui_only",
+  "purpose": "把角色制作、能力引用、团队设置替换、秘书长音色 / VRM、云上传、sandbox 购买、下载、安装、运行使用和负例阻断拆成用户视角智能体可逐步执行的 GUI 脚本候选。",
+  "source_refs": [
+    "tests/gui-user-agent-scenarios.json",
+    "tests/gui-evidence-capture-protocol.json",
+    "integration/cross-repo-execution-readiness-package.json",
+    "tests/e2e-evidence-run-record.json"
+  ],
+  "step_contract": {
+    "required_fields": [
+      "step_id",
+      "step_order",
+      "scenario_ref",
+      "surface_id",
+      "action_type",
+      "user_action",
+      "expected_page_state",
+      "truth_source",
+      "required_evidence_slots",
+      "failure_issue_id"
+    ],
+    "allowed_action_types": [
+      "open_page",
+      "click",
+      "type",
+      "select",
+      "upload_via_gui",
+      "download_via_gui",
+      "confirm_owner_gate",
+      "observe"
+    ],
+    "evidence_storage_policy": "执行仓保存截图、页面状态和网络摘要；truzhen-packs 只保存脚本和证据槽定义，不保存原始截图、token、签名 URL 或支付凭据。"
+  },
+  "ordered_steps": [
+    {
+      "step_id": "open_role_studio",
+      "step_order": 1,
+      "scenario_ref": "GUI-ROLE-CREATE-SECRETARY",
+      "surface_id": "role_studio_home",
+      "action_type": "open_page",
+      "user_action": "从产品导航打开角色制作台。",
+      "expected_page_state": "角色制作台首页可见，创建角色入口可见，页面无后端成功假态。",
+      "truth_source": "truzhen-client-web-desktop",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-OPEN-GAP"
+    },
+    {
+      "step_id": "create_secretary_candidate",
+      "step_order": 2,
+      "scenario_ref": "GUI-ROLE-CREATE-SECRETARY",
+      "surface_id": "role_studio_editor",
+      "action_type": "type",
+      "user_action": "创建秘书长角色，填写目标槽位、风格、候选输出边界和 forbidden phrases 后保存。",
+      "expected_page_state": "页面展示 candidate-only、proposer-only、formal authority none，并返回 candidate_or_receipt_ref。",
+      "truth_source": "truzhenos",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "role_candidate_receipt_ref"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-SECRETARY-GAP"
+    },
+    {
+      "step_id": "create_five_advisor_candidates",
+      "step_order": 3,
+      "scenario_ref": "GUI-ROLE-CREATE-FIVE-ADVISORS",
+      "surface_id": "role_studio_editor",
+      "action_type": "type",
+      "user_action": "依次创建战略、产品、运营、财务、法务风控五个顾问角色候选。",
+      "expected_page_state": "五个顾问都显示 candidate-only、proposer-only 和对应 compatible slot。",
+      "truth_source": "truzhenos",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "five_advisor_candidate_refs"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-ADVISORS-GAP"
+    },
+    {
+      "step_id": "select_secretary_voice_vrm",
+      "step_order": 4,
+      "scenario_ref": "GUI-SECRETARY-VOICE-VRM",
+      "surface_id": "secretary_appearance_picker",
+      "action_type": "select",
+      "user_action": "在秘书长表现层设置中选择音色和 VRM，再清空并恢复默认。",
+      "expected_page_state": "页面只展示 voice_asset_ref、vrm_asset_ref 和 provider readiness，不接受 raw 文件路径。",
+      "truth_source": "multi_repo",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "voice_asset_ref",
+        "vrm_asset_ref",
+        "provider_readiness_receipt_ref"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-APPEARANCE-GAP"
+    },
+    {
+      "step_id": "create_capability_role_reference",
+      "step_order": 5,
+      "scenario_ref": "GUI-CAPABILITY-ROLE-REFERENCE",
+      "surface_id": "capability_pack_role_requirement_picker",
+      "action_type": "select",
+      "user_action": "在能力 Pack 制作入口选择秘书长和顾问角色需求，并尝试选择不兼容角色。",
+      "expected_page_state": "能力 Pack 只保存 role requirement 引用，不复制角色本体；不兼容角色被 blocked。",
+      "truth_source": "multi_repo",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "capability_role_requirement_receipt_ref",
+        "incompatible_role_block_receipt_ref"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-CAP-REF-GAP"
+    },
+    {
+      "step_id": "export_candidate_bundle",
+      "step_order": 6,
+      "scenario_ref": "GUI-CLOUD-UPLOAD-PURCHASE-DOWNLOAD-INSTALL",
+      "surface_id": "role_studio_export",
+      "action_type": "click",
+      "user_action": "点击导出 / 准备上架，生成 candidate bundle 和 artifact manifest。",
+      "expected_page_state": "页面展示 bundle_ref、artifact_manifest_ref、artifact_sha256 和 forbidden artifact scan 结果。",
+      "truth_source": "truzhenos",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "bundle_export_receipt_ref",
+        "artifact_sha256"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-EXPORT-GAP"
+    },
+    {
+      "step_id": "upload_cloud_listing_draft",
+      "step_order": 7,
+      "scenario_ref": "GUI-CLOUD-UPLOAD-PURCHASE-DOWNLOAD-INSTALL",
+      "surface_id": "cloud_listing_draft",
+      "action_type": "upload_via_gui",
+      "user_action": "通过 GUI 上传 candidate bundle 到云端草稿，不手工复制文件。",
+      "expected_page_state": "云端草稿展示 listing_draft_ref、cloud_upload_receipt_ref 和 artifact hash match。",
+      "truth_source": "truzhen-cloud",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "cloud_receipt_ref",
+        "cloud_upload_receipt_ref",
+        "artifact_hash_match"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-CLOUD-UPLOAD-GAP"
+    },
+    {
+      "step_id": "submit_marketplace_review_candidate",
+      "step_order": 8,
+      "scenario_ref": "GUI-CLOUD-UPLOAD-PURCHASE-DOWNLOAD-INSTALL",
+      "surface_id": "cloud_marketplace_review",
+      "action_type": "click",
+      "user_action": "提交云市场审核候选并确认生产上架仍 blocked。",
+      "expected_page_state": "页面展示 review candidate 状态、风险声明、条款隐私入口和 production publish blocked。",
+      "truth_source": "truzhen-cloud",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "cloud_receipt_ref",
+        "review_state_ref",
+        "production_publish_block_receipt_ref"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-REVIEW-GAP"
+    },
+    {
+      "step_id": "sandbox_purchase",
+      "step_order": 9,
+      "scenario_ref": "GUI-CLOUD-UPLOAD-PURCHASE-DOWNLOAD-INSTALL",
+      "surface_id": "cloud_product_page",
+      "action_type": "click",
+      "user_action": "买家通过云商品页接受条款并完成 sandbox 购买。",
+      "expected_page_state": "页面展示 sandbox_order_ref、sandbox_payment_receipt_ref、entitlement_ref，真实支付保持 blocked。",
+      "truth_source": "truzhen-cloud",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "cloud_receipt_ref",
+        "sandbox_order_ref",
+        "sandbox_payment_receipt_ref",
+        "entitlement_ref"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-PURCHASE-GAP"
+    },
+    {
+      "step_id": "download_purchased_artifact",
+      "step_order": 10,
+      "scenario_ref": "GUI-CLOUD-UPLOAD-PURCHASE-DOWNLOAD-INSTALL",
+      "surface_id": "purchased_product_download",
+      "action_type": "download_via_gui",
+      "user_action": "在已购页面下载签名 artifact。",
+      "expected_page_state": "页面展示 entitlement 校验通过、download_receipt_ref、signed_download_ref 和 artifact hash。",
+      "truth_source": "truzhen-cloud",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "download_receipt_ref",
+        "cloud_receipt_ref",
+        "artifact_sha256"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-DOWNLOAD-GAP"
+    },
+    {
+      "step_id": "install_downloaded_role_pack",
+      "step_order": 11,
+      "scenario_ref": "GUI-CLOUD-UPLOAD-PURCHASE-DOWNLOAD-INSTALL",
+      "surface_id": "local_pack_manager",
+      "action_type": "click",
+      "user_action": "在本地 Pack 管理或安装入口安装下载的角色包。",
+      "expected_page_state": "页面展示 entitlement verification、artifact hash verification、install_receipt_ref 和 enabled role pack version。",
+      "truth_source": "truzhenos",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "download_receipt_ref",
+        "install_receipt_ref",
+        "entitlement_verification_ref",
+        "artifact_hash_verification_ref",
+        "enabled_role_pack_version"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-INSTALL-GAP"
+    },
+    {
+      "step_id": "replace_team_roles_after_install",
+      "step_order": 12,
+      "scenario_ref": "GUI-TEAM-SETTINGS-ROLE-REPLACE",
+      "surface_id": "team_settings_role_tab",
+      "action_type": "confirm_owner_gate",
+      "user_action": "在团队设置 tab 中用已安装角色替换秘书长和五顾问，并确认 Owner Gate。",
+      "expected_page_state": "页面展示 team_binding_receipt_ref，历史回执未被改写。",
+      "truth_source": "truzhenos",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "install_receipt_ref",
+        "team_binding_receipt_ref",
+        "owner_gate_decision_ref",
+        "history_not_rewritten_evidence"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-TEAM-BINDING-GAP"
+    },
+    {
+      "step_id": "run_team_office_runtime_use",
+      "step_order": 13,
+      "scenario_ref": "GUI-CLOUD-UPLOAD-PURCHASE-DOWNLOAD-INSTALL",
+      "surface_id": "team_office_runtime",
+      "action_type": "observe",
+      "user_action": "进入团队办公室运行场景，让秘书长召集五顾问并输出候选建议。",
+      "expected_page_state": "运行输出标记 candidate-only，包含 runtime_receipt_candidate_ref 和团队绑定关联。",
+      "truth_source": "truzhenos",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "runtime_receipt_candidate_ref",
+        "secretary_candidate_output_ref",
+        "five_advisor_candidate_output_refs"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-RUNTIME-GAP"
+    },
+    {
+      "step_id": "run_negative_cases",
+      "step_order": 14,
+      "scenario_ref": "GUI-NEGATIVE-SOVEREIGNTY-AND-ASSET-GATES",
+      "surface_id": "negative_case_surface",
+      "action_type": "observe",
+      "user_action": "执行未购买下载、篡改 hash、raw asset、真实支付未授权等负例。",
+      "expected_page_state": "每个负例都显示 blocked 状态、可读原因和 blocked receipt。",
+      "truth_source": "multi_repo",
+      "required_evidence_slots": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "blocked_reason",
+        "blocked_receipt_ref",
+        "actual_block_status"
+      ],
+      "failure_issue_id": "ROLE-STUDIO-GUI-SCRIPT-NEGATIVE-GAP"
+    }
+  ],
+  "negative_case_script": {
+    "must_capture_blocked_receipt": true,
+    "required_cases": [
+      "download_without_entitlement",
+      "tampered_artifact_hash",
+      "raw_voice_or_vrm_asset",
+      "real_payment_without_owner_authorization",
+      "production_publish_without_owner_authorization",
+      "team_binding_without_owner_gate"
+    ]
+  },
+  "forbidden": [
+    "direct_api_call_as_user_action",
+    "manual_json_edit_as_gui_success",
+    "filesystem_copy_to_cloud",
+    "backend_fixture_success_without_gui",
+    "completion_claim_from_script_candidate_only",
+    "store_raw_screenshot_or_signed_download_url_in_truzhen_packs"
+  ],
+  "non_completion_clause": "本文件只是用户视角 GUI 执行脚本候选。没有跨仓授权、真实 GUI 操作、截图、页面状态、云端回执、安装回执、团队绑定回执和负例 blocked 回执前，不得声称角色制作、使用、上传、下载或正常商品化已完成。"
+}

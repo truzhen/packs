@@ -1,0 +1,280 @@
+{
+  "run_record_ref": "e2e-evidence-run-record://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包 E2E 证据运行记录候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "run_status": "not_run_requires_cross_repo_execution",
+  "purpose": "作为后续用户视角 GUI E2E 的统一记录包，收集角色制作、使用、上传、购买、下载、安装、团队替换和负例阻断的截图、页面状态、回执、hash 与缺口登记。",
+  "cross_repo_authorization": {
+    "truzhen-client-web-desktop": "requires_owner_authorization",
+    "truzhenos": "requires_owner_authorization",
+    "truzhen-cloud": "requires_owner_authorization",
+    "truzhen-contracts": "requires_owner_authorization"
+  },
+  "recording_policy": {
+    "user_agents_gui_only": true,
+    "organizer_role": "record_evidence_coordinate_issue_and_gap_only",
+    "no_manual_json_success": true,
+    "no_backend_only_success": true,
+    "no_cloud_truth_in_truzhen_packs": true,
+    "no_completion_claim_without_all_evidence": true
+  },
+  "stage_records": [
+    {
+      "stage_id": "publisher_create_role_candidates",
+      "status": "not_run",
+      "truth_source": "multi_repo",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "receipt_or_candidate_ref",
+        "timestamp",
+        "truth_source",
+        "role_candidate_refs",
+        "candidate_only_state"
+      ],
+      "gap_record_required_if_missing": "ROLE-STUDIO-GUI-OR-BE-CANDIDATE-GAP"
+    },
+    {
+      "stage_id": "publisher_export_candidate_bundle",
+      "status": "not_run",
+      "truth_source": "truzhenos",
+      "target_repos": [
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "receipt_or_candidate_ref",
+        "timestamp",
+        "truth_source",
+        "artifact_manifest_ref",
+        "file_sha256_list",
+        "forbidden_artifact_scan_result"
+      ],
+      "gap_record_required_if_missing": "ROLE-STUDIO-BUNDLE-EXPORT-GAP"
+    },
+    {
+      "stage_id": "publisher_upload_cloud_draft",
+      "status": "not_run",
+      "truth_source": "truzhen-cloud",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "receipt_or_candidate_ref",
+        "timestamp",
+        "truth_source",
+        "cloud_upload_receipt_ref",
+        "listing_draft_ref",
+        "artifact_hash_match"
+      ],
+      "gap_record_required_if_missing": "ROLE-STUDIO-CLOUD-UPLOAD-GAP"
+    },
+    {
+      "stage_id": "cloud_review_candidate",
+      "status": "not_run",
+      "truth_source": "truzhen-cloud",
+      "target_repos": [
+        "truzhen-cloud"
+      ],
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "receipt_or_candidate_ref",
+        "timestamp",
+        "truth_source",
+        "review_state_ref",
+        "production_publish_block_evidence"
+      ],
+      "gap_record_required_if_missing": "ROLE-STUDIO-CLOUD-REVIEW-GAP"
+    },
+    {
+      "stage_id": "buyer_sandbox_purchase",
+      "status": "not_run",
+      "truth_source": "truzhen-cloud",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "receipt_or_candidate_ref",
+        "timestamp",
+        "truth_source",
+        "sandbox_order_ref",
+        "sandbox_payment_receipt_ref",
+        "real_payment_block_policy"
+      ],
+      "gap_record_required_if_missing": "ROLE-STUDIO-SANDBOX-PURCHASE-GAP"
+    },
+    {
+      "stage_id": "buyer_entitlement_and_signed_download",
+      "status": "not_run",
+      "truth_source": "truzhen-cloud",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "receipt_or_candidate_ref",
+        "timestamp",
+        "truth_source",
+        "entitlement_ref",
+        "download_receipt_ref",
+        "signed_download_ref",
+        "artifact_hash_match"
+      ],
+      "gap_record_required_if_missing": "ROLE-STUDIO-DOWNLOAD-GAP"
+    },
+    {
+      "stage_id": "buyer_local_install",
+      "status": "not_run",
+      "truth_source": "truzhenos",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "receipt_or_candidate_ref",
+        "timestamp",
+        "truth_source",
+        "artifact_hash_match",
+        "entitlement_verification_ref",
+        "install_receipt",
+        "enabled_role_pack_version"
+      ],
+      "gap_record_required_if_missing": "ROLE-STUDIO-INSTALL-GAP"
+    },
+    {
+      "stage_id": "buyer_team_settings_replace_and_use",
+      "status": "not_run",
+      "truth_source": "multi_repo",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "receipt_or_candidate_ref",
+        "timestamp",
+        "truth_source",
+        "owner_gate_decision_ref",
+        "team_binding_receipt_ref",
+        "runtime_receipt_candidate_ref"
+      ],
+      "gap_record_required_if_missing": "ROLE-STUDIO-RUNTIME-BINDING-GAP"
+    }
+  ],
+  "negative_case_records": [
+    {
+      "case_id": "download_without_purchase",
+      "status": "not_run",
+      "expected_status": "blocked_entitlement_missing",
+      "truth_source": "truzhen-cloud",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "blocked_reason",
+        "receipt_or_candidate_ref",
+        "page_state_ref"
+      ]
+    },
+    {
+      "case_id": "expired_entitlement_install",
+      "status": "not_run",
+      "expected_status": "blocked_entitlement_expired",
+      "truth_source": "truzhenos",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "blocked_reason",
+        "receipt_or_candidate_ref",
+        "entitlement_verification_ref"
+      ]
+    },
+    {
+      "case_id": "tampered_artifact_hash",
+      "status": "not_run",
+      "expected_status": "blocked_artifact_hash_mismatch",
+      "truth_source": "truzhenos",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "blocked_reason",
+        "receipt_or_candidate_ref",
+        "artifact_hash_mismatch_ref"
+      ]
+    },
+    {
+      "case_id": "team_binding_without_owner_gate",
+      "status": "not_run",
+      "expected_status": "blocked_owner_gate_required",
+      "truth_source": "truzhenos",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "blocked_reason",
+        "receipt_or_candidate_ref",
+        "owner_gate_required_state"
+      ]
+    },
+    {
+      "case_id": "raw_voice_or_vrm_asset",
+      "status": "not_run",
+      "expected_status": "blocked_raw_asset_not_allowed",
+      "truth_source": "truzhenos",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "blocked_reason",
+        "receipt_or_candidate_ref",
+        "asset_ref_only_validation"
+      ]
+    },
+    {
+      "case_id": "real_payment_without_owner_authorization",
+      "status": "not_run",
+      "expected_status": "blocked_real_payment_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "required_evidence_slots": [
+        "gui_screenshot_path",
+        "blocked_reason",
+        "receipt_or_candidate_ref",
+        "real_payment_block_policy"
+      ]
+    }
+  ],
+  "completion_gate": {
+    "completion_claim_allowed": false,
+    "required_before_completion": [
+      "all_stage_records_passed",
+      "all_negative_case_records_blocked",
+      "artifact_hash_match",
+      "no_secret_scan",
+      "owner_gate_evidence",
+      "cloud_receipts_present",
+      "install_receipt_present",
+      "team_binding_receipt_present"
+    ],
+    "non_sufficient_evidence": [
+      "candidate_json_only",
+      "single_repo_test_only",
+      "mock_success_only",
+      "manual_json_edit",
+      "backend_only_success",
+      "cloud_only_success_without_local_install"
+    ]
+  },
+  "non_completion_clause": "本记录包当前未执行。只有跨仓授权后由用户视角智能体通过 GUI 产生截图、页面状态、候选 / 回执引用、cloud receipt、install receipt、binding receipt、hash match 和负例 blocked 证据，才能把对应记录从 not_run 改成 passed / blocked_verified。"
+}

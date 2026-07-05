@@ -1,0 +1,309 @@
+{
+  "execution_cards_ref": "cross-repo-execution-cards://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色制作台商品化跨仓执行卡候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "execution_status": "pending_owner_authorization",
+  "purpose": "把角色制作、使用、上传、购买、下载、安装和团队设置替换的商品阶段目标拆成授权后可逐仓执行、验证和验收的工作卡。",
+  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "execution_cards": [
+    {
+      "card_id": "contracts_schema_impact_review",
+      "target_repo": "truzhen-contracts",
+      "risk_color": "橙",
+      "authorization_status": "requires_owner_authorization",
+      "lifecycle_stage": "设计中 -> 契约已定",
+      "allowed_actions_after_authorization": [
+        "read_schema",
+        "run_schema_tests",
+        "write_impact_report",
+        "modify_schema_only_after_owner_confirms"
+      ],
+      "implementation_targets": [
+        "RolePackCandidate shape",
+        "CapabilityRoleRequirement shape",
+        "TeamRoleSlotBinding shape",
+        "SecretaryAppearancePreference shape",
+        "PackListing / Entitlement references"
+      ],
+      "verification_commands": [
+        "contract schema tests",
+        "reverse dependency checks",
+        "compatibility check for existing pack manifests"
+      ],
+      "required_evidence": [
+        "schema_impact_report",
+        "schema_compatibility_result",
+        "owner_decision_for_schema_change"
+      ],
+      "forbidden_boundaries": [
+        "no_schema_change_without_owner_confirmation",
+        "no_consumer_repo_defines_truth_shape_first"
+      ]
+    },
+    {
+      "card_id": "backend_role_candidate_gate_receipt",
+      "target_repo": "truzhenos",
+      "risk_color": "橙",
+      "authorization_status": "requires_owner_authorization",
+      "lifecycle_stage": "契约已定 -> 已接线",
+      "allowed_actions_after_authorization": [
+        "create_isolated_worktree",
+        "implement_role_candidate_backend",
+        "implement_owner_gate_and_receipt",
+        "run_backend_tests",
+        "run_isolated_devserver_e2e"
+      ],
+      "implementation_targets": [
+        "RolePackCandidate create / validate / export",
+        "CapabilityRoleRequirement compatibility check",
+        "TeamRoleSlotBindingCandidate + Owner Gate",
+        "SecretaryAppearancePreference asset ref validation",
+        "install downloaded role pack candidate bundle",
+        "Receipt lookup for install, binding and runtime use"
+      ],
+      "verification_commands": [
+        "go test ./... focused role studio backend tests",
+        "isolated devserver install smoke",
+        "receipt lookup smoke",
+        "forbidden artifact scan"
+      ],
+      "required_evidence": [
+        "RolePackCandidate_receipt",
+        "TeamRoleSlotBindingCandidate_receipt",
+        "Owner_Gate_decision_receipt",
+        "install_receipt",
+        "runtime_receipt_candidate_ref"
+      ],
+      "forbidden_boundaries": [
+        "no_formal_binding_without_owner_gate",
+        "no_direct_gateway_bypass",
+        "no_raw_voice_or_vrm_asset_storage"
+      ]
+    },
+    {
+      "card_id": "frontend_role_studio_and_team_settings",
+      "target_repo": "truzhen-client-web-desktop",
+      "risk_color": "黄",
+      "authorization_status": "requires_owner_authorization",
+      "lifecycle_stage": "设计中 -> 已接线",
+      "allowed_actions_after_authorization": [
+        "create_isolated_worktree",
+        "implement_role_studio_gui",
+        "implement_team_settings_role_tab",
+        "implement_voice_vrm_picker",
+        "run_typecheck",
+        "run_playwright_gui_smoke"
+      ],
+      "implementation_targets": [
+        "Role Studio create / edit / preview / export",
+        "Capability Pack role requirement picker",
+        "Team Settings Role Tab secretary and five advisors replacement",
+        "Secretary voice and VRM asset ref picker",
+        "Evidence display for candidate ID, Owner Gate, Receipt and blocked states"
+      ],
+      "verification_commands": [
+        "frontend typecheck",
+        "frontend unit tests for role studio",
+        "Playwright GUI smoke with user-view agent",
+        "visual screenshot review"
+      ],
+      "required_evidence": [
+        "gui_screenshot_role_create",
+        "gui_screenshot_team_settings_replace",
+        "gui_screenshot_voice_vrm_picker",
+        "gui_screenshot_blocked_state",
+        "network_response_summary_with_candidate_or_receipt_ref"
+      ],
+      "forbidden_boundaries": [
+        "no_frontend_only_success_state",
+        "no_backend_fixture_success_without_gui",
+        "no_terminal_command_as_user_action"
+      ]
+    },
+    {
+      "card_id": "cloud_upload_purchase_download",
+      "target_repo": "truzhen-cloud",
+      "risk_color": "橙",
+      "authorization_status": "requires_owner_authorization",
+      "lifecycle_stage": "设计中 -> 已接线",
+      "allowed_actions_after_authorization": [
+        "create_isolated_worktree",
+        "implement_upload_draft",
+        "implement_listing_draft",
+        "implement_sandbox_purchase",
+        "implement_entitlement_and_signed_download",
+        "run_cloud_sandbox_tests"
+      ],
+      "implementation_targets": [
+        "artifact upload draft",
+        "listing draft state machine",
+        "sandbox order and payment receipt",
+        "License / Entitlement issue and invalidation",
+        "signed download URL with artifact hash verification",
+        "refund / expired entitlement negative gates"
+      ],
+      "verification_commands": [
+        "cloud unit tests for upload draft",
+        "cloud sandbox commerce flow tests",
+        "entitlement download authorization tests",
+        "artifact hash mismatch negative test"
+      ],
+      "required_evidence": [
+        "cloud_upload_receipt",
+        "listing_draft_receipt",
+        "sandbox_payment_receipt",
+        "entitlement_receipt",
+        "download_receipt",
+        "artifact_hash_match_receipt"
+      ],
+      "forbidden_boundaries": [
+        "no_real_payment_without_owner_authorization",
+        "no_production_publish_without_owner_authorization",
+        "no_license_or_entitlement_truth_in_truzhen_packs"
+      ]
+    },
+    {
+      "card_id": "local_install_and_runtime_binding",
+      "target_repo": "truzhenos",
+      "risk_color": "橙",
+      "authorization_status": "requires_owner_authorization",
+      "lifecycle_stage": "已接线 -> 已验收",
+      "allowed_actions_after_authorization": [
+        "verify_downloaded_artifact",
+        "verify_entitlement",
+        "install_role_pack_candidate_bundle",
+        "enable_role_pack_for_team",
+        "bind_installed_role_from_team_settings",
+        "run_runtime_usage_smoke"
+      ],
+      "implementation_targets": [
+        "artifact hash verification before install",
+        "entitlement verification before install",
+        "role pack schema and forbidden artifact scan",
+        "enabled role pack version receipt",
+        "TeamRoleSlotBinding receipt",
+        "team office runtime candidate output receipt"
+      ],
+      "verification_commands": [
+        "install role pack candidate bundle smoke",
+        "entitlement missing negative test",
+        "artifact hash mismatch negative test",
+        "team binding Owner Gate smoke"
+      ],
+      "required_evidence": [
+        "artifact_hash_verification_receipt",
+        "entitlement_verification_receipt",
+        "install_receipt",
+        "enabled_role_pack_version_receipt",
+        "team_binding_receipt",
+        "runtime_receipt_candidate_ref"
+      ],
+      "forbidden_boundaries": [
+        "no_install_without_entitlement",
+        "no_install_with_hash_mismatch",
+        "no_formal_binding_without_owner_gate"
+      ]
+    },
+    {
+      "card_id": "gui_e2e_acceptance_recording",
+      "target_repo": "multi_repo",
+      "risk_color": "橙",
+      "authorization_status": "requires_owner_authorization",
+      "lifecycle_stage": "已接线 -> 已验收",
+      "allowed_actions_after_authorization": [
+        "start_isolated_backend_devserver",
+        "start_frontend_devserver",
+        "start_cloud_sandbox",
+        "run_user_view_gui_agent",
+        "record_e2e_evidence",
+        "fill_e2e_evidence_run_record"
+      ],
+      "implementation_targets": [
+        "publisher GUI creates six role candidates",
+        "publisher GUI uploads cloud listing draft",
+        "buyer GUI completes sandbox purchase",
+        "buyer GUI downloads signed artifact",
+        "buyer GUI installs role pack locally",
+        "buyer GUI replaces secretary and five advisors",
+        "team office runtime returns candidate-only outputs"
+      ],
+      "verification_commands": [
+        "Playwright user-view GUI E2E",
+        "cloud sandbox receipt audit",
+        "truzhenos receipt lookup audit",
+        "artifact hash audit",
+        "negative case GUI smoke"
+      ],
+      "required_evidence": [
+        "gui_screenshot_full_path",
+        "cloud_receipt_bundle",
+        "install_receipt",
+        "team_binding_receipt",
+        "negative_block_receipts",
+        "e2e_evidence_run_record_filled"
+      ],
+      "forbidden_boundaries": [
+        "no_backend_only_e2e_claim",
+        "no_mock_success_only",
+        "no_completion_claim_without_all_stage_evidence"
+      ]
+    },
+    {
+      "card_id": "production_promotion_controls",
+      "target_repo": "multi_repo",
+      "risk_color": "红",
+      "authorization_status": "requires_owner_authorization",
+      "lifecycle_stage": "已验收 -> 已发布",
+      "allowed_actions_after_authorization": [
+        "verify_commercial_production_promotion_gate",
+        "submit_production_go_live_request",
+        "submit_real_payment_enable_request",
+        "submit_production_signed_download_enable_request",
+        "submit_production_listing_publish_request",
+        "verify_production_install_observability"
+      ],
+      "implementation_targets": [
+        "production_go_live_request",
+        "real_payment_enable_request",
+        "production_signed_download_enable",
+        "production_listing_publish_request",
+        "production_install_observability"
+      ],
+      "verification_commands": [
+        "production promotion gate review",
+        "truzhen-cloud production go-live request receipt check",
+        "real payment enable request blocked-or-allowed receipt check",
+        "production signed download enable receipt check",
+        "production listing publish request receipt check",
+        "truzhenos production install observability receipt check"
+      ],
+      "required_evidence": [
+        "production_promotion_gate_pass_receipt",
+        "owner_go_no_go_decision_ref",
+        "production_go_live_request_receipt",
+        "real_payment_enable_request_receipt",
+        "production_signed_download_enable_receipt",
+        "production_listing_publish_request_receipt",
+        "production_install_observability_receipt"
+      ],
+      "forbidden_boundaries": [
+        "no_production_publish_without_owner_authorization",
+        "no_real_payment_without_owner_authorization",
+        "no_copy_sandbox_receipt_as_production_receipt",
+        "no_production_secret_in_pack",
+        "no_mark_released_from_candidate_json_only"
+      ]
+    }
+  ],
+  "forbidden": [
+    "no_cross_repo_write_without_owner_authorization",
+    "no_real_payment_without_owner_authorization",
+    "no_production_publish_without_owner_authorization",
+    "no_formal_binding_without_owner_gate",
+    "no_raw_secret_or_payment_credential",
+    "no_raw_voice_or_vrm_asset"
+  ],
+  "non_completion_clause": "本文件只定义跨仓执行卡，不是授权、不是真实施工记录。只有 Owner 明确授权目标仓、逐仓独立 status、实现接线、用户视角 GUI E2E 和回执证据通过后，才能把对应卡片升级到已验收。"
+}

@@ -1,0 +1,184 @@
+{
+  "matrix_ref": "install-compatibility-matrix://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包安装兼容性矩阵候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "artifact_manifest": "commerce/artifact-manifest.json",
+  "install_truth_source": "truzhenos",
+  "commerce_truth_source": "truzhen-cloud",
+  "package_contents_truth_source": "truzhen-packs",
+  "purpose": "声明买家下载角色包后，本地安装、升级、回滚和重新启用前必须满足的兼容性检查、证据和阻断条件。",
+  "supported_install_targets": [
+    "local_pack_manager",
+    "team_settings_role_tab",
+    "cloud_purchased_page_trigger"
+  ],
+  "compatibility_dimensions": [
+    {
+      "dimension_id": "truzhenos_runtime_version",
+      "check_required": "true",
+      "check_truth_source": "truzhenos",
+      "accepted_policy": "runtime_supports_role_pack_candidate_bundle_v0",
+      "expected_evidence": "runtime_version_compatibility_receipt"
+    },
+    {
+      "dimension_id": "role_pack_schema_version",
+      "check_required": "true",
+      "check_truth_source": "truzhenos",
+      "accepted_policy": "role_pack_candidate_schema_0_1_0_compatible_or_migratable",
+      "expected_evidence": "role_pack_schema_check_receipt"
+    },
+    {
+      "dimension_id": "team_office_role_slots",
+      "check_required": "true",
+      "check_truth_source": "truzhenos",
+      "accepted_policy": "secretary_general_and_five_advisor_slots_available_or_migratable",
+      "expected_evidence": "team_role_slot_compatibility_receipt"
+    },
+    {
+      "dimension_id": "entitlement_scope",
+      "check_required": "true",
+      "check_truth_source": "truzhen-cloud + truzhenos",
+      "accepted_policy": "valid_team_scoped_entitlement_for_target_team",
+      "expected_evidence": "entitlement_scope_verification_receipt"
+    },
+    {
+      "dimension_id": "artifact_signature_hash",
+      "check_required": "true",
+      "check_truth_source": "truzhen-cloud + truzhenos",
+      "accepted_policy": "cloud_signed_artifact_and_file_sha256_match_manifest",
+      "expected_evidence": "signature_and_artifact_hash_verification_receipt"
+    },
+    {
+      "dimension_id": "frontend_route_version",
+      "check_required": "true",
+      "check_truth_source": "truzhen-client-web-desktop",
+      "accepted_policy": "role_studio_and_team_settings_routes_support_installed_role_pack",
+      "expected_evidence": "frontend_route_compatibility_screenshot_and_smoke_result"
+    }
+  ],
+  "install_paths": [
+    {
+      "path_id": "fresh_install_after_purchase",
+      "entry_surface": "Purchased Product Download -> Local Pack Install",
+      "required_checks": [
+        "entitlement_scope",
+        "artifact_signature_hash",
+        "role_pack_schema_version",
+        "team_office_role_slots"
+      ],
+      "required_evidence": [
+        "install_receipt",
+        "artifact_hash_match",
+        "owner_gate_evidence",
+        "enabled_role_pack_version_receipt"
+      ],
+      "success_status": "candidate_install_ready_after_cross_repo_execution"
+    },
+    {
+      "path_id": "upgrade_existing_role_pack",
+      "entry_surface": "Local Pack Manager Upgrade",
+      "required_checks": [
+        "entitlement_scope",
+        "artifact_signature_hash",
+        "role_pack_schema_version",
+        "team_office_role_slots"
+      ],
+      "required_evidence": [
+        "install_receipt",
+        "artifact_hash_match",
+        "owner_gate_evidence",
+        "upgrade_compatibility_receipt",
+        "previous_binding_preserved_receipt"
+      ],
+      "success_status": "candidate_upgrade_ready_after_cross_repo_execution"
+    },
+    {
+      "path_id": "rollback_to_previous_binding",
+      "entry_surface": "Team Settings Role Tab Rollback",
+      "required_checks": [
+        "team_office_role_slots",
+        "role_pack_schema_version",
+        "truzhenos_runtime_version"
+      ],
+      "required_evidence": [
+        "install_receipt",
+        "artifact_hash_match",
+        "owner_gate_evidence",
+        "rollback_receipt",
+        "history_not_rewritten_receipt"
+      ],
+      "success_status": "candidate_rollback_ready_after_cross_repo_execution"
+    },
+    {
+      "path_id": "reinstall_after_reenable",
+      "entry_surface": "Local Pack Manager Re-enable",
+      "required_checks": [
+        "entitlement_scope",
+        "artifact_signature_hash",
+        "truzhenos_runtime_version"
+      ],
+      "required_evidence": [
+        "install_receipt",
+        "artifact_hash_match",
+        "owner_gate_evidence",
+        "reenable_receipt",
+        "cloud_revocation_check_receipt"
+      ],
+      "success_status": "candidate_reinstall_ready_after_cross_repo_execution"
+    }
+  ],
+  "negative_cases": {
+    "missing_entitlement": {
+      "expected_status": "blocked_entitlement_missing",
+      "truth_source": "truzhenos",
+      "expected_evidence": "install_block_receipt_entitlement_missing"
+    },
+    "expired_entitlement": {
+      "expected_status": "blocked_entitlement_expired",
+      "truth_source": "truzhenos",
+      "expected_evidence": "install_block_receipt_entitlement_expired"
+    },
+    "incompatible_schema": {
+      "expected_status": "blocked_role_pack_schema_incompatible",
+      "truth_source": "truzhenos",
+      "expected_evidence": "schema_compatibility_block_receipt"
+    },
+    "missing_team_slot": {
+      "expected_status": "blocked_team_role_slot_missing",
+      "truth_source": "truzhenos",
+      "expected_evidence": "team_slot_compatibility_block_receipt"
+    },
+    "unsupported_truzhenos_version": {
+      "expected_status": "blocked_runtime_version_unsupported",
+      "truth_source": "truzhenos",
+      "expected_evidence": "runtime_version_block_receipt"
+    },
+    "artifact_hash_mismatch": {
+      "expected_status": "blocked_artifact_hash_mismatch",
+      "truth_source": "truzhenos",
+      "expected_evidence": "artifact_hash_block_receipt"
+    },
+    "signature_missing": {
+      "expected_status": "blocked_signature_missing",
+      "truth_source": "truzhen-cloud + truzhenos",
+      "expected_evidence": "signature_missing_block_receipt"
+    },
+    "production_publish_without_owner_authorization": {
+      "expected_status": "blocked_production_publish_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "production_publish_block_receipt"
+    }
+  },
+  "forbidden": [
+    "install_without_entitlement_verification",
+    "install_without_artifact_hash_verification",
+    "install_unsigned_artifact",
+    "rewrite_existing_binding_receipts",
+    "formal_binding_without_owner_gate",
+    "production_publish_without_owner_authorization"
+  ],
+  "non_completion_clause": "本矩阵只声明安装兼容性候选，不代表本地安装、升级、回滚或重新启用已经通过。真实通过必须由 truzhenos、truzhen-cloud 和 GUI E2E 产生对应 receipt、hash 和截图证据。"
+}

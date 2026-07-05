@@ -1,0 +1,181 @@
+{
+  "readiness_package_ref": "p17-execution-readiness-package://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "slice_key": "p17_provider_adapter_candidate",
+  "readiness_status": "blocked_pending_owner_authorization_and_p16_evidence",
+  "depends_on": [
+    "p16_controlled_code_assistant_run"
+  ],
+  "provider_candidate_refs": [
+    "provider-candidate://short-video-draft-generation-adapter",
+    "provider-candidate://short-video-composition-adapter",
+    "provider-candidate://short-video-social-publish-adapter"
+  ],
+  "default_readiness": [
+    "provider_missing",
+    "blocked"
+  ],
+  "provider_implementation_in_packs_allowed": false,
+  "third_party_oss_execution_allowed_now": false,
+  "provider_ready_claim_allowed": false,
+  "authorization_scope_contract": "docs/p17-cross-repo-authorization-scope.json",
+  "authorization_evidence_intake_contract": "docs/p17-owner-authorization-evidence-intake.json",
+  "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
+  "evidence_contract": "docs/p17-provider-adapter-candidate-evidence-contract.json",
+  "source_p16_post_run_evidence_acceptance_gate": "docs/p16-post-run-evidence-acceptance-gate.json",
+  "frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
+  "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-provider-adapter-candidate-spec-20260704.md",
+  "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md",
+  "target_repositories": [
+    "truzhen-software",
+    "truzhenos",
+    "truzhen-client-web-desktop",
+    "truzhen-packs"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "vendor_third_party_oss_source",
+    "provider_implementation_in_packs",
+    "provider_ready_claim"
+  ],
+  "allowed_scope_summary": {
+    "truzhen-software": "Provider / adapter candidate scaffold, readiness check and risk docs only after Owner authorization",
+    "truzhenos": "Only if provider readiness consumption is needed after Owner authorization",
+    "truzhen-client-web-desktop": "Only if provider candidate readiness display is needed after Owner authorization",
+    "truzhen-packs": "P17 provider candidate ledger and capability candidate refs only"
+  },
+  "required_preconditions": [
+    "p16_controlled_code_assistant_run_evidence_complete_verified",
+    "p16_post_run_evidence_acceptance_gate_passed",
+    "p17_owner_authorization_recorded",
+    "p17_authorization_scope_matched",
+    "target_provider_repository_confirmed_outside_packs"
+  ],
+  "required_verification_commands": [
+    "git status --short --branch && git diff --check",
+    "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1",
+    "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx",
+    "go test ./... -run TestShortVideoP17ExecutionReadinessPackageIsMachineCheckable -count=1"
+  ],
+  "required_evidence_outputs": [
+    "owner_authorization_evidence_intake_recorded",
+    "p16_evidence_completion_ref",
+    "provider_candidate_scaffold_diff_outside_packs",
+    "provider_manifest_candidate_refs",
+    "readiness_check_default_provider_missing_or_blocked",
+    "secret_scan_or_no_raw_secret_evidence",
+    "packs_artifact_scan_no_provider_runtime",
+    "forbidden_action_noop_evidence"
+  ],
+  "evidence_writeback_plan": {
+    "candidate_only": true,
+    "write_status": "pending_authorization",
+    "ledger_path": "docs/provider-adapter-candidate-ledger.md",
+    "evidence_contract": "docs/p17-provider-adapter-candidate-evidence-contract.json",
+    "can_write_completion_claim": false,
+    "required_before_marking_slice_complete": [
+      "owner_authorization_recorded",
+      "pack_studio_issue_ledger_closed",
+      "all_evidence_ids_written",
+      "all_evidence_refs_recorded",
+      "forbidden_action_checks_written",
+      "independent_verification_passed"
+    ],
+    "required_entries": [
+      {
+        "evidence_id": "adapter_candidate_lands_outside_packs",
+        "source_group": "required_provider_evidence",
+        "target_ledger": "docs/provider-adapter-candidate-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "readiness_reports_provider_missing_or_blocked",
+        "source_group": "required_provider_evidence",
+        "target_ledger": "docs/provider-adapter-candidate-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "gui_shows_provider_ownership_and_blocked_state",
+        "source_group": "required_provider_evidence",
+        "target_ledger": "docs/provider-adapter-candidate-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "provider_implementation_not_in_packs",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/provider-adapter-candidate-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "no_third_party_oss_execution",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/provider-adapter-candidate-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "no_raw_secret",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/provider-adapter-candidate-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      }
+    ],
+    "non_completion_clause": "This writeback plan maps future evidence IDs to the candidate ledger only. It is not execution evidence and does not permit a completion claim."
+  },
+  "cross_repo_work_gate": {
+    "can_start_cross_repo_work": false,
+    "required_authorization_attempt_coverage_verifier_source": "commercial_go_live_evidence_package.authorization_attempt_coverage_verifier",
+    "authorization_attempt_coverage_verifier_must_pass": true,
+    "required_next_authorization_start_guard_source": "commercial_go_live_evidence_package.next_authorization_start_guard",
+    "next_authorization_start_guard_must_open": true,
+    "required_pack_studio_issue_ledger_source": "candidate_set.pack_studio_issue_ledger",
+    "pack_studio_issue_ledger_must_close": true,
+    "required_status_before_cross_repo_work": "owner_authorization_recorded_and_p16_evidence_complete_and_authorization_attempt_coverage_verifier_passed_and_next_authorization_start_guard_open_and_pack_studio_issue_ledger_closed_and_no_rejected_authorization_attempt_substitution",
+    "must_record_before_cross_repo_work": true,
+    "required_rejected_authorization_attempt_source": "commercial_go_live_evidence_package.latest_rejected_authorization_attempt",
+    "rejected_authorization_attempt_can_satisfy_owner_authorization": false,
+    "rejected_authorization_attempt_can_start_cross_repo_work": false,
+    "blocked_attempt_refs": [
+      "owner-message://2026-07-05-p11-card-mismatch-for-p12"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "owner_authorization_missing",
+    "p16_evidence_incomplete",
+    "authorization_attempt_coverage_verifier_pending",
+    "next_authorization_start_guard_pending",
+    "pack_studio_issue_ledger_open",
+    "execution_readiness_package_without_open_gate",
+    "rejected_authorization_attempt_is_not_owner_authorization",
+    "adapter_scaffold_inside_packs_without_external_repo_evidence",
+    "provider_manifest_without_readiness_receipt",
+    "provider_ready_claim_without_owner_base_receipt",
+    "vendored_third_party_oss_source_in_packs"
+  ],
+  "non_completion_clause": "This readiness package does not create provider code. It only defines the P17 gate for future Owner-authorized provider / adapter candidates outside truzhen-packs, with default readiness provider_missing or blocked and no provider-ready claim."
+}

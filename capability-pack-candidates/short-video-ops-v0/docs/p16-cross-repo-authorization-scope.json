@@ -1,0 +1,70 @@
+{
+  "scope_ref": "p16-cross-repo-authorization-scope://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p16_controlled_code_assistant_run",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "pending_owner_authorization",
+  "authorization_truth_source": "Owner explicit authorization in the current thread or a signed authorization card; not inferred from plan text",
+  "authorized_repositories": [
+    {
+      "repo": "truzhenos",
+      "path": "/Users/li/Documents/truzhenv3worktree/truzhenos-mod-04-capability-pack-studio-short-video-oss",
+      "allowed_actions": [
+        "modify",
+        "test",
+        "controlled_code_assistant_run_once"
+      ],
+      "scope": "11 Gateway / 04 Studio controlled Code Assistant run, Gate, Receipt and tests"
+    },
+    {
+      "repo": "truzhen-client-web-desktop",
+      "path": "/Users/li/.config/superpowers/worktrees/truzhen-client-web-desktop/capability-pack-studio-short-video-gui",
+      "allowed_actions": [
+        "modify",
+        "test"
+      ],
+      "scope": "GUI display for run receipt, PatchCandidate refs and review-required state"
+    },
+    {
+      "repo": "truzhen-packs",
+      "path": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+      "allowed_actions": [
+        "document",
+        "candidate_asset_maintenance",
+        "test"
+      ],
+      "scope": "P16 controlled run ledger and candidate status only"
+    }
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "uncontrolled_codex_cli_run",
+    "auto_apply_patch",
+    "commit_or_push_patch_candidate",
+    "provider_ready_claim"
+  ],
+  "required_authorization_phrase_contains": [
+    "授权按 P16 授权卡",
+    "truzhenos 与 truzhen-client-web-desktop",
+    "允许通过 11 Gateway 执行一次受控 Code Assistant 最小 run",
+    "不改 contracts、software、cloud",
+    "不执行第三方 OSS",
+    "不登录或上传社媒",
+    "不应用补丁"
+  ],
+  "current_authorization_evidence": {
+    "status": "missing",
+    "owner_thread_quote_required": true,
+    "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-cross-repo-execution-authorization-20260704.md",
+    "evidence_intake_contract": "docs/p16-owner-authorization-evidence-intake.json",
+    "must_be_recorded_before_cross_repo_work": true
+  }
+}

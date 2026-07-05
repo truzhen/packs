@@ -1,0 +1,138 @@
+{
+  "contract_ref": "p12-safe-lifecycle-evidence-contract://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p12_safe_lifecycle_sample",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "pending_authorization",
+  "required_repositories": [
+    "truzhenos",
+    "truzhen-client-web-desktop"
+  ],
+  "lifecycle_endpoints": [
+    "/v3/capability/lifecycle/draft",
+    "/v3/capability/lifecycle/readiness",
+    "/v3/capability/lifecycle/promote",
+    "/v3/capability/lifecycle/confirm",
+    "/v3/capability/lifecycle/history",
+    "/v3/capability/lifecycle/packs"
+  ],
+  "required_backend_evidence": [
+    {
+      "evidence_id": "server_derived_draft",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "targeted Go test output showing draft fields are derived from the server-side safe fixture and no enabled pointer exists at draft stage",
+      "expected_command": "GOWORK=off go test ./backend/tests/capability -run 'TestCapabilityPackLifecycleSafeFixtureDraftIsServerDerived' -count=1"
+    },
+    {
+      "evidence_id": "readiness_issues_or_ready_state",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "readiness response summary showing ready or explicit provider_missing/not_ready issue keys and promote_allowed=false when blocked",
+      "expected_command": "GOWORK=off go test ./backend/tests/capability -run 'TestCapabilityPackLifecycleSafeFixtureReadinessExplainsProviderMissing' -count=1"
+    },
+    {
+      "evidence_id": "promote_gate_preserved",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "promote response and lifecycle history proving promote does not write enabled pointer and still requires Owner/Base Gate",
+      "expected_command": "GOWORK=off go test ./backend/tests/capability -run 'TestCapabilityPackLifecycleSafeFixtureConfirmRequiresGateAndReceipt' -count=1"
+    },
+    {
+      "evidence_id": "confirm_requires_owner_base_gate",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "confirm test evidence showing missing or invalid Owner/Base Gate decision is blocked before enabled pointer is created",
+      "expected_command": "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+    },
+    {
+      "evidence_id": "receipt_ref_bound_to_confirm",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "confirm response summary containing a 03 Receipt test-chain ref bound to the lifecycle confirm operation",
+      "expected_command": "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+    },
+    {
+      "evidence_id": "enabled_pointer_visible_after_confirm",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "history and packs query summaries proving enabled pointer appears only after confirm succeeds",
+      "expected_command": "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+    }
+  ],
+  "required_frontend_evidence": [
+    {
+      "evidence_id": "gui_safe_sample_lifecycle_controls",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI test output showing safe lifecycle sample controls render after P11 preflight area",
+      "expected_command": "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx -t lifecycle"
+    },
+    {
+      "evidence_id": "confirm_disabled_until_gate_receipt",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI assertions proving confirm cannot be clicked before promote, Owner/Base Gate and receipt prerequisites are present",
+      "expected_command": "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx -t lifecycle"
+    },
+    {
+      "evidence_id": "enabled_pointer_receipt_after_confirm",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI and smoke evidence showing enabled pointer and receipt ref render only after confirm response",
+      "expected_command": "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx src/components/pack-lifecycle/CodeAssistantPackPanel.test.tsx src/api/__tests__/executionLiveSmokeScript.test.ts && npm run typecheck && npm run smoke:frontend-shell"
+    },
+    {
+      "evidence_id": "third_party_oss_not_runnable",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI test or smoke evidence that MoneyPrinterTurbo, Pixelle-Video and social-auto-upload remain evidence/blocked samples and are not runnable providers",
+      "expected_command": "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenv3worktree/truzhenos-mod-04-capability-pack-studio-short-video-oss GOWORK=off npm run smoke:frontend-behavior"
+    }
+  ],
+  "required_forbidden_action_checks": [
+    {
+      "evidence_id": "codex_cli_not_run",
+      "current_status": "pending_authorization",
+      "evidence_required": "P12 execution logs and GUI smoke summary showing no Codex CLI invocation and no GPT/Codex token consumption"
+    },
+    {
+      "evidence_id": "third_party_oss_not_executed",
+      "current_status": "pending_authorization",
+      "evidence_required": "execution logs and artifact scan showing MoneyPrinterTurbo, Pixelle-Video and social-auto-upload were not installed or run"
+    },
+    {
+      "evidence_id": "social_login_upload_not_happened",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI smoke and gateway logs showing no social login, no cookie access and no upload/publish action"
+    },
+    {
+      "evidence_id": "raw_secret_not_saved",
+      "current_status": "pending_authorization",
+      "evidence_required": "secret scan and log redaction review showing no raw token, cookie, password, private key or production credential was stored"
+    },
+    {
+      "evidence_id": "contracts_not_changed",
+      "current_status": "pending_authorization",
+      "evidence_required": "git status / diff evidence showing truzhen-contracts was not modified for P12"
+    }
+  ],
+  "completion_gate": {
+    "can_mark_slice_complete": false,
+    "can_mark_p12_complete": false,
+    "required_status_before_completion": "all_required_backend_evidence_and_frontend_evidence_and_forbidden_action_checks_passed_and_owner_authorization_recorded_and_pack_studio_issue_ledger_closed_and_all_evidence_ids_written_and_all_evidence_refs_recorded_and_forbidden_action_checks_written_and_independent_verification_passed_and_owner_base_gate_receipts_bound",
+    "commercial_status_after_slice_only": "not_commercial_ready",
+    "commercial_status_after_p12_only": "not_commercial_ready",
+    "next_required_slice": "p13_gui_lifecycle_panel",
+    "required_evidence_writeback_plan_source": "docs/p12-execution-readiness-package.json#evidence_writeback_plan",
+    "evidence_writeback_plan_must_complete": true,
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "blocking_owner_base_gate": "owner_base_gate_receipts_missing"
+  },
+  "non_sufficient_evidence": [
+    "evidence_writeback_incomplete",
+    "owner_base_gate_receipts_missing"
+  ]
+}

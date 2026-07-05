@@ -1,0 +1,97 @@
+{
+  "pack_type": "Capability Pack",
+  "capability_pack_ref": "capability-pack://short-video-social-publish-draft",
+  "display_name": "短视频发布草稿能力包",
+  "version": "0.1.0",
+  "lifecycle_status": "契约已定",
+  "candidate_only": true,
+  "non_formal": true,
+  "default_readiness": "blocked",
+  "capability_domain": "short_video_ops",
+  "capability_operation": "prepare_social_publish_draft_candidate",
+  "input_contract": [
+    {
+      "name": "video_draft_ref",
+      "type": "artifact_ref",
+      "required": true,
+      "description": "候选短视频草稿产物引用。"
+    }
+  ],
+  "output_contract": [
+    {
+      "name": "communication_draft_candidate_ref",
+      "type": "candidate_ref",
+      "required": true,
+      "description": "平台发布文案、标签、标题和上传意图的候选引用；不代表真实发送。"
+    }
+  ],
+  "risk": {
+    "risk_class": "high",
+    "side_effect_class": "external_send",
+    "owner_decision_required": true,
+    "base_gate_required_for_execution": true,
+    "communication_gateway_required": true
+  },
+  "provider_requirements": [
+    {
+      "requirement_ref": "provider-requirement://short-video/social-publish-draft-candidate",
+      "gateway_class": "10-communication-gateway + 11-execution-gateway",
+      "provider_family": "social_platform_upload",
+      "required_readiness": "blocked_until_gateway_provider_ready",
+      "fallback_policy": "blocked",
+      "notes": "真实上传、登录、发布和外发必须经 Communication / Execution Gateway 与 Owner + Base Gate。"
+    }
+  ],
+  "oss_candidates": [
+    {
+      "name": "social-auto-upload",
+      "source_registry": "github",
+      "source_url": "https://github.com/dreammis/social-auto-upload",
+      "observed_license": "MIT",
+      "evidence_refs": [
+        "evidence://github/dreammis/social-auto-upload/license",
+        "evidence://github/dreammis/social-auto-upload/readme",
+        "evidence://github/dreammis/social-auto-upload/platform-surface"
+      ],
+      "verification_status": "pending_human_review",
+      "risk_notes": [
+        "涉及社媒账号、平台登录、网络上传和真实发布，默认 blocked。",
+        "本候选只能用于识别 provider requirement 和风险，不生成直接执行胶水计划。"
+      ],
+      "integration_plan_status": "blocked_no_glue_plan_for_external_send"
+    }
+  ],
+  "integration_plan": {
+    "integration_kind": "blocked_external_send_candidate",
+    "allowed_actions": [
+      "draft_mapping",
+      "risk_labeling",
+      "gateway_requirement_declaration",
+      "receipt_binding"
+    ],
+    "no_direct_execution": true,
+    "candidate_only": true,
+    "non_formal": true,
+    "code_assistant_policy": {
+      "capability_pack_ref": "capability-pack://software-code-assistant",
+      "allowed_skill_ids": [],
+      "patch_candidate_only": false,
+      "credential_policy": "credential_ref_only_no_raw_token",
+      "no_raw_token": true,
+      "blocked_reason": "external_send_requires_gateway_and_owner_base_gate"
+    }
+  },
+  "acceptance": [
+    "只生成 communication_draft_candidate_ref，不真实上传、不真实发送。",
+    "涉及社媒上传类 OSS 时必须 blocked，直到 10/11 Gateway provider、Owner Gate、Base Gate 和 Receipt 全部就绪。",
+    "任何平台账号、登录态、cookie 或凭据原文不得进入 Pack。"
+  ],
+  "forbidden": [
+    "real_social_upload",
+    "real_publish",
+    "platform_login",
+    "cookie_or_session_capture",
+    "direct_browser_automation_from_pack",
+    "third_party_repo_execution_from_pack"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "bundle_layout_candidate_ref": "artifact-bundle-layout-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "display_name": "团队办公室角色包确定性打包规格候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "build_truth_source": "truzhenos",
+  "distribution_truth_source": "truzhen-cloud",
+  "package_contents_truth_source": "truzhen-packs",
+  "package_format": "role_pack_candidate_bundle_v0",
+  "archive_format": "deterministic_tar_zstd_or_cloud_equivalent",
+  "scope": "声明角色制作台导出候选包时的确定性打包、哈希、签名请求、上传请求和安装消费规则；不提交真实压缩包、不保存签名私钥、不代表云端已上传。",
+  "required_inputs": [
+    "candidate-set.json",
+    "commerce/artifact-manifest.json",
+    "commerce/release-candidate-package.json",
+    "commerce/marketplace-review-submission-candidate.json",
+    "commerce/commercial-receipt-chain-candidate.json",
+    "commerce/commercial-production-promotion-gate-candidate.json",
+    "install/install-preflight-request-candidate.json"
+  ],
+  "source_file_policy": {
+    "source_of_truth": "commerce/artifact-manifest.json",
+    "include_policy": "only_files_declared_in_artifact_manifest",
+    "path_scope": "role-pack-candidates/team-office-v0",
+    "path_style": "posix_relative",
+    "forbidden_paths": [
+      "__pycache__",
+      "node_modules",
+      "dist",
+      "build",
+      ".vite",
+      "*.db",
+      "*.sqlite",
+      "*.log",
+      "*.jsonl",
+      "*.pyc",
+      "raw_voice_asset",
+      "raw_vrm_asset",
+      "private_key",
+      "payment_webhook_secret"
+    ]
+  },
+  "deterministic_build_policy": {
+    "path_normalization": "posix_relative_no_dotdot_no_absolute_path",
+    "file_order": "artifact_manifest_order_then_lexicographic_for_audit_only",
+    "timestamp_policy": "zero_or_reproducible_epoch",
+    "compression_policy": "deterministic_no_original_mtime_no_owner_group",
+    "manifest_hash_policy": "commerce/artifact-manifest.json self_hash_excluded",
+    "json_encoding_policy": "utf8_no_bom_preserve_declared_files",
+    "line_ending_policy": "lf"
+  },
+  "hash_and_signature_policy": {
+    "file_hash_algorithm": "sha256",
+    "bundle_hash_algorithm": "sha256",
+    "bundle_hash_created_by": "truzhenos",
+    "cloud_signature_required": "true",
+    "signing_truth_source": "truzhen-cloud",
+    "private_key_storage": "not_in_truzhen_packs",
+    "public_key_distribution": "cloud_release_metadata"
+  },
+  "package_outputs": {
+    "candidate_bundle_ref": "candidate_bundle://team-office-role-pack-v0/0.1.0",
+    "bundle_sha256": "computed_by_truzhenos_at_export_time",
+    "upload_request_ref": "cloud_upload_request_candidate://team-office-role-pack-v0/0.1.0",
+    "signing_request_ref": "cloud_signing_request_candidate://team-office-role-pack-v0/0.1.0",
+    "artifact_manifest_ref": "commerce/artifact-manifest.json"
+  },
+  "install_and_distribution_consumers": [
+    "truzhen-cloud upload draft",
+    "truzhen-cloud signed download",
+    "truzhenos install preflight",
+    "team settings role tab"
+  ],
+  "negative_cases": {
+    "missing_artifact_manifest": {
+      "expected_status": "blocked_artifact_manifest_missing",
+      "truth_source": "truzhenos",
+      "expected_evidence": "bundle_build_block_receipt_artifact_manifest_missing"
+    },
+    "file_not_declared_in_manifest": {
+      "expected_status": "blocked_file_not_declared_in_manifest",
+      "truth_source": "truzhenos",
+      "expected_evidence": "bundle_build_block_receipt_file_not_declared"
+    },
+    "nondeterministic_timestamp": {
+      "expected_status": "blocked_nondeterministic_bundle_metadata",
+      "truth_source": "truzhenos",
+      "expected_evidence": "bundle_build_block_receipt_nondeterministic_timestamp"
+    },
+    "private_key_in_bundle": {
+      "expected_status": "blocked_private_key_in_bundle",
+      "truth_source": "truzhenos",
+      "expected_evidence": "bundle_build_block_receipt_private_key_detected"
+    },
+    "bundle_hash_mismatch_before_upload": {
+      "expected_status": "blocked_bundle_hash_mismatch_before_upload",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "cloud_upload_block_receipt_bundle_hash_mismatch"
+    }
+  },
+  "forbidden": [
+    "submit_unmanifested_file_to_cloud",
+    "include_runtime_cache_or_build_output",
+    "include_private_key_or_payment_secret",
+    "include_raw_voice_or_raw_vrm_asset",
+    "use_nondeterministic_archive_metadata",
+    "claim_uploaded_without_cloud_upload_receipt"
+  ],
+  "non_completion_clause": "本文件只是确定性打包规格候选，不代表候选包已构建、签名、上传、下载或安装。真实 bundle sha256、签名和上传回执必须由 truzhenos 与 truzhen-cloud 在跨仓执行时产生。"
+}

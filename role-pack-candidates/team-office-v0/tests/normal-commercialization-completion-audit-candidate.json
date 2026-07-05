@@ -1,0 +1,263 @@
+{
+  "audit_ref": "normal-commercialization-completion-audit-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包普通商品化完成审计候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "completion_status": "not_achieved_requires_cross_repo_execution",
+  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "phase_coverage_matrix_ref": "tests/role-studio-phase-coverage-matrix-candidate.json",
+  "independent_acceptance_signoff_matrix_ref": "tests/independent-acceptance-signoff-matrix-candidate.json",
+  "product_stage_frontend_backend_closure_report_ref": "tests/product-stage-frontend-backend-closure-report-candidate.json",
+  "p11_normal_commercialization_acceptance_gate_ref": "tests/p11-normal-commercialization-acceptance-gate-candidate.json",
+  "p11_normal_commercialization_verification_record_template_ref": "tests/p11-normal-commercialization-verification-record-template.json",
+  "p11_evidence_ingestion_binder_ref": "tests/p11-evidence-ingestion-binder-candidate.json",
+  "p11_sandbox_execution_runbook_ref": "tests/p11-sandbox-execution-runbook-candidate.json",
+  "p11_commercial_go_live_evidence_package_template_ref": "tests/p11-commercial-go-live-evidence-package-template.json",
+  "role_studio_export_provenance_attestation_ref": "tests/role-studio-export-provenance-attestation-candidate.json",
+  "source_commercial_production_promotion_gate": "commerce/commercial-production-promotion-gate-candidate.json",
+  "required_participants": [
+    "user_view_gui_agent",
+    "organizer_coordinator_recorder",
+    "independent_acceptance_agent"
+  ],
+  "goal_requirements": [
+    {
+      "requirement_id": "role_candidate_creation_gui",
+      "truth_source": "truzhen-client-web-desktop",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "tests/gui-user-agent-scenarios.json"
+      ],
+      "missing_authoritative_evidence": [
+        "GUI screenshot and browser operation log receipt are missing"
+      ],
+      "acceptance_gate_ref": "frontend_role_studio_gui"
+    },
+    {
+      "requirement_id": "capability_pack_role_reference",
+      "truth_source": "multi_repo",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "capability-role-requirements/sample-team-research.role-requirements.json"
+      ],
+      "missing_authoritative_evidence": [
+        "cross-repo capability reference receipt and GUI screenshot are missing"
+      ],
+      "acceptance_gate_ref": "capability_role_reference_gate"
+    },
+    {
+      "requirement_id": "team_settings_secretary_replacement",
+      "truth_source": "multi_repo",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "bindings/team-settings-installed-role-catalog-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "team settings replacement screenshot and binding receipt are missing"
+      ],
+      "acceptance_gate_ref": "frontend_team_settings_gui"
+    },
+    {
+      "requirement_id": "team_settings_five_advisors_replacement",
+      "truth_source": "multi_repo",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "role-slots/team-office-role-slots.json"
+      ],
+      "missing_authoritative_evidence": [
+        "five advisor replacement screenshots and binding receipts are missing"
+      ],
+      "acceptance_gate_ref": "frontend_team_settings_gui"
+    },
+    {
+      "requirement_id": "secretary_voice_vrm_asset_ref",
+      "truth_source": "multi_repo",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "appearance/secretary-appearance-asset-rights-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "asset registry receipt and selection screenshot are missing"
+      ],
+      "acceptance_gate_ref": "appearance_asset_gate"
+    },
+    {
+      "requirement_id": "team_office_runtime_use",
+      "truth_source": "multi_repo",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "usage/team-office-runtime-usage-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "runtime use screenshot and candidate-only output receipt are missing"
+      ],
+      "acceptance_gate_ref": "runtime_usage_gate"
+    },
+    {
+      "requirement_id": "cloud_upload_draft",
+      "truth_source": "truzhen-cloud",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "commerce/cloud-listing-candidate.json",
+        "tests/role-studio-export-provenance-attestation-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "candidate bundle export receipt is missing",
+        "cloud upload receipt and listing draft screenshot are missing"
+      ],
+      "acceptance_gate_ref": "cloud_upload_purchase_download"
+    },
+    {
+      "requirement_id": "marketplace_review_listing",
+      "truth_source": "truzhen-cloud",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "commerce/marketplace-review-submission-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "marketplace review receipt and sandbox listing screenshot are missing"
+      ],
+      "acceptance_gate_ref": "cloud_upload_purchase_download"
+    },
+    {
+      "requirement_id": "sandbox_payment_purchase",
+      "truth_source": "truzhen-cloud",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "commerce/order-payment-state-machine-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "sandbox payment receipt and purchase screenshot are missing"
+      ],
+      "acceptance_gate_ref": "cloud_upload_purchase_download"
+    },
+    {
+      "requirement_id": "license_entitlement_issue",
+      "truth_source": "truzhen-cloud",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "commerce/license-entitlement-policy-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "license entitlement receipt and signoff are missing"
+      ],
+      "acceptance_gate_ref": "cloud_upload_purchase_download"
+    },
+    {
+      "requirement_id": "entitled_download_hash",
+      "truth_source": "truzhen-cloud",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "commerce/download-install-access-matrix.json"
+      ],
+      "missing_authoritative_evidence": [
+        "download receipt and artifact hash screenshot are missing"
+      ],
+      "acceptance_gate_ref": "cloud_upload_purchase_download"
+    },
+    {
+      "requirement_id": "local_install_enabled_version",
+      "truth_source": "truzhenos",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "install/install-preflight-request-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "install receipt and enabled version screenshot are missing"
+      ],
+      "acceptance_gate_ref": "local_install_and_team_binding"
+    },
+    {
+      "requirement_id": "post_install_team_settings_binding",
+      "truth_source": "multi_repo",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "bindings/team-office-role-binding-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "post-install team binding receipt and screenshot are missing"
+      ],
+      "acceptance_gate_ref": "local_install_and_team_binding"
+    },
+    {
+      "requirement_id": "negative_cases_blocked",
+      "truth_source": "multi_repo",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "tests/commercial-evidence-gate-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "negative case blocked receipts and independent signoff are missing"
+      ],
+      "acceptance_gate_ref": "negative_cases"
+    },
+    {
+      "requirement_id": "frontend_product_stage",
+      "truth_source": "truzhen-client-web-desktop",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "integration/frontend-backend-contract-map.json"
+      ],
+      "missing_authoritative_evidence": [
+        "frontend product-stage screenshot and smoke receipt are missing"
+      ],
+      "acceptance_gate_ref": "frontend_role_studio_gui"
+    },
+    {
+      "requirement_id": "backend_product_stage",
+      "truth_source": "truzhenos",
+      "status": "candidate_evidence_defined_pending_cross_repo_execution",
+      "current_repo_evidence": [
+        "integration/commercial-api-contract-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "backend product-stage receipt and lifecycle signoff are missing"
+      ],
+      "acceptance_gate_ref": "backend_role_candidate_gate_receipt"
+    },
+    {
+      "requirement_id": "independent_acceptance_signoff",
+      "truth_source": "independent_acceptance_agent",
+      "status": "pending_owner_decision",
+      "current_repo_evidence": [
+        "tests/product-readiness-evidence-matrix.json"
+      ],
+      "missing_authoritative_evidence": [
+        "independent acceptance signoff is missing"
+      ],
+      "acceptance_gate_ref": "commercial_evidence_gate_candidate"
+    },
+    {
+      "requirement_id": "production_promotion_gate",
+      "truth_source": "multi_repo",
+      "status": "pending_owner_decision",
+      "can_count_toward_goal_completion": false,
+      "current_repo_evidence": [
+        "commerce/commercial-production-promotion-gate-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "production promotion gate pass receipt is missing",
+        "Owner go/no-go signoff is missing",
+        "production publish / real payment / signed download block or allow receipts are missing"
+      ],
+      "acceptance_gate_ref": "commerce/commercial-production-promotion-gate-candidate.json"
+    }
+  ],
+  "completion_barriers": [
+    "cross_repo_authorization_missing",
+    "gui_user_agent_evidence_missing",
+    "truzhen_cloud_receipts_missing",
+    "truzhenos_install_receipts_missing",
+    "independent_acceptance_signoff_missing",
+    "commercial_production_promotion_gate_missing"
+  ],
+  "non_sufficient_evidence": [
+    "candidate_json_only",
+    "current_repo_go_test_only",
+    "mock_success_only",
+    "organizer_self_attestation_only",
+    "sandbox_pass_without_production_promotion_gate"
+  ],
+  "non_completion_clause": "本审计只映射普通商品化完成目标到证据，不代表团队办公室 Role Pack 已商品化完成。"
+}

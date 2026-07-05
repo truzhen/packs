@@ -1,0 +1,179 @@
+{
+  "intake_ref": "owner-authorization-evidence-intake://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包跨仓 Owner 授权证据摄取候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "missing_owner_authorization",
+  "authorization_scope_contract": "integration/cross-repo-execution-readiness-package.json",
+  "execution_cards_ref": "integration/cross-repo-execution-cards.json",
+  "commercial_cross_repo_execution_queue_ref": "integration/commercial-cross-repo-execution-queue-candidate.json",
+  "p11_runbook_ref": "tests/p11-sandbox-execution-runbook-candidate.json",
+  "go_live_evidence_package_ref": "tests/p11-commercial-go-live-evidence-package-template.json",
+  "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-cross-repo-execution-authorization-20260704.md",
+  "authorization_truth_source": "Owner explicit authorization in the current thread or signed authorization card; not inferred from plan text, candidate assets, prior runs, or narrow test success.",
+  "evidence_output_policy": "record_refs_only_in_truzhen_packs_raw_evidence_stays_in_execution_repos",
+  "current_authorization_boundary": "no_cross_repo_work_without_recorded_matching_owner_authorization",
+  "required_owner_quote_contains": [
+    "授权按角色制作台跨仓执行授权卡",
+    "truzhen-client-web-desktop",
+    "truzhenos",
+    "truzhen-cloud",
+    "truzhen-contracts",
+    "truzhen-packs",
+    "用户视角 GUI 智能体",
+    "sandbox payment",
+    "不真实支付",
+    "不生产发布",
+    "不推送"
+  ],
+  "authorized_repository_scopes": [
+    {
+      "repo_id": "truzhen-client-web-desktop",
+      "repo_path": "/Users/li/Documents/truzhen-client-web-desktop",
+      "authorization_status": "missing",
+      "required_status_command": "git status --short --branch",
+      "allowed_actions_after_authorization": [
+        "create_isolated_worktree",
+        "run_user_view_gui_agent",
+        "capture_redacted_screenshots"
+      ],
+      "required_evidence_outputs": [
+        "role_studio_gui_screenshots",
+        "team_settings_replacement_screenshots",
+        "network_summary_with_candidate_or_receipt_refs"
+      ],
+      "forbidden_boundaries": [
+        "no_frontend_only_success_state",
+        "no_terminal_command_as_user_action",
+        "no_push_or_merge_without_separate_authorization"
+      ]
+    },
+    {
+      "repo_id": "truzhenos",
+      "repo_path": "/Users/li/Documents/truzhenos",
+      "authorization_status": "missing",
+      "required_status_command": "git status --short --branch",
+      "allowed_actions_after_authorization": [
+        "create_isolated_worktree",
+        "wire_owner_gate_and_receipts",
+        "run_install_and_team_binding_tests"
+      ],
+      "required_evidence_outputs": [
+        "RolePackCandidate_receipt",
+        "install_receipt",
+        "team_binding_receipt"
+      ],
+      "forbidden_boundaries": [
+        "no_formal_binding_without_owner_gate",
+        "no_gateway_bypass",
+        "no_user_data_deletion"
+      ]
+    },
+    {
+      "repo_id": "truzhen-cloud",
+      "repo_path": "/Users/li/Documents/truzhen-cloud",
+      "authorization_status": "missing",
+      "required_status_command": "git status --short --branch",
+      "allowed_actions_after_authorization": [
+        "create_isolated_worktree",
+        "run_sandbox_upload_listing_draft",
+        "run_sandbox_payment_and_entitlement_tests"
+      ],
+      "required_evidence_outputs": [
+        "cloud_upload_receipt",
+        "sandbox_payment_receipt",
+        "entitlement_and_download_receipts"
+      ],
+      "forbidden_boundaries": [
+        "no_real_payment",
+        "no_production_publish",
+        "no_cloud_secret_in_packs"
+      ]
+    },
+    {
+      "repo_id": "truzhen-contracts",
+      "repo_path": "/Users/li/Documents/truzhen-contracts",
+      "authorization_status": "missing",
+      "required_status_command": "git status --short --branch",
+      "allowed_actions_after_authorization": [
+        "read_governance_files",
+        "audit_existing_schema",
+        "write_schema_impact_report"
+      ],
+      "required_evidence_outputs": [
+        "schema_impact_report",
+        "compatibility_test_result",
+        "owner_decision_if_schema_change_needed"
+      ],
+      "forbidden_boundaries": [
+        "no_schema_change_without_owner_confirmation",
+        "no_consumer_repo_defines_truth_shape_first",
+        "no_push_or_merge_without_separate_authorization"
+      ]
+    },
+    {
+      "repo_id": "truzhen-packs-current",
+      "repo_path": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+      "authorization_status": "missing",
+      "required_status_command": "git status --short --branch",
+      "allowed_actions_after_authorization": [
+        "maintain_candidate_assets",
+        "record_cross_repo_evidence_refs",
+        "run_pack_validation"
+      ],
+      "required_evidence_outputs": [
+        "candidate_asset_diff_summary",
+        "json_validity_receipt",
+        "artifact_manifest_hash_receipt"
+      ],
+      "forbidden_boundaries": [
+        "no_candidate_asset_claimed_as_formal_release",
+        "no_order_payment_license_entitlement_truth_in_packs",
+        "no_cross_repo_write_from_current_repo_without_owner_authorization"
+      ]
+    }
+  ],
+  "forbidden_actions": [
+    "real_payment",
+    "production_publish",
+    "push_or_merge",
+    "store_raw_secret",
+    "store_raw_voice_asset",
+    "store_raw_vrm_asset",
+    "mark_complete_from_candidate_assets",
+    "start_cross_repo_work_without_owner_authorization"
+  ],
+  "current_authorization_evidence": {
+    "status": "missing",
+    "owner_thread_quote_required": true,
+    "owner_thread_quote": "",
+    "recorded_by": "",
+    "recorded_at": "",
+    "evidence_ref": ""
+  },
+  "cross_repo_work_gate": {
+    "can_start_cross_repo_work": false,
+    "required_status_before_cross_repo_work": "recorded_matching_owner_authorization_for_each_target_repo",
+    "blocking_reason": "owner_authorization_missing",
+    "must_record_before_cross_repo_work": true
+  },
+  "expiration_and_scope_controls": {
+    "per_repo_status_required": true,
+    "isolated_worktree_required": true,
+    "must_reconfirm_if_repos_or_actions_change": true,
+    "authorization_expires_on_thread_change": true
+  },
+  "evidence_recording_contract": {
+    "required_fields": [
+      "owner_quote",
+      "repo_status_snapshot",
+      "allowed_actions_by_repo",
+      "forbidden_actions_ack",
+      "evidence_output_refs",
+      "organizer_recorder",
+      "recorded_at"
+    ]
+  },
+  "non_completion_clause": "This intake contract records the shape of future Owner authorization evidence. It is not authorization, not cross-repo execution evidence, and not a commercial completion claim."
+}

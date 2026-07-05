@@ -1,0 +1,317 @@
+{
+  "contract_ref": "commercial-frontend-backend-acceptance-contract://short-video-ops-v0/2026-07-04",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "acceptance_status": "blocked_pending_cross_repo_authorization_and_evidence",
+  "can_mark_frontend_backend_commercial_complete": false,
+  "frontend_screenshot_only_can_mark_accepted": false,
+  "backend_test_only_can_mark_accepted": false,
+  "network_summary_without_receipt_lookup_can_mark_accepted": false,
+  "formal_write_allowed": false,
+  "latest_rejected_authorization_attempt": {
+    "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+    "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",
+    "target_slice_key": "p12_safe_lifecycle_sample",
+    "rejection_reason": "authorization_card_mismatch_p11_not_p12",
+    "required_p12_phrase_matched": false,
+    "can_treat_as_owner_authorization": false,
+    "missing_required_phrase_parts": [
+      "授权按 P12 授权卡",
+      "只使用基座内置安全样本或 fixture"
+    ]
+  },
+  "source_evidence_contract_index": "docs/commercial-evidence-contract-index.json",
+  "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
+  "authorization_attempt_coverage_verifier": "docs/commercial-authorization-attempt-coverage-verifier.json",
+  "execution_readiness_guard_coverage_verifier": "docs/commercial-execution-readiness-guard-coverage-verifier.json",
+  "machine_evidence_package_coverage_verifier": "docs/commercial-machine-go-live-evidence-package-coverage-verifier.json",
+  "next_authorization_start_guard": "docs/commercial-next-authorization-start-guard.json",
+  "required_repositories": [
+    "truzhenos",
+    "truzhen-client-web-desktop"
+  ],
+  "disallowed_without_new_authorization": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "required_source_slices": [
+    "p12_safe_lifecycle_sample",
+    "p13_gui_lifecycle_panel",
+    "p15_gui_walkthrough_three_candidates"
+  ],
+  "frontend_backend_handoff_runbook": "docs/commercial-frontend-backend-handoff-runbook.json",
+  "gui_api_receipt_traceability_matrix_status": "pending_authorization",
+  "required_backend_endpoints": [
+    {
+      "evidence_id": "draft_from_delivery",
+      "source_slice": "p12_safe_lifecycle_sample",
+      "target_repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "backend test proving lifecycle draft is server-derived from studio delivery, not client supplied fake spec",
+      "expected_command": "GOWORK=off go test ./backend/tests/capability -run 'TestCapabilityPackLifecycleSafeFixtureDraftIsServerDerived' -count=1"
+    },
+    {
+      "evidence_id": "readiness_aggregate",
+      "source_slice": "p12_safe_lifecycle_sample",
+      "target_repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "backend test proving readiness aggregates delivery, golden cases, evaluation ready and provider dependency issues",
+      "expected_command": "GOWORK=off go test ./backend/tests/capability -run 'TestCapabilityPackLifecycleSafeFixtureReadinessExplainsProviderMissing' -count=1"
+    },
+    {
+      "evidence_id": "promote_candidate",
+      "source_slice": "p12_safe_lifecycle_sample",
+      "target_repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "backend test proving promote remains a gated candidate and cannot enable without readiness plus Owner/Base Gate",
+      "expected_command": "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+    },
+    {
+      "evidence_id": "confirm_with_gate_receipt",
+      "source_slice": "p12_safe_lifecycle_sample",
+      "target_repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "backend test proving confirm requires Owner/Base Gate and binds a Receipt ref before enabled pointer appears",
+      "expected_command": "GOWORK=off go test ./backend/tests/capability -run 'TestCapabilityPackLifecycleSafeFixtureConfirmRequiresGateAndReceipt' -count=1"
+    },
+    {
+      "evidence_id": "commercial_readiness_verifier_api",
+      "source_slice": "p14_commercial_readiness_audit",
+      "target_repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "backend API or read model evidence exposing commercial readiness verifier without allowing formal write from packs",
+      "expected_command": "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+    }
+  ],
+  "required_frontend_surfaces": [
+    {
+      "evidence_id": "candidate_bundle_panel",
+      "source_slice": "p13_gui_lifecycle_panel",
+      "target_repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI evidence showing candidate bundle is visible as candidate-only and cannot be installed or enabled directly",
+      "expected_command": "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx && npm run typecheck"
+    },
+    {
+      "evidence_id": "delivery_status_panel",
+      "source_slice": "p13_gui_lifecycle_panel",
+      "target_repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI evidence showing delivery status, missing delivery and next required authorization without fake success",
+      "expected_command": "npm run smoke:frontend-shell"
+    },
+    {
+      "evidence_id": "readiness_issue_panel",
+      "source_slice": "p13_gui_lifecycle_panel",
+      "target_repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI evidence showing provider_missing/not_ready/blocked readiness issues from backend, not local optimistic state",
+      "expected_command": "npm test -- src/components/pack-lifecycle/CodeAssistantPackPanel.test.tsx"
+    },
+    {
+      "evidence_id": "promote_confirm_controls",
+      "source_slice": "p13_gui_lifecycle_panel",
+      "target_repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI evidence showing promote/confirm controls disabled until readiness, Owner/Base Gate and Receipt evidence exist",
+      "expected_command": "npm run smoke:frontend-shell"
+    },
+    {
+      "evidence_id": "commercial_readiness_verifier_panel",
+      "source_slice": "p14_commercial_readiness_audit",
+      "target_repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI evidence showing commercial readiness verifier status and next authorization card without marking commercial ready",
+      "expected_command": "npm run smoke:frontend-behavior"
+    }
+  ],
+  "required_e2e_scenarios": [
+    {
+      "evidence_id": "safe_fixture_lifecycle_round_trip",
+      "source_slice": "p12_safe_lifecycle_sample",
+      "target_repository": "truzhenos + truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "live smoke or equivalent run proving draft/readiness/promote/confirm safe fixture round trip with receipt-bound enabled pointer",
+      "expected_command": "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenos GOWORK=off npm run smoke:frontend-behavior"
+    },
+    {
+      "evidence_id": "three_short_video_candidates_gui_walkthrough",
+      "source_slice": "p15_gui_walkthrough_three_candidates",
+      "target_repository": "truzhen-client-web-desktop + truzhenos + truzhen-packs",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI walkthrough evidence for draft generation, composition orchestration and social publish draft candidates with screenshots and network response summaries",
+      "expected_command": "manual_or_playwright_gui_walkthrough_with_artifact_refs"
+    },
+    {
+      "evidence_id": "blocked_actions_visible_and_disabled",
+      "source_slice": "p15_gui_walkthrough_three_candidates",
+      "target_repository": "truzhen-client-web-desktop + truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "E2E evidence that real Codex CLI run, third-party OSS execution, social login/upload and formal enable remain blocked without authorization",
+      "expected_command": "manual_or_playwright_gui_walkthrough_with_blocked_action_assertions"
+    }
+  ],
+  "gui_api_receipt_traceability_matrix": [
+    {
+      "gui_evidence_id": "candidate_bundle_panel",
+      "required_backend_evidence_id": "draft_from_delivery",
+      "required_api_endpoint_or_readmodel": "capability_pack_candidate_bundle_read_model",
+      "required_receipt_or_candidate_ref_field": "candidate_set_ref",
+      "required_field_match": "GUI candidate_set_ref must equal backend draft candidate_set_ref and candidate bundle ref",
+      "current_status": "pending_authorization",
+      "can_count_toward_frontend_backend_acceptance": false
+    },
+    {
+      "gui_evidence_id": "delivery_status_panel",
+      "required_backend_evidence_id": "draft_from_delivery",
+      "required_api_endpoint_or_readmodel": "capability_pack_delivery_status_read_model",
+      "required_receipt_or_candidate_ref_field": "delivery_candidate_ref",
+      "required_field_match": "GUI delivery status must show the backend delivery_candidate_ref and missing delivery reason",
+      "current_status": "pending_authorization",
+      "can_count_toward_frontend_backend_acceptance": false
+    },
+    {
+      "gui_evidence_id": "readiness_issue_panel",
+      "required_backend_evidence_id": "readiness_aggregate",
+      "required_api_endpoint_or_readmodel": "capability_pack_readiness_aggregate_read_model",
+      "required_receipt_or_candidate_ref_field": "readiness_issue_refs",
+      "required_field_match": "GUI readiness issues must equal backend provider_missing/not_ready/blocked issue refs",
+      "current_status": "pending_authorization",
+      "can_count_toward_frontend_backend_acceptance": false
+    },
+    {
+      "gui_evidence_id": "promote_confirm_controls",
+      "required_backend_evidence_id": "confirm_with_gate_receipt",
+      "required_api_endpoint_or_readmodel": "capability_pack_lifecycle_gate_read_model",
+      "required_receipt_or_candidate_ref_field": "receipt_ref",
+      "required_field_match": "GUI promote and confirm controls must remain disabled until backend Owner/Base Gate receipt_ref is present",
+      "current_status": "pending_authorization",
+      "can_count_toward_frontend_backend_acceptance": false
+    },
+    {
+      "gui_evidence_id": "commercial_readiness_verifier_panel",
+      "required_backend_evidence_id": "commercial_readiness_verifier_api",
+      "required_api_endpoint_or_readmodel": "commercial_readiness_verifier_read_model",
+      "required_receipt_or_candidate_ref_field": "commercial_readiness_verifier_ref",
+      "required_field_match": "GUI verifier panel must show backend verifier ref and blocker counts without local ready override",
+      "current_status": "pending_authorization",
+      "can_count_toward_frontend_backend_acceptance": false
+    },
+    {
+      "gui_evidence_id": "safe_fixture_lifecycle_round_trip",
+      "required_backend_evidence_id": "confirm_with_gate_receipt",
+      "required_api_endpoint_or_readmodel": "capability_pack_lifecycle_round_trip_read_model",
+      "required_receipt_or_candidate_ref_field": "enabled_pointer_receipt_ref",
+      "required_field_match": "E2E round trip must bind GUI final state to backend enabled pointer receipt ref",
+      "current_status": "pending_authorization",
+      "can_count_toward_frontend_backend_acceptance": false
+    },
+    {
+      "gui_evidence_id": "three_short_video_candidates_gui_walkthrough",
+      "required_backend_evidence_id": "draft_from_delivery+readiness_aggregate+promote_candidate",
+      "required_api_endpoint_or_readmodel": "short_video_candidate_bundle_lifecycle_read_model",
+      "required_receipt_or_candidate_ref_field": "short_video_candidate_refs",
+      "required_field_match": "Walkthrough screenshots and network summaries must resolve to the same three backend candidate refs",
+      "current_status": "pending_authorization",
+      "can_count_toward_frontend_backend_acceptance": false
+    },
+    {
+      "gui_evidence_id": "blocked_actions_visible_and_disabled",
+      "required_backend_evidence_id": "required_forbidden_action_checks",
+      "required_api_endpoint_or_readmodel": "capability_pack_forbidden_action_status_read_model",
+      "required_receipt_or_candidate_ref_field": "forbidden_action_check_refs",
+      "required_field_match": "Blocked GUI controls must match backend forbidden action check refs and remain disabled",
+      "current_status": "pending_authorization",
+      "can_count_toward_frontend_backend_acceptance": false
+    }
+  ],
+  "required_forbidden_action_checks": [
+    {
+      "evidence_id": "no_real_codex_cli_run",
+      "current_status": "pending_authorization",
+      "evidence_required": "P12/P13/P15 execution evidence showing no real Codex CLI invocation and no GPT/Codex token consumption",
+      "target_repository": "truzhenos + truzhen-client-web-desktop",
+      "expected_command": "review P12/P13/P15 execution logs and 11 Gateway receipts; confirm no real Codex CLI invocation and no GPT/Codex token consumption"
+    },
+    {
+      "evidence_id": "no_third_party_oss_execution",
+      "current_status": "pending_authorization",
+      "evidence_required": "execution logs and GUI evidence showing MoneyPrinterTurbo, Pixelle-Video and social-auto-upload remain evidence-only and not executed",
+      "target_repository": "truzhen-packs + truzhenos + truzhen-client-web-desktop",
+      "expected_command": "review candidate ledgers, GUI walkthrough evidence, and execution logs; confirm MoneyPrinterTurbo, Pixelle-Video, and social-auto-upload were evidence-only and not executed"
+    },
+    {
+      "evidence_id": "no_social_login_or_upload",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI and network evidence showing no social account login, upload or publish action occurred",
+      "target_repository": "truzhen-client-web-desktop + truzhenos",
+      "expected_command": "review GUI/network evidence and gateway receipts; confirm no social account login, upload, publish, browser cookie access, or platform session use occurred"
+    },
+    {
+      "evidence_id": "no_raw_secret_saved",
+      "current_status": "pending_authorization",
+      "evidence_required": "secret scan and execution log review showing no token, cookie, password or production credential was saved",
+      "target_repository": "truzhen-packs + truzhenos + truzhen-client-web-desktop",
+      "expected_command": "run secret scan over touched artifacts and review execution logs; confirm no token, cookie, password, production credential, or signed URL was saved"
+    }
+  ],
+  "completion_gate": {
+    "can_mark_complete": false,
+    "required_evidence_writeback_gate_source": "commercial_go_no_go_gate.evidence_writeback_gate",
+    "evidence_writeback_gate_must_pass": true,
+    "required_execution_readiness_guard_coverage_verifier_source": "commercial_go_live_evidence_package.execution_readiness_guard_coverage_verifier",
+    "execution_readiness_guard_coverage_verifier_must_pass": true,
+    "required_machine_evidence_package_coverage_verifier_source": "commercial_go_live_evidence_package.machine_evidence_package_coverage_verifier",
+    "machine_evidence_package_coverage_verifier_must_pass": true,
+    "required_pack_studio_issue_ledger_source": "candidate_set.pack_studio_issue_ledger",
+    "pack_studio_issue_ledger_must_close": true,
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "blocking_owner_base_gate": "owner_base_gate_receipts_missing",
+    "required_status_before_completion": "all_required_backend_endpoints_frontend_surfaces_e2e_scenarios_forbidden_checks_and_gui_api_receipt_traceability_passed_with_owner_authorization_execution_readiness_guard_coverage_verifier_passed_and_machine_evidence_package_coverage_verifier_passed_pack_studio_issue_ledger_closed_all_evidence_writebacks_completed_and_verified_and_owner_base_gate_receipts_bound",
+    "required_before_completion": [
+      "gui_api_receipt_traceability_verified",
+      "all_gui_steps_bound_to_backend_receipts",
+      "all_backend_results_visible_in_gui",
+      "all_required_backend_endpoints_passed",
+      "all_required_frontend_surfaces_passed",
+      "all_required_e2e_scenarios_passed",
+      "all_forbidden_action_checks_passed",
+      "execution_readiness_guard_coverage_verifier_passed",
+      "machine_evidence_package_coverage_verifier_passed",
+      "pack_studio_issue_ledger_closed",
+      "all_evidence_writebacks_completed_and_verified",
+      "owner_base_gate_receipts_bound"
+    ],
+    "non_sufficient_evidence": [
+      "frontend_screenshot_without_api_receipt_trace",
+      "backend_test_without_gui_api_trace",
+      "network_summary_without_receipt_lookup",
+      "execution_readiness_guard_coverage_verifier_pending",
+      "machine_evidence_package_coverage_verifier_pending",
+      "pack_studio_issue_ledger_open",
+      "owner_base_gate_receipts_missing",
+      "evidence_writeback_incomplete",
+      "frontend_backend_contract_without_cross_repo_evidence"
+    ],
+    "commercial_status_after_frontend_backend_only": "not_commercial_ready",
+    "final_status_after_all_slices": "commercial_ready_candidate"
+  },
+  "non_sufficient_evidence": [
+    "frontend_backend_contract_without_cross_repo_evidence",
+    "evidence_writeback_incomplete",
+    "green_packs_tests_without_frontend_backend_runtime_evidence",
+    "frontend_screenshot_without_backend_receipt",
+    "frontend_screenshot_without_api_receipt_trace",
+    "backend_test_without_gui_surface_evidence",
+    "backend_test_without_gui_api_trace",
+    "network_summary_without_receipt_lookup",
+    "execution_readiness_guard_coverage_verifier_pending",
+    "machine_evidence_package_coverage_verifier_pending",
+    "pack_studio_issue_ledger_open",
+    "manual_ledger_without_artifact_refs"
+  ],
+  "non_completion_clause": "This file is a candidate-only frontend/backend acceptance contract. It does not prove the Pack Studio is commercially complete until P12/P13/P15 cross-repo evidence is actually collected and P16-P18 evidence also passes."
+}

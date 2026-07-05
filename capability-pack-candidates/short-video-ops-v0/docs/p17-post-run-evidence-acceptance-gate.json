@@ -1,0 +1,133 @@
+{
+  "gate_ref": "post-run-evidence-acceptance-gate://short-video-ops-v0/p17-provider-adapter-candidate",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "slice_key": "p17_provider_adapter_candidate",
+  "gate_status": "blocked_pending_p17_provider_adapter_evidence",
+  "can_mark_p17_complete": false,
+  "can_unlock_p18": false,
+  "can_mark_commercial_ready": false,
+  "packs_scaffold_alone_can_mark_p17_complete": false,
+  "provider_manifest_without_readiness_receipt_can_unlock_p18": false,
+  "provider_ready_claim_without_external_provider_evidence_can_count_toward_commercial_ready": false,
+  "previous_slice": "p16_controlled_code_assistant_run",
+  "previous_slice_post_run_evidence_gate": "docs/p16-post-run-evidence-acceptance-gate.json",
+  "next_slice": "p18_cloud_market_sandbox",
+  "evidence_contract": "docs/p17-provider-adapter-candidate-evidence-contract.json",
+  "evidence_ledger": "docs/provider-adapter-candidate-ledger.md",
+  "execution_readiness_package": "docs/p17-execution-readiness-package.json",
+  "next_slice_execution_readiness_package": "docs/p18-execution-readiness-package.json",
+  "commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+  "commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json",
+  "commercial_evidence_writeback_gate_source": "commercial_go_no_go_gate.evidence_writeback_gate",
+  "acceptance_requirements": [
+    {
+      "evidence_id": "adapter_candidate_lands_outside_packs",
+      "source_group": "required_provider_evidence",
+      "current_status": "pending_provider_adapter_evidence",
+      "required_before_p17_complete": true,
+      "blocks_p18": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p17-provider-adapter-candidate-evidence-contract.json#required_provider_evidence.adapter_candidate_lands_outside_packs"
+    },
+    {
+      "evidence_id": "readiness_reports_provider_missing_or_blocked",
+      "source_group": "required_provider_evidence",
+      "current_status": "pending_provider_adapter_evidence",
+      "required_before_p17_complete": true,
+      "blocks_p18": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p17-provider-adapter-candidate-evidence-contract.json#required_provider_evidence.readiness_reports_provider_missing_or_blocked"
+    },
+    {
+      "evidence_id": "gui_shows_provider_ownership_and_blocked_state",
+      "source_group": "required_provider_evidence",
+      "current_status": "pending_provider_adapter_evidence",
+      "required_before_p17_complete": true,
+      "blocks_p18": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p17-provider-adapter-candidate-evidence-contract.json#required_provider_evidence.gui_shows_provider_ownership_and_blocked_state"
+    },
+    {
+      "evidence_id": "provider_implementation_not_in_packs",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_provider_adapter_evidence",
+      "required_before_p17_complete": true,
+      "blocks_p18": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p17-provider-adapter-candidate-evidence-contract.json#required_forbidden_action_checks.provider_implementation_not_in_packs"
+    },
+    {
+      "evidence_id": "no_third_party_oss_execution",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_provider_adapter_evidence",
+      "required_before_p17_complete": true,
+      "blocks_p18": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p17-provider-adapter-candidate-evidence-contract.json#required_forbidden_action_checks.no_third_party_oss_execution"
+    },
+    {
+      "evidence_id": "no_raw_secret",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_provider_adapter_evidence",
+      "required_before_p17_complete": true,
+      "blocks_p18": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p17-provider-adapter-candidate-evidence-contract.json#required_forbidden_action_checks.no_raw_secret"
+    }
+  ],
+  "current_blockers": [
+    "p17_cross_repo_execution_not_run",
+    "owner_authorization_missing",
+    "p16_post_run_evidence_acceptance_gate_not_passed",
+    "provider_adapter_evidence_missing",
+    "owner_base_gate_receipts_missing",
+    "evidence_writeback_incomplete",
+    "independent_verification_missing"
+  ],
+  "required_before_p17_complete": [
+    "all_evidence_ids_written",
+    "all_evidence_refs_recorded",
+    "provider_candidate_outside_packs_verified",
+    "readiness_default_blocked_or_missing_verified",
+    "forbidden_action_checks_written",
+    "independent_verification_passed",
+    "owner_base_gate_receipts_bound",
+    "commercial_evidence_writeback_gate_updated",
+    "p17_post_run_evidence_acceptance_gate_passed",
+    "external_provider_repository_evidence_bound",
+    "provider_readiness_receipt_bound",
+    "packs_provider_runtime_absence_verified"
+  ],
+  "non_sufficient_evidence": [
+    "authorization_card_without_owner_evidence",
+    "provider_candidate_without_external_repo_evidence",
+    "provider_ready_claim_without_readiness_receipt",
+    "manual_ledger_without_machine_evidence",
+    "post_run_gate_candidate_only",
+    "adapter_scaffold_inside_packs_without_external_repo_evidence",
+    "provider_manifest_without_readiness_receipt",
+    "provider_ready_claim_without_owner_base_receipt",
+    "vendored_third_party_oss_source_in_packs"
+  ],
+  "substitution_rejection_policy": {
+    "adapter_scaffold_inside_packs_without_external_repo_evidence": "not_completion_evidence",
+    "provider_manifest_without_readiness_receipt": "not_completion_evidence",
+    "provider_ready_claim_without_owner_base_receipt": "not_completion_evidence",
+    "vendored_third_party_oss_source_in_packs": "not_completion_evidence"
+  },
+  "non_completion_clause": "This gate records the future post-run acceptance requirements for P17. It is not authorization, provider implementation, provider readiness proof, a P18 unlock, cloud marketplace evidence, or commercial readiness proof."
+}

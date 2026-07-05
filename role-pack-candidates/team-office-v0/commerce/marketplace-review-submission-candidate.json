@@ -1,0 +1,183 @@
+{
+  "submission_candidate_ref": "marketplace-review-submission-candidate://team-office-role-pack-v0",
+  "listing_candidate_ref": "pack-listing-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包云市场审核提交候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "commerce_truth_source": "truzhen-cloud",
+  "package_contents_truth_source": "truzhen-packs",
+  "review_status": "candidate_not_submitted",
+  "production_publish_policy": "blocked_until_owner_authorizes",
+  "scope": "声明云市场审核提交所需的商品信息、证据和阻断条件；不保存正式审核状态、订单、支付、License、Entitlement 或下载链接。",
+  "listing_metadata": {
+    "display_name": "团队办公室角色包 v0",
+    "short_description": "秘书长 + 五顾问角色包候选，用于团队办公室协调、顾问质询、候选输出和团队设置替换。",
+    "category": "role_pack",
+    "artifact_ref": "role-pack-artifact://team-office-v0",
+    "artifact_manifest": "commerce/artifact-manifest.json",
+    "release_candidate": "commerce/release-candidate-package.json",
+    "role_component_summary_ref": "commerce/cloud-listing-candidate.json#role_component_summary",
+    "risk_statement": "所有角色只作为 Proposer，不拥有审批、执行、发送、正式记忆或正式绑定权；团队绑定和安装必须经 Owner + Base Gate / Receipt。"
+  },
+  "pricing_and_license": {
+    "pricing_status": "pending_owner_decision_before_real_listing",
+    "currency": "CNY",
+    "amount_candidate": "0_for_sandbox_only",
+    "license_scope": "team_scoped",
+    "refund_policy": "sandbox_refund_and_entitlement_revocation_must_be_tested_before_real_listing",
+    "real_payment_policy": "blocked_until_owner_authorizes",
+    "license_entitlement_policy": "commerce/license-entitlement-policy-candidate.json"
+  },
+  "asset_rights_and_safety": {
+    "voice_asset_policy": "asset_ref_only_no_raw_voice",
+    "vrm_asset_policy": "asset_ref_only_no_raw_vrm_or_unlicensed_avatar",
+    "raw_asset_policy": "blocked_raw_voice_raw_vrm_real_person_image_and_secret",
+    "privacy_policy": "no_personal_data_or_customer_runtime_record_in_pack",
+    "commercial_terms_privacy_policy": "commerce/commercial-terms-privacy-policy-candidate.json",
+    "data_boundary_policy": "buyer_must_see_cloud_order_data_truzhenos_runtime_data_and_pack_content_boundaries_before_purchase",
+    "secret_policy": "no_api_key_token_cookie_password_private_key_or_payment_credential"
+  },
+  "support_and_operations": {
+    "support_status": "candidate_ready_pending_owner_approval_before_real_listing",
+    "support_policy_reference": "commerce/support-refund-revocation-policy-candidate.json",
+    "support_channel_policy": "cloud_listing_must_show_support_channel_or mark explicitly unsupported before real_listing",
+    "version_support_policy": "initial_candidate_0_1_0_requires compatibility and revocation policy",
+    "refund_handling_policy": "refund_must_revoke_future_download_entitlement_without_deleting_historical_receipts",
+    "revocation_notice_policy": "revoked_release_must_block_future_download_and surface readable reason"
+  },
+  "review_checklist": [
+    {
+      "check_id": "artifact_manifest_hashes",
+      "status": "candidate_ready",
+      "required_evidence": "commerce/artifact-manifest.json with file-level SHA-256"
+    },
+    {
+      "check_id": "role_pack_candidate_only",
+      "status": "candidate_ready",
+      "required_evidence": "all role-packs/*.rolepack.json candidate_only and proposer-only checks"
+    },
+    {
+      "check_id": "six_role_component_listing",
+      "status": "candidate_ready",
+      "required_evidence": "commerce/cloud-listing-candidate.json role_component_summary shows secretary general plus five advisors, slot refs, role_pack files, candidate-only authority and secretary voice / VRM asset-ref-only boundary"
+    },
+    {
+      "check_id": "owner_gate_boundaries",
+      "status": "candidate_ready",
+      "required_evidence": "bindings/team-office-role-binding-candidate.json and usage/team-office-runtime-usage-candidate.json"
+    },
+    {
+      "check_id": "license_entitlement_policy",
+      "status": "candidate_ready",
+      "required_evidence": "commerce/license-entitlement-policy-candidate.json"
+    },
+    {
+      "check_id": "asset_rights_asset_ref_only",
+      "status": "candidate_ready",
+      "required_evidence": "appearance/secretary-appearance-preferences.json and raw asset negative cases"
+    },
+    {
+      "check_id": "support_refund_revocation",
+      "status": "candidate_ready",
+      "required_evidence": "commerce/support-refund-revocation-policy-candidate.json plus cloud listing support channel, refund terms and revocation notice copy approved before real listing"
+    },
+    {
+      "check_id": "pre_purchase_support_refund_revocation_disclosures",
+      "status": "candidate_ready",
+      "required_evidence": "commerce/support-refund-revocation-policy-candidate.json pre_purchase_disclosure_policy plus cloud listing support, refund, revocation and candidate role disclaimer surfaces before purchase"
+    },
+    {
+      "check_id": "publisher_identity_settlement",
+      "status": "pending_owner_decision",
+      "required_evidence": "commerce/publisher-account-settlement-policy-candidate.json plus publisher identity, pricing, tax invoice and settlement policy receipts before real listing"
+    },
+    {
+      "check_id": "terms_privacy_data_policy",
+      "status": "candidate_ready",
+      "required_evidence": "commerce/commercial-terms-privacy-policy-candidate.json plus terms acceptance, privacy notice and data boundary GUI evidence before purchase"
+    },
+    {
+      "check_id": "commercial_go_live_approval",
+      "status": "pending_owner_decision",
+      "required_evidence": "commerce/commercial-go-live-approval-candidate.json plus cross-repo sandbox evidence, negative case receipts, independent acceptance signoff and explicit Owner go-live decision before production publish or real payment"
+    },
+    {
+      "check_id": "commercial_production_promotion_gate",
+      "status": "pending_owner_decision",
+      "required_evidence": "commerce/commercial-production-promotion-gate-candidate.json plus P11 verified evidence package, independent acceptance signoff, Owner go/no-go decision, production rollback plan and cloud go-live gate receipt before production listing, real payment or signed production download"
+    },
+    {
+      "check_id": "negative_case_evidence_plan",
+      "status": "candidate_ready",
+      "required_evidence": "tests/commercialization-execution-packet.json and tests/e2e-evidence-run-record.json"
+    }
+  ],
+  "negative_cases": {
+    "submit_review_without_artifact_hash": {
+      "expected_status": "blocked_artifact_hash_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "review_submission_block_receipt_artifact_hash_missing"
+    },
+    "publish_without_owner_authorization": {
+      "expected_status": "blocked_production_publish_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "publish_block_receipt_owner_authorization_missing"
+    },
+    "real_payment_without_owner_authorization": {
+      "expected_status": "blocked_real_payment_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "payment_block_receipt_owner_authorization_missing"
+    },
+    "raw_voice_or_vrm_asset": {
+      "expected_status": "blocked_raw_asset_not_allowed",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "review_block_receipt_raw_asset_detected"
+    },
+    "missing_refund_policy": {
+      "expected_status": "blocked_refund_policy_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "review_block_receipt_refund_policy_missing"
+    },
+    "missing_support_policy": {
+      "expected_status": "blocked_support_policy_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "review_block_receipt_support_policy_missing"
+    },
+    "purchase_without_terms_acceptance": {
+      "expected_status": "blocked_terms_acceptance_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "purchase_block_receipt_terms_acceptance_missing"
+    },
+    "listing_without_privacy_notice": {
+      "expected_status": "blocked_privacy_notice_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "review_block_receipt_privacy_notice_missing"
+    },
+    "missing_data_boundary_disclosure": {
+      "expected_status": "blocked_data_boundary_disclosure_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "review_block_receipt_data_boundary_missing"
+    }
+  },
+  "forbidden": [
+    "store_order_truth_in_truzhen_packs",
+    "store_payment_truth_in_truzhen_packs",
+    "store_license_truth_in_truzhen_packs",
+    "store_entitlement_truth_in_truzhen_packs",
+    "production_publish_without_owner_authorization",
+    "real_payment_capture_without_owner_authorization",
+    "ship_raw_voice_or_vrm_asset",
+    "store_support_ticket_truth_in_truzhen_packs",
+    "store_refund_truth_in_truzhen_packs",
+    "delete_historical_receipts_after_refund",
+    "silent_release_revocation",
+    "purchase_without_terms_acceptance",
+    "hide_data_boundary_from_buyer",
+    "store_customer_runtime_data_in_truzhen_packs",
+    "store_cloud_order_personal_data_in_truzhen_packs",
+    "present_role_output_as_formal_advice",
+    "claim_role_pack_has_formal_authority"
+  ],
+  "non_completion_clause": "本文件只是云市场审核提交候选，不代表已上传、已提交审核、已上架、已购买或已可下载。真实审核、商品状态、支付、License / Entitlement 和下载分发真相必须由 truzhen-cloud 持有并产生回执。"
+}

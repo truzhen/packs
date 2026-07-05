@@ -1,0 +1,181 @@
+{
+  "activation_map_ref": "install-runtime-activation-map://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包安装到运行使用激活映射候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "install_truth_source": "truzhenos",
+  "cloud_entitlement_truth_source": "truzhen-cloud",
+  "gui_truth_source": "truzhen-client-web-desktop",
+  "package_contents_truth_source": "truzhen-packs",
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "artifact_manifest": "commerce/artifact-manifest.json",
+  "install_preflight_request": "install/install-preflight-request-candidate.json",
+  "installed_role_catalog": "bindings/team-settings-installed-role-catalog-candidate.json",
+  "capability_role_requirements": "capability-role-requirements/sample-team-research.role-requirements.json",
+  "buyer_library_install_state": "commerce/buyer-library-install-state-candidate.json",
+  "runtime_usage_candidate": "usage/team-office-runtime-usage-candidate.json",
+  "team_role_binding_candidate": "bindings/team-office-role-binding-candidate.json",
+  "commercial_receipt_chain": "commerce/commercial-receipt-chain-candidate.json",
+  "artifact_manifest_closure_gate": "tests/artifact-manifest-closure-gate-candidate.json",
+  "purpose": "把买家已购下载、安装预检、角色包启用版本、团队设置可替换目录和团队办公室运行使用串成一个可验链路，防止把下载成功、文件存在或候选 JSON 存在误认为角色已经可替换、可运行。",
+  "activation_steps": [
+    {
+      "step_id": "download_receipt_verified",
+      "actor": "truzhen-cloud",
+      "required_evidence": "download_receipt_ref + entitlement_ref + bundle_tree_sha256",
+      "blocking_if_missing": "blocked_download_receipt_missing"
+    },
+    {
+      "step_id": "install_preflight_passed",
+      "actor": "truzhenos",
+      "required_evidence": "install_preflight_receipt_ref with entitlement/hash/signature/schema/forbidden-artifact checks",
+      "blocking_if_missing": "blocked_install_preflight_missing"
+    },
+    {
+      "step_id": "role_pack_versions_enabled",
+      "actor": "truzhenos",
+      "required_evidence": "install_receipt_ref + enabled_role_pack_version_ref for secretary general and five advisors",
+      "blocking_if_missing": "blocked_enabled_role_pack_version_missing"
+    },
+    {
+      "step_id": "capability_role_reference_ready",
+      "actor": "truzhenos + truzhen-client-web-desktop",
+      "required_evidence": "CapabilityRoleRequirement validation receipt + enabled_role_pack_version_ref + entitlement_verification_receipt + role_body_not_copied_receipt + GUI capability role picker screenshot",
+      "blocking_if_missing": "blocked_capability_role_reference_after_install_missing"
+    },
+    {
+      "step_id": "team_settings_catalog_refreshed",
+      "actor": "truzhenos + truzhen-client-web-desktop",
+      "required_evidence": "team_settings_catalog_refresh_receipt_ref + GUI screenshot showing six replaceable roles",
+      "blocking_if_missing": "blocked_team_settings_catalog_refresh_missing"
+    },
+    {
+      "step_id": "team_binding_owner_gate_ready",
+      "actor": "Owner + Base Gate",
+      "required_evidence": "TeamRoleSlotBindingCandidate refs for six slots and owner_gate_required=true",
+      "blocking_if_missing": "blocked_team_binding_owner_gate_missing"
+    },
+    {
+      "step_id": "runtime_usage_smoke_ready",
+      "actor": "truzhenos + truzhen-client-web-desktop",
+      "required_evidence": "runtime_usage_trace_ref proving secretary general and five advisors produce candidate-only outputs",
+      "blocking_if_missing": "blocked_runtime_usage_smoke_missing"
+    }
+  ],
+  "required_role_activations": [
+    {
+      "slot_ref": "team_office.secretary_general",
+      "role_pack_ref": "role_pack://team-office-secretary-general",
+      "role_pack_file": "role-packs/team-office-secretary-general.rolepack.json",
+      "enabled_role_pack_version_ref": "enabled_role_pack_version://team-office-secretary-general/0.1.0",
+      "install_receipt_ref": "receipt_candidate://team-office/install/team-office-secretary-general",
+      "replaceable_in_team_settings": true,
+      "owner_gate_required_for_binding": true,
+      "runtime_usage_required": true
+    },
+    {
+      "slot_ref": "team_office.advisor.strategy",
+      "role_pack_ref": "role_pack://team-office-strategy-advisor",
+      "role_pack_file": "role-packs/team-office-strategy-advisor.rolepack.json",
+      "enabled_role_pack_version_ref": "enabled_role_pack_version://team-office-strategy-advisor/0.1.0",
+      "install_receipt_ref": "receipt_candidate://team-office/install/team-office-strategy-advisor",
+      "replaceable_in_team_settings": true,
+      "owner_gate_required_for_binding": true,
+      "runtime_usage_required": true
+    },
+    {
+      "slot_ref": "team_office.advisor.product",
+      "role_pack_ref": "role_pack://team-office-product-advisor",
+      "role_pack_file": "role-packs/team-office-product-advisor.rolepack.json",
+      "enabled_role_pack_version_ref": "enabled_role_pack_version://team-office-product-advisor/0.1.0",
+      "install_receipt_ref": "receipt_candidate://team-office/install/team-office-product-advisor",
+      "replaceable_in_team_settings": true,
+      "owner_gate_required_for_binding": true,
+      "runtime_usage_required": true
+    },
+    {
+      "slot_ref": "team_office.advisor.operations",
+      "role_pack_ref": "role_pack://team-office-operations-advisor",
+      "role_pack_file": "role-packs/team-office-operations-advisor.rolepack.json",
+      "enabled_role_pack_version_ref": "enabled_role_pack_version://team-office-operations-advisor/0.1.0",
+      "install_receipt_ref": "receipt_candidate://team-office/install/team-office-operations-advisor",
+      "replaceable_in_team_settings": true,
+      "owner_gate_required_for_binding": true,
+      "runtime_usage_required": true
+    },
+    {
+      "slot_ref": "team_office.advisor.finance",
+      "role_pack_ref": "role_pack://team-office-finance-advisor",
+      "role_pack_file": "role-packs/team-office-finance-advisor.rolepack.json",
+      "enabled_role_pack_version_ref": "enabled_role_pack_version://team-office-finance-advisor/0.1.0",
+      "install_receipt_ref": "receipt_candidate://team-office/install/team-office-finance-advisor",
+      "replaceable_in_team_settings": true,
+      "owner_gate_required_for_binding": true,
+      "runtime_usage_required": true
+    },
+    {
+      "slot_ref": "team_office.advisor.legal_risk",
+      "role_pack_ref": "role_pack://team-office-legal-risk-advisor",
+      "role_pack_file": "role-packs/team-office-legal-risk-advisor.rolepack.json",
+      "enabled_role_pack_version_ref": "enabled_role_pack_version://team-office-legal-risk-advisor/0.1.0",
+      "install_receipt_ref": "receipt_candidate://team-office/install/team-office-legal-risk-advisor",
+      "replaceable_in_team_settings": true,
+      "owner_gate_required_for_binding": true,
+      "runtime_usage_required": true
+    }
+  ],
+  "completion_gate": {
+    "download_receipt_verified": "required",
+    "install_preflight_passed": "required",
+    "enabled_role_pack_versions_recorded": "required",
+    "capability_role_reference_after_install_verified": "required",
+    "team_settings_catalog_refreshed": "required",
+    "owner_gate_binding_ready": "required",
+    "runtime_usage_smoke_evidence": "required"
+  },
+  "negative_cases": {
+    "install_without_entitlement": {
+      "expected_status": "blocked_entitlement_missing",
+      "expected_evidence": "install_preflight_block_receipt_ref"
+    },
+    "missing_enabled_role_pack_version": {
+      "expected_status": "blocked_enabled_role_pack_version_missing",
+      "expected_evidence": "install_receipt_missing_enabled_version_ref"
+    },
+    "catalog_refresh_without_install_receipt": {
+      "expected_status": "blocked_install_receipt_required",
+      "expected_evidence": "team_settings_catalog_refresh_block_receipt_ref"
+    },
+    "capability_reference_without_install_receipt": {
+      "expected_status": "blocked_install_receipt_required",
+      "expected_evidence": "capability_role_reference_block_receipt_install_missing"
+    },
+    "capability_reference_after_entitlement_revoked": {
+      "expected_status": "blocked_entitlement_revoked",
+      "expected_evidence": "capability_role_reference_block_receipt_entitlement_revoked"
+    },
+    "capability_pack_copies_role_body": {
+      "expected_status": "blocked_role_body_copy_not_allowed",
+      "expected_evidence": "capability_role_reference_block_receipt_role_body_copy"
+    },
+    "runtime_use_without_team_binding": {
+      "expected_status": "blocked_team_binding_required",
+      "expected_evidence": "runtime_usage_block_receipt_ref"
+    },
+    "role_output_formalization_without_owner_gate": {
+      "expected_status": "blocked_owner_gate_required",
+      "expected_evidence": "owner_gate_block_receipt_ref"
+    }
+  },
+  "forbidden": [
+    "treat_download_receipt_as_install_receipt",
+    "show_role_replaceable_without_enabled_role_pack_version",
+    "capability_reference_without_enabled_role_pack_version",
+    "capability_pack_copies_role_pack_body",
+    "runtime_use_without_team_binding",
+    "formalize_role_output_without_owner_gate",
+    "delete_or_rewrite_existing_binding_receipts"
+  ],
+  "non_completion_clause": "本文件只是安装到运行使用的激活映射候选，不代表真实已购下载、本地安装、团队设置目录刷新、团队绑定或运行使用已经完成。真实完成必须由 truzhen-cloud、truzhenos 和用户视角 GUI 共同产生可关联回执。"
+}

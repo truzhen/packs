@@ -1,0 +1,393 @@
+{
+  "index_ref": "commercial-evidence-contract-index://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "template_ready_not_commercial_ready",
+  "current_go_live_status": "not_commercial_ready",
+  "current_state_audit": "docs/commercial-readiness-current-state-audit.json",
+  "commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+  "frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
+  "frontend_backend_handoff_runbook": "docs/commercial-frontend-backend-handoff-runbook.json",
+  "cross_repo_execution_queue": "docs/commercial-cross-repo-execution-queue.json",
+  "improvement_backlog": "docs/commercial-improvement-backlog.json",
+  "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
+  "commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json",
+  "forbidden_action_coverage_verifier": "docs/commercial-forbidden-action-coverage-verifier.json",
+  "authorization_attempt_coverage_verifier": "docs/commercial-authorization-attempt-coverage-verifier.json",
+  "execution_readiness_guard_coverage_verifier": "docs/commercial-execution-readiness-guard-coverage-verifier.json",
+  "next_authorization_start_guard": "docs/commercial-next-authorization-start-guard.json",
+  "machine_go_live_evidence_package": "docs/commercial-go-live-evidence-package.json",
+  "machine_evidence_package_coverage_verifier": "docs/commercial-machine-go-live-evidence-package-coverage-verifier.json",
+  "latest_rejected_authorization_attempt": {
+    "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+    "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",
+    "target_slice_key": "p12_safe_lifecycle_sample",
+    "rejection_reason": "authorization_card_mismatch_p11_not_p12",
+    "required_p12_phrase_matched": false,
+    "can_treat_as_owner_authorization": false,
+    "missing_required_phrase_parts": [
+      "授权按 P12 授权卡",
+      "只使用基座内置安全样本或 fixture"
+    ]
+  },
+  "execution_order": [
+    "p12_safe_lifecycle_sample",
+    "p13_gui_lifecycle_panel",
+    "p15_gui_walkthrough_three_candidates",
+    "p16_controlled_code_assistant_run",
+    "p17_provider_adapter_candidate",
+    "p18_cloud_market_sandbox"
+  ],
+  "required_slices": [
+    {
+      "slice_key": "p12_safe_lifecycle_sample",
+      "status": "specified_pending_authorization",
+      "target_repositories": [
+        "truzhenos",
+        "truzhen-client-web-desktop"
+      ],
+      "authorization_scope_contract": "docs/p12-cross-repo-authorization-scope.json",
+      "authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+      "execution_readiness_package": "docs/p12-execution-readiness-package.json",
+      "pre_run_gate": "docs/p12-pre-run-gate.json",
+      "post_run_evidence_acceptance_gate": "docs/p12-post-run-evidence-acceptance-gate.json",
+      "evidence_contract": "docs/p12-safe-lifecycle-evidence-contract.json",
+      "evidence_ledger": "docs/safe-lifecycle-sample-ledger.md",
+      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-safe-lifecycle-sample-execution-spec-20260704.md",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md"
+    },
+    {
+      "slice_key": "p13_gui_lifecycle_panel",
+      "status": "specified_pending_authorization",
+      "depends_on": [
+        "p12_safe_lifecycle_sample"
+      ],
+      "target_repositories": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "authorization_scope_contract": "docs/p13-cross-repo-authorization-scope.json",
+      "authorization_evidence_intake_contract": "docs/p13-owner-authorization-evidence-intake.json",
+      "execution_readiness_package": "docs/p13-execution-readiness-package.json",
+      "evidence_contract": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p13-post-run-evidence-acceptance-gate.json",
+      "evidence_ledger": "docs/gui-lifecycle-panel-ledger.md",
+      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-gui-lifecycle-panel-execution-spec-20260704.md",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md"
+    },
+    {
+      "slice_key": "p15_gui_walkthrough_three_candidates",
+      "status": "evidence_ledger_skeleton_ready_pending_authorization",
+      "depends_on": [
+        "p13_gui_lifecycle_panel"
+      ],
+      "target_repositories": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "authorization_scope_contract": "docs/p15-cross-repo-authorization-scope.json",
+      "authorization_evidence_intake_contract": "docs/p15-owner-authorization-evidence-intake.json",
+      "execution_readiness_package": "docs/p15-execution-readiness-package.json",
+      "evidence_contract": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p15-post-run-evidence-acceptance-gate.json",
+      "evidence_ledger": "docs/gui-walkthrough-evidence-ledger.md",
+      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-three-candidate-gui-walkthrough-spec-20260704.md",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-cross-repo-execution-authorization-20260704.md"
+    },
+    {
+      "slice_key": "p16_controlled_code_assistant_run",
+      "status": "specified_pending_authorization",
+      "depends_on": [
+        "p12_safe_lifecycle_sample",
+        "p13_gui_lifecycle_panel",
+        "p15_gui_walkthrough_three_candidates"
+      ],
+      "target_repositories": [
+        "truzhenos",
+        "truzhen-client-web-desktop",
+        "truzhen-packs"
+      ],
+      "authorization_scope_contract": "docs/p16-cross-repo-authorization-scope.json",
+      "authorization_evidence_intake_contract": "docs/p16-owner-authorization-evidence-intake.json",
+      "execution_readiness_package": "docs/p16-execution-readiness-package.json",
+      "evidence_contract": "docs/p16-controlled-code-assistant-run-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p16-post-run-evidence-acceptance-gate.json",
+      "evidence_ledger": "docs/code-assistant-controlled-run-ledger.md",
+      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-controlled-code-assistant-run-spec-20260704.md",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-cross-repo-execution-authorization-20260704.md"
+    },
+    {
+      "slice_key": "p17_provider_adapter_candidate",
+      "status": "specified_pending_authorization",
+      "depends_on": [
+        "p16_controlled_code_assistant_run"
+      ],
+      "target_repositories": [
+        "truzhen-software",
+        "truzhenos",
+        "truzhen-client-web-desktop",
+        "truzhen-packs"
+      ],
+      "authorization_scope_contract": "docs/p17-cross-repo-authorization-scope.json",
+      "authorization_evidence_intake_contract": "docs/p17-owner-authorization-evidence-intake.json",
+      "execution_readiness_package": "docs/p17-execution-readiness-package.json",
+      "evidence_contract": "docs/p17-provider-adapter-candidate-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p17-post-run-evidence-acceptance-gate.json",
+      "evidence_ledger": "docs/provider-adapter-candidate-ledger.md",
+      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-provider-adapter-candidate-spec-20260704.md",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md"
+    },
+    {
+      "slice_key": "p18_cloud_market_sandbox",
+      "status": "specified_pending_authorization",
+      "depends_on": [
+        "p12_safe_lifecycle_sample",
+        "p13_gui_lifecycle_panel",
+        "p15_gui_walkthrough_three_candidates",
+        "p16_controlled_code_assistant_run",
+        "p17_provider_adapter_candidate"
+      ],
+      "target_repositories": [
+        "truzhen-cloud",
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "authorization_scope_contract": "docs/p18-cross-repo-authorization-scope.json",
+      "authorization_evidence_intake_contract": "docs/p18-owner-authorization-evidence-intake.json",
+      "execution_readiness_package": "docs/p18-execution-readiness-package.json",
+      "evidence_contract": "docs/p18-cloud-market-sandbox-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p18-post-run-evidence-acceptance-gate.json",
+      "evidence_ledger": "docs/cloud-market-sandbox-ledger.md",
+      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cloud-market-sandbox-spec-20260704.md",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md"
+    }
+  ],
+  "forbidden_action_terminal_checks": {
+    "raw_token_cookie_password_saved": {
+      "current_result": "pending",
+      "required_final_value": false,
+      "evidence_required": "secret scan + execution log redaction review + GUI/network evidence"
+    },
+    "third_party_oss_vendored_into_packs": {
+      "current_result": "pending",
+      "required_final_value": false,
+      "evidence_required": "git tracked file scan + artifact manifest review"
+    },
+    "third_party_oss_executed_without_authorization": {
+      "current_result": "pending",
+      "required_final_value": false,
+      "evidence_required": "11 Gateway run receipts or explicit no-run ledgers"
+    },
+    "social_login_happened": {
+      "current_result": "pending",
+      "required_final_value": false,
+      "evidence_required": "GUI walkthrough evidence + browser/session access denial evidence"
+    },
+    "social_upload_or_publish_happened": {
+      "current_result": "pending",
+      "required_final_value": false,
+      "evidence_required": "communication/execution gateway receipts showing blocked or no-op"
+    },
+    "candidate_only_written_as_enabled": {
+      "current_result": "pending",
+      "required_final_value": false,
+      "evidence_required": "lifecycle history + packs query + receipt refs"
+    },
+    "cloud_listing_truth_stored_in_packs": {
+      "current_result": "pending",
+      "required_final_value": false,
+      "evidence_required": "cloud sandbox receipt refs + packs artifact scan"
+    },
+    "production_payment_captured": {
+      "current_result": "pending",
+      "required_final_value": false,
+      "evidence_required": "truzhen-cloud sandbox payment evidence + no production payment receipt"
+    },
+    "production_license_issued": {
+      "current_result": "pending",
+      "required_final_value": false,
+      "evidence_required": "sandbox entitlement refs + no production license evidence"
+    }
+  },
+  "owner_signoff_gate": {
+    "can_request_owner_signoff": false,
+    "blocked_reason": "P12-P18 evidence slices are pending authorization, forbidden action terminal checks are still pending, evidence writeback is incomplete, and Owner/Base Gate receipts are missing.",
+    "blocking_required_slices": [
+      "p12_safe_lifecycle_sample",
+      "p13_gui_lifecycle_panel",
+      "p15_gui_walkthrough_three_candidates",
+      "p16_controlled_code_assistant_run",
+      "p17_provider_adapter_candidate",
+      "p18_cloud_market_sandbox"
+    ],
+    "blocking_terminal_checks": [
+      "raw_token_cookie_password_saved",
+      "third_party_oss_vendored_into_packs",
+      "third_party_oss_executed_without_authorization",
+      "social_login_happened",
+      "social_upload_or_publish_happened",
+      "candidate_only_written_as_enabled",
+      "cloud_listing_truth_stored_in_packs",
+      "production_payment_captured",
+      "production_license_issued"
+    ],
+    "required_evidence_writeback_gate_source": "commercial_go_no_go_gate.evidence_writeback_gate",
+    "evidence_writeback_gate_must_pass": true,
+    "blocking_evidence_writeback_gate": "evidence_writeback_incomplete",
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "blocking_owner_base_gate": "owner_base_gate_receipts_missing",
+    "blocking_required_before_owner_signoff": [
+      "all_required_slices_authorized_and_evidence_complete_verified",
+      "forbidden_action_coverage_verifier_passed",
+      "authorization_attempt_coverage_verifier_passed",
+      "next_authorization_start_guard_open",
+      "pack_studio_issue_ledger_closed",
+      "forbidden_action_terminal_checks_proven_false",
+      "all_evidence_writebacks_completed_and_verified",
+      "owner_base_gate_receipts_bound"
+    ],
+    "required_next_authorization": "p12_safe_lifecycle_sample",
+    "next_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md"
+  },
+  "commercial_signoff_matrix": {
+    "matrix_status": "blocked_pending_authorization_and_evidence",
+    "owner_authorization_truth": "Owner explicit authorization in current thread or signed authorization card; not inferred from plan text",
+    "required_evidence_writeback_gate_source": "commercial_go_no_go_gate.evidence_writeback_gate",
+    "evidence_writeback_gate_must_pass": true,
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "required_before_owner_signoff": "each entry owner_authorization_status=authorized, evidence_status=evidence_complete_verified, forbidden action coverage verifier passed, authorization attempt coverage verifier passed, next_authorization_start_guard_open, pack_studio_issue_ledger_closed, forbidden action terminal checks proven false, all_evidence_writebacks_completed_and_verified, and owner_base_gate_receipts_bound",
+    "non_sufficient_evidence": [
+      "authorization_cards_without_owner_authorization",
+      "evidence_status_pending",
+      "forbidden_action_terminal_checks_pending",
+      "forbidden_action_coverage_verifier_pending",
+      "post_run_gate_coverage_verifier_pending",
+      "authorization_attempt_coverage_verifier_pending",
+      "next_authorization_start_guard_pending",
+      "pack_studio_issue_ledger_open",
+      "evidence_writeback_incomplete",
+      "owner_base_gate_receipts_missing"
+    ],
+    "next_authorization": "p12_safe_lifecycle_sample",
+    "entries": [
+      {
+        "slice_key": "p12_safe_lifecycle_sample",
+        "owner_authorization_status": "pending_authorization",
+        "evidence_status": "pending",
+        "can_count_toward_commercial_ready": false,
+        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+        "authorization_scope_contract": "docs/p12-cross-repo-authorization-scope.json",
+        "authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+        "evidence_contract": "docs/p12-safe-lifecycle-evidence-contract.json",
+        "evidence_ledger": "docs/safe-lifecycle-sample-ledger.md"
+      },
+      {
+        "slice_key": "p13_gui_lifecycle_panel",
+        "owner_authorization_status": "pending_authorization",
+        "evidence_status": "pending",
+        "can_count_toward_commercial_ready": false,
+        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md",
+        "authorization_scope_contract": "docs/p13-cross-repo-authorization-scope.json",
+        "authorization_evidence_intake_contract": "docs/p13-owner-authorization-evidence-intake.json",
+        "evidence_contract": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
+        "evidence_ledger": "docs/gui-lifecycle-panel-ledger.md"
+      },
+      {
+        "slice_key": "p15_gui_walkthrough_three_candidates",
+        "owner_authorization_status": "pending_authorization",
+        "evidence_status": "pending",
+        "can_count_toward_commercial_ready": false,
+        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-cross-repo-execution-authorization-20260704.md",
+        "authorization_scope_contract": "docs/p15-cross-repo-authorization-scope.json",
+        "authorization_evidence_intake_contract": "docs/p15-owner-authorization-evidence-intake.json",
+        "evidence_contract": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json",
+        "evidence_ledger": "docs/gui-walkthrough-evidence-ledger.md"
+      },
+      {
+        "slice_key": "p16_controlled_code_assistant_run",
+        "owner_authorization_status": "pending_authorization",
+        "evidence_status": "pending",
+        "can_count_toward_commercial_ready": false,
+        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-cross-repo-execution-authorization-20260704.md",
+        "authorization_scope_contract": "docs/p16-cross-repo-authorization-scope.json",
+        "authorization_evidence_intake_contract": "docs/p16-owner-authorization-evidence-intake.json",
+        "evidence_contract": "docs/p16-controlled-code-assistant-run-evidence-contract.json",
+        "evidence_ledger": "docs/code-assistant-controlled-run-ledger.md"
+      },
+      {
+        "slice_key": "p17_provider_adapter_candidate",
+        "owner_authorization_status": "pending_authorization",
+        "evidence_status": "pending",
+        "can_count_toward_commercial_ready": false,
+        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md",
+        "authorization_scope_contract": "docs/p17-cross-repo-authorization-scope.json",
+        "authorization_evidence_intake_contract": "docs/p17-owner-authorization-evidence-intake.json",
+        "evidence_contract": "docs/p17-provider-adapter-candidate-evidence-contract.json",
+        "evidence_ledger": "docs/provider-adapter-candidate-ledger.md"
+      },
+      {
+        "slice_key": "p18_cloud_market_sandbox",
+        "owner_authorization_status": "pending_authorization",
+        "evidence_status": "pending",
+        "can_count_toward_commercial_ready": false,
+        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md",
+        "authorization_scope_contract": "docs/p18-cross-repo-authorization-scope.json",
+        "authorization_evidence_intake_contract": "docs/p18-owner-authorization-evidence-intake.json",
+        "evidence_contract": "docs/p18-cloud-market-sandbox-evidence-contract.json",
+        "evidence_ledger": "docs/cloud-market-sandbox-ledger.md"
+      }
+    ]
+  },
+  "completion_gate": {
+    "can_mark_commercial_ready": false,
+    "required_order_source": "commercial_go_live_evidence_package.required_slices",
+    "required_signoff_matrix_source": "commercial_go_live_evidence_package.commercial_signoff_matrix",
+    "required_evidence_writeback_gate_source": "commercial_go_no_go_gate.evidence_writeback_gate",
+    "evidence_writeback_gate_must_pass": true,
+    "required_authorization_attempt_coverage_verifier_source": "commercial_go_live_evidence_package.authorization_attempt_coverage_verifier",
+    "authorization_attempt_coverage_verifier_must_pass": true,
+    "required_execution_readiness_guard_coverage_verifier_source": "commercial_go_live_evidence_package.execution_readiness_guard_coverage_verifier",
+    "execution_readiness_guard_coverage_verifier_must_pass": true,
+    "required_machine_go_live_evidence_package_source": "commercial_go_live_evidence_package.machine_evidence_package",
+    "machine_go_live_evidence_package_must_pass": true,
+    "required_machine_evidence_package_coverage_verifier_source": "commercial_go_live_evidence_package.machine_evidence_package_coverage_verifier",
+    "machine_evidence_package_coverage_verifier_must_pass": true,
+    "required_next_authorization_start_guard_source": "commercial_go_live_evidence_package.next_authorization_start_guard",
+    "next_authorization_start_guard_must_open": true,
+    "required_pack_studio_issue_ledger_source": "candidate_set.pack_studio_issue_ledger",
+    "pack_studio_issue_ledger_must_close": true,
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "blocking_owner_base_gate": "owner_base_gate_receipts_missing",
+    "required_status_before_completion": "all_required_slices_completed_and_p12_post_run_evidence_acceptance_gate_passed_and_p13_post_run_evidence_acceptance_gate_passed_and_p15_post_run_evidence_acceptance_gate_passed_and_p16_post_run_evidence_acceptance_gate_passed_and_p17_post_run_evidence_acceptance_gate_passed_and_p18_post_run_evidence_acceptance_gate_passed_and_forbidden_action_coverage_verifier_passed_and_authorization_attempt_coverage_verifier_passed_and_execution_readiness_guard_coverage_verifier_passed_and_machine_evidence_package_coverage_verifier_passed_and_machine_go_live_evidence_package_verified_and_next_authorization_start_guard_open_and_pack_studio_issue_ledger_closed_and_all_forbidden_action_terminal_checks_false_and_owner_signoff_authorized_and_all_evidence_writebacks_completed_and_verified_and_owner_base_gate_receipts_bound",
+    "required_before_go_live_signoff": [
+      "machine_evidence_package_coverage_verifier_passed",
+      "machine_go_live_evidence_package_verified"
+    ],
+    "non_sufficient_evidence": [
+      "authorization_attempt_coverage_verifier_pending",
+      "execution_readiness_guard_coverage_verifier_pending",
+      "machine_evidence_package_coverage_verifier_pending",
+      "machine_go_live_evidence_package_blocked",
+      "next_authorization_start_guard_pending",
+      "pack_studio_issue_ledger_open",
+      "owner_base_gate_receipts_missing",
+      "evidence_writeback_incomplete",
+      "owner_signoff_missing"
+    ],
+    "final_status_after_success": "commercial_ready_candidate"
+  },
+  "non_sufficient_evidence": [
+    "machine_go_live_evidence_package_blocked",
+    "machine_evidence_package_coverage_verifier_pending",
+    "authorization_cards_without_owner_authorization",
+    "evidence_writeback_incomplete",
+    "owner_base_gate_receipts_missing"
+  ],
+  "non_completion_clause": "本索引只是 P12-P18 商用验收证据契约索引，不代表任何分片已执行、已验收或已商用。任一分片仍 pending / blocked / missing 时，能力 Pack 制作台不得标记为商用完成。"
+}

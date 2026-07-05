@@ -1,0 +1,122 @@
+{
+  "verifier_ref": "commercial-authorization-attempt-coverage-verifier://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "coverage_status": "blocked_rejected_p12_authorization_attempt_not_authorization",
+  "can_mark_commercial_ready": false,
+  "formal_write_allowed": false,
+  "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+  "expected_attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",
+  "expected_rejection_reason": "authorization_card_mismatch_p11_not_p12",
+  "expected_target_slice_key": "p12_safe_lifecycle_sample",
+  "required_commercial_gate_docs": [
+    "docs/commercial-evidence-contract-index.json",
+    "docs/commercial-readiness-current-state-audit.json",
+    "docs/commercial-improvement-backlog.json",
+    "docs/commercial-frontend-backend-acceptance-contract.json",
+    "docs/commercial-frontend-backend-handoff-runbook.json",
+    "docs/commercial-cross-repo-execution-queue.json",
+    "docs/commercial-readiness-verifier.json",
+    "docs/commercial-go-no-go-gate.json",
+    "docs/pack-studio-goal-completion-evidence-map.json"
+  ],
+  "coverage_checks": [
+    {
+      "doc_path": "docs/commercial-evidence-contract-index.json",
+      "latest_rejected_authorization_attempt_present": true,
+      "attempt_ref_matches": true,
+      "rejection_reason_matches": true,
+      "can_treat_as_owner_authorization": false,
+      "authorization_attempt_coverage_verifier_path_present": true,
+      "authorization_attempt_coverage_verifier_path_matches": true
+    },
+    {
+      "doc_path": "docs/commercial-readiness-current-state-audit.json",
+      "latest_rejected_authorization_attempt_present": true,
+      "attempt_ref_matches": true,
+      "rejection_reason_matches": true,
+      "can_treat_as_owner_authorization": false,
+      "authorization_attempt_coverage_verifier_path_present": true,
+      "authorization_attempt_coverage_verifier_path_matches": true
+    },
+    {
+      "doc_path": "docs/commercial-improvement-backlog.json",
+      "latest_rejected_authorization_attempt_present": true,
+      "attempt_ref_matches": true,
+      "rejection_reason_matches": true,
+      "can_treat_as_owner_authorization": false,
+      "authorization_attempt_coverage_verifier_path_present": true,
+      "authorization_attempt_coverage_verifier_path_matches": true
+    },
+    {
+      "doc_path": "docs/commercial-frontend-backend-acceptance-contract.json",
+      "latest_rejected_authorization_attempt_present": true,
+      "attempt_ref_matches": true,
+      "rejection_reason_matches": true,
+      "can_treat_as_owner_authorization": false,
+      "authorization_attempt_coverage_verifier_path_present": true,
+      "authorization_attempt_coverage_verifier_path_matches": true
+    },
+    {
+      "doc_path": "docs/commercial-frontend-backend-handoff-runbook.json",
+      "latest_rejected_authorization_attempt_present": true,
+      "attempt_ref_matches": true,
+      "rejection_reason_matches": true,
+      "can_treat_as_owner_authorization": false,
+      "authorization_attempt_coverage_verifier_path_present": true,
+      "authorization_attempt_coverage_verifier_path_matches": true
+    },
+    {
+      "doc_path": "docs/commercial-cross-repo-execution-queue.json",
+      "latest_rejected_authorization_attempt_present": true,
+      "attempt_ref_matches": true,
+      "rejection_reason_matches": true,
+      "can_treat_as_owner_authorization": false,
+      "authorization_attempt_coverage_verifier_path_present": true,
+      "authorization_attempt_coverage_verifier_path_matches": true
+    },
+    {
+      "doc_path": "docs/commercial-readiness-verifier.json",
+      "latest_rejected_authorization_attempt_present": true,
+      "attempt_ref_matches": true,
+      "rejection_reason_matches": true,
+      "can_treat_as_owner_authorization": false,
+      "authorization_attempt_coverage_verifier_path_present": true,
+      "authorization_attempt_coverage_verifier_path_matches": true
+    },
+    {
+      "doc_path": "docs/commercial-go-no-go-gate.json",
+      "latest_rejected_authorization_attempt_present": true,
+      "attempt_ref_matches": true,
+      "rejection_reason_matches": true,
+      "can_treat_as_owner_authorization": false,
+      "authorization_attempt_coverage_verifier_path_present": true,
+      "authorization_attempt_coverage_verifier_path_matches": true
+    },
+    {
+      "doc_path": "docs/pack-studio-goal-completion-evidence-map.json",
+      "latest_rejected_authorization_attempt_present": true,
+      "attempt_ref_matches": true,
+      "rejection_reason_matches": true,
+      "can_treat_as_owner_authorization": false,
+      "authorization_attempt_coverage_verifier_path_present": true,
+      "authorization_attempt_coverage_verifier_path_matches": true
+    }
+  ],
+  "required_before_coverage_pass": [
+    "all_commercial_gate_docs_reference_latest_rejected_attempt",
+    "all_commercial_gate_docs_reference_authorization_attempt_coverage_verifier",
+    "attempt_ref_matches_p12_authorization_intake",
+    "rejection_reason_matches_p12_authorization_intake",
+    "all_docs_mark_attempt_not_owner_authorization",
+    "owner_authorization_recorded_and_scope_matched"
+  ],
+  "non_sufficient_evidence": [
+    "rejected_p12_authorization_attempt_is_not_owner_authorization",
+    "authorization_attempt_coverage_verifier_path_not_independently_verified",
+    "authorization_card_mismatch_p11_not_p12",
+    "owner_authorization_missing"
+  ],
+  "non_completion_clause": "This verifier only proves that the rejected P11-for-P12 authorization attempt is propagated across commercial gate documents. It is not Owner authorization and cannot start cross-repo work."
+}

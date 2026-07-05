@@ -1,0 +1,75 @@
+{
+  "intake_ref": "owner-authorization-evidence-intake://short-video-ops-v0/p12-safe-lifecycle-sample",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p12_safe_lifecycle_sample",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "missing_owner_authorization",
+  "authorization_scope_contract": "docs/p12-cross-repo-authorization-scope.json",
+  "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "authorization_truth_source": "Owner explicit authorization in the current thread or signed authorization card; not inferred from plan text or previous slice authorization.",
+  "required_owner_quote_contains": [
+    "授权按 P12 授权卡",
+    "truzhenos 与 truzhen-client-web-desktop",
+    "不改 contracts、software、cloud",
+    "不运行真实 Codex CLI",
+    "不执行第三方 OSS",
+    "不登录或上传社媒",
+    "只使用基座内置安全样本或 fixture"
+  ],
+  "authorized_repositories": [
+    "truzhenos",
+    "truzhen-client-web-desktop"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "run_real_codex_cli",
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "production_cloud_market_action"
+  ],
+  "current_authorization_evidence": {
+    "status": "missing",
+    "owner_thread_quote_required": true,
+    "owner_thread_quote": "",
+    "recorded_by": "",
+    "recorded_at": "",
+    "evidence_ref": ""
+  },
+  "rejected_authorization_attempts": [
+    {
+      "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",
+      "received_at": "2026-07-05",
+      "source": "current_thread_owner_message",
+      "target_slice_key": "p12_safe_lifecycle_sample",
+      "received_authorization_card": "P11",
+      "required_authorization_card": "P12",
+      "owner_quote_contains": [
+        "授权按 P11 授权卡",
+        "truzhenos 与 truzhen-client-web-desktop",
+        "不改 contracts、software、cloud",
+        "不运行真实 Codex CLI",
+        "不执行第三方 OSS",
+        "不登录或上传社媒"
+      ],
+      "missing_required_phrase_parts": [
+        "授权按 P12 授权卡",
+        "只使用基座内置安全样本或 fixture"
+      ],
+      "required_p12_phrase_matched": false,
+      "rejection_reason": "authorization_card_mismatch_p11_not_p12",
+      "status_after_attempt": "missing_owner_authorization",
+      "can_start_cross_repo_work_after_attempt": false
+    }
+  ],
+  "cross_repo_work_gate": {
+    "can_start_cross_repo_work": false,
+    "required_status_before_cross_repo_work": "owner_authorization_recorded_and_scope_matched",
+    "must_record_before_cross_repo_work": true
+  }
+}

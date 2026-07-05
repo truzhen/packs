@@ -1,0 +1,293 @@
+{
+  "matrix_ref": "commercial-independent-acceptance-signoff-matrix://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "signoff_status": "blocked_pending_independent_acceptance_evidence",
+  "can_mark_commercial_ready": false,
+  "can_request_owner_signoff": false,
+  "required_reviewer_identity_fields": [
+    "reviewer_ref",
+    "required_reviewer_role",
+    "reviewed_at",
+    "decision_ref",
+    "evidence_refs"
+  ],
+  "review_rows": [
+    {
+      "review_row_id": "p12_safe_lifecycle_sample",
+      "required_evidence_source": "docs/p12-post-run-evidence-acceptance-gate.json",
+      "required_reviewer_role": "independent_lifecycle_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/p12-safe-lifecycle-evidence-contract.json",
+        "docs/safe-lifecycle-sample-ledger.md",
+        "docs/p12-execution-readiness-package.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "p12_post_run_evidence_acceptance_gate_not_passed"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs"
+      ]
+    },
+    {
+      "review_row_id": "p13_gui_lifecycle_panel",
+      "required_evidence_source": "docs/p13-post-run-evidence-acceptance-gate.json",
+      "required_reviewer_role": "independent_gui_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/p13-gui-lifecycle-panel-evidence-contract.json",
+        "docs/gui-lifecycle-panel-ledger.md",
+        "docs/p13-execution-readiness-package.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "p13_post_run_evidence_acceptance_gate_not_passed"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs"
+      ]
+    },
+    {
+      "review_row_id": "p15_gui_walkthrough_three_candidates",
+      "required_evidence_source": "docs/p15-post-run-evidence-acceptance-gate.json",
+      "required_reviewer_role": "independent_gui_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json",
+        "docs/gui-walkthrough-evidence-ledger.md",
+        "docs/p15-execution-readiness-package.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "p15_post_run_evidence_acceptance_gate_not_passed"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs"
+      ]
+    },
+    {
+      "review_row_id": "p16_controlled_code_assistant_run",
+      "required_evidence_source": "docs/p16-post-run-evidence-acceptance-gate.json",
+      "required_reviewer_role": "independent_execution_gateway_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/p16-controlled-code-assistant-run-evidence-contract.json",
+        "docs/code-assistant-controlled-run-ledger.md",
+        "docs/p16-execution-readiness-package.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "p16_post_run_evidence_acceptance_gate_not_passed",
+        "no_real_codex_cli_run_in_current_batch"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs"
+      ]
+    },
+    {
+      "review_row_id": "p17_provider_adapter_candidate",
+      "required_evidence_source": "docs/p17-post-run-evidence-acceptance-gate.json",
+      "required_reviewer_role": "independent_provider_boundary_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/p17-provider-adapter-candidate-evidence-contract.json",
+        "docs/provider-adapter-candidate-ledger.md",
+        "docs/p17-execution-readiness-package.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "p17_post_run_evidence_acceptance_gate_not_passed"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs"
+      ]
+    },
+    {
+      "review_row_id": "p18_cloud_market_sandbox",
+      "required_evidence_source": "docs/p18-post-run-evidence-acceptance-gate.json",
+      "required_reviewer_role": "independent_cloud_boundary_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/p18-cloud-market-sandbox-evidence-contract.json",
+        "docs/cloud-market-sandbox-ledger.md",
+        "docs/p18-execution-readiness-package.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "p18_post_run_evidence_acceptance_gate_not_passed"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs"
+      ]
+    },
+    {
+      "review_row_id": "gui_api_receipt_traceability",
+      "required_evidence_source": "docs/commercial-frontend-backend-acceptance-contract.json#gui_api_receipt_traceability_matrix",
+      "required_reviewer_role": "independent_frontend_backend_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/commercial-frontend-backend-acceptance-contract.json",
+        "docs/commercial-frontend-backend-handoff-runbook.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "gui_api_receipt_traceability_evidence_missing"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs"
+      ]
+    },
+    {
+      "review_row_id": "pack_studio_issue_resolution_evidence_schema",
+      "required_evidence_source": "docs/pack-studio-issue-ledger.json#resolution_evidence_schema",
+      "required_reviewer_role": "independent_issue_resolution_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/pack-studio-issue-ledger.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "pack_studio_issue_ledger_open"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs"
+      ]
+    },
+    {
+      "review_row_id": "forbidden_action_terminal_checks",
+      "required_evidence_source": "candidate-set.json#commercial_go_live_evidence_package.forbidden_action_terminal_checks",
+      "required_reviewer_role": "independent_forbidden_action_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/commercial-forbidden-action-coverage-verifier.json",
+        "docs/commercial-go-no-go-gate.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "forbidden_action_terminal_checks_pending"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs"
+      ]
+    },
+    {
+      "review_row_id": "evidence_writeback_completeness",
+      "required_evidence_source": "docs/commercial-go-no-go-gate.json#evidence_writeback_gate",
+      "required_reviewer_role": "independent_evidence_writeback_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/commercial-cross-repo-execution-queue.json",
+        "docs/commercial-go-no-go-gate.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "evidence_writeback_incomplete"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs"
+      ]
+    },
+    {
+      "review_row_id": "owner_base_gate_receipts",
+      "required_evidence_source": "Owner + Base Gate + Gateway + Receipt",
+      "required_reviewer_role": "independent_owner_base_gate_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/commercial-cross-repo-execution-queue.json",
+        "docs/commercial-readiness-verifier.json",
+        "docs/commercial-go-no-go-gate.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "owner_base_gate_receipts_missing"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs",
+        "owner_authorization_without_evidence_review"
+      ]
+    },
+    {
+      "review_row_id": "machine_go_live_evidence_package",
+      "required_evidence_source": "docs/commercial-go-live-evidence-package.json",
+      "required_reviewer_role": "independent_commercial_go_live_reviewer",
+      "current_status": "pending_evidence",
+      "can_count_toward_commercial_ready": false,
+      "required_artifact_refs": [
+        "docs/commercial-go-live-evidence-package.json",
+        "docs/commercial-machine-go-live-evidence-package-coverage-verifier.json"
+      ],
+      "blocked_by": [
+        "independent_acceptance_evidence_missing",
+        "machine_go_live_evidence_package_blocked"
+      ],
+      "forbidden_substitutions": [
+        "self_attestation_without_independent_reviewer",
+        "green_tests_without_independent_review",
+        "manual_summary_without_artifact_refs",
+        "readiness_verifier_without_independent_signoff"
+      ]
+    }
+  ],
+  "completion_gate": {
+    "can_pass": false,
+    "required_before_pass": [
+      "all_independent_review_rows_verified",
+      "all_review_artifact_refs_recorded",
+      "all_reviewer_identities_recorded",
+      "all_blocked_rows_resolved_or_explicitly_not_ready"
+    ],
+    "non_sufficient_evidence": [
+      "independent_acceptance_signoff_missing",
+      "self_attestation_without_independent_reviewer",
+      "green_tests_without_independent_review",
+      "manual_summary_without_artifact_refs",
+      "owner_authorization_without_evidence_review",
+      "readiness_verifier_without_independent_signoff"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "independent_acceptance_signoff_missing",
+    "self_attestation_without_independent_reviewer",
+    "green_tests_without_independent_review",
+    "manual_summary_without_artifact_refs",
+    "owner_authorization_without_evidence_review",
+    "readiness_verifier_without_independent_signoff"
+  ],
+  "non_completion_clause": "This matrix is an acceptance requirement candidate, not an acceptance result. It cannot mark commercial readiness until every row has independent reviewer identity, artifact refs, and authoritative evidence."
+}

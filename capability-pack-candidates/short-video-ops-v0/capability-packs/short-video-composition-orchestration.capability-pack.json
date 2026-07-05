@@ -1,0 +1,96 @@
+{
+  "pack_type": "Capability Pack",
+  "capability_pack_ref": "capability-pack://short-video-composition-orchestration",
+  "display_name": "短视频合成编排能力包",
+  "version": "0.1.0",
+  "lifecycle_status": "契约已定",
+  "candidate_only": true,
+  "non_formal": true,
+  "capability_domain": "short_video_ops",
+  "capability_operation": "compose_video_timeline_candidate",
+  "input_contract": [
+    {
+      "name": "storyboard_bundle_ref",
+      "type": "artifact_ref",
+      "required": true,
+      "description": "分镜、素材、配音和字幕的候选包引用。"
+    }
+  ],
+  "output_contract": [
+    {
+      "name": "timeline_render_plan_ref",
+      "type": "artifact_ref",
+      "required": true,
+      "description": "视频时间线合成计划候选引用。"
+    }
+  ],
+  "risk": {
+    "risk_class": "medium",
+    "side_effect_class": "local_draft",
+    "owner_decision_required": true,
+    "base_gate_required_for_execution": true
+  },
+  "provider_requirements": [
+    {
+      "requirement_ref": "provider-requirement://short-video/composition-orchestration-candidate",
+      "gateway_class": "11-execution-gateway",
+      "provider_family": "video_composition",
+      "required_readiness": "ready_or_provider_missing",
+      "fallback_policy": "provider_missing",
+      "notes": "真实合成、模型推理、媒体处理和文件写入由 Execution Gateway provider 负责。"
+    }
+  ],
+  "oss_candidates": [
+    {
+      "name": "Pixelle-Video",
+      "source_registry": "github",
+      "source_url": "https://github.com/AIDC-AI/Pixelle-Video",
+      "observed_license": "Apache-2.0",
+      "evidence_refs": [
+        "evidence://github/AIDC-AI/Pixelle-Video/license",
+        "evidence://github/AIDC-AI/Pixelle-Video/readme",
+        "evidence://github/AIDC-AI/Pixelle-Video/docs"
+      ],
+      "verification_status": "pending_human_review",
+      "risk_notes": [
+        "可能依赖模型、ComfyUI 或本地媒体工具；必须拆成 provider requirement。",
+        "Pack 不实现模型工作流和媒体处理核心。"
+      ]
+    }
+  ],
+  "integration_plan": {
+    "integration_kind": "glue_code_candidate",
+    "allowed_actions": [
+      "adapter",
+      "mapping",
+      "config",
+      "validation",
+      "packaging",
+      "receipt_binding"
+    ],
+    "no_direct_execution": true,
+    "candidate_only": true,
+    "non_formal": true,
+    "code_assistant_policy": {
+      "capability_pack_ref": "capability-pack://software-code-assistant",
+      "allowed_skill_ids": [
+        "code.change_candidate",
+        "test.run"
+      ],
+      "patch_candidate_only": true,
+      "credential_policy": "credential_ref_only_no_raw_token",
+      "no_raw_token": true
+    }
+  },
+  "acceptance": [
+    "输入 storyboard_bundle_ref 后只生成 timeline_render_plan_ref 候选。",
+    "合成、渲染和模型调用必须在 provider_missing / not_ready / gated run 中诚实表达。",
+    "胶水代码只做适配、映射、校验和回执绑定。"
+  ],
+  "forbidden": [
+    "model_workflow_reimplementation_in_pack",
+    "direct_media_rendering_from_pack",
+    "raw_account_credential",
+    "third_party_repo_execution_from_pack"
+  ]
+}

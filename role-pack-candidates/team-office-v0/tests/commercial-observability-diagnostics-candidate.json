@@ -1,0 +1,246 @@
+{
+  "diagnostics_candidate_ref": "commercial-observability-diagnostics-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包商品化监控 / 诊断候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "diagnostics_status": "candidate_not_wired",
+  "purpose": "定义角色制作、云上传、sandbox 购买、entitlement、签名下载、本地安装、团队替换和运行使用的最小诊断事件、trace、告警和脱敏要求；本文件只声明诊断契约，不保存原始日志、个人数据、secret、生产端点或签名下载 URL。",
+  "truth_sources": {
+    "frontend_truth": "truzhen-client-web-desktop",
+    "cloud_truth": "truzhen-cloud",
+    "install_truth": "truzhenos",
+    "candidate_asset_truth": "truzhen-packs"
+  },
+  "data_policy": {
+    "no_pii_payload_in_packs": true,
+    "no_secret_payload_in_packs": true,
+    "redaction_required": true,
+    "receipt_ref_not_payload": true,
+    "screenshot_policy": "store redacted screenshot ref only; do not store raw screenshot payload in pack",
+    "network_summary_policy": "store endpoint id, status and receipt ref only; never store token, cookie, signed URL or payment credential"
+  },
+  "required_events": [
+    {
+      "event_id": "role_candidate_created",
+      "truth_source": "multi_repo",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "candidate_ref",
+        "gui_screenshot_ref"
+      ]
+    },
+    {
+      "event_id": "candidate_bundle_exported",
+      "truth_source": "truzhenos",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "receipt_ref",
+        "bundle_ref",
+        "artifact_sha256"
+      ]
+    },
+    {
+      "event_id": "cloud_upload_draft_created",
+      "truth_source": "truzhen-cloud",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "receipt_ref",
+        "listing_draft_ref",
+        "artifact_sha256"
+      ]
+    },
+    {
+      "event_id": "sandbox_order_created",
+      "truth_source": "truzhen-cloud",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "receipt_ref",
+        "sandbox_order_ref",
+        "terms_acceptance_receipt_ref"
+      ]
+    },
+    {
+      "event_id": "sandbox_payment_confirmed",
+      "truth_source": "truzhen-cloud",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "receipt_ref",
+        "sandbox_payment_receipt_ref",
+        "real_payment_block_policy"
+      ]
+    },
+    {
+      "event_id": "entitlement_issued",
+      "truth_source": "truzhen-cloud",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "receipt_ref",
+        "entitlement_ref",
+        "license_candidate_ref"
+      ]
+    },
+    {
+      "event_id": "signed_download_created",
+      "truth_source": "truzhen-cloud",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "receipt_ref",
+        "download_receipt_ref",
+        "artifact_sha256"
+      ]
+    },
+    {
+      "event_id": "local_install_completed",
+      "truth_source": "truzhenos",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "receipt_ref",
+        "install_receipt_ref",
+        "enabled_role_pack_version"
+      ]
+    },
+    {
+      "event_id": "team_role_binding_replaced",
+      "truth_source": "truzhenos",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "receipt_ref",
+        "team_binding_receipt_ref",
+        "owner_gate_decision_ref"
+      ]
+    },
+    {
+      "event_id": "runtime_candidate_used",
+      "truth_source": "multi_repo",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "candidate_ref",
+        "runtime_receipt_candidate_ref",
+        "candidate_only_state"
+      ]
+    },
+    {
+      "event_id": "negative_case_blocked",
+      "truth_source": "multi_repo",
+      "required_fields": [
+        "correlation_id",
+        "stage_id",
+        "timestamp",
+        "actor_ref",
+        "status",
+        "receipt_ref",
+        "blocked_reason",
+        "negative_case_id"
+      ]
+    }
+  ],
+  "diagnostic_signals": [
+    {
+      "signal_id": "gui_step_trace",
+      "storage_policy": "redacted_summary_only",
+      "evidence_required": "GUI step trace ref + redacted screenshot refs + page state refs"
+    },
+    {
+      "signal_id": "cloud_commerce_trace",
+      "storage_policy": "receipt_ref_only",
+      "evidence_required": "cloud upload, order, payment, entitlement and download receipt refs"
+    },
+    {
+      "signal_id": "install_preflight_trace",
+      "storage_policy": "receipt_ref_only",
+      "evidence_required": "artifact hash verification, entitlement verification and install receipt refs"
+    },
+    {
+      "signal_id": "artifact_hash_continuity",
+      "storage_policy": "hash_only",
+      "evidence_required": "artifact_sha256 across export, upload, download and install"
+    },
+    {
+      "signal_id": "entitlement_decision_trace",
+      "storage_policy": "receipt_ref_only",
+      "evidence_required": "entitlement issue, validation, expiration or revocation receipt refs"
+    },
+    {
+      "signal_id": "owner_gate_decision_trace",
+      "storage_policy": "receipt_ref_only",
+      "evidence_required": "Owner Gate decision ref + team binding receipt ref"
+    }
+  ],
+  "alert_rules": [
+    {
+      "alert_id": "missing_receipt_after_gui_success",
+      "severity": "red",
+      "expected_action": "mark stage failed_requires_issue and create issue with GUI screenshot and missing receipt target"
+    },
+    {
+      "alert_id": "artifact_hash_mismatch",
+      "severity": "red",
+      "expected_action": "block download or install and record expected / actual hash refs"
+    },
+    {
+      "alert_id": "entitlement_install_denied",
+      "severity": "orange",
+      "expected_action": "show buyer-visible blocked reason and record entitlement verification receipt"
+    },
+    {
+      "alert_id": "production_endpoint_detected",
+      "severity": "red",
+      "expected_action": "stop sandbox execution and require Owner decision before any production route"
+    },
+    {
+      "alert_id": "secret_or_pii_detected",
+      "severity": "red",
+      "expected_action": "block artifact or evidence upload, redact source, and record secret scan block receipt"
+    }
+  ],
+  "forbidden": [
+    "upload_raw_log_payload_to_packs",
+    "store_personal_data_in_diagnostics",
+    "store_secret_in_diagnostics",
+    "claim_gui_success_without_receipt_trace",
+    "store_signed_download_url_in_pack",
+    "store_payment_credential_in_diagnostics"
+  ],
+  "non_completion_clause": "本文件只是监控 / 诊断候选，不代表 trace、日志、指标或告警已经接线。真实诊断证据必须由 client、truzhen-cloud、truzhenos 在授权后产生，并只以脱敏摘要、hash 或 receipt ref 形式进入验收材料。"
+}

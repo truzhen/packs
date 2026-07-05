@@ -1,0 +1,111 @@
+{
+  "attestation_ref": "role-studio-export-provenance-attestation://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包制作台导出来源证明候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "attestation_status": "not_run_requires_user_view_gui_export_receipt",
+  "actor_role": "user_view_gui_agent",
+  "coordinator_role": "organizer_coordinator_recorder",
+  "gui_truth_source": "truzhen-client-web-desktop",
+  "export_truth_source": "truzhenos",
+  "package_contents_truth_source": "truzhen-packs",
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "source_gui_script": "tests/gui-user-agent-execution-script-candidate.json",
+  "source_gui_evidence_protocol": "tests/gui-evidence-capture-protocol.json",
+  "artifact_manifest": "commerce/artifact-manifest.json",
+  "artifact_bundle_digest": "commerce/artifact-bundle-digest-candidate.json",
+  "commercial_receipt_schema": "commerce/commercial-distribution-receipt-schema-candidate.json",
+  "purpose": "证明团队办公室角色候选包必须由用户视角 GUI 完成角色创建和导出，并由 truzhenos 产生 candidate bundle export receipt；不得用手工 JSON、后端直调或文件复制冒充上传前导出成功。",
+  "required_gui_export_evidence": [
+    "role_creation_screenshot_refs",
+    "candidate_bundle_export_click_screenshot",
+    "candidate_bundle_export_receipt_ref",
+    "six_role_candidate_refs",
+    "bundle_tree_sha256",
+    "artifact_manifest_sha256",
+    "no_manual_json_edit_evidence"
+  ],
+  "required_role_candidate_refs": [
+    {
+      "slot_ref": "team_office.secretary_general",
+      "role_pack_ref": "role_pack://team-office-secretary-general",
+      "role_pack_file": "role-packs/team-office-secretary-general.rolepack.json",
+      "candidate_ref": "role_pack_candidate://team-office-secretary-general",
+      "gui_creation_step_ref": "gui-step://role-studio/create-secretary-general",
+      "forbidden_phrase_check_status": "required_pass"
+    },
+    {
+      "slot_ref": "team_office.advisor.strategy",
+      "role_pack_ref": "role_pack://team-office-strategy-advisor",
+      "role_pack_file": "role-packs/team-office-strategy-advisor.rolepack.json",
+      "candidate_ref": "role_pack_candidate://team-office-strategy-advisor",
+      "gui_creation_step_ref": "gui-step://role-studio/create-strategy-advisor",
+      "forbidden_phrase_check_status": "required_pass"
+    },
+    {
+      "slot_ref": "team_office.advisor.product",
+      "role_pack_ref": "role_pack://team-office-product-advisor",
+      "role_pack_file": "role-packs/team-office-product-advisor.rolepack.json",
+      "candidate_ref": "role_pack_candidate://team-office-product-advisor",
+      "gui_creation_step_ref": "gui-step://role-studio/create-product-advisor",
+      "forbidden_phrase_check_status": "required_pass"
+    },
+    {
+      "slot_ref": "team_office.advisor.operations",
+      "role_pack_ref": "role_pack://team-office-operations-advisor",
+      "role_pack_file": "role-packs/team-office-operations-advisor.rolepack.json",
+      "candidate_ref": "role_pack_candidate://team-office-operations-advisor",
+      "gui_creation_step_ref": "gui-step://role-studio/create-operations-advisor",
+      "forbidden_phrase_check_status": "required_pass"
+    },
+    {
+      "slot_ref": "team_office.advisor.finance",
+      "role_pack_ref": "role_pack://team-office-finance-advisor",
+      "role_pack_file": "role-packs/team-office-finance-advisor.rolepack.json",
+      "candidate_ref": "role_pack_candidate://team-office-finance-advisor",
+      "gui_creation_step_ref": "gui-step://role-studio/create-finance-advisor",
+      "forbidden_phrase_check_status": "required_pass"
+    },
+    {
+      "slot_ref": "team_office.advisor.legal_risk",
+      "role_pack_ref": "role_pack://team-office-legal-risk-advisor",
+      "role_pack_file": "role-packs/team-office-legal-risk-advisor.rolepack.json",
+      "candidate_ref": "role_pack_candidate://team-office-legal-risk-advisor",
+      "gui_creation_step_ref": "gui-step://role-studio/create-legal-risk-advisor",
+      "forbidden_phrase_check_status": "required_pass"
+    }
+  ],
+  "upload_blocking_policy": {
+    "blocks_cloud_upload_without_gui_export_receipt": true,
+    "blocks_cloud_upload_if_manual_json_edit_detected": true,
+    "blocks_cloud_upload_if_bundle_hash_mismatch": true,
+    "blocks_cloud_upload_if_any_role_candidate_missing": true
+  },
+  "negative_cases": {
+    "manual_json_edit_as_export_success": {
+      "expected_status": "blocked_manual_json_not_gui_export",
+      "expected_evidence": "gui_export_receipt_missing"
+    },
+    "backend_api_call_without_gui": {
+      "expected_status": "blocked_user_view_gui_evidence_missing",
+      "expected_evidence": "user_view_gui_step_evidence_missing"
+    },
+    "bundle_hash_mismatch": {
+      "expected_status": "blocked_bundle_hash_mismatch",
+      "expected_evidence": "bundle_tree_sha256_diff"
+    },
+    "missing_six_role_candidates": {
+      "expected_status": "blocked_role_candidate_set_incomplete",
+      "expected_evidence": "six_role_candidate_refs_required"
+    }
+  },
+  "forbidden": [
+    "manual_json_edit_as_gui_export_success",
+    "filesystem_copy_to_cloud_without_export_receipt",
+    "backend_fixture_success_as_user_view_evidence",
+    "upload_bundle_without_bundle_tree_sha256",
+    "claim_export_provenance_as_cloud_upload_receipt"
+  ],
+  "non_completion_clause": "本文件只是导出来源证明候选，不代表真实 GUI 已执行、truzhenos 已导出、云端已上传或商品化已完成。真实完成必须由用户视角 GUI 证据、candidate bundle export receipt、bundle hash 和后续 cloud / install receipts 共同证明。"
+}

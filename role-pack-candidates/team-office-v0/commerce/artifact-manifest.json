@@ -1,0 +1,516 @@
+{
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "artifact_type": "role_pack_candidate_bundle",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "version": "0.1.0",
+  "hash_algorithm": "sha256",
+  "manifest_hash_policy": "self_hash_excluded",
+  "artifact_hash_status": "candidate_hash_required_at_cloud_upload",
+  "upload_status": "candidate_ready_for_cloud_upload",
+  "download_status": "candidate_requires_entitlement",
+  "install_status": "candidate_requires_truzhenos_install",
+  "files": [
+    {
+      "path": "README.md",
+      "required_for": "upload",
+      "sha256": "329a40fd8b783986bfa17e07f5f86ab46b5872b14130340333015c0fbad43689",
+      "size_bytes": 22574
+    },
+    {
+      "path": "candidate-set.json",
+      "required_for": "upload",
+      "sha256": "8d900b667a2dc3e86248cbdad678e418d49afc1d56914f56bdf076a1b32ed08e",
+      "size_bytes": 13227
+    },
+    {
+      "path": "role-packs/team-office-secretary-general.rolepack.json",
+      "required_for": "install",
+      "sha256": "e8dc672526b575b1fc78bd1c45b166513693292c1efdedf0afd5abe49950b196",
+      "size_bytes": 1420
+    },
+    {
+      "path": "role-packs/team-office-strategy-advisor.rolepack.json",
+      "required_for": "install",
+      "sha256": "f2b57474e12affeb0601ea3d627e9e8fe9af32f891f9d24a313e000350a154b2",
+      "size_bytes": 1107
+    },
+    {
+      "path": "role-packs/team-office-product-advisor.rolepack.json",
+      "required_for": "install",
+      "sha256": "fbd49405c3f0e7a0a5d8f669816061023c8805e97b605b5338818567a5f18d71",
+      "size_bytes": 1126
+    },
+    {
+      "path": "role-packs/team-office-operations-advisor.rolepack.json",
+      "required_for": "install",
+      "sha256": "33a0dca819c26b2326e9a141bbda10e892d928b875f996c7b01adee877ead81f",
+      "size_bytes": 1114
+    },
+    {
+      "path": "role-packs/team-office-finance-advisor.rolepack.json",
+      "required_for": "install",
+      "sha256": "567418978707b9999b3880c67ccc083ebec210b9dba7b7b8c36dc07bd271a8ce",
+      "size_bytes": 1100
+    },
+    {
+      "path": "role-packs/team-office-legal-risk-advisor.rolepack.json",
+      "required_for": "install",
+      "sha256": "7e22636d5e7d401e276ea7dd1d3d36dd873c54def2177a76d06ac42085e100a8",
+      "size_bytes": 1158
+    },
+    {
+      "path": "role-slots/team-office-role-slots.json",
+      "required_for": "install",
+      "sha256": "c6022fb66b41b99b7cd6d9478b13beadcb56871261a82dc142971dad92510d9f",
+      "size_bytes": 4353
+    },
+    {
+      "path": "bindings/team-office-role-binding-candidate.json",
+      "required_for": "install",
+      "sha256": "60c685d670bee21d8c462125dcc9bc9aa0e07ce5894c92c8dd31fe0101b3b395",
+      "size_bytes": 4033
+    },
+    {
+      "path": "bindings/team-settings-installed-role-catalog-candidate.json",
+      "required_for": "install",
+      "sha256": "ff98da3125c8ffd1fe2d6c28f223dc4ec880447c5694951f34b0751c03281e7e",
+      "size_bytes": 5960
+    },
+    {
+      "path": "capability-role-requirements/sample-team-research.role-requirements.json",
+      "required_for": "install",
+      "sha256": "4b4c14638c996a3191fd1984cb29e32ed2dbc7d63d1604d7131e8695a54a8567",
+      "size_bytes": 5129
+    },
+    {
+      "path": "appearance/secretary-appearance-preferences.json",
+      "required_for": "install",
+      "sha256": "9b003e14c8cb121389e2a859c4f4969244a8aa1f3d30314950b80308a7612c88",
+      "size_bytes": 3541
+    },
+    {
+      "path": "appearance/secretary-appearance-asset-rights-candidate.json",
+      "required_for": "install",
+      "sha256": "db7511c654865f85dfb00b60589bd93bf62bda405e672f0e8d6ddee47c8868ce",
+      "size_bytes": 4021
+    },
+    {
+      "path": "commerce/cloud-listing-candidate.json",
+      "required_for": "upload",
+      "sha256": "769b25a8bebc7d656841e903e5e9dcccc3aa69c7f385f3097fe468a2717b20f1",
+      "size_bytes": 4629
+    },
+    {
+      "path": "commerce/artifact-manifest.json",
+      "required_for": "audit",
+      "sha256": "self_hash_excluded",
+      "size_bytes": 18878
+    },
+    {
+      "path": "commerce/sandbox-commerce-flow-candidates.json",
+      "required_for": "upload",
+      "sha256": "22746dcba4b6ff7435d897bbb496083c811269c764587744f1422a22e6e92d4c",
+      "size_bytes": 3468
+    },
+    {
+      "path": "commerce/product-handoff-candidate.json",
+      "required_for": "upload",
+      "sha256": "57b0ab315f20a4aaa11a5864d904596e5a7ca55bcb833d1f88a31eaa8daea902",
+      "size_bytes": 5674
+    },
+    {
+      "path": "commerce/license-entitlement-policy-candidate.json",
+      "required_for": "upload",
+      "sha256": "251af40e2bce343a1f482d32fc132173c4cf5dceeaefbe2757041fcbff8d6f11",
+      "size_bytes": 5168
+    },
+    {
+      "path": "commerce/order-payment-state-machine-candidate.json",
+      "required_for": "upload",
+      "sha256": "d244f6854565408cb28003d7db1ff01594f24789ff12754874216571870996bd",
+      "size_bytes": 7564
+    },
+    {
+      "path": "commerce/support-refund-revocation-policy-candidate.json",
+      "required_for": "upload",
+      "sha256": "3f01a74ecb58408bc979df42549fc4850b1caad0e09e03d5ed8e63574a2e1d7e",
+      "size_bytes": 5985
+    },
+    {
+      "path": "commerce/buyer-library-install-state-candidate.json",
+      "required_for": "install",
+      "sha256": "5d068a326b0464bf85b5992b355295d26c2efa1c9d65bb185adac2bd6309d4cf",
+      "size_bytes": 8363
+    },
+    {
+      "path": "commerce/publisher-account-settlement-policy-candidate.json",
+      "required_for": "upload",
+      "sha256": "d1bc80611a8a751d283fab6a083b76de34a25e5f6c33db8e2b2dbada6c61a899",
+      "size_bytes": 5357
+    },
+    {
+      "path": "commerce/commercial-terms-privacy-policy-candidate.json",
+      "required_for": "upload",
+      "sha256": "5285c5bd405e62d26ac7a8a26e28583a813b2c375065331bc9f9f0a16ae668d4",
+      "size_bytes": 6617
+    },
+    {
+      "path": "commerce/release-candidate-package.json",
+      "required_for": "upload",
+      "sha256": "d76234be26a4377618340edf3e12ac4ddd474edca2f0762f90a676b75c8300cb",
+      "size_bytes": 4121
+    },
+    {
+      "path": "commerce/download-install-access-matrix.json",
+      "required_for": "upload",
+      "sha256": "e3c431e29dc0bd705721e03f9da3589174a728bec1d9b5da9f3fd24a4dfaef8b",
+      "size_bytes": 6382
+    },
+    {
+      "path": "commerce/artifact-bundle-layout-candidate.json",
+      "required_for": "upload",
+      "sha256": "dce92d624a7cac833ea076278ba0e3d71f639b20a212377f24de8fbcc84d79e2",
+      "size_bytes": 4874
+    },
+    {
+      "path": "commerce/artifact-bundle-digest-candidate.json",
+      "required_for": "upload",
+      "sha256": "eddcd061076a41953ba40daaf645a229c5d8895687c0c46e9a336c62e9a6613f",
+      "size_bytes": 14221
+    },
+    {
+      "path": "commerce/install-compatibility-matrix.json",
+      "required_for": "upload",
+      "sha256": "add2d3548831db9fb2cb0df4fef61a2ed7b90d0b5bd3e183537e58f8ffe401b1",
+      "size_bytes": 7022
+    },
+    {
+      "path": "commerce/marketplace-review-submission-candidate.json",
+      "required_for": "upload",
+      "sha256": "14087c5f758dc5281818dd95132709d40efa45281b207be1b02b8530b977ca79",
+      "size_bytes": 9884
+    },
+    {
+      "path": "commerce/commercial-go-live-approval-candidate.json",
+      "required_for": "upload",
+      "sha256": "b7c5ee7afa84c078702494b2dbc53478ad6f340fbb63f143bd3a3d0e6a208a7a",
+      "size_bytes": 13649
+    },
+    {
+      "path": "commerce/commercial-production-promotion-gate-candidate.json",
+      "required_for": "audit",
+      "sha256": "2fe7a5f73856f059e4eae3144f7800093aaa30aa15fc122b6a83ecde73a27327",
+      "size_bytes": 11829
+    },
+    {
+      "path": "commerce/commercial-receipt-chain-candidate.json",
+      "required_for": "upload",
+      "sha256": "cf830dcaa413224f8796c34a616d5fdeb5f4e307448adcd8345e85810d916a3d",
+      "size_bytes": 10897
+    },
+    {
+      "path": "commerce/commercial-distribution-receipt-schema-candidate.json",
+      "required_for": "upload",
+      "sha256": "44cf5e4cc3b2eac09e15e1804c1de57dc3361def8e9447b96d4eb278459d4155",
+      "size_bytes": 12165
+    },
+    {
+      "path": "install/install-preflight-request-candidate.json",
+      "required_for": "upload",
+      "sha256": "ad78b26e3650a6a42012bc4dd079ee1cfd67e4e07d0670babd6cceb2b6132ceb",
+      "size_bytes": 7133
+    },
+    {
+      "path": "install/install-runtime-activation-map-candidate.json",
+      "required_for": "install",
+      "sha256": "0690ca6a575c5ead8bef34716f85efcaebd4c8ce5de247f2c4183baabc6bedb8",
+      "size_bytes": 9654
+    },
+    {
+      "path": "tests/gui-user-agent-scenarios.json",
+      "required_for": "audit",
+      "sha256": "0d57bbc6742152e4f28f96ddbb3bbb1b2ade9230a0efc32193fa74967af27146",
+      "size_bytes": 8605
+    },
+    {
+      "path": "tests/gui-user-agent-execution-script-candidate.json",
+      "required_for": "audit",
+      "sha256": "76cf41901514b1b605d4323586c5969a192e7cfc7ef4afe40ef3ce33ecf1447e",
+      "size_bytes": 13489
+    },
+    {
+      "path": "tests/gui-evidence-capture-protocol.json",
+      "required_for": "audit",
+      "sha256": "7e17df0dd53478ae0637e52f9a8057197c7c86b9d64af8c5df8b007eadb4c0fc",
+      "size_bytes": 8533
+    },
+    {
+      "path": "tests/role-studio-export-provenance-attestation-candidate.json",
+      "required_for": "audit",
+      "sha256": "892d8696137ac843ac16dfae53a9441c003e458d605d608568739a73d9619b9b",
+      "size_bytes": 5741
+    },
+    {
+      "path": "tests/artifact-secret-raw-asset-scan-candidate.json",
+      "required_for": "audit",
+      "sha256": "4ebf84282bd1752f89c3d4430ed5d79723672a064a74eca64e3aa5e062c8ff61",
+      "size_bytes": 3473
+    },
+    {
+      "path": "tests/artifact-manifest-closure-gate-candidate.json",
+      "required_for": "audit",
+      "sha256": "9881b5d5f26443fbdb91e620e4f2cdaa508d2dabf4e96e0a8db18b94209b1245",
+      "size_bytes": 3926
+    },
+    {
+      "path": "tests/product-readiness-evidence-matrix.json",
+      "required_for": "audit",
+      "sha256": "099bc346c20094f8f88399896c346d693acf4afd89a05b34cca91da1aa9a3fe8",
+      "size_bytes": 13196
+    },
+    {
+      "path": "tests/role-studio-goal-completion-evidence-map-candidate.json",
+      "required_for": "audit",
+      "sha256": "8af4f8372b0f2c0d96805d59e8b3918b47b415444da466f805454cc0b13fd85f",
+      "size_bytes": 17667
+    },
+    {
+      "path": "tests/commercialization-execution-packet.json",
+      "required_for": "audit",
+      "sha256": "439131ae180b53b07562913611882f804be4a55d72160947677fb91c5d242bec",
+      "size_bytes": 9986
+    },
+    {
+      "path": "tests/e2e-evidence-run-record.json",
+      "required_for": "audit",
+      "sha256": "cd02633b3c03399e966e92580e858222ce8e16137ee399c57d34a22e7e161247",
+      "size_bytes": 8785
+    },
+    {
+      "path": "tests/commercial-evidence-gate-candidate.json",
+      "required_for": "audit",
+      "sha256": "2275f40cdb3ae451629d312063fd4452e82865f6378082db87349782e9b0810b",
+      "size_bytes": 8956
+    },
+    {
+      "path": "tests/sandbox-environment-readiness-candidate.json",
+      "required_for": "audit",
+      "sha256": "f3afb0f08d4a4c9180eaaa34db71a99f7b3b3c677c5d4abf823e8220034f72af",
+      "size_bytes": 7239
+    },
+    {
+      "path": "tests/commercial-observability-diagnostics-candidate.json",
+      "required_for": "audit",
+      "sha256": "20013da257ce96ccda77e37173ea8fc20080c14d3c42db695d50c19658d2ef69",
+      "size_bytes": 7559
+    },
+    {
+      "path": "tests/normal-commercialization-completion-audit-candidate.json",
+      "required_for": "audit",
+      "sha256": "0a70598e66b646dfc3a9404c5252c5989910e505f80b1adf334138b244248600",
+      "size_bytes": 11144
+    },
+    {
+      "path": "tests/commercial-chain-verifier-candidate.json",
+      "required_for": "audit",
+      "sha256": "37f8066ac7af1755696ff734b9a01ee45e15765bda5add09c60489cb68b9304c",
+      "size_bytes": 13870
+    },
+    {
+      "path": "tests/commercial-go-no-go-gate-candidate.json",
+      "required_for": "audit",
+      "sha256": "d3ca39946799e29e10542fc85cedc05d7de1542ec8d5a5cb19bed2e4993cd4bc",
+      "size_bytes": 22504
+    },
+    {
+      "path": "tests/commercial-readiness-verifier-candidate.json",
+      "required_for": "audit",
+      "sha256": "427efa75427d334d5395be3ef767572acb92eb0f44b74b8bc0a7a67998d52553",
+      "size_bytes": 22606
+    },
+    {
+      "path": "tests/role-studio-phase-coverage-matrix-candidate.json",
+      "required_for": "audit",
+      "sha256": "32b15c1aa54822c3418e79966f6b64190f130652b50a8b81054367b6e85089d1",
+      "size_bytes": 11855
+    },
+    {
+      "path": "tests/role-studio-test-case-coverage-matrix-candidate.json",
+      "required_for": "audit",
+      "sha256": "30d17aa669bc6bd16fdf8366f043cdae52d9f5d65b73124e90fa148ab43d682e",
+      "size_bytes": 24448
+    },
+    {
+      "path": "tests/independent-acceptance-signoff-matrix-candidate.json",
+      "required_for": "audit",
+      "sha256": "7503de6b44e72ef44a422091478804fdc6eba6c069525490d76791a9368a8f8d",
+      "size_bytes": 10953
+    },
+    {
+      "path": "tests/p0-p11-commercialization-blocker-register-candidate.json",
+      "required_for": "audit",
+      "sha256": "320f839a8c32c307137084baeb44a606b9071b3915e07b2afdcaf2d23202fe82",
+      "size_bytes": 19115
+    },
+    {
+      "path": "tests/product-stage-frontend-backend-closure-report-candidate.json",
+      "required_for": "audit",
+      "sha256": "4b8ea03ed540558e354d59c1f498d16036689ee6490cb16a0c15d81d8bfda7bf",
+      "size_bytes": 23432
+    },
+    {
+      "path": "tests/p11-normal-commercialization-acceptance-gate-candidate.json",
+      "required_for": "audit",
+      "sha256": "f6692c35f61491411f555ade1b10dfd3f5c4b059b678df41100c16e2a0ba110c",
+      "size_bytes": 15281
+    },
+    {
+      "path": "tests/p11-normal-commercialization-verification-record-template.json",
+      "required_for": "audit",
+      "sha256": "cd6a79f53e3a00c925656abeb92857fb2ee1ca39ed6f07f11cd819b06aa39b14",
+      "size_bytes": 20704
+    },
+    {
+      "path": "tests/p11-evidence-ingestion-binder-candidate.json",
+      "required_for": "audit",
+      "sha256": "86a36b9062f62d3c6c976ef370eeea79095a902575f197f12b39204b0d686f37",
+      "size_bytes": 20778
+    },
+    {
+      "path": "tests/p11-sandbox-execution-runbook-candidate.json",
+      "required_for": "audit",
+      "sha256": "3412ae0c53c7d80ba1a20732d61bf8dc8838e55ade3b80315088f991cc37ab3c",
+      "size_bytes": 18911
+    },
+    {
+      "path": "tests/p11-sandbox-preflight-gate-candidate.json",
+      "required_for": "audit",
+      "sha256": "0519ed5a29501baba64c3427792f8f513b901b92bdf4bf8b5d461ab4e0a2e1eb",
+      "size_bytes": 7039
+    },
+    {
+      "path": "tests/p11-sandbox-run-request-candidate.json",
+      "required_for": "audit",
+      "sha256": "f7ebb3c90aea655dd48772f09c1cb758a7bf4d3f99ecccb33e7bc4d22eb5e0bc",
+      "size_bytes": 22037
+    },
+    {
+      "path": "tests/p11-evidence-acceptance-checklist-candidate.json",
+      "required_for": "audit",
+      "sha256": "fcd27ca8ea5849ac42ca7fd0dbb2bb6dcae47c195245b0ac99d789726244efb8",
+      "size_bytes": 23873
+    },
+    {
+      "path": "tests/p11-commercial-go-live-evidence-package-template.json",
+      "required_for": "audit",
+      "sha256": "8d126602a274616eea2615d5e1ebaa0de2de29c1fae9aa83ca49627da4e106a4",
+      "size_bytes": 28278
+    },
+    {
+      "path": "integration/cross-repo-execution-cards.json",
+      "required_for": "audit",
+      "sha256": "0db9438775d25d7585d3b43f4115fc2218ef87dcddb4cf249d67fe8f8f647a6e",
+      "size_bytes": 12076
+    },
+    {
+      "path": "integration/cross-repo-execution-readiness-package.json",
+      "required_for": "audit",
+      "sha256": "97513962a9ae56a07145c2faa76f5fd3fdc6dc2c9345cfd2ab82905f2fe616e8",
+      "size_bytes": 12781
+    },
+    {
+      "path": "integration/owner-authorization-evidence-intake-candidate.json",
+      "required_for": "audit",
+      "sha256": "36bfe5ffbf3135b052eaee67f220ab745e870d94988e84767a5d9b08c9a84ae2",
+      "size_bytes": 6920
+    },
+    {
+      "path": "integration/commercial-cross-repo-execution-queue-candidate.json",
+      "required_for": "audit",
+      "sha256": "ec365c4d7e6dad04a458d63593846a8545a23637ceb89a06fdd89393d481d904",
+      "size_bytes": 23918
+    },
+    {
+      "path": "integration/frontend-backend-contract-map.json",
+      "required_for": "audit",
+      "sha256": "c84b0f99c2ba142918b8b4a2035183c89861ceccfde143cdc703f6c81e3d9073",
+      "size_bytes": 21125
+    },
+    {
+      "path": "integration/commercial-api-contract-candidate.json",
+      "required_for": "audit",
+      "sha256": "e2136ee347113067c0f6f401263db2113d9aabf34dc89f173d0ed6e62158f2fe",
+      "size_bytes": 20126
+    },
+    {
+      "path": "integration/commercial-api-example-cases-candidate.json",
+      "required_for": "audit",
+      "sha256": "ee97fe80b86e0bf889cd8765134e4fc31d3054eeb0ce2ae8ebeb9c14271efd2d",
+      "size_bytes": 28736
+    },
+    {
+      "path": "docs/cloud-commerce-ledger.md",
+      "required_for": "audit",
+      "sha256": "4e0047bea499b3a1008616bd6de8dcd69a38b8d5df840e50120ac7ae0107f9de",
+      "size_bytes": 18755
+    },
+    {
+      "path": "docs/role-pack-export-ledger.md",
+      "required_for": "audit",
+      "sha256": "45ee3f3cf8879beab760801696e931748c2594d906dcb1a057416bd4f17797e2",
+      "size_bytes": 15471
+    },
+    {
+      "path": "docs/role-studio-issue-ledger.md",
+      "required_for": "audit",
+      "sha256": "681e6eef5f58de5e35a4275a83209ce70191d63caf1dc722c2acc43932364e0e",
+      "size_bytes": 16146
+    },
+    {
+      "path": "docs/team-settings-binding-ledger.md",
+      "required_for": "audit",
+      "sha256": "a6732d394b446ed3f33acd36c2428942f844129429e5112e0c09121f6ba86a31",
+      "size_bytes": 1651
+    },
+    {
+      "path": "docs/commercial-cross-repo-evidence-ledger.json",
+      "required_for": "audit",
+      "sha256": "344398cb2de7c8a26cfad228ee40ee06cee6b1cae57096a1cec4ec2666cbcfb3",
+      "size_bytes": 21558
+    },
+    {
+      "path": "usage/team-office-runtime-usage-candidate.json",
+      "required_for": "upload",
+      "sha256": "52866ee15440251e7700e3a3498c08fa0147299152d3d3c4ee7a434bc25da6c3",
+      "size_bytes": 5339
+    }
+  ],
+  "download_requirements": {
+    "entitlement_required": "true",
+    "download_truth_source": "truzhen-cloud",
+    "hash_verification": "required",
+    "signed_url_required": "true",
+    "blocked_without_purchase": "true"
+  },
+  "install_requirements": {
+    "installer_truth_source": "truzhenos",
+    "owner_gate_required": "true",
+    "receipt_required": "true",
+    "artifact_hash_verification": "required",
+    "forbidden_artifact_scan": "required",
+    "role_pack_schema_check": "required",
+    "team_binding_after_install": "owner_gate_required"
+  },
+  "forbidden": [
+    "raw_secret",
+    "raw_voice_asset",
+    "raw_vrm_asset",
+    "formal_license_truth_in_packs",
+    "payment_truth_in_packs",
+    "production_publish_without_owner_authorization"
+  ],
+  "generated_from": "role-pack-candidates/team-office-v0",
+  "payload_file_count": 79
+}

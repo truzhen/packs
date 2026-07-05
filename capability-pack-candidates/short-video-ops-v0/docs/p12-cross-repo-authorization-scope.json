@@ -1,0 +1,74 @@
+{
+  "scope_ref": "p12-cross-repo-authorization-scope://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p12_safe_lifecycle_sample",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "pending_owner_authorization",
+  "authorization_truth_source": "Owner explicit authorization in the current thread or a signed authorization card; not inferred from plan text",
+  "authorized_repositories": [
+    {
+      "repo": "truzhenos",
+      "path": "/Users/li/Documents/truzhenv3worktree/truzhenos-mod-04-capability-pack-studio-short-video-oss",
+      "allowed_actions": [
+        "modify",
+        "test"
+      ],
+      "scope": "04 capability lifecycle safe fixture, readiness, promote, confirm, API and acceptance tests only"
+    },
+    {
+      "repo": "truzhen-client-web-desktop",
+      "path": "/Users/li/.config/superpowers/worktrees/truzhen-client-web-desktop/capability-pack-studio-short-video-gui",
+      "allowed_actions": [
+        "modify",
+        "test"
+      ],
+      "scope": "Capability Pack Studio lifecycle sample panel, confirmation card, API client, unit tests and smoke only"
+    },
+    {
+      "repo": "truzhen-packs",
+      "path": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+      "allowed_actions": [
+        "document",
+        "candidate_asset_maintenance",
+        "test"
+      ],
+      "scope": "P12 plans, authorization card, candidate ledgers and evidence contracts only"
+    }
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "run_real_codex_cli",
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "production_cloud_market_action"
+  ],
+  "allowed_fixture_scope": [
+    "safe_builtin_or_fixture_only",
+    "server_derived_lifecycle_draft",
+    "readiness_issue_or_ready_state",
+    "promote_gate_preserved",
+    "confirm_requires_owner_base_gate_and_receipt"
+  ],
+  "required_authorization_phrase_contains": [
+    "授权按 P12 授权卡",
+    "truzhenos 与 truzhen-client-web-desktop",
+    "不改 contracts、software、cloud",
+    "不运行真实 Codex CLI",
+    "不执行第三方 OSS",
+    "不登录或上传社媒",
+    "只使用基座内置安全样本或 fixture"
+  ],
+  "current_authorization_evidence": {
+    "status": "missing",
+    "owner_thread_quote_required": true,
+    "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+    "evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+    "must_be_recorded_before_cross_repo_work": true
+  }
+}

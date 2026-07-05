@@ -1,0 +1,233 @@
+{
+  "evidence_gate_ref": "commercial-evidence-gate-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包商品化证据门槛候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "completion_status": "not_verified_requires_cross_repo_execution",
+  "purpose": "定义角色制作、上传、购买、下载、安装、团队替换和运行使用每个商品化阶段的最小证据记录、跨仓关联键、独立验收签收和负例阻断要求，防止 GUI-only、candidate-only 或单仓测试冒充正常商品化。",
+  "truth_sources": {
+    "frontend_truth": "truzhen-client-web-desktop",
+    "cloud_truth": "truzhen-cloud",
+    "install_truth": "truzhenos",
+    "acceptance_truth": "independent_acceptance_agent",
+    "candidate_asset_truth": "truzhen-packs"
+  },
+  "evidence_record_schema": {
+    "required_fields": [
+      "evidence_ref",
+      "stage_id",
+      "actor",
+      "truth_source",
+      "gui_screenshot_path",
+      "page_state_ref",
+      "candidate_or_receipt_ref",
+      "receipt_ref",
+      "timestamp",
+      "correlation_id",
+      "artifact_sha256",
+      "redaction_status",
+      "verifier_ref",
+      "result_status"
+    ],
+    "allowed_result_statuses": [
+      "pending",
+      "passed_verified",
+      "blocked_verified",
+      "failed_requires_issue"
+    ],
+    "correlation_policy": "同一次商品化链路必须贯通 role_pack_candidate_ref、bundle_ref、artifact_sha256、listing_draft_ref、sandbox_order_ref、entitlement_ref、download_receipt_ref、install_receipt_ref 和 team_binding_receipt_ref。",
+    "redaction_policy": "截图、页面状态和网络摘要必须脱敏订单个人信息、账号标识、支付凭据、访问 token、签名 URL 和本地绝对隐私路径。"
+  },
+  "stage_evidence_gates": [
+    {
+      "stage_id": "publisher_create_role_candidates",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "multi_repo",
+      "required_evidence_records": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "role_candidate_refs",
+        "candidate_only_state",
+        "forbidden_phrase_block_evidence",
+        "correlation_id"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-EVIDENCE-ROLE-CREATE-GAP"
+    },
+    {
+      "stage_id": "publisher_export_candidate_bundle",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhenos",
+      "required_evidence_records": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "bundle_export_receipt_ref",
+        "artifact_manifest_ref",
+        "artifact_sha256",
+        "forbidden_artifact_scan_result",
+        "correlation_id"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-EVIDENCE-BUNDLE-EXPORT-GAP"
+    },
+    {
+      "stage_id": "publisher_upload_cloud_draft",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-cloud",
+      "required_evidence_records": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "cloud_receipt_ref",
+        "cloud_upload_receipt_ref",
+        "listing_draft_ref",
+        "artifact_sha256",
+        "artifact_hash_match",
+        "correlation_id"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-EVIDENCE-CLOUD-UPLOAD-GAP"
+    },
+    {
+      "stage_id": "cloud_review_candidate",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-cloud",
+      "required_evidence_records": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "cloud_receipt_ref",
+        "review_state_ref",
+        "production_publish_block_evidence",
+        "risk_statement_visible",
+        "correlation_id"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-EVIDENCE-CLOUD-REVIEW-GAP"
+    },
+    {
+      "stage_id": "buyer_sandbox_purchase",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-cloud",
+      "required_evidence_records": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "cloud_receipt_ref",
+        "sandbox_order_ref",
+        "sandbox_payment_receipt_ref",
+        "terms_acceptance_receipt_ref",
+        "real_payment_block_policy",
+        "correlation_id"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-EVIDENCE-SANDBOX-PURCHASE-GAP"
+    },
+    {
+      "stage_id": "buyer_entitlement_and_signed_download",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-cloud",
+      "required_evidence_records": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "download_receipt_ref",
+        "cloud_receipt_ref",
+        "entitlement_ref",
+        "signed_download_ref",
+        "artifact_sha256",
+        "artifact_hash_match",
+        "correlation_id"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-EVIDENCE-DOWNLOAD-GAP"
+    },
+    {
+      "stage_id": "buyer_local_install",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhenos",
+      "required_evidence_records": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "install_receipt_ref",
+        "artifact_hash_verification_ref",
+        "entitlement_verification_ref",
+        "enabled_role_pack_version",
+        "forbidden_artifact_scan_result",
+        "correlation_id"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-EVIDENCE-INSTALL-GAP"
+    },
+    {
+      "stage_id": "buyer_team_settings_replace_and_use",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "multi_repo",
+      "required_evidence_records": [
+        "gui_screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "team_binding_receipt_ref",
+        "owner_gate_decision_ref",
+        "runtime_receipt_candidate_ref",
+        "candidate_only_output_state",
+        "correlation_id"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-EVIDENCE-TEAM-BINDING-RUNTIME-GAP"
+    }
+  ],
+  "independent_acceptance_policy": {
+    "independent_acceptance_agent_required": true,
+    "organizer_self_attestation_allowed_for_completion": false,
+    "acceptance_artifact": "independent_acceptance_report_ref_with_stage_by_stage_evidence_ids",
+    "required_signoff": "independent_acceptance_agent_must_mark_each_stage passed_verified or failed_requires_issue",
+    "issue_when_missing": "ROLE-STUDIO-EVIDENCE-INDEPENDENT-ACCEPTANCE-GAP"
+  },
+  "negative_evidence_gates": {
+    "download_without_purchase": {
+      "expected_status": "blocked_entitlement_missing",
+      "truth_source": "truzhen-cloud",
+      "required_block_evidence": "gui_screenshot_path + cloud_block_receipt_ref + entitlement_missing_reason"
+    },
+    "tampered_artifact_hash": {
+      "expected_status": "blocked_artifact_hash_mismatch",
+      "truth_source": "truzhenos",
+      "required_block_evidence": "gui_screenshot_path + artifact_hash_block_receipt_ref + expected_actual_hash_pair"
+    },
+    "expired_entitlement_install": {
+      "expected_status": "blocked_entitlement_expired",
+      "truth_source": "truzhenos",
+      "required_block_evidence": "gui_screenshot_path + entitlement_verification_block_receipt_ref + entitlement_ref"
+    },
+    "real_payment_without_owner_authorization": {
+      "expected_status": "blocked_real_payment_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "required_block_evidence": "gui_screenshot_path + payment_policy_block_receipt_ref + owner_authorization_missing_state"
+    }
+  },
+  "completion_gate": {
+    "completion_claim_allowed": false,
+    "required_before_completion_claim": [
+      "all_required_evidence_records_verified",
+      "cross_repo_authorization_records",
+      "hash_continuity",
+      "negative_cases_blocked_verified",
+      "independent_acceptance_signoff"
+    ],
+    "non_sufficient_evidence": [
+      "candidate_json_only",
+      "single_repo_test_only",
+      "manual_json_edit",
+      "gui_success_without_backend_receipt",
+      "cloud_success_without_local_install_receipt",
+      "organizer_self_attestation_only"
+    ]
+  },
+  "forbidden": [
+    "completion_claim_from_candidate_json_only",
+    "organizer_self_attestation_as_final_acceptance",
+    "cloud_success_without_local_install_receipt",
+    "gui_success_without_backend_receipt",
+    "manual_json_edit_as_user_gui_success",
+    "store_payment_truth_in_truzhen_packs",
+    "store_entitlement_truth_in_truzhen_packs"
+  ],
+  "non_completion_clause": "本文件只是商品化证据门槛候选。没有跨仓授权、用户视角 GUI 截图、云端回执、本地安装回执、团队绑定回执、hash 连续性、负例阻断证据和独立验收签收前，不得声称角色制作、使用、上传、购买、下载、安装或正常商品化闭环已完成。"
+}

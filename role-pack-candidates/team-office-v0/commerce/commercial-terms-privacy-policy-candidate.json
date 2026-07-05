@@ -1,0 +1,125 @@
+{
+  "policy_candidate_ref": "commercial-terms-privacy-policy-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "listing_candidate_ref": "pack-listing-candidate://team-office-role-pack-v0",
+  "display_name": "团队办公室角色包商业条款 / 隐私 / 数据边界候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "cloud_truth_source": "truzhen-cloud",
+  "package_contents_truth_source": "truzhen-packs",
+  "runtime_truth_source": "truzhenos",
+  "scope": "声明购买前条款展示、隐私告知、数据边界、角色候选输出免责声明和上线阻断条件；不保存正式条款接受记录、订单个人数据、用户运行态数据或生产隐私配置。",
+  "terms_policy": {
+    "terms_surface_required": true,
+    "buyer_acceptance_required_before_purchase": true,
+    "role_output_candidate_disclaimer_required": true,
+    "license_terms_surface": "cloud_listing_terms_panel_must_show_team_scoped_license_candidate_ref_and_refund_boundary_before_purchase",
+    "acceptable_use_surface": "cloud_listing_must_show_proposer_only_no_formal_advice_no_bypass_owner_gate_rules",
+    "evidence_required": "cloud_terms_surface_screenshot plus terms_acceptance_receipt_ref from truzhen-cloud before sandbox purchase"
+  },
+  "privacy_policy": {
+    "privacy_notice_required": true,
+    "no_customer_runtime_data_in_pack": true,
+    "no_cloud_order_personal_data_in_pack": true,
+    "privacy_surface": "cloud_listing_privacy_panel_must_disclose_pack_content_metadata_only_and_runtime_data_owner_boundary",
+    "data_controller_truth_source": "truzhen-cloud_for_order_identity_and truzhenos_for_runtime_team_data",
+    "evidence_required": "privacy_notice_screenshot plus data_boundary_receipt_ref before listing review can pass"
+  },
+  "data_handling_policy": {
+    "pack_content_truth_source": "truzhen-packs",
+    "runtime_data_truth_source": "truzhenos",
+    "cloud_order_data_truth_source": "truzhen-cloud",
+    "telemetry_policy": "telemetry_must_be_opt_in_or_declared_by_cloud_and_runtime; this pack stores no telemetry payload",
+    "deletion_export_request_route": "buyer_requests_route_to_truzhen-cloud_for_order_data_and truzhenos_for_runtime_team_data",
+    "evidence_required": "data_boundary_matrix plus deletion_export_route_visible_in_cloud_listing"
+  },
+  "buyer_disclosure_policy": {
+    "candidate_only_notice_surface": "cloud_listing_and_install_preflight_must_show_role_pack_is_candidate_asset_until_owner_gate_installs_it",
+    "no_professional_advice_notice": "role_outputs_are_suggestions_not_legal_financial_tax_medical_or_formal_business_advice",
+    "owner_gate_notice": "installation_team_binding_role_replacement_and_runtime_formalization_require_owner_gate_and_receipt",
+    "asset_ref_notice": "secretary_voice_and_vrm_are_asset_ref_only; raw voice raw vrm and real-person image assets are blocked",
+    "evidence_required": "buyer_disclosure_screenshot plus install_preflight_notice_receipt_ref"
+  },
+  "commercial_go_live_gates": [
+    {
+      "gate_id": "terms_acceptance_before_purchase",
+      "status": "candidate_ready",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "terms_acceptance_receipt_ref_before_sandbox_order_paid"
+    },
+    {
+      "gate_id": "privacy_notice_visible",
+      "status": "candidate_ready",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "privacy_notice_visible_screenshot_and_review_receipt_ref"
+    },
+    {
+      "gate_id": "data_boundary_disclosed",
+      "status": "candidate_ready",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "listing_data_boundary_panel_and_cloud_review_receipt_ref"
+    },
+    {
+      "gate_id": "candidate_disclaimer_visible",
+      "status": "candidate_ready",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "role_candidate_disclaimer_visible_in_listing_and_install_preflight"
+    },
+    {
+      "gate_id": "owner_gate_notice_visible",
+      "status": "candidate_ready",
+      "truth_source": "truzhenos",
+      "evidence_required": "install_preflight_owner_gate_notice_and_owner_gate_receipt_ref"
+    },
+    {
+      "gate_id": "asset_ref_boundary_visible",
+      "status": "candidate_ready",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "listing_asset_ref_boundary_notice_and_asset_rights_review_receipt_ref"
+    }
+  ],
+  "negative_cases": {
+    "purchase_without_terms_acceptance": {
+      "expected_status": "blocked_terms_acceptance_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "purchase_block_receipt_terms_acceptance_missing"
+    },
+    "listing_without_privacy_notice": {
+      "expected_status": "blocked_privacy_notice_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "review_block_receipt_privacy_notice_missing"
+    },
+    "pack_contains_customer_runtime_data": {
+      "expected_status": "blocked_customer_runtime_data_not_allowed_in_pack",
+      "truth_source": "truzhenos",
+      "expected_evidence": "install_preflight_block_receipt_runtime_data_detected"
+    },
+    "role_output_marked_formal_advice": {
+      "expected_status": "blocked_candidate_disclaimer_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "review_block_receipt_formal_advice_claim_detected"
+    },
+    "cloud_order_personal_data_in_pack": {
+      "expected_status": "blocked_cloud_order_data_not_allowed_in_pack",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "upload_block_receipt_cloud_order_data_detected"
+    },
+    "missing_data_deletion_export_route": {
+      "expected_status": "blocked_deletion_export_route_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "review_block_receipt_data_request_route_missing"
+    }
+  },
+  "forbidden": [
+    "store_customer_runtime_data_in_truzhen_packs",
+    "store_cloud_order_personal_data_in_truzhen_packs",
+    "present_role_output_as_formal_advice",
+    "purchase_without_terms_acceptance",
+    "hide_data_boundary_from_buyer",
+    "hide_privacy_notice_from_buyer",
+    "ship_raw_voice_or_vrm_asset",
+    "claim_terms_acceptance_without_cloud_receipt",
+    "claim_privacy_compliance_without_review_evidence"
+  ],
+  "non_completion_clause": "本文件只是商业条款、隐私和数据边界候选，不代表真实条款已生效、隐私合规已完成、买家已接受条款、商品已上架或支付链路已启用。真实条款接受、隐私展示、订单个人数据和购买回执必须由 truzhen-cloud 持有；运行态团队数据必须由 truzhenos 持有。"
+}

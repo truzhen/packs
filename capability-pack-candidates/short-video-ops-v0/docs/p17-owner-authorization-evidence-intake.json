@@ -1,0 +1,51 @@
+{
+  "intake_ref": "owner-authorization-evidence-intake://short-video-ops-v0/p17-provider-adapter-candidate",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p17_provider_adapter_candidate",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "missing_owner_authorization",
+  "authorization_scope_contract": "docs/p17-cross-repo-authorization-scope.json",
+  "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md",
+  "authorization_truth_source": "Owner explicit authorization in the current thread or signed authorization card; not inferred from plan text or previous slice authorization.",
+  "required_owner_quote_contains": [
+    "授权按 P17 授权卡",
+    "修改和测试 truzhen-software",
+    "必要时只为 provider readiness 展示修改和测试 truzhenos 与 truzhen-client-web-desktop",
+    "不改 contracts、cloud",
+    "不执行第三方 OSS",
+    "不登录或上传社媒",
+    "不保存 raw secret"
+  ],
+  "authorized_repositories": [
+    "truzhen-software",
+    "truzhenos",
+    "truzhen-client-web-desktop",
+    "truzhen-packs"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "vendor_third_party_oss_source",
+    "provider_implementation_in_packs",
+    "provider_ready_claim"
+  ],
+  "current_authorization_evidence": {
+    "status": "missing",
+    "owner_thread_quote_required": true,
+    "owner_thread_quote": "",
+    "recorded_by": "",
+    "recorded_at": "",
+    "evidence_ref": ""
+  },
+  "cross_repo_work_gate": {
+    "can_start_cross_repo_work": false,
+    "required_status_before_cross_repo_work": "owner_authorization_recorded_and_scope_matched",
+    "must_record_before_cross_repo_work": true
+  }
+}

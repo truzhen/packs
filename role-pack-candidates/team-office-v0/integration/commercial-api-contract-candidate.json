@@ -1,0 +1,593 @@
+{
+  "api_contract_ref": "commercial-api-contract-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包商品化前后端 API 接线契约候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "lifecycle_status": "设计中",
+  "purpose": "把角色制作台、云商品草稿、sandbox 购买、Entitlement、签名下载、本地安装和团队设置刷新拆成候选接口契约，供后续 client、truzhen-cloud、truzhenos 授权施工时对齐 request、response、幂等键、回执和错误态。",
+  "source_commercial_production_promotion_gate": "commerce/commercial-production-promotion-gate-candidate.json",
+  "truth_sources": {
+    "frontend_truth": "truzhen-client-web-desktop",
+    "cloud_truth": "truzhen-cloud",
+    "install_truth": "truzhenos",
+    "candidate_asset_truth": "truzhen-packs"
+  },
+  "operation_policy": {
+    "user_view_agents_gui_only": true,
+    "receipt_ref_required_for_all_mutations": true,
+    "idempotency_key_required_for_all_mutations": true,
+    "real_payment_policy": "blocked_until_owner_authorizes",
+    "production_publish_policy": "blocked_until_owner_authorizes",
+    "candidate_path_policy": "all paths are candidate API shapes, not production routes"
+  },
+  "endpoints": [
+    {
+      "endpoint_id": "role_bundle_export",
+      "status": "pending_cross_repo_execution",
+      "surface_id": "role_studio",
+      "truth_source": "truzhenos",
+      "method": "POST",
+      "path_candidate": "/candidate/role-packs/team-office-v0/export-bundle",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "role_pack_candidate_refs",
+        "role_slot_candidate_ref",
+        "artifact_manifest_ref",
+        "forbidden_artifact_scan_required"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "bundle_ref",
+        "artifact_sha256",
+        "file_sha256_list",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_invalid_role_candidate",
+        "blocked_forbidden_artifact",
+        "not_ready_schema_missing"
+      ]
+    },
+    {
+      "endpoint_id": "cloud_upload_draft",
+      "status": "pending_cross_repo_execution",
+      "surface_id": "cloud_listing_purchase_download",
+      "truth_source": "truzhen-cloud",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/role-pack-artifacts/upload-draft",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "bundle_ref",
+        "artifact_sha256",
+        "artifact_manifest_ref",
+        "publisher_sandbox_identity_ref",
+        "listing_metadata_candidate"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "cloud_upload_receipt_ref",
+        "listing_draft_ref",
+        "artifact_sha256",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_artifact_hash_missing",
+        "blocked_publisher_identity_missing",
+        "not_ready_cloud_storage"
+      ]
+    },
+    {
+      "endpoint_id": "marketplace_review_submit",
+      "status": "pending_cross_repo_execution",
+      "surface_id": "cloud_listing_purchase_download",
+      "truth_source": "truzhen-cloud",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/listings/submit-review",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "listing_draft_ref",
+        "artifact_manifest_ref",
+        "risk_statement_ref",
+        "terms_privacy_policy_ref",
+        "asset_rights_policy_ref"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "review_candidate_ref",
+        "review_state_ref",
+        "production_publish_block_ref",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_terms_privacy_missing",
+        "blocked_asset_rights_missing",
+        "blocked_production_publish_without_owner_authorization"
+      ]
+    },
+    {
+      "endpoint_id": "sandbox_order_create",
+      "status": "pending_cross_repo_execution",
+      "surface_id": "cloud_listing_purchase_download",
+      "truth_source": "truzhen-cloud",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/orders/sandbox-create",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "listing_draft_ref",
+        "buyer_sandbox_identity_ref",
+        "terms_acceptance_ref",
+        "license_terms_ref"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "sandbox_order_ref",
+        "terms_acceptance_receipt_ref",
+        "payment_required_state",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_terms_acceptance_required",
+        "blocked_listing_not_available",
+        "not_ready_payment_sandbox"
+      ]
+    },
+    {
+      "endpoint_id": "sandbox_payment_confirm",
+      "status": "pending_cross_repo_execution",
+      "surface_id": "cloud_listing_purchase_download",
+      "truth_source": "truzhen-cloud",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/payments/sandbox-confirm",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "sandbox_order_ref",
+        "sandbox_payment_method_ref",
+        "real_payment_authorization_ref"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "sandbox_payment_receipt_ref",
+        "sandbox_order_ref",
+        "real_payment_block_policy",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_real_payment_without_owner_authorization",
+        "blocked_order_not_payable",
+        "not_ready_payment_provider"
+      ]
+    },
+    {
+      "endpoint_id": "entitlement_issue",
+      "status": "pending_cross_repo_execution",
+      "surface_id": "cloud_listing_purchase_download",
+      "truth_source": "truzhen-cloud",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/entitlements/issue",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "sandbox_order_ref",
+        "sandbox_payment_receipt_ref",
+        "artifact_ref",
+        "license_scope"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "entitlement_ref",
+        "license_candidate_ref",
+        "artifact_ref",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_payment_receipt_missing",
+        "blocked_license_scope_invalid",
+        "not_ready_entitlement_service"
+      ]
+    },
+    {
+      "endpoint_id": "signed_download_create",
+      "status": "pending_cross_repo_execution",
+      "surface_id": "cloud_listing_purchase_download",
+      "truth_source": "truzhen-cloud",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/downloads/signed-create",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "entitlement_ref",
+        "artifact_ref",
+        "artifact_sha256",
+        "buyer_sandbox_identity_ref"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "download_receipt_ref",
+        "signed_download_ref",
+        "artifact_sha256",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_entitlement_missing",
+        "blocked_entitlement_expired",
+        "blocked_artifact_hash_mismatch",
+        "not_ready_signed_download_service"
+      ]
+    },
+    {
+      "endpoint_id": "production_go_live_request",
+      "status": "pending_owner_decision",
+      "surface_id": "production_promotion",
+      "truth_source": "truzhen-cloud",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/go-live/request",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "production_promotion_gate_ref",
+        "owner_go_no_go_decision_ref",
+        "p11_go_live_evidence_package_ref",
+        "commercial_readiness_verifier_ref",
+        "commercial_go_no_go_gate_ref",
+        "bundle_tree_sha256"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "production_go_live_request_receipt_ref",
+        "blocked_or_allowed_result",
+        "required_followup_endpoint_refs",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_commercial_production_promotion_gate_missing",
+        "blocked_owner_go_no_go_missing",
+        "blocked_p11_evidence_package_incomplete",
+        "blocked_team_office_runtime_usage_smoke_missing",
+        "blocked_independent_acceptance_missing"
+      ]
+    },
+    {
+      "endpoint_id": "real_payment_enable_request",
+      "status": "pending_owner_decision",
+      "surface_id": "production_promotion",
+      "truth_source": "truzhen-cloud",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/payments/real-enable-request",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "production_promotion_gate_ref",
+        "owner_go_no_go_decision_ref",
+        "p11_go_live_evidence_package_ref",
+        "production_go_live_request_receipt_ref",
+        "bundle_tree_sha256"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "real_payment_enable_request_receipt_ref",
+        "blocked_or_allowed_result",
+        "payment_mode_after_request",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_commercial_production_promotion_gate_missing",
+        "blocked_owner_go_no_go_missing",
+        "blocked_p11_evidence_package_incomplete",
+        "blocked_team_office_runtime_usage_smoke_missing",
+        "blocked_payment_provider_not_ready"
+      ]
+    },
+    {
+      "endpoint_id": "production_signed_download_enable",
+      "status": "pending_owner_decision",
+      "surface_id": "production_promotion",
+      "truth_source": "truzhen-cloud",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/downloads/production-signed-enable",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "production_promotion_gate_ref",
+        "owner_go_no_go_decision_ref",
+        "p11_go_live_evidence_package_ref",
+        "production_go_live_request_receipt_ref",
+        "bundle_tree_sha256",
+        "artifact_ref"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "production_signed_download_enable_receipt_ref",
+        "blocked_or_allowed_result",
+        "production_download_policy_ref",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_commercial_production_promotion_gate_missing",
+        "blocked_owner_go_no_go_missing",
+        "blocked_p11_evidence_package_incomplete",
+        "blocked_team_office_runtime_usage_smoke_missing",
+        "blocked_artifact_hash_mismatch"
+      ]
+    },
+    {
+      "endpoint_id": "production_listing_publish_request",
+      "status": "pending_owner_decision",
+      "surface_id": "production_promotion",
+      "truth_source": "truzhen-cloud",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/listings/production-publish-request",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "production_promotion_gate_ref",
+        "owner_go_no_go_decision_ref",
+        "p11_go_live_evidence_package_ref",
+        "production_go_live_request_receipt_ref",
+        "bundle_tree_sha256",
+        "listing_draft_ref"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "production_listing_publish_request_receipt_ref",
+        "blocked_or_allowed_result",
+        "listing_visibility_after_request",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_commercial_production_promotion_gate_missing",
+        "blocked_owner_go_no_go_missing",
+        "blocked_p11_evidence_package_incomplete",
+        "blocked_team_office_runtime_usage_smoke_missing",
+        "blocked_listing_review_not_passed"
+      ]
+    },
+    {
+      "endpoint_id": "local_install_request",
+      "status": "pending_cross_repo_execution",
+      "surface_id": "local_install_and_runtime_usage",
+      "truth_source": "truzhenos",
+      "method": "POST",
+      "path_candidate": "/candidate/local-role-pack-install/request",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "signed_download_ref",
+        "download_receipt_ref",
+        "artifact_manifest_ref",
+        "artifact_sha256",
+        "entitlement_ref",
+        "team_ref",
+        "owner_gate_decision_ref"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "install_receipt_ref",
+        "enabled_role_pack_version",
+        "artifact_hash_verification_ref",
+        "entitlement_verification_ref",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_entitlement_missing",
+        "blocked_artifact_hash_mismatch",
+        "blocked_owner_gate_required",
+        "not_ready_role_pack_installer"
+      ]
+    },
+    {
+      "endpoint_id": "team_settings_installed_roles_refresh",
+      "status": "pending_cross_repo_execution",
+      "surface_id": "team_settings_role_tab",
+      "truth_source": "truzhenos",
+      "method": "GET",
+      "path_candidate": "/candidate/team-settings/installed-role-packs",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "team_ref",
+        "enabled_role_pack_version"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "installed_role_catalog_ref",
+        "replaceable_slot_refs",
+        "compatibility_results",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": false,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_team_scope_missing",
+        "blocked_role_pack_not_installed",
+        "not_ready_team_settings_catalog"
+      ]
+    },
+    {
+      "endpoint_id": "team_role_binding_replace",
+      "status": "pending_cross_repo_execution",
+      "surface_id": "team_settings_role_tab",
+      "truth_source": "truzhenos",
+      "method": "POST",
+      "path_candidate": "/candidate/team-settings/role-slot-binding/replace",
+      "request_fields": [
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "team_ref",
+        "slot_ref",
+        "replacement_role_pack_ref",
+        "enabled_role_pack_version",
+        "owner_gate_decision_ref"
+      ],
+      "response_fields": [
+        "status",
+        "receipt_ref",
+        "team_binding_receipt_ref",
+        "team_role_slot_binding_candidate_ref",
+        "rollback_receipt_ref",
+        "candidate_or_receipt_ref"
+      ],
+      "idempotency_key_required": true,
+      "receipt_ref_required": true,
+      "failure_statuses": [
+        "blocked_owner_gate_required",
+        "blocked_incompatible_role_slot",
+        "blocked_role_pack_not_installed",
+        "not_ready_team_binding_service"
+      ]
+    }
+  ],
+  "handoff_contracts": [
+    {
+      "handoff_id": "bundle_export_to_cloud_upload",
+      "source_endpoint": "role_bundle_export",
+      "target_endpoint": "cloud_upload_draft",
+      "required_correlation_keys": [
+        "correlation_id",
+        "bundle_ref",
+        "artifact_sha256",
+        "artifact_manifest_ref"
+      ],
+      "required_evidence": "bundle_export_receipt_ref + cloud_upload_receipt_ref + artifact_sha256_match"
+    },
+    {
+      "handoff_id": "upload_to_review",
+      "source_endpoint": "cloud_upload_draft",
+      "target_endpoint": "marketplace_review_submit",
+      "required_correlation_keys": [
+        "correlation_id",
+        "listing_draft_ref",
+        "artifact_sha256",
+        "artifact_manifest_ref"
+      ],
+      "required_evidence": "cloud_upload_receipt_ref + review_state_ref + production_publish_block_ref"
+    },
+    {
+      "handoff_id": "purchase_to_entitlement",
+      "source_endpoint": "sandbox_payment_confirm",
+      "target_endpoint": "entitlement_issue",
+      "required_correlation_keys": [
+        "correlation_id",
+        "sandbox_order_ref",
+        "sandbox_payment_receipt_ref",
+        "artifact_ref"
+      ],
+      "required_evidence": "sandbox_payment_receipt_ref + entitlement_ref + license_candidate_ref"
+    },
+    {
+      "handoff_id": "entitlement_to_download",
+      "source_endpoint": "entitlement_issue",
+      "target_endpoint": "signed_download_create",
+      "required_correlation_keys": [
+        "correlation_id",
+        "entitlement_ref",
+        "artifact_ref",
+        "artifact_sha256"
+      ],
+      "required_evidence": "entitlement_ref + download_receipt_ref + signed_download_ref"
+    },
+    {
+      "handoff_id": "download_to_install",
+      "source_endpoint": "signed_download_create",
+      "target_endpoint": "local_install_request",
+      "required_correlation_keys": [
+        "correlation_id",
+        "signed_download_ref",
+        "download_receipt_ref",
+        "entitlement_ref",
+        "artifact_sha256"
+      ],
+      "required_evidence": "download_receipt_ref + install_receipt_ref + artifact_hash_verification_ref"
+    },
+    {
+      "handoff_id": "install_to_team_settings",
+      "source_endpoint": "local_install_request",
+      "target_endpoint": "team_settings_installed_roles_refresh",
+      "required_correlation_keys": [
+        "correlation_id",
+        "install_receipt_ref",
+        "enabled_role_pack_version",
+        "artifact_sha256"
+      ],
+      "required_evidence": "install_receipt_ref + installed_role_catalog_ref + replaceable_slot_refs"
+    },
+    {
+      "handoff_id": "promotion_gate_to_production_controls",
+      "source_endpoint": "production_go_live_request",
+      "target_endpoint": "production_listing_publish_request",
+      "required_correlation_keys": [
+        "correlation_id",
+        "production_promotion_gate_ref",
+        "owner_go_no_go_decision_ref",
+        "bundle_tree_sha256"
+      ],
+      "required_evidence": "production_promotion_gate_ref + owner_go_no_go_decision_ref + production_go_live_request_receipt_ref + production_listing_publish_request_receipt_ref"
+    }
+  ],
+  "forbidden": [
+    "real_payment_capture_without_owner_authorization",
+    "production_publish_without_owner_authorization",
+    "download_without_entitlement",
+    "install_without_hash_verification",
+    "frontend_success_without_receipt_ref",
+    "cloud_payment_truth_in_truzhen_packs",
+    "store_signed_download_secret_in_pack",
+    "team_role_binding_without_owner_gate"
+  ],
+  "non_completion_clause": "本文件只是前后端 API 接线契约候选，不代表这些接口已经存在、已接线或已通过。真实实现和验证必须分别在 truzhen-client-web-desktop、truzhen-cloud、truzhenos 中完成，并留下 GUI 证据、回执和 hash 连续性。"
+}

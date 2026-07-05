@@ -1,0 +1,53 @@
+{
+  "intake_ref": "owner-authorization-evidence-intake://short-video-ops-v0/p18-cloud-market-sandbox",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p18_cloud_market_sandbox",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "missing_owner_authorization",
+  "authorization_scope_contract": "docs/p18-cross-repo-authorization-scope.json",
+  "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md",
+  "authorization_truth_source": "Owner explicit authorization in the current thread or signed authorization card; not inferred from plan text or previous slice authorization.",
+  "required_owner_quote_contains": [
+    "授权按 P18 授权卡",
+    "truzhen-cloud、truzhen-client-web-desktop 与 truzhenos",
+    "在 truzhen-packs 写入云市场 sandbox 证据",
+    "不改 contracts、software",
+    "不真实支付",
+    "不生产发布",
+    "不执行第三方 OSS",
+    "不登录或上传社媒"
+  ],
+  "authorized_repositories": [
+    "truzhen-cloud",
+    "truzhen-client-web-desktop",
+    "truzhenos",
+    "truzhen-packs"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software"
+  ],
+  "forbidden_actions": [
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "real_payment",
+    "production_release",
+    "production_license",
+    "cloud_listing_truth_stored_in_packs"
+  ],
+  "current_authorization_evidence": {
+    "status": "missing",
+    "owner_thread_quote_required": true,
+    "owner_thread_quote": "",
+    "recorded_by": "",
+    "recorded_at": "",
+    "evidence_ref": ""
+  },
+  "cross_repo_work_gate": {
+    "can_start_cross_repo_work": false,
+    "required_status_before_cross_repo_work": "owner_authorization_recorded_and_scope_matched",
+    "must_record_before_cross_repo_work": true
+  }
+}

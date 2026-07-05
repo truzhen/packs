@@ -1,0 +1,97 @@
+{
+  "binding_candidate_ref": "team-role-binding-candidate://team-office-v0/default",
+  "display_name": "团队办公室角色槽绑定候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "team_ref": "team://owner-default",
+  "entry_surface": "Team Settings Role Tab",
+  "binding_truth_source": "truzhenos",
+  "gui_truth_source": "truzhen-client-web-desktop",
+  "purpose": "声明秘书长和五顾问在团队设置页下的可替换绑定候选；正式绑定必须经 Owner Gate 并由 truzhenos 产生回执。",
+  "slot_bindings": [
+    {
+      "slot_ref": "team_office.secretary_general",
+      "role_pack_ref": "role_pack://team-office-secretary-general",
+      "binding_status": "candidate_pending_owner",
+      "owner_gate_required": "true",
+      "receipt_required": "true",
+      "history_policy": "do_not_rewrite_existing_receipts",
+      "replaceable_in_team_settings": "true"
+    },
+    {
+      "slot_ref": "team_office.advisor.strategy",
+      "role_pack_ref": "role_pack://team-office-strategy-advisor",
+      "binding_status": "candidate_pending_owner",
+      "owner_gate_required": "true",
+      "receipt_required": "true",
+      "history_policy": "do_not_rewrite_existing_receipts",
+      "replaceable_in_team_settings": "true"
+    },
+    {
+      "slot_ref": "team_office.advisor.product",
+      "role_pack_ref": "role_pack://team-office-product-advisor",
+      "binding_status": "candidate_pending_owner",
+      "owner_gate_required": "true",
+      "receipt_required": "true",
+      "history_policy": "do_not_rewrite_existing_receipts",
+      "replaceable_in_team_settings": "true"
+    },
+    {
+      "slot_ref": "team_office.advisor.operations",
+      "role_pack_ref": "role_pack://team-office-operations-advisor",
+      "binding_status": "candidate_pending_owner",
+      "owner_gate_required": "true",
+      "receipt_required": "true",
+      "history_policy": "do_not_rewrite_existing_receipts",
+      "replaceable_in_team_settings": "true"
+    },
+    {
+      "slot_ref": "team_office.advisor.finance",
+      "role_pack_ref": "role_pack://team-office-finance-advisor",
+      "binding_status": "candidate_pending_owner",
+      "owner_gate_required": "true",
+      "receipt_required": "true",
+      "history_policy": "do_not_rewrite_existing_receipts",
+      "replaceable_in_team_settings": "true"
+    },
+    {
+      "slot_ref": "team_office.advisor.legal_risk",
+      "role_pack_ref": "role_pack://team-office-legal-risk-advisor",
+      "binding_status": "candidate_pending_owner",
+      "owner_gate_required": "true",
+      "receipt_required": "true",
+      "history_policy": "do_not_rewrite_existing_receipts",
+      "replaceable_in_team_settings": "true"
+    }
+  ],
+  "rollback_policy": {
+    "rollback_supported": "true",
+    "rollback_creates_new_receipt": "true",
+    "history_policy": "do_not_rewrite_existing_receipts",
+    "owner_gate_required": "true",
+    "rollback_truth_source": "truzhenos"
+  },
+  "negative_cases": {
+    "replace_without_owner_gate": {
+      "expected_status": "blocked_owner_gate_required",
+      "truth_source": "truzhenos",
+      "expected_evidence": "binding_block_receipt_candidate_ref"
+    },
+    "incompatible_role_slot": {
+      "expected_status": "blocked_incompatible_role_slot",
+      "truth_source": "truzhenos",
+      "expected_evidence": "compatibility_block_receipt_candidate_ref"
+    },
+    "rewrite_existing_receipt": {
+      "expected_status": "blocked_receipt_rewrite_forbidden",
+      "truth_source": "truzhenos",
+      "expected_evidence": "receipt_rewrite_block_candidate_ref"
+    },
+    "capability_pack_changes_team_binding": {
+      "expected_status": "blocked_capability_pack_cannot_change_team_binding",
+      "truth_source": "truzhenos",
+      "expected_evidence": "capability_binding_block_receipt_candidate_ref"
+    }
+  },
+  "non_completion_clause": "本文件只声明绑定候选。未由用户视角智能体通过团队设置 GUI 操作、未产生 Owner Gate 和 truzhenos binding receipt 前，不得声称团队角色替换已接通。"
+}

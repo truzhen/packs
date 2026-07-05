@@ -1,0 +1,190 @@
+{
+  "promotion_gate_ref": "commercial-production-promotion-gate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包生产发布晋级门候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "formal_write_allowed": false,
+  "promotion_status": "blocked_requires_p11_verified_evidence_and_owner_decision",
+  "can_promote_to_production": false,
+  "can_enable_real_payment": false,
+  "can_publish_production_listing": false,
+  "can_enable_production_download": false,
+  "purpose": "把 P11 sandbox 商品化证据包、商品化 go/no-go、上线批准和 Owner 裁定收束成生产发布晋级门，防止候选资产、sandbox 通过或单仓测试被误当作可生产上架、可真实支付、可生产下载或可安装完成。",
+  "source_p11_sandbox_run_request": "tests/p11-sandbox-run-request-candidate.json",
+  "source_p11_go_live_evidence_package": "tests/p11-commercial-go-live-evidence-package-template.json",
+  "source_runtime_usage_candidate": "usage/team-office-runtime-usage-candidate.json",
+  "source_commercial_go_no_go_gate": "tests/commercial-go-no-go-gate-candidate.json",
+  "source_commercial_go_live_approval": "commerce/commercial-go-live-approval-candidate.json",
+  "source_download_install_access_matrix": "commerce/download-install-access-matrix.json",
+  "source_commercial_readiness_verifier": "tests/commercial-readiness-verifier-candidate.json",
+  "source_commercial_chain_verifier": "tests/commercial-chain-verifier-candidate.json",
+  "source_product_readiness_evidence_matrix": "tests/product-readiness-evidence-matrix.json",
+  "source_p0_p11_blocker_register": "tests/p0-p11-commercialization-blocker-register-candidate.json",
+  "production_controls": {
+    "production_publish_blocked": true,
+    "real_payment_capture_blocked": true,
+    "production_download_distribution_blocked": true,
+    "sandbox_to_production_auto_promotion_forbidden": true,
+    "owner_explicit_go_decision_required": true,
+    "independent_acceptance_required": true,
+    "rollback_plan_required": true,
+    "p11_go_live_evidence_package_required": true,
+    "runtime_usage_smoke_required": true,
+    "download_install_access_matrix_required": true,
+    "can_enable_real_payment_without_p11_package": false,
+    "can_enable_production_download_without_runtime_usage_smoke": false,
+    "can_enable_production_download_without_access_matrix": false,
+    "cloud_listing_truth_source": "truzhen-cloud",
+    "payment_truth_source": "truzhen-cloud",
+    "license_entitlement_truth_source": "truzhen-cloud",
+    "production_download_truth_source": "truzhen-cloud",
+    "production_install_truth_source": "truzhenos",
+    "gui_evidence_truth_source": "truzhen-client-web-desktop",
+    "candidate_asset_truth_source": "truzhen-packs",
+    "production_promotion_decision_owner": "Owner + truzhen-cloud go-live gate"
+  },
+  "promotion_gate_checks": [
+    {
+      "check_id": "p11_sandbox_run_request_authorized",
+      "truth_source": "Owner + integration/owner-authorization-evidence-intake-candidate.json",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "owner_authorization record covering target repos, allowed actions, sandbox scope and forbidden production actions",
+      "required_before_production": "Owner authorization must be recorded before any cross-repo sandbox evidence can count."
+    },
+    {
+      "check_id": "role_candidate_bundle_hash_locked",
+      "truth_source": "truzhenos + truzhen-cloud",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "bundle hash lock evidence linking artifact_manifest, bundle_tree_sha256, upload receipt, download receipt and install receipt",
+      "required_before_production": "The promoted production artifact must match the verified P11 sandbox bundle hash."
+    },
+    {
+      "check_id": "gui_user_view_flow_verified",
+      "truth_source": "truzhen-client-web-desktop",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "user-view GUI screenshot and operation log for role creation, capability Pack reference, team settings replacement, voice picker and VRM picker",
+      "required_before_production": "The buyer and publisher visible flows must be proven by GUI evidence, not direct JSON edits."
+    },
+    {
+      "check_id": "cloud_sandbox_upload_listing_receipts_verified",
+      "truth_source": "truzhen-cloud",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "cloud upload receipt, marketplace review receipt and sandbox listing receipt referencing the same candidate bundle",
+      "required_before_production": "Cloud upload, review and listing draft receipts must be present before production listing can be requested."
+    },
+    {
+      "check_id": "sandbox_order_payment_entitlement_receipts_verified",
+      "truth_source": "truzhen-cloud",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "sandbox order receipt, sandbox payment receipt, entitlement grant receipt and entitlement revoke negative receipt",
+      "required_before_production": "Sandbox order, payment and entitlement states must be verified before real payment can be enabled."
+    },
+    {
+      "check_id": "signed_download_hash_continuity_verified",
+      "truth_source": "truzhen-cloud + truzhenos",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "signed download receipt, download hash, install hash and artifact hash continuity report",
+      "required_before_production": "Signed production downloads require hash continuity from upload through local install."
+    },
+    {
+      "check_id": "p11_go_live_evidence_package_verified",
+      "truth_source": "multi_repo",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "tests/p11-commercial-go-live-evidence-package-template.json verified with final_go_live_decision, production_promotion_receipts, owner_go_no_go_decision, all authoritative receipts and independent acceptance signoff",
+      "required_before_production": "Real payment, production listing, production signed download and install distribution require the final P11 go-live evidence package to be verified."
+    },
+    {
+      "check_id": "download_install_access_matrix_verified",
+      "truth_source": "multi_repo",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "commerce/download-install-access-matrix.json verified with authoritative blocked receipts for unpaid_download, refund_revoked_download, version_unpublished_or_revoked_download_install and artifact_hash_mismatch",
+      "required_before_production": "production signed download and install distribution require the access matrix to be verified."
+    },
+    {
+      "check_id": "truzhenos_install_team_binding_receipts_verified",
+      "truth_source": "truzhenos",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "install receipt, enabled role pack version receipt, secretary role binding receipt and five advisor team binding receipt",
+      "required_before_production": "Local install and team setting replacement must be proven before claiming production installability."
+    },
+    {
+      "check_id": "team_office_runtime_usage_smoke_verified",
+      "truth_source": "multi_repo",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "usage/team-office-runtime-usage-candidate.json verified by user-view GUI screenshots, runtime receipt candidate, secretary and five advisor call trace, capability invocation candidate, Owner Gate pending state and blocked receipts for formal task, execution, memory write and send-message attempts",
+      "required_before_production": "Real payment, production signed download and production listing require proof that the installed role set works in Team Office runtime after install and binding."
+    },
+    {
+      "check_id": "negative_cases_blocked_verified",
+      "truth_source": "multi_repo",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "blocked receipt set for unauthenticated download, missing entitlement, artifact hash mismatch, unauthorized real payment and unauthorized production publish",
+      "required_before_production": "All required negative cases must produce blocked receipts before production promotion."
+    },
+    {
+      "check_id": "independent_acceptance_signed",
+      "truth_source": "independent_acceptance_agent",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "independent acceptance signoff covering GUI operations, cloud receipts, install receipts, team binding receipts, negative cases and evidence package integrity",
+      "required_before_production": "An independent user-view acceptance agent must sign the final evidence package."
+    },
+    {
+      "check_id": "owner_go_no_go_decision_recorded",
+      "truth_source": "Owner",
+      "current_status": "missing_authoritative_evidence",
+      "can_pass_gate": false,
+      "can_count_toward_production": false,
+      "required_evidence": "owner_go_no_go decision record explicitly authorizing or rejecting production listing, real payment, signed download and install distribution",
+      "required_before_production": "Owner go/no-go must be recorded after all evidence gates pass."
+    }
+  ],
+  "allowed_after_owner_cloud_approval": [
+    "production_listing_publish_request",
+    "real_payment_enable_request",
+    "production_release_sign_request",
+    "production_download_distribution_request",
+    "production_install_observability_required"
+  ],
+  "forbidden_shortcuts": [
+    "sandbox_success_auto_promotes_to_production",
+    "real_payment_without_owner_decision",
+    "production_listing_truth_in_pack_repo",
+    "copy_sandbox_receipt_as_production_receipt",
+    "store_payment_secret_in_pack",
+    "store_cloud_token_in_pack",
+    "skip_independent_acceptance",
+    "skip_hash_continuity",
+    "enable_real_payment_without_p11_go_live_evidence_package",
+    "enable_production_download_without_runtime_usage_smoke",
+    "publish_production_listing_without_runtime_usage_smoke",
+    "enable_production_download_without_download_install_access_matrix",
+    "claim_production_ready_from_candidate_assets_only",
+    "claim_normal_commercialization_without_authoritative_receipts"
+  ],
+  "non_completion_clause": "本文件只是生产发布晋级门候选，当前状态明确为 blocked_requires_p11_verified_evidence_and_owner_decision。没有 P11 权威证据包、用户视角 GUI 证据、云端 sandbox 回执、truzhenos 安装 / 团队绑定回执、负例 blocked 回执、独立验收和 Owner go/no-go 裁定前，不得声称角色包可生产上架、可真实支付、可生产下载、可安装或已正常商品化。"
+}

@@ -1,0 +1,261 @@
+{
+  "scenario_set_ref": "gui-user-agent-scenarios://team-office-role-pack-v0",
+  "display_name": "团队办公室角色包 GUI 用户视角场景候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "actor_role": "user_view_gui_agent",
+  "coordinator_role": "organizer_coordinator_recorder",
+  "purpose": "约束后续前端、基座和云端验收必须由用户视角智能体只通过 GUI 操作完成，组织者只记录证据、协调缺口和回填问题。",
+  "operation_policy": {
+    "gui_only": true,
+    "allowed_actions": [
+      "open_page",
+      "click",
+      "type",
+      "select",
+      "toggle",
+      "upload_via_gui",
+      "confirm_owner_gate",
+      "observe",
+      "download_via_gui"
+    ],
+    "forbidden_direct_access": [
+      "direct_api_call",
+      "direct_database_write",
+      "manual_json_edit",
+      "filesystem_copy_to_cloud",
+      "terminal_command_as_user_action",
+      "mock_success_without_gui_state"
+    ]
+  },
+  "evidence_policy": {
+    "required_for_every_scenario": [
+      "screenshot",
+      "page_state",
+      "candidate_or_receipt_ref",
+      "timestamp",
+      "blocked_or_not_ready_reason_when_failed"
+    ],
+    "coordinator_outputs": [
+      "issue_ledger_entry",
+      "target_repo",
+      "risk_color",
+      "contract_impact",
+      "next_owner_decision"
+    ]
+  },
+  "scenarios": [
+    {
+      "scenario_id": "GUI-ROLE-CREATE-SECRETARY",
+      "target_phase": "P2",
+      "gui_only": true,
+      "entry_surface": "Role Studio",
+      "backend_truth_sources": [
+        "truzhenos"
+      ],
+      "steps": [
+        "open role studio from product navigation",
+        "click create role",
+        "type secretary general display name, target slot, style summary and decision boundary",
+        "add forbidden phrases for approval, execution, sending and formalization claims",
+        "save candidate and observe candidate-only state"
+      ],
+      "evidence_required": [
+        "screenshot",
+        "page_state",
+        "candidate_or_receipt_ref",
+        "candidate_only_badge"
+      ],
+      "success_assertions": [
+        "role candidate is candidate_only",
+        "role_mode is proposer",
+        "formal_authority is none"
+      ]
+    },
+    {
+      "scenario_id": "GUI-ROLE-CREATE-FIVE-ADVISORS",
+      "target_phase": "P2",
+      "gui_only": true,
+      "entry_surface": "Role Studio",
+      "backend_truth_sources": [
+        "truzhenos"
+      ],
+      "steps": [
+        "create strategy advisor through GUI",
+        "create product advisor through GUI",
+        "create operations advisor through GUI",
+        "create finance advisor through GUI",
+        "create legal risk advisor through GUI",
+        "verify each advisor compatible slot in preview"
+      ],
+      "evidence_required": [
+        "screenshot",
+        "page_state",
+        "candidate_or_receipt_ref",
+        "six_role_candidate_refs"
+      ],
+      "success_assertions": [
+        "all five advisors are candidate_only",
+        "all five advisors have compatible_slots",
+        "all five advisors remain proposer-only"
+      ]
+    },
+    {
+      "scenario_id": "GUI-CAPABILITY-ROLE-REFERENCE",
+      "target_phase": "P4",
+      "gui_only": true,
+      "entry_surface": "Capability Pack Workbench",
+      "backend_truth_sources": [
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "steps": [
+        "open capability pack workbench from GUI",
+        "select role requirement section",
+        "choose secretary and advisor role requirements from installed or candidate role list",
+        "attempt incompatible role selection and observe block",
+        "save capability role requirement candidate"
+      ],
+      "evidence_required": [
+        "screenshot",
+        "page_state",
+        "candidate_or_receipt_ref",
+        "blocked_status_for_incompatible_role"
+      ],
+      "success_assertions": [
+        "capability pack references requirements only",
+        "capability pack does not copy role pack body",
+        "capability pack does not change team settings"
+      ]
+    },
+    {
+      "scenario_id": "GUI-TEAM-SETTINGS-ROLE-REPLACE",
+      "target_phase": "P5",
+      "gui_only": true,
+      "entry_surface": "Team Settings Role Tab",
+      "backend_truth_sources": [
+        "truzhenos"
+      ],
+      "steps": [
+        "open team settings",
+        "switch to role or office tab",
+        "select secretary slot and replace role",
+        "select five advisor slots and replace roles",
+        "confirm Owner Gate",
+        "observe binding receipt refs"
+      ],
+      "evidence_required": [
+        "screenshot",
+        "page_state",
+        "candidate_or_receipt_ref",
+        "binding_receipt_refs"
+      ],
+      "success_assertions": [
+        "replacement creates TeamRoleSlotBindingCandidate first",
+        "binding requires Owner Gate",
+        "history and previous receipts are not rewritten"
+      ]
+    },
+    {
+      "scenario_id": "GUI-SECRETARY-VOICE-VRM",
+      "target_phase": "P6",
+      "gui_only": true,
+      "entry_surface": "Team Settings Role Tab",
+      "backend_truth_sources": [
+        "truzhenos",
+        "asset_registry_or_provider"
+      ],
+      "steps": [
+        "open secretary role appearance settings",
+        "select voice from GUI option list",
+        "select VRM from GUI option list",
+        "clear selection and restore default",
+        "observe provider readiness state"
+      ],
+      "evidence_required": [
+        "screenshot",
+        "page_state",
+        "candidate_or_receipt_ref",
+        "voice_asset_ref",
+        "vrm_asset_ref",
+        "provider_readiness_state"
+      ],
+      "success_assertions": [
+        "only asset refs are saved",
+        "raw local file path is rejected",
+        "provider_missing or not_ready is shown honestly when renderer is unavailable"
+      ]
+    },
+    {
+      "scenario_id": "GUI-CLOUD-UPLOAD-PURCHASE-DOWNLOAD-INSTALL",
+      "target_phase": "P11",
+      "gui_only": true,
+      "entry_surface": "Role Studio Export And Cloud Listing",
+      "backend_truth_sources": [
+        "truzhen-cloud",
+        "truzhenos"
+      ],
+      "steps": [
+        "click prepare listing from role studio",
+        "upload candidate bundle to cloud draft through GUI",
+        "open cloud listing draft and run sandbox purchase",
+        "observe sandbox payment receipt and entitlement candidate",
+        "download signed artifact from purchased page",
+        "install downloaded artifact through local TruzhenOS GUI",
+        "open team settings and verify installed role appears as replaceable option"
+      ],
+      "evidence_required": [
+        "screenshot",
+        "page_state",
+        "candidate_or_receipt_ref",
+        "cloud_upload_receipt",
+        "sandbox_payment_receipt",
+        "entitlement_id",
+        "download_receipt",
+        "install_receipt",
+        "artifact_hash_match"
+      ],
+      "success_assertions": [
+        "cloud truth stays in truzhen-cloud",
+        "install truth stays in truzhenos",
+        "download requires entitlement",
+        "install verifies artifact hash",
+        "team binding still requires Owner Gate"
+      ]
+    },
+    {
+      "scenario_id": "GUI-NEGATIVE-SOVEREIGNTY-AND-ASSET-GATES",
+      "target_phase": "P8",
+      "gui_only": true,
+      "entry_surface": "Role Studio And Team Settings",
+      "backend_truth_sources": [
+        "truzhenos",
+        "truzhen-cloud"
+      ],
+      "steps": [
+        "type approval or execution claim into role style and try to save",
+        "select finance advisor for legal risk slot and observe compatibility block",
+        "choose raw local voice path and observe asset rejection",
+        "attempt download without entitlement",
+        "attempt install with tampered artifact hash",
+        "attempt real payment in non-authorized environment"
+      ],
+      "evidence_required": [
+        "screenshot",
+        "page_state",
+        "candidate_or_receipt_ref",
+        "blocked_status",
+        "blocked_reason"
+      ],
+      "success_assertions": [
+        "sovereignty claims are blocked",
+        "incompatible role replacement is blocked or requires high-risk Owner confirmation",
+        "raw assets are rejected",
+        "download without entitlement is blocked",
+        "hash mismatch install is blocked",
+        "real payment without Owner authorization is blocked"
+      ]
+    }
+  ],
+  "non_completion_clause": "本文件只定义用户视角 GUI 测试场景候选；未产生截图、页面状态、候选 ID、Receipt 或 blocked 证据前，不得声称 GUI E2E、云购买、下载或安装通过。"
+}

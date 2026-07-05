@@ -1,0 +1,215 @@
+{
+  "signoff_matrix_ref": "independent-acceptance-signoff-matrix://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包独立验收签收矩阵候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "signoff_status": "candidate_not_run_requires_authoritative_evidence",
+  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "blocker_register_ref": "tests/p0-p11-commercialization-blocker-register-candidate.json",
+  "purpose": "定义独立验收智能体如何逐阶段复核角色制作、使用、上传、购买、下载、安装、团队设置替换、负例阻断和正常商品化证据；组织者只能协调和记录，不能自证完成。",
+  "reviewer_policy": {
+    "independent_acceptance_agent_required": true,
+    "organizer_self_attestation_allowed_for_completion": false,
+    "user_view_gui_evidence_required": true,
+    "cross_repo_receipts_required": true,
+    "redaction_required": true,
+    "raw_runtime_artifact_storage_in_packs_allowed": false
+  },
+  "required_actor_separation": [
+    "user_view_gui_agent",
+    "organizer_coordinator_recorder",
+    "independent_acceptance_agent",
+    "owner_go_no_go_decider"
+  ],
+  "allowed_acceptance_decisions": [
+    "passed_verified",
+    "failed_requires_issue",
+    "blocked_missing_evidence",
+    "not_run"
+  ],
+  "stage_signoff_rows": [
+    {
+      "phase_id": "P0",
+      "phase_order": 1,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["owner_scope_decision", "target_repo_authorization_record", "per_repo_git_status_record"],
+      "blocking_if_missing": ["owner_scope_decision", "cross_repo_authorization"],
+      "target_repos": ["truzhen-packs"]
+    },
+    {
+      "phase_id": "P1",
+      "phase_order": 2,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["role_studio_entry_screenshot", "team_settings_tab_screenshot", "read_only_backend_inventory"],
+      "blocking_if_missing": ["gui_screenshot", "backend_inventory"],
+      "target_repos": ["truzhen-client-web-desktop", "truzhenos"]
+    },
+    {
+      "phase_id": "P2",
+      "phase_order": 3,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["secretary_create_screenshot", "five_advisor_create_screenshots", "RolePackCandidate_receipts", "forbidden_phrase_block_receipt"],
+      "blocking_if_missing": ["gui_creation_evidence", "RolePackCandidate_receipt"],
+      "target_repos": ["truzhen-client-web-desktop", "truzhenos"]
+    },
+    {
+      "phase_id": "P3",
+      "phase_order": 4,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["candidate_bundle_export_screenshot", "candidate_bundle_export_receipt", "artifact_manifest_sha256", "bundle_tree_sha256"],
+      "blocking_if_missing": ["bundle_export_receipt", "hash_continuity"],
+      "target_repos": ["truzhen-client-web-desktop", "truzhenos", "truzhen-packs"]
+    },
+    {
+      "phase_id": "P4",
+      "phase_order": 5,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["capability_role_requirement_gui_screenshot", "CapabilityRoleRequirement_receipt", "incompatible_role_block_receipt"],
+      "blocking_if_missing": ["capability_reference_receipt", "incompatible_role_block"],
+      "target_repos": ["truzhen-client-web-desktop", "truzhenos", "truzhen-packs"]
+    },
+    {
+      "phase_id": "P5",
+      "phase_order": 6,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["team_settings_role_tab_screenshot", "secretary_replacement_screenshot", "TeamRoleSlotBindingCandidate_receipt", "Owner_Gate_decision_receipt"],
+      "blocking_if_missing": ["team_settings_gui", "owner_gate_receipt", "team_binding_receipt"],
+      "target_repos": ["truzhen-client-web-desktop", "truzhenos"]
+    },
+    {
+      "phase_id": "P6",
+      "phase_order": 7,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["voice_asset_selection_screenshot", "vrm_asset_selection_screenshot", "SecretaryAppearancePreference_receipt", "raw_asset_block_receipt"],
+      "blocking_if_missing": ["voice_vrm_gui", "asset_ref_receipt", "raw_asset_block"],
+      "target_repos": ["truzhen-client-web-desktop", "truzhenos", "truzhen-software"]
+    },
+    {
+      "phase_id": "P7",
+      "phase_order": 8,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["team_office_runtime_screenshot", "runtime_session_receipt", "candidate_only_output_receipts", "no_formal_action_receipt"],
+      "blocking_if_missing": ["runtime_gui", "candidate_only_output_receipt"],
+      "target_repos": ["truzhen-client-web-desktop", "truzhenos"]
+    },
+    {
+      "phase_id": "P8",
+      "phase_order": 9,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["negative_case_screenshots", "negative_block_receipts", "secret_scan_result", "forbidden_artifact_scan_result"],
+      "blocking_if_missing": ["negative_block_receipt", "secret_scan", "forbidden_artifact_scan"],
+      "target_repos": ["truzhen-client-web-desktop", "truzhenos", "truzhen-cloud", "truzhen-packs"]
+    },
+    {
+      "phase_id": "P9",
+      "phase_order": 10,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["issue_cards_with_repro_steps", "target_repo_risk_contract_impact", "stage_report_evidence_refs"],
+      "blocking_if_missing": ["issue_card_for_each_gap", "lifecycle_status_record"],
+      "target_repos": ["truzhen-packs", "truzhen-client-web-desktop", "truzhenos", "truzhen-cloud", "truzhen-contracts"]
+    },
+    {
+      "phase_id": "P10",
+      "phase_order": 11,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": false,
+      "required_review_evidence": ["frontend_product_stage_smoke", "backend_receipt_lookup", "frontend_backend_field_match_report", "honest_failure_state_receipts"],
+      "blocking_if_missing": ["frontend_smoke", "backend_receipt_lookup", "field_parity_report"],
+      "target_repos": ["truzhen-client-web-desktop", "truzhenos", "truzhen-contracts"]
+    },
+    {
+      "phase_id": "P11",
+      "phase_order": 12,
+      "acceptance_status": "not_run",
+      "must_reference_phase_coverage_matrix": true,
+      "must_reference_gui_evidence": true,
+      "must_reference_backend_receipt": true,
+      "must_reference_distribution_receipt_schema": true,
+      "required_review_evidence": ["cloud_upload_receipt", "sandbox_payment_receipt", "license_entitlement_receipt", "download_receipt", "install_receipt", "team_binding_receipt", "bundle_tree_sha256_match", "gui_api_traceability_matrix_verified", "commercial_api_endpoint_refs", "required_receipt_or_result_fields", "required_gui_evidence_slots"],
+      "blocking_if_missing": ["cloud_upload_receipt", "sandbox_payment_receipt", "download_receipt", "install_receipt", "hash_continuity", "gui_api_traceability_matrix_missing", "commercial_api_endpoint_trace_missing", "receipt_field_trace_missing"],
+      "target_repos": ["truzhen-cloud", "truzhenos", "truzhen-client-web-desktop", "truzhen-packs"]
+    }
+  ],
+  "blocking_issue_codes": [
+    "missing_gui_evidence",
+    "missing_cloud_receipt",
+    "missing_install_receipt",
+    "missing_team_binding_receipt",
+    "missing_negative_block_receipt",
+    "missing_hash_continuity",
+    "missing_gui_api_traceability_matrix",
+    "organizer_self_attestation_only"
+  ],
+  "completion_claim_policy": {
+    "completion_claim_allowed": false,
+    "required_before_completion_claim": [
+      "all_stage_signoffs_passed",
+      "all_negative_cases_reviewed",
+      "independent_acceptance_agent_receipt",
+      "gui_api_traceability_matrix_verified",
+      "owner_go_no_go_decision",
+      "no_open_p0_p11_blockers"
+    ],
+    "non_sufficient_evidence": [
+      "organizer_self_attestation_only",
+      "candidate_json_only",
+      "current_repo_tests_only",
+      "gui_screenshot_without_backend_receipt",
+      "independent_acceptance_without_gui_api_traceability",
+      "backend_receipt_without_user_view_gui",
+      "cloud_download_without_install_receipt"
+    ]
+  },
+  "forbidden": [
+    "accept_organizer_self_attestation_as_final",
+    "accept_candidate_json_as_commercial_completion",
+    "accept_cloud_success_without_local_install",
+    "accept_download_without_entitlement",
+    "accept_install_without_team_binding_path"
+  ],
+  "non_completion_clause": "本矩阵只是独立验收签收模板，当前全部为 not_run。没有用户视角 GUI 证据、truzhenos / truzhen-cloud 回执、hash 连续性、负例阻断证据、独立验收智能体签收和 Owner go / no-go 裁定前，不得声称角色制作、使用、上传、购买、下载、安装或正常商品化完成。"
+}

@@ -1,0 +1,112 @@
+{
+  "release_candidate_ref": "release-candidate://team-office-role-pack-v0/0.1.0",
+  "display_name": "团队办公室角色包 0.1.0 发布候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "version": "0.1.0",
+  "release_status": "candidate_not_published",
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "artifact_manifest": "commerce/artifact-manifest.json",
+  "package_format": "role_pack_candidate_bundle",
+  "release_truth_source": "truzhen-cloud",
+  "package_contents_truth_source": "truzhen-packs",
+  "install_truth_source": "truzhenos",
+  "release_contents": {
+    "role_component_summary_source": "commerce/cloud-listing-candidate.json#role_component_summary",
+    "role_count": 6,
+    "role_pack_refs": [
+      "role_pack://team-office-secretary-general",
+      "role_pack://team-office-strategy-advisor",
+      "role_pack://team-office-product-advisor",
+      "role_pack://team-office-operations-advisor",
+      "role_pack://team-office-finance-advisor",
+      "role_pack://team-office-legal-risk-advisor"
+    ]
+  },
+  "allowed_channels": [
+    "cloud_draft",
+    "review_candidate",
+    "sandbox_purchase",
+    "signed_download",
+    "local_install_after_entitlement"
+  ],
+  "production_publish_policy": "blocked_until_owner_authorizes",
+  "bundle_policy": {
+    "bundle_root": "role-pack-candidates/team-office-v0",
+    "hash_algorithm": "sha256",
+    "file_manifest_required": "true",
+    "artifact_hash_required_at_cloud_upload": "true",
+    "forbidden": [
+      "raw_secret",
+      "raw_voice_asset",
+      "raw_vrm_asset",
+      "payment_truth",
+      "license_truth",
+      "entitlement_truth",
+      "build_output_without_manifest"
+    ]
+  },
+  "signing_policy": {
+    "signature_required": "true",
+    "signing_truth_source": "truzhen-cloud",
+    "signature_status": "candidate_pending_cloud_signing",
+    "public_key_distribution": "cloud_release_metadata",
+    "private_key_storage": "not_in_truzhen_packs",
+    "forbidden": [
+      "private_key_in_truzhen_packs",
+      "unsigned_artifact_download",
+      "signature_bypass_for_install"
+    ]
+  },
+  "upgrade_policy": {
+    "compatibility_check_required": "true",
+    "compatible_from": "0.1.0",
+    "migration_required": "false_for_initial_candidate",
+    "owner_gate_required_for_team_binding_changes": "true",
+    "history_policy": "do_not_rewrite_existing_receipts",
+    "blocked_if": [
+      "role_slot_removed_without_migration",
+      "artifact_hash_mismatch",
+      "entitlement_missing_or_expired"
+    ]
+  },
+  "revocation_policy": {
+    "revocation_truth_source": "truzhen-cloud",
+    "revocation_status": "candidate_policy_only",
+    "revocation_triggers": [
+      "artifact_hash_compromised",
+      "license_policy_violation",
+      "owner_unpublishes_listing",
+      "security_review_blocked"
+    ],
+    "expected_effect": [
+      "block_future_download",
+      "mark_release_revoked_in_cloud",
+      "local_install_reports_revoked_on_next_verification",
+      "do_not_delete_historical_receipts"
+    ]
+  },
+  "negative_cases": {
+    "production_publish_without_owner_authorization": {
+      "expected_status": "blocked_production_publish_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "publish_block_receipt_candidate_ref"
+    },
+    "unsigned_artifact_download": {
+      "expected_status": "blocked_unsigned_artifact",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "download_block_receipt_candidate_ref"
+    },
+    "stale_version_install": {
+      "expected_status": "blocked_stale_or_revoked_version",
+      "truth_source": "truzhenos",
+      "expected_evidence": "install_block_receipt_candidate_ref"
+    },
+    "signature_key_in_pack": {
+      "expected_status": "blocked_private_key_in_pack",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "security_block_receipt_candidate_ref"
+    }
+  },
+  "non_completion_clause": "本文件是发布候选包声明，不是云端 Release、不是签名产物、不是正式上架记录。真实发布、签名、下载和撤回状态必须由 truzhen-cloud 持有并产生回执。"
+}

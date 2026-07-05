@@ -1,0 +1,161 @@
+{
+  "guard_ref": "commercial-next-authorization-start-guard://short-video-ops-v0/p12-safe-lifecycle-sample",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "guard_status": "blocked_missing_exact_p12_owner_authorization",
+  "can_start_cross_repo_execution": false,
+  "next_required_slice_key": "p12_safe_lifecycle_sample",
+  "source_authorization_scope_contract": "docs/p12-cross-repo-authorization-scope.json",
+  "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+  "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "authorization_attempt_coverage_verifier": "docs/commercial-authorization-attempt-coverage-verifier.json",
+  "required_commercial_gate_docs": [
+    "docs/commercial-evidence-contract-index.json",
+    "docs/commercial-readiness-current-state-audit.json",
+    "docs/commercial-improvement-backlog.json",
+    "docs/commercial-frontend-backend-acceptance-contract.json",
+    "docs/commercial-frontend-backend-handoff-runbook.json",
+    "docs/commercial-cross-repo-execution-queue.json",
+    "docs/commercial-readiness-verifier.json",
+    "docs/commercial-go-no-go-gate.json",
+    "docs/pack-studio-goal-completion-evidence-map.json"
+  ],
+  "coverage_checks": [
+    {
+      "doc_path": "docs/commercial-evidence-contract-index.json",
+      "next_authorization_start_guard_path_present": true,
+      "next_authorization_start_guard_path_matches": true,
+      "can_start_cross_repo_execution": false
+    },
+    {
+      "doc_path": "docs/commercial-readiness-current-state-audit.json",
+      "next_authorization_start_guard_path_present": true,
+      "next_authorization_start_guard_path_matches": true,
+      "can_start_cross_repo_execution": false
+    },
+    {
+      "doc_path": "docs/commercial-improvement-backlog.json",
+      "next_authorization_start_guard_path_present": true,
+      "next_authorization_start_guard_path_matches": true,
+      "can_start_cross_repo_execution": false
+    },
+    {
+      "doc_path": "docs/commercial-frontend-backend-acceptance-contract.json",
+      "next_authorization_start_guard_path_present": true,
+      "next_authorization_start_guard_path_matches": true,
+      "can_start_cross_repo_execution": false
+    },
+    {
+      "doc_path": "docs/commercial-frontend-backend-handoff-runbook.json",
+      "next_authorization_start_guard_path_present": true,
+      "next_authorization_start_guard_path_matches": true,
+      "can_start_cross_repo_execution": false
+    },
+    {
+      "doc_path": "docs/commercial-cross-repo-execution-queue.json",
+      "next_authorization_start_guard_path_present": true,
+      "next_authorization_start_guard_path_matches": true,
+      "can_start_cross_repo_execution": false
+    },
+    {
+      "doc_path": "docs/commercial-readiness-verifier.json",
+      "next_authorization_start_guard_path_present": true,
+      "next_authorization_start_guard_path_matches": true,
+      "can_start_cross_repo_execution": false
+    },
+    {
+      "doc_path": "docs/commercial-go-no-go-gate.json",
+      "next_authorization_start_guard_path_present": true,
+      "next_authorization_start_guard_path_matches": true,
+      "can_start_cross_repo_execution": false
+    },
+    {
+      "doc_path": "docs/pack-studio-goal-completion-evidence-map.json",
+      "next_authorization_start_guard_path_present": true,
+      "next_authorization_start_guard_path_matches": true,
+      "can_start_cross_repo_execution": false
+    }
+  ],
+  "required_authorization_card": "P12",
+  "required_owner_quote_contains": [
+    "授权按 P12 授权卡",
+    "truzhenos 与 truzhen-client-web-desktop",
+    "不改 contracts、software、cloud",
+    "不运行真实 Codex CLI",
+    "不执行第三方 OSS",
+    "不登录或上传社媒",
+    "只使用基座内置安全样本或 fixture"
+  ],
+  "authorized_repositories": [
+    "truzhenos",
+    "truzhen-client-web-desktop"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "run_real_codex_cli",
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "production_cloud_market_action"
+  ],
+  "required_before_guard_open": [
+    "owner_quote_contains_all_required_p12_parts",
+    "authorization_card_matches_P12",
+    "p11_lifecycle_preflight_reverification_current",
+    "all_commercial_gate_docs_reference_next_authorization_start_guard",
+    "authorization_attempt_coverage_verifier_passed",
+    "p12_pre_run_gate_open",
+    "allowed_fixture_scope_confirmed",
+    "target_repositories_match_p12_scope",
+    "disallowed_repositories_excluded"
+  ],
+  "current_authorization_evidence_status": "missing",
+  "current_blockers": [
+    "owner_authorization_missing",
+    "authorization_card_mismatch_p11_not_p12",
+    "p12_safe_fixture_scope_not_authorized",
+    "p12_pre_run_gate_closed"
+  ],
+  "latest_rejected_authorization_attempt": {
+    "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+    "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",
+    "target_slice_key": "p12_safe_lifecycle_sample",
+    "rejection_reason": "authorization_card_mismatch_p11_not_p12",
+    "required_p12_phrase_matched": false,
+    "can_treat_as_owner_authorization": false,
+    "can_start_cross_repo_execution_after_attempt": false
+  },
+  "p11_reverification_baseline": {
+    "source_candidate_set_slice": "p11_lifecycle_preflight",
+    "source_ledger": "docs/lifecycle-preflight-commercial-gap-ledger.md",
+    "verified_at": "2026-07-05",
+    "verified_blocked_status": "lifecycle_preflight_blocked",
+    "verified_blocked_reason": "candidate_bundle_not_delivery",
+    "commercial_status_after_reverification": "not_commercial_ready",
+    "must_be_current_before_p12_execution": true,
+    "required_before_p12_cross_repo_work": [
+      "p11_lifecycle_preflight_reverification_current",
+      "p11_preflight_still_blocks_candidate_bundle_not_delivery",
+      "p11_forbidden_actions_still_false"
+    ],
+    "non_sufficient_evidence": [
+      "missing_p11_lifecycle_preflight_reverification",
+      "stale_or_missing_p11_lifecycle_preflight_reverification",
+      "p11_reverification_without_live_smoke_evidence"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "plan_text_without_owner_quote",
+    "p11_authorization_card_for_p12",
+    "stale_or_missing_p11_lifecycle_preflight_reverification",
+    "next_authorization_start_guard_path_not_independently_verified",
+    "candidate_guard_without_owner_base_receipt",
+    "authorization_attempt_coverage_verifier_pending"
+  ],
+  "non_completion_clause": "This guard only centralizes the exact P12 authorization phrases and start conditions. It is not Owner authorization, not cross-repo execution evidence, and cannot make the Capability Pack Studio commercial-ready."
+}

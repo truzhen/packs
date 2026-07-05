@@ -1,0 +1,195 @@
+{
+  "gate_ref": "p12-pre-run-gate://short-video-ops-v0/safe-lifecycle-sample",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p12_safe_lifecycle_sample",
+  "candidate_only": true,
+  "non_formal": true,
+  "gate_status": "blocked_pending_owner_authorization",
+  "can_start_cross_repo_run": false,
+  "authorization_scope_contract": "docs/p12-cross-repo-authorization-scope.json",
+  "authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+  "execution_readiness_package": "docs/p12-execution-readiness-package.json",
+  "evidence_contract": "docs/p12-safe-lifecycle-evidence-contract.json",
+  "evidence_ledger": "docs/safe-lifecycle-sample-ledger.md",
+  "commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+  "commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json",
+  "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
+  "required_evidence_writeback_gate_source": "commercial_go_no_go_gate.evidence_writeback_gate",
+  "target_repositories": [
+    "truzhenos",
+    "truzhen-client-web-desktop"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "run_real_codex_cli",
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "production_cloud_market_action",
+    "change_contracts_schema"
+  ],
+  "current_state": {
+    "owner_authorization_status": "missing",
+    "scope_match_status": "blocked_until_owner_authorization_recorded",
+    "readiness_status": "blocked_pending_owner_authorization",
+    "commercial_go_live_status": "not_commercial_ready",
+    "issue_ledger_status": "blocked_pending_issue_resolution_evidence",
+    "evidence_writeback_status": "pending_authorization"
+  },
+  "source_p11_reverification_baseline": {
+    "source_candidate_set_slice": "p11_lifecycle_preflight",
+    "source_ledger": "docs/lifecycle-preflight-commercial-gap-ledger.md",
+    "verified_at": "2026-07-05",
+    "verified_blocked_status": "lifecycle_preflight_blocked",
+    "verified_blocked_reason": "candidate_bundle_not_delivery",
+    "commercial_status_after_reverification": "not_commercial_ready",
+    "must_be_current_before_p12_execution": true,
+    "required_before_p12_cross_repo_work": [
+      "p11_lifecycle_preflight_reverification_current",
+      "p11_preflight_still_blocks_candidate_bundle_not_delivery",
+      "p11_forbidden_actions_still_false"
+    ],
+    "non_sufficient_evidence": [
+      "missing_p11_lifecycle_preflight_reverification",
+      "stale_or_missing_p11_lifecycle_preflight_reverification",
+      "p11_reverification_without_live_smoke_evidence"
+    ]
+  },
+  "pre_run_checks": [
+    {
+      "check_id": "owner_authorization_recorded",
+      "current_status": "missing",
+      "satisfied": false,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "docs/p12-owner-authorization-evidence-intake.json"
+    },
+    {
+      "check_id": "owner_authorization_scope_matched",
+      "current_status": "blocked_until_owner_authorization_recorded",
+      "satisfied": false,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "docs/p12-cross-repo-authorization-scope.json"
+    },
+    {
+      "check_id": "p11_lifecycle_preflight_reverification_current",
+      "current_status": "verified_current",
+      "satisfied": true,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "docs/lifecycle-preflight-commercial-gap-ledger.md"
+    },
+    {
+      "check_id": "p11_forbidden_actions_still_false",
+      "current_status": "verified_current",
+      "satisfied": true,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "p11_lifecycle_preflight.latest_reverification"
+    },
+    {
+      "check_id": "execution_readiness_package_open",
+      "current_status": "blocked_pending_owner_authorization",
+      "satisfied": false,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "docs/p12-execution-readiness-package.json"
+    },
+    {
+      "check_id": "required_verification_commands_present",
+      "current_status": "specified",
+      "satisfied": true,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "docs/p12-execution-readiness-package.json"
+    },
+    {
+      "check_id": "evidence_writeback_targets_bound",
+      "current_status": "specified",
+      "satisfied": true,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "docs/p12-execution-readiness-package.json.evidence_writeback_plan"
+    },
+    {
+      "check_id": "disallowed_repositories_excluded",
+      "current_status": "specified",
+      "satisfied": true,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "docs/p12-cross-repo-authorization-scope.json"
+    },
+    {
+      "check_id": "forbidden_actions_bound",
+      "current_status": "specified",
+      "satisfied": true,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "docs/p12-cross-repo-authorization-scope.json"
+    },
+    {
+      "check_id": "commercial_evidence_writeback_gate_bound",
+      "current_status": "specified",
+      "satisfied": true,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "commercial_go_no_go_gate.evidence_writeback_gate"
+    },
+    {
+      "check_id": "pack_studio_issue_ledger_closed",
+      "current_status": "open_blocked_pending_issue_resolution_evidence",
+      "satisfied": false,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "docs/pack-studio-issue-ledger.json"
+    },
+    {
+      "check_id": "no_rejected_authorization_attempt_substitution",
+      "current_status": "blocked_rejected_p11_authorization_attempt_present",
+      "satisfied": false,
+      "required_before_start": true,
+      "failure_blocks_start": true,
+      "evidence_source": "docs/p12-owner-authorization-evidence-intake.json#rejected_authorization_attempts"
+    }
+  ],
+  "required_before_start": [
+    "owner_authorization_recorded",
+    "owner_authorization_scope_matched",
+    "p11_lifecycle_preflight_reverification_current",
+    "p11_forbidden_actions_still_false",
+    "execution_readiness_package_open",
+    "required_verification_commands_present",
+    "evidence_writeback_targets_bound",
+    "disallowed_repositories_excluded",
+    "forbidden_actions_bound",
+    "commercial_evidence_writeback_gate_bound",
+    "pack_studio_issue_ledger_closed",
+    "no_rejected_authorization_attempt_substitution"
+  ],
+  "non_sufficient_evidence": [
+    "p11_preflight_only",
+    "pre_run_gate_candidate_only",
+    "authorization_card_without_owner_quote",
+    "execution_readiness_package_without_open_gate",
+    "pack_studio_issue_ledger_open",
+    "tests_in_packs_only_without_cross_repo_execution",
+    "rejected_authorization_attempt_is_not_owner_authorization"
+  ],
+  "non_completion_clause": "This gate only describes the conditions required before P12 cross-repo execution may start. It is not authorization, not execution evidence, and not proof that the capability Pack Studio is commercially ready.",
+  "authorization_attempt_coverage_verifier": "docs/commercial-authorization-attempt-coverage-verifier.json",
+  "next_authorization_start_guard": "docs/commercial-next-authorization-start-guard.json",
+  "latest_rejected_authorization_attempt": {
+    "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+    "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",
+    "target_slice_key": "p12_safe_lifecycle_sample",
+    "rejection_reason": "authorization_card_mismatch_p11_not_p12",
+    "required_p12_phrase_matched": false,
+    "can_treat_as_owner_authorization": false,
+    "can_start_cross_repo_run_after_attempt": false
+  }
+}

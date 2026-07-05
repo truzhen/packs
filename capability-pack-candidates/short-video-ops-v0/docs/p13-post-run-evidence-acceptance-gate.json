@@ -1,0 +1,110 @@
+{
+  "gate_ref": "post-run-evidence-acceptance-gate://short-video-ops-v0/p13-gui-lifecycle-panel",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p13_gui_lifecycle_panel",
+  "candidate_only": true,
+  "non_formal": true,
+  "gate_status": "blocked_pending_p13_execution_evidence",
+  "can_mark_p13_complete": false,
+  "can_unlock_p15": false,
+  "can_mark_commercial_ready": false,
+  "evidence_contract": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
+  "evidence_ledger": "docs/gui-lifecycle-panel-ledger.md",
+  "execution_readiness_package": "docs/p13-execution-readiness-package.json",
+  "next_slice": "p15_gui_walkthrough_three_candidates",
+  "next_slice_execution_readiness_package": "docs/p15-execution-readiness-package.json",
+  "commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+  "commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json",
+  "commercial_evidence_writeback_gate_source": "commercial_go_no_go_gate.evidence_writeback_gate",
+  "acceptance_requirements": [
+    {
+      "evidence_id": "candidate_delivery_readiness_panel_rendered",
+      "source_group": "required_frontend_evidence",
+      "current_status": "pending_execution_evidence",
+      "required_before_p13_complete": true,
+      "blocks_p15": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/gui-lifecycle-panel-ledger.md"
+    },
+    {
+      "evidence_id": "enable_controls_gate_blocked",
+      "source_group": "required_frontend_evidence",
+      "current_status": "pending_execution_evidence",
+      "required_before_p13_complete": true,
+      "blocks_p15": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/gui-lifecycle-panel-ledger.md"
+    },
+    {
+      "evidence_id": "blocked_reasons_and_repo_ownership_visible",
+      "source_group": "required_frontend_evidence",
+      "current_status": "pending_execution_evidence",
+      "required_before_p13_complete": true,
+      "blocks_p15": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/gui-lifecycle-panel-ledger.md"
+    },
+    {
+      "evidence_id": "lifecycle_status_summary_readable_by_gui",
+      "source_group": "required_backend_evidence",
+      "current_status": "pending_execution_evidence",
+      "required_before_p13_complete": true,
+      "blocks_p15": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/gui-lifecycle-panel-ledger.md"
+    },
+    {
+      "evidence_id": "third_party_oss_run_from_gui_blocked",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_execution_evidence",
+      "required_before_p13_complete": true,
+      "blocks_p15": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/gui-lifecycle-panel-ledger.md"
+    },
+    {
+      "evidence_id": "codex_cli_run_without_11_gateway_blocked",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_execution_evidence",
+      "required_before_p13_complete": true,
+      "blocks_p15": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/gui-lifecycle-panel-ledger.md"
+    }
+  ],
+  "current_blockers": [
+    "p13_cross_repo_execution_not_run",
+    "owner_authorization_missing",
+    "p12_post_run_evidence_acceptance_gate_not_passed",
+    "owner_base_gate_receipts_missing",
+    "evidence_writeback_incomplete",
+    "independent_verification_missing"
+  ],
+  "required_before_p13_complete": [
+    "all_evidence_ids_written",
+    "all_evidence_refs_recorded",
+    "forbidden_action_checks_written",
+    "independent_verification_passed",
+    "owner_base_gate_receipts_bound",
+    "commercial_evidence_writeback_gate_updated"
+  ],
+  "non_sufficient_evidence": [
+    "test_logs_without_receipts",
+    "screenshots_without_network_response_summary",
+    "manual_ledger_without_independent_review",
+    "post_run_gate_candidate_only"
+  ],
+  "non_completion_clause": "This gate only defines how P13 evidence will be accepted after authorized execution. It is not Owner authorization, not GUI execution evidence, not a Receipt, and cannot mark P13 or the Pack Studio commercial-ready."
+}

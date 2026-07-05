@@ -1,0 +1,142 @@
+{
+  "capability_pack_ref": "capability-pack://sample-team-research",
+  "display_name": "团队研究能力角色需求样例",
+  "candidate_only": true,
+  "non_formal": true,
+  "post_install_reference_policy": {
+    "reference_available_only_after_install": true,
+    "cloud_entitlement_truth_source": "truzhen-cloud",
+    "install_truth_source": "truzhenos",
+    "installed_role_activation_map": "install/install-runtime-activation-map-candidate.json",
+    "required_before_capability_reference": [
+      "entitlement_verification_receipt",
+      "install_receipt_ref",
+      "enabled_role_pack_version_ref",
+      "role_slot_compatibility_receipt",
+      "role_body_not_copied_receipt"
+    ],
+    "blocking_cases": [
+      "candidate_json_only_without_install_receipt",
+      "entitlement_missing_or_revoked",
+      "enabled_role_pack_version_missing",
+      "role_slot_incompatible",
+      "capability_pack_attempts_to_copy_role_body"
+    ],
+    "non_completion_clause": "能力 Pack 只能在买家团队已获得 entitlement、完成本地安装并生成 enabled role version 后引用角色；候选 JSON 存在不等于角色可被能力 Pack 使用。"
+  },
+  "role_requirements": [
+    {
+      "requirement_ref": "role-requirement://team-office/secretary-general",
+      "accepted_role_pack_refs": [
+        "role_pack://team-office-secretary-general"
+      ],
+      "accepted_slot_refs": [
+        "team_office.secretary_general"
+      ],
+      "required_behavior": "coordination_and_summary_only",
+      "formal_authority": "none",
+      "post_install_reference_required": true,
+      "reference_scope": "installed_buyer_team_only",
+      "activation_evidence_required": [
+        "entitlement_verification_receipt",
+        "install_receipt_ref",
+        "enabled_role_pack_version_ref"
+      ]
+    },
+    {
+      "requirement_ref": "role-requirement://team-office/strategy-advisor",
+      "accepted_role_pack_refs": [
+        "role_pack://team-office-strategy-advisor"
+      ],
+      "accepted_slot_refs": [
+        "team_office.advisor.strategy"
+      ],
+      "required_behavior": "proposal_and_challenge_only",
+      "formal_authority": "none",
+      "post_install_reference_required": true,
+      "reference_scope": "installed_buyer_team_only",
+      "activation_evidence_required": [
+        "entitlement_verification_receipt",
+        "install_receipt_ref",
+        "enabled_role_pack_version_ref"
+      ]
+    },
+    {
+      "requirement_ref": "role-requirement://team-office/product-advisor",
+      "accepted_role_pack_refs": [
+        "role_pack://team-office-product-advisor"
+      ],
+      "accepted_slot_refs": [
+        "team_office.advisor.product"
+      ],
+      "required_behavior": "product_path_and_user_experience_challenge_only",
+      "formal_authority": "none",
+      "post_install_reference_required": true,
+      "reference_scope": "installed_buyer_team_only",
+      "activation_evidence_required": [
+        "entitlement_verification_receipt",
+        "install_receipt_ref",
+        "enabled_role_pack_version_ref"
+      ]
+    },
+    {
+      "requirement_ref": "role-requirement://team-office/operations-advisor",
+      "accepted_role_pack_refs": [
+        "role_pack://team-office-operations-advisor"
+      ],
+      "accepted_slot_refs": [
+        "team_office.advisor.operations"
+      ],
+      "required_behavior": "execution_process_and_delivery_risk_challenge_only",
+      "formal_authority": "none",
+      "post_install_reference_required": true,
+      "reference_scope": "installed_buyer_team_only",
+      "activation_evidence_required": [
+        "entitlement_verification_receipt",
+        "install_receipt_ref",
+        "enabled_role_pack_version_ref"
+      ]
+    },
+    {
+      "requirement_ref": "role-requirement://team-office/finance-advisor",
+      "accepted_role_pack_refs": [
+        "role_pack://team-office-finance-advisor"
+      ],
+      "accepted_slot_refs": [
+        "team_office.advisor.finance"
+      ],
+      "required_behavior": "budget_cashflow_and_roi_challenge_only",
+      "formal_authority": "none",
+      "post_install_reference_required": true,
+      "reference_scope": "installed_buyer_team_only",
+      "activation_evidence_required": [
+        "entitlement_verification_receipt",
+        "install_receipt_ref",
+        "enabled_role_pack_version_ref"
+      ]
+    },
+    {
+      "requirement_ref": "role-requirement://team-office/legal-risk-advisor",
+      "accepted_role_pack_refs": [
+        "role_pack://team-office-legal-risk-advisor"
+      ],
+      "accepted_slot_refs": [
+        "team_office.advisor.legal_risk"
+      ],
+      "required_behavior": "risk_challenge_only",
+      "formal_authority": "none",
+      "post_install_reference_required": true,
+      "reference_scope": "installed_buyer_team_only",
+      "activation_evidence_required": [
+        "entitlement_verification_receipt",
+        "install_receipt_ref",
+        "enabled_role_pack_version_ref"
+      ]
+    }
+  ],
+  "forbidden": [
+    "copy_role_pack_body_into_capability_pack",
+    "change_team_settings_from_capability_pack",
+    "grant_formal_authority_to_role_requirement"
+  ]
+}

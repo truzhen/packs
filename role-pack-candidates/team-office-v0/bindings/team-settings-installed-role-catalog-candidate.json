@@ -1,0 +1,131 @@
+{
+  "catalog_candidate_ref": "team-settings-installed-role-catalog-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队设置已安装角色目录候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "catalog_truth_source": "truzhenos",
+  "gui_truth_source": "truzhen-client-web-desktop",
+  "entry_surface": "Team Settings Role Tab",
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "install_receipt_required": "true",
+  "purpose": "声明角色包完成下载和本地安装后，秘书长与五顾问角色如何进入团队设置 tab 的可替换角色列表；正式绑定仍必须经 Owner Gate 并产生 binding receipt。",
+  "required_inputs": [
+    "install_receipt_ref",
+    "enabled_role_pack_version",
+    "team_ref",
+    "role_slots_ref",
+    "artifact_ref",
+    "entitlement_ref",
+    "owner_gate_decision_ref_if_binding_requested"
+  ],
+  "replaceable_role_items": [
+    {
+      "slot_ref": "team_office.secretary_general",
+      "role_pack_ref": "role_pack://team-office-secretary-general",
+      "display_name": "团队秘书长",
+      "source_install_receipt_ref": "receipt_candidate://team-office-role-pack-install",
+      "enabled_role_pack_version": "0.1.0",
+      "replaceable_in_team_settings": "true",
+      "owner_gate_required_for_binding": "true",
+      "history_policy": "do_not_rewrite_existing_receipts"
+    },
+    {
+      "slot_ref": "team_office.advisor.strategy",
+      "role_pack_ref": "role_pack://team-office-strategy-advisor",
+      "display_name": "战略顾问",
+      "source_install_receipt_ref": "receipt_candidate://team-office-role-pack-install",
+      "enabled_role_pack_version": "0.1.0",
+      "replaceable_in_team_settings": "true",
+      "owner_gate_required_for_binding": "true",
+      "history_policy": "do_not_rewrite_existing_receipts"
+    },
+    {
+      "slot_ref": "team_office.advisor.product",
+      "role_pack_ref": "role_pack://team-office-product-advisor",
+      "display_name": "产品顾问",
+      "source_install_receipt_ref": "receipt_candidate://team-office-role-pack-install",
+      "enabled_role_pack_version": "0.1.0",
+      "replaceable_in_team_settings": "true",
+      "owner_gate_required_for_binding": "true",
+      "history_policy": "do_not_rewrite_existing_receipts"
+    },
+    {
+      "slot_ref": "team_office.advisor.operations",
+      "role_pack_ref": "role_pack://team-office-operations-advisor",
+      "display_name": "运营顾问",
+      "source_install_receipt_ref": "receipt_candidate://team-office-role-pack-install",
+      "enabled_role_pack_version": "0.1.0",
+      "replaceable_in_team_settings": "true",
+      "owner_gate_required_for_binding": "true",
+      "history_policy": "do_not_rewrite_existing_receipts"
+    },
+    {
+      "slot_ref": "team_office.advisor.finance",
+      "role_pack_ref": "role_pack://team-office-finance-advisor",
+      "display_name": "财务顾问",
+      "source_install_receipt_ref": "receipt_candidate://team-office-role-pack-install",
+      "enabled_role_pack_version": "0.1.0",
+      "replaceable_in_team_settings": "true",
+      "owner_gate_required_for_binding": "true",
+      "history_policy": "do_not_rewrite_existing_receipts"
+    },
+    {
+      "slot_ref": "team_office.advisor.legal_risk",
+      "role_pack_ref": "role_pack://team-office-legal-risk-advisor",
+      "display_name": "法务风控顾问",
+      "source_install_receipt_ref": "receipt_candidate://team-office-role-pack-install",
+      "enabled_role_pack_version": "0.1.0",
+      "replaceable_in_team_settings": "true",
+      "owner_gate_required_for_binding": "true",
+      "history_policy": "do_not_rewrite_existing_receipts"
+    }
+  ],
+  "gui_projection": {
+    "tab_id": "team_settings.role_office",
+    "page_state": "installed_role_pack_replaceable_after_install_receipt",
+    "required_badges": "installed, candidate_only, owner_gate_required, entitlement_verified",
+    "required_actions": "replace_role, preview_role, rollback_binding, view_receipt"
+  },
+  "refresh_policy": {
+    "refresh_trigger": "install_receipt_created_or_role_pack_enabled_version_changed",
+    "refresh_truth_source": "truzhenos",
+    "stale_catalog_status": "blocked_until_refresh_receipt",
+    "receipt_required": "true"
+  },
+  "negative_cases": {
+    "missing_install_receipt": {
+      "expected_status": "blocked_install_receipt_missing",
+      "truth_source": "truzhenos",
+      "expected_evidence": "team_settings_catalog_block_receipt_install_missing"
+    },
+    "entitlement_revoked": {
+      "expected_status": "blocked_entitlement_revoked",
+      "truth_source": "truzhenos",
+      "expected_evidence": "team_settings_catalog_block_receipt_entitlement_revoked"
+    },
+    "incompatible_slot": {
+      "expected_status": "blocked_incompatible_role_slot",
+      "truth_source": "truzhenos",
+      "expected_evidence": "team_settings_catalog_block_receipt_incompatible_slot"
+    },
+    "bind_without_owner_gate": {
+      "expected_status": "blocked_owner_gate_required",
+      "truth_source": "truzhenos",
+      "expected_evidence": "team_settings_binding_block_receipt_owner_gate_missing"
+    },
+    "catalog_from_uninstalled_bundle": {
+      "expected_status": "blocked_uninstalled_bundle_not_replaceable",
+      "truth_source": "truzhenos",
+      "expected_evidence": "team_settings_catalog_block_receipt_uninstalled_bundle"
+    }
+  },
+  "forbidden": [
+    "show_uninstalled_bundle_as_replaceable",
+    "bind_without_owner_gate",
+    "rewrite_existing_binding_receipt",
+    "use_revoked_entitlement_for_replacement",
+    "copy_role_body_into_team_settings_truth"
+  ],
+  "non_completion_clause": "本文件只是安装后团队设置目录候选，不代表角色已安装、已出现在真实团队设置 tab 或已完成替换。真实可替换列表必须由 truzhenos 在安装回执和 entitlement 校验后生成，并由用户视角 GUI 截图与 binding receipt 证明。"
+}

@@ -1,0 +1,77 @@
+{
+  "gate_ref": "artifact-manifest-closure-gate://team-office-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包 artifact manifest 闭合门候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "closure_status": "candidate_ready_manifest_matches_current_tree",
+  "purpose": "在云上传、签名下载和本地安装前，确保当前候选目录、candidate-set artifact_files 和 commerce/artifact-manifest.json files 使用同一组文件，防止漏打包、多打包或绕过 manifest 的候选资产进入商品链路。",
+  "artifact_manifest": "commerce/artifact-manifest.json",
+  "candidate_set": "candidate-set.json",
+  "artifact_bundle_digest": "commerce/artifact-bundle-digest-candidate.json",
+  "blocks_upload_if_unregistered_file_exists": true,
+  "blocks_download_if_manifest_file_missing": true,
+  "blocks_install_if_candidate_set_manifest_drift": true,
+  "required_closure_checks": [
+    "actual_tree_equals_candidate_set_artifact_files",
+    "actual_tree_equals_artifact_manifest_files",
+    "candidate_set_artifact_files_equals_artifact_manifest_files",
+    "artifact_manifest_payload_file_count_matches_files",
+    "artifact_bundle_digest_payload_file_count_matches_manifest_payload",
+    "every_manifest_entry_has_sha256_or_self_hash_excluded",
+    "every_manifest_entry_size_matches_current_file",
+    "no_absolute_path_or_parent_traversal",
+    "no_forbidden_artifact_path",
+    "secret_raw_asset_scan_passed"
+  ],
+  "required_before_cloud_upload": [
+    "artifact_manifest_closure_gate_verified",
+    "artifact_secret_raw_asset_scan_verified",
+    "artifact_bundle_digest_verified"
+  ],
+  "required_before_signed_download": [
+    "artifact_manifest_closure_gate_verified",
+    "cloud_upload_receipt_hash_matches_bundle_tree",
+    "entitlement_verified",
+    "signed_download_receipt_required"
+  ],
+  "required_before_local_install": [
+    "artifact_manifest_closure_gate_verified",
+    "download_receipt_hash_matches_bundle_tree",
+    "install_preflight_hash_verified",
+    "owner_gate_receipt_required"
+  ],
+  "output_evidence": {
+    "closure_gate_receipt_candidate_ref": "receipt_candidate://team-office/artifact-manifest-closure-gate",
+    "current_tree_file_count": "computed_by_verifier",
+    "candidate_set_file_count": "computed_by_verifier",
+    "artifact_manifest_file_count": "computed_by_verifier",
+    "bundle_tree_sha256": "commerce/artifact-bundle-digest-candidate.json#bundle_tree_sha256",
+    "result_status": "blocked_until_real_cross_repo_verifier_records_receipt"
+  },
+  "negative_cases": {
+    "unregistered_file_exists": {
+      "expected_status": "blocked_unregistered_artifact_file",
+      "blocking_stage": "cloud_upload_preflight",
+      "evidence_required": "closure gate diff showing actual tree file absent from candidate set or manifest"
+    },
+    "manifest_missing_file": {
+      "expected_status": "blocked_manifest_file_missing",
+      "blocking_stage": "signed_download_or_install_preflight",
+      "evidence_required": "closure gate diff showing manifest path absent from current tree"
+    },
+    "candidate_set_manifest_drift": {
+      "expected_status": "blocked_candidate_set_manifest_drift",
+      "blocking_stage": "cloud_upload_download_install",
+      "evidence_required": "closure gate diff showing candidate-set artifact_files and manifest files mismatch"
+    }
+  },
+  "forbidden": [
+    "upload_unregistered_file",
+    "download_artifact_not_in_manifest",
+    "install_file_absent_from_candidate_set",
+    "treat_manifest_closure_gate_as_cloud_upload_receipt",
+    "treat_candidate_json_as_real_download_or_install_success"
+  ],
+  "non_completion_clause": "本文件只是 manifest 闭合门候选。即使本仓文件集合闭合，也不代表真实云上传、签名下载、本地安装或团队绑定已经完成；正式完成仍需要 truzhen-cloud 与 truzhenos 的回执。"
+}

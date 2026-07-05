@@ -1,0 +1,253 @@
+{
+  "readiness_package_ref": "p12-execution-readiness-package://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "slice_key": "p12_safe_lifecycle_sample",
+  "readiness_status": "blocked_pending_owner_authorization",
+  "authorization_scope_contract": "docs/p12-cross-repo-authorization-scope.json",
+  "authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+  "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
+  "evidence_contract": "docs/p12-safe-lifecycle-evidence-contract.json",
+  "frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
+  "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-safe-lifecycle-sample-execution-spec-20260704.md",
+  "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "target_repositories": [
+    "truzhenos",
+    "truzhen-client-web-desktop"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "run_real_codex_cli",
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "production_cloud_market_action",
+    "change_contracts_schema"
+  ],
+  "allowed_scope_summary": {
+    "truzhenos": "04 capability lifecycle safe fixture, readiness, promote, confirm, history/packs endpoints and tests only",
+    "truzhen-client-web-desktop": "Capability Pack Studio lifecycle panels, disabled unsafe actions and GUI smoke/tests only"
+  },
+  "required_verification_commands": [
+    "GOWORK=off go test ./backend/tests/capability -run 'TestCapabilityPackLifecycleSafeFixtureDraftIsServerDerived' -count=1",
+    "GOWORK=off go test ./backend/tests/capability -run 'TestCapabilityPackLifecycleSafeFixtureReadinessExplainsProviderMissing' -count=1",
+    "GOWORK=off go test ./backend/tests/capability -run 'TestCapabilityPackLifecycleSafeFixtureConfirmRequiresGateAndReceipt' -count=1",
+    "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1",
+    "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx src/components/pack-lifecycle/CodeAssistantPackPanel.test.tsx src/api/__tests__/executionLiveSmokeScript.test.ts",
+    "npm run typecheck",
+    "npm run smoke:frontend-shell",
+    "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenos GOWORK=off npm run smoke:frontend-behavior"
+  ],
+  "required_evidence_outputs": [
+    "owner_authorization_evidence_intake_recorded",
+    "backend_lifecycle_draft_readiness_promote_confirm_test_logs",
+    "frontend_lifecycle_panel_test_and_smoke_logs",
+    "frontend_backend_behavior_smoke_summary",
+    "receipt_ref_or_blocked_reason_evidence",
+    "forbidden_action_noop_evidence"
+  ],
+  "evidence_writeback_plan": {
+    "candidate_only": true,
+    "write_status": "pending_authorization",
+    "ledger_path": "docs/safe-lifecycle-sample-ledger.md",
+    "evidence_contract": "docs/p12-safe-lifecycle-evidence-contract.json",
+    "can_write_completion_claim": false,
+    "required_before_marking_slice_complete": [
+      "owner_authorization_recorded",
+      "pack_studio_issue_ledger_closed",
+      "all_evidence_ids_written",
+      "all_evidence_refs_recorded",
+      "forbidden_action_checks_written",
+      "independent_verification_passed"
+    ],
+    "required_entries": [
+      {
+        "evidence_id": "server_derived_draft",
+        "source_group": "required_backend_evidence",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "readiness_issues_or_ready_state",
+        "source_group": "required_backend_evidence",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "promote_gate_preserved",
+        "source_group": "required_backend_evidence",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "confirm_requires_owner_base_gate",
+        "source_group": "required_backend_evidence",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "receipt_ref_bound_to_confirm",
+        "source_group": "required_backend_evidence",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "enabled_pointer_visible_after_confirm",
+        "source_group": "required_backend_evidence",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "gui_safe_sample_lifecycle_controls",
+        "source_group": "required_frontend_evidence",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "confirm_disabled_until_gate_receipt",
+        "source_group": "required_frontend_evidence",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "enabled_pointer_receipt_after_confirm",
+        "source_group": "required_frontend_evidence",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "third_party_oss_not_runnable",
+        "source_group": "required_frontend_evidence",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "codex_cli_not_run",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "third_party_oss_not_executed",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "social_login_upload_not_happened",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "raw_secret_not_saved",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "contracts_not_changed",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/safe-lifecycle-sample-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      }
+    ],
+    "non_completion_clause": "This writeback plan maps future evidence IDs to the candidate ledger only. It is not execution evidence and does not permit a completion claim."
+  },
+  "cross_repo_work_gate": {
+    "can_start_cross_repo_work": false,
+    "required_authorization_attempt_coverage_verifier_source": "commercial_go_live_evidence_package.authorization_attempt_coverage_verifier",
+    "authorization_attempt_coverage_verifier_must_pass": true,
+    "required_next_authorization_start_guard_source": "commercial_go_live_evidence_package.next_authorization_start_guard",
+    "next_authorization_start_guard_must_open": true,
+    "required_pack_studio_issue_ledger_source": "candidate_set.pack_studio_issue_ledger",
+    "pack_studio_issue_ledger_must_close": true,
+    "required_status_before_cross_repo_work": "owner_authorization_recorded_and_scope_matched_and_p11_lifecycle_preflight_reverification_current_and_authorization_attempt_coverage_verifier_passed_and_next_authorization_start_guard_open_and_pack_studio_issue_ledger_closed_and_no_rejected_authorization_attempt_substitution",
+    "must_record_before_cross_repo_work": true,
+    "required_rejected_authorization_attempt_source": "commercial_go_live_evidence_package.latest_rejected_authorization_attempt",
+    "rejected_authorization_attempt_can_satisfy_owner_authorization": false,
+    "rejected_authorization_attempt_can_start_cross_repo_work": false,
+    "blocked_attempt_refs": [
+      "owner-message://2026-07-05-p11-card-mismatch-for-p12"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "owner_authorization_missing",
+    "stale_or_missing_p11_lifecycle_preflight_reverification",
+    "authorization_attempt_coverage_verifier_pending",
+    "next_authorization_start_guard_pending",
+    "pack_studio_issue_ledger_open",
+    "execution_readiness_package_without_open_gate",
+    "rejected_authorization_attempt_is_not_owner_authorization"
+  ],
+  "non_completion_clause": "This readiness package only makes P12 executable after Owner authorization. It is not authorization, not execution evidence, and not proof of commercial readiness.",
+  "p11_reverification_baseline": {
+    "source_candidate_set_slice": "p11_lifecycle_preflight",
+    "source_ledger": "docs/lifecycle-preflight-commercial-gap-ledger.md",
+    "verified_at": "2026-07-05",
+    "verified_blocked_status": "lifecycle_preflight_blocked",
+    "verified_blocked_reason": "candidate_bundle_not_delivery",
+    "commercial_status_after_reverification": "not_commercial_ready",
+    "must_be_current_before_p12_execution": true,
+    "required_before_p12_cross_repo_work": [
+      "p11_lifecycle_preflight_reverification_current",
+      "p11_preflight_still_blocks_candidate_bundle_not_delivery",
+      "p11_forbidden_actions_still_false"
+    ],
+    "non_sufficient_evidence": [
+      "missing_p11_lifecycle_preflight_reverification",
+      "stale_or_missing_p11_lifecycle_preflight_reverification",
+      "p11_reverification_without_live_smoke_evidence"
+    ]
+  }
+}

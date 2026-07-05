@@ -1,0 +1,173 @@
+{
+  "readiness_candidate_ref": "sandbox-environment-readiness-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包 sandbox 商品化环境就绪候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "readiness_status": "not_ready_requires_cross_repo_authorization",
+  "purpose": "定义后续真实 GUI sandbox 执行前必须具备的云端、买卖双方、支付桩、签名下载、本地安装和团队设置环境引用；本文件只保存 ref 和证据要求，不保存真实凭据、生产端点、支付方法秘密或签名下载秘密。",
+  "truth_sources": {
+    "frontend_truth": "truzhen-client-web-desktop",
+    "cloud_truth": "truzhen-cloud",
+    "install_truth": "truzhenos",
+    "candidate_asset_truth": "truzhen-packs"
+  },
+  "operation_policy": {
+    "sandbox_only": true,
+    "no_real_credentials_in_pack": true,
+    "production_endpoint_blocked": true,
+    "real_payment_capture_blocked": true,
+    "signed_download_secret_not_in_pack": true,
+    "cross_repo_authorization_required_before_execution": true
+  },
+  "sandbox_actors": [
+    "publisher_user_view_gui_agent",
+    "buyer_user_view_gui_agent",
+    "organizer_coordinator_recorder",
+    "independent_acceptance_agent"
+  ],
+  "required_environment_bindings": [
+    {
+      "binding_id": "cloud_sandbox_base_url_ref",
+      "truth_source": "truzhen-cloud",
+      "value_policy": "ref_only_no_secret",
+      "evidence_required": "cloud_sandbox_endpoint_ref + production_endpoint_absent_scan"
+    },
+    {
+      "binding_id": "cloud_marketplace_sandbox_project_ref",
+      "truth_source": "truzhen-cloud",
+      "value_policy": "ref_only_no_secret",
+      "evidence_required": "marketplace_sandbox_project_receipt_ref"
+    },
+    {
+      "binding_id": "publisher_sandbox_identity_ref",
+      "truth_source": "truzhen-cloud",
+      "value_policy": "ref_only_no_secret",
+      "evidence_required": "publisher_sandbox_identity_receipt_ref"
+    },
+    {
+      "binding_id": "buyer_sandbox_identity_ref",
+      "truth_source": "truzhen-cloud",
+      "value_policy": "ref_only_no_secret",
+      "evidence_required": "buyer_sandbox_identity_receipt_ref"
+    },
+    {
+      "binding_id": "sandbox_payment_method_ref",
+      "truth_source": "truzhen-cloud",
+      "value_policy": "ref_only_no_secret",
+      "evidence_required": "sandbox_payment_stub_receipt_ref + no_real_payment_method_scan"
+    },
+    {
+      "binding_id": "artifact_storage_sandbox_ref",
+      "truth_source": "truzhen-cloud",
+      "value_policy": "ref_only_no_secret",
+      "evidence_required": "artifact_storage_sandbox_receipt_ref + artifact_hash_policy"
+    },
+    {
+      "binding_id": "signed_download_service_ref",
+      "truth_source": "truzhen-cloud",
+      "value_policy": "ref_only_no_secret",
+      "evidence_required": "signed_download_service_readiness_receipt_ref + secret_not_exported_scan"
+    },
+    {
+      "binding_id": "local_install_target_ref",
+      "truth_source": "truzhenos",
+      "value_policy": "ref_only_no_secret",
+      "evidence_required": "isolated_local_install_target_receipt_ref + forbidden_artifact_scan"
+    },
+    {
+      "binding_id": "team_ref",
+      "truth_source": "truzhenos",
+      "value_policy": "ref_only_no_secret",
+      "evidence_required": "isolated_team_ref + owner_gate_test_policy"
+    }
+  ],
+  "preflight_checks": [
+    {
+      "check_id": "cloud_sandbox_reachable",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "cloud_health_or_readiness_receipt_ref from sandbox endpoint"
+    },
+    {
+      "check_id": "publisher_identity_sandbox",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "publisher_sandbox_identity_receipt_ref without identity document in packs"
+    },
+    {
+      "check_id": "buyer_identity_sandbox",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "buyer_sandbox_identity_receipt_ref without personal data in packs"
+    },
+    {
+      "check_id": "sandbox_payment_stub_ready",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "sandbox_payment_stub_receipt_ref proving no real payment capture"
+    },
+    {
+      "check_id": "artifact_storage_ready",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "artifact_storage_readiness_receipt_ref + hash verification setting"
+    },
+    {
+      "check_id": "signed_download_ready",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "signed_download_readiness_receipt_ref + signed URL secret not exported"
+    },
+    {
+      "check_id": "local_install_target_ready",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhenos",
+      "evidence_required": "isolated install target readiness receipt + enabled role pack catalog empty or controlled"
+    },
+    {
+      "check_id": "team_settings_role_tab_ready",
+      "status": "pending_cross_repo_execution",
+      "truth_source": "truzhen-client-web-desktop",
+      "evidence_required": "GUI screenshot of team settings role tab + route ref"
+    },
+    {
+      "check_id": "no_production_endpoint_loaded",
+      "status": "blocked_until_owner_authorizes",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "config scan showing sandbox endpoint only and no production publish channel"
+    }
+  ],
+  "negative_cases": {
+    "production_endpoint_configured": {
+      "expected_status": "blocked_production_endpoint_not_allowed_in_sandbox",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "sandbox_preflight_block_receipt_production_endpoint_detected"
+    },
+    "real_payment_method_configured": {
+      "expected_status": "blocked_real_payment_method_not_allowed_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "sandbox_payment_block_receipt_real_method_detected"
+    },
+    "raw_secret_in_environment_binding": {
+      "expected_status": "blocked_raw_secret_not_allowed",
+      "truth_source": "multi_repo",
+      "expected_evidence": "secret_scan_block_receipt"
+    },
+    "signed_download_secret_in_pack": {
+      "expected_status": "blocked_signed_download_secret_not_allowed_in_pack",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "signed_download_secret_scan_block_receipt"
+    }
+  },
+  "forbidden": [
+    "store_cloud_access_token_in_pack",
+    "store_payment_method_secret_in_pack",
+    "use_production_endpoint_for_sandbox",
+    "real_payment_capture_without_owner_authorization",
+    "store_signed_download_secret_in_pack",
+    "store_identity_document_in_pack",
+    "store_personal_data_fixture_in_pack"
+  ],
+  "non_completion_clause": "本文件只是 sandbox 环境就绪候选。真实 sandbox 账号、云端项目、支付桩、签名下载服务、本地安装目标和团队设置页面必须在对应仓库授权后验证；本文件不能证明上传、购买、下载或安装已通过。"
+}

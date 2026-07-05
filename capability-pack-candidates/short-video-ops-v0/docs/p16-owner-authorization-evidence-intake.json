@@ -1,0 +1,52 @@
+{
+  "intake_ref": "owner-authorization-evidence-intake://short-video-ops-v0/p16-controlled-code-assistant-run",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p16_controlled_code_assistant_run",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "missing_owner_authorization",
+  "authorization_scope_contract": "docs/p16-cross-repo-authorization-scope.json",
+  "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-cross-repo-execution-authorization-20260704.md",
+  "authorization_truth_source": "Owner explicit authorization in the current thread or signed authorization card; not inferred from plan text or previous slice authorization.",
+  "required_owner_quote_contains": [
+    "授权按 P16 授权卡",
+    "truzhenos 与 truzhen-client-web-desktop",
+    "允许通过 11 Gateway 执行一次受控 Code Assistant 最小 run",
+    "不改 contracts、software、cloud",
+    "不执行第三方 OSS",
+    "不登录或上传社媒",
+    "不应用补丁"
+  ],
+  "authorized_repositories": [
+    "truzhenos",
+    "truzhen-client-web-desktop",
+    "truzhen-packs"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "uncontrolled_codex_cli_run",
+    "auto_apply_patch",
+    "commit_or_push_patch_candidate",
+    "provider_ready_claim"
+  ],
+  "current_authorization_evidence": {
+    "status": "missing",
+    "owner_thread_quote_required": true,
+    "owner_thread_quote": "",
+    "recorded_by": "",
+    "recorded_at": "",
+    "evidence_ref": ""
+  },
+  "cross_repo_work_gate": {
+    "can_start_cross_repo_work": false,
+    "required_status_before_cross_repo_work": "owner_authorization_recorded_and_scope_matched",
+    "must_record_before_cross_repo_work": true
+  }
+}

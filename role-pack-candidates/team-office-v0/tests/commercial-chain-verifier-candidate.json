@@ -1,0 +1,326 @@
+{
+  "verifier_ref": "commercial-chain-verifier://team-office-role-pack-v0",
+  "display_name": "团队办公室角色包正常商品化链路核验器候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "verifier_status": "not_run_requires_cross_repo_receipts",
+  "verifier_role": "organizer_coordinator_recorder",
+  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "source_p11_sandbox_run_request": "tests/p11-sandbox-run-request-candidate.json",
+  "source_execution_queue": "integration/commercial-cross-repo-execution-queue-candidate.json",
+  "source_p11_phase_dependency_contract": "tests/p11-sandbox-run-request-candidate.json#phase_dependency_contract",
+  "source_install_runtime_activation_map": "install/install-runtime-activation-map-candidate.json",
+  "purpose": "在跨仓 GUI、云端、支付、下载、安装和团队设置实测后，逐项核对权威证据，防止用候选 JSON、单仓测试或组织者自述冒充正常商品化完成。",
+  "completion_claim_policy": {
+    "completion_claim_allowed": false,
+    "required_pass_status": "all_authoritative_receipts_and_gui_evidence_verified",
+    "non_sufficient_completion_evidence": [
+      "candidate_json_only",
+      "current_repo_tests_only",
+      "sandbox_design_without_receipts",
+      "organizer_self_attestation_only",
+      "mock_payment_success_only",
+      "download_hash_without_entitlement",
+      "install_receipt_without_gui_path"
+    ]
+  },
+  "correlation_requirements": {
+    "required_correlation_keys": [
+      "candidate_set_ref",
+      "artifact_ref",
+      "distribution_receipt_schema_ref",
+      "artifact_sha256",
+      "bundle_tree_sha256",
+      "six_role_pack_refs",
+      "role_pack_ref_set_hash",
+      "upload_receipt_ref",
+      "listing_draft_ref",
+      "sandbox_order_ref",
+      "sandbox_payment_receipt_ref",
+      "entitlement_ref",
+      "download_receipt_ref",
+      "install_receipt_ref",
+      "enabled_role_pack_version_ref",
+      "team_settings_catalog_refresh_receipt_ref",
+      "enabled_role_pack_version_refs",
+      "slot_mapping_refs",
+      "team_binding_receipt_ref",
+      "runtime_session_ref"
+    ],
+    "hash_continuity": "upload_download_install_hashes_must_match",
+    "receipt_chain_policy": "each_later_stage_must_reference_previous_stage_receipt_or_correlation_key",
+    "redaction_policy": "store_refs_and_redacted_summaries_only_no_raw_secret_no_payment_token"
+  },
+  "phase_dependency_verification": {
+    "p11_phase_dependency_links_ref": "integration/commercial-cross-repo-execution-queue-candidate.json#p11_phase_dependency_links",
+    "required_completion_proof": "p11_execution_queue_phase_dependencies_verified",
+    "missing_dependency_status": "blocked_previous_phase_evidence_missing",
+    "expected_phase_dependency_count": 9,
+    "all_run_request_handoffs_must_be_verified": true,
+    "no_stage_can_pass_if_previous_receipts_missing": true
+  },
+  "ordered_verification_gates": [
+    {
+      "stage_id": "role_candidate_export_gui",
+      "stage_order": 1,
+      "target_plan_phase": "P2-P3",
+      "truth_source": "multi_repo",
+      "stage_status": "pending_cross_repo_execution",
+      "required_authoritative_evidence": [
+        "gui_screenshot_role_studio_export",
+        "gui_page_state_candidate_only",
+        "truzhenos_candidate_export_receipt",
+        "artifact_sha256"
+      ],
+      "failure_issue_route": "role-studio-issue-ledger.md#commercial-chain-role-export"
+    },
+    {
+      "stage_id": "cloud_upload_listing_draft",
+      "stage_order": 2,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "stage_status": "pending_cross_repo_execution",
+      "required_authoritative_evidence": [
+        "gui_screenshot_cloud_upload_draft",
+        "truzhen-cloud_upload_receipt",
+        "truzhen-cloud_listing_draft_ref",
+        "uploaded_artifact_sha256"
+      ],
+      "failure_issue_route": "cloud-commerce-ledger.md#commercial-chain-upload"
+    },
+    {
+      "stage_id": "marketplace_review_candidate",
+      "stage_order": 3,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "stage_status": "pending_cross_repo_execution",
+      "required_authoritative_evidence": [
+        "gui_screenshot_review_submission",
+        "truzhen-cloud_review_candidate_receipt",
+        "truzhen-cloud_listing_status_ref"
+      ],
+      "failure_issue_route": "cloud-commerce-ledger.md#commercial-chain-review"
+    },
+    {
+      "stage_id": "sandbox_order_payment",
+      "stage_order": 4,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "stage_status": "pending_cross_repo_execution",
+      "required_authoritative_evidence": [
+        "gui_screenshot_sandbox_purchase",
+        "truzhen-cloud_sandbox_order_ref",
+        "truzhen-cloud_sandbox_payment_receipt",
+        "real_payment_block_policy_ref"
+      ],
+      "failure_issue_route": "cloud-commerce-ledger.md#commercial-chain-payment"
+    },
+    {
+      "stage_id": "license_entitlement_issue",
+      "stage_order": 5,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "stage_status": "pending_cross_repo_execution",
+      "required_authoritative_evidence": [
+        "gui_screenshot_owned_library",
+        "truzhen-cloud_license_ref",
+        "truzhen-cloud_entitlement_ref",
+        "truzhen-cloud_entitlement_issue_receipt"
+      ],
+      "failure_issue_route": "cloud-commerce-ledger.md#commercial-chain-entitlement"
+    },
+    {
+      "stage_id": "entitled_download_hash",
+      "stage_order": 6,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "stage_status": "pending_cross_repo_execution",
+      "required_authoritative_evidence": [
+        "gui_screenshot_entitled_download",
+        "truzhen-cloud_download_receipt",
+        "truzhen-cloud_download_artifact_sha256",
+        "artifact_hash_matches_upload"
+      ],
+      "failure_issue_route": "cloud-commerce-ledger.md#commercial-chain-download"
+    },
+    {
+      "stage_id": "local_install_enabled_version",
+      "stage_order": 7,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhenos",
+      "stage_status": "pending_cross_repo_execution",
+      "required_authoritative_evidence": [
+        "gui_screenshot_local_install",
+        "truzhenos_entitlement_verification_receipt",
+        "truzhenos_artifact_hash_verification_receipt",
+        "truzhenos_install_receipt",
+        "truzhenos_enabled_role_pack_version_ref"
+      ],
+      "failure_issue_route": "role-studio-issue-ledger.md#commercial-chain-install"
+    },
+    {
+      "stage_id": "team_settings_role_replacement",
+      "stage_order": 8,
+      "target_plan_phase": "P5-P6-P11",
+      "truth_source": "multi_repo",
+      "stage_status": "pending_cross_repo_execution",
+      "required_authoritative_evidence": [
+        "gui_screenshot_team_settings_role_tab",
+        "gui_screenshot_secretary_and_five_advisors_replaceable",
+        "gui_screenshot_secretary_and_five_advisors_slot_mapping",
+        "truzhenos_team_settings_catalog_refresh_receipt",
+        "six_replaceable_role_refs",
+        "enabled_role_pack_version_refs",
+        "slot_mapping_refs",
+        "truzhenos_owner_gate_decision_receipt",
+        "truzhenos_team_binding_receipt",
+        "truzhenos_previous_receipts_not_rewritten_evidence"
+      ],
+      "failure_issue_route": "team-settings-binding-ledger.md#commercial-chain-team-binding"
+    },
+    {
+      "stage_id": "runtime_use_candidate_only",
+      "stage_order": 9,
+      "target_plan_phase": "P7",
+      "truth_source": "truzhenos",
+      "stage_status": "pending_cross_repo_execution",
+      "required_authoritative_evidence": [
+        "gui_screenshot_team_office_runtime_session",
+        "truzhenos_runtime_session_ref",
+        "truzhenos_candidate_only_output_receipt",
+        "no_formal_task_memory_send_execution_receipt"
+      ],
+      "failure_issue_route": "role-studio-issue-ledger.md#commercial-chain-runtime"
+    },
+    {
+      "stage_id": "negative_cases_blocked",
+      "stage_order": 10,
+      "target_plan_phase": "P8-P11",
+      "truth_source": "multi_repo",
+      "stage_status": "pending_cross_repo_execution",
+      "required_authoritative_evidence": [
+        "blocked_download_without_entitlement_receipt",
+        "blocked_artifact_hash_mismatch_receipt",
+        "blocked_install_without_truzhenos_receipt",
+        "blocked_team_binding_without_owner_gate_receipt",
+        "blocked_release_revoked_or_not_available_receipt",
+        "blocked_real_payment_without_owner_authorization_receipt"
+      ],
+      "failure_issue_route": "role-studio-issue-ledger.md#commercial-chain-negative"
+    },
+    {
+      "stage_id": "independent_acceptance_signoff",
+      "stage_order": 11,
+      "target_plan_phase": "P9-P10-P11",
+      "truth_source": "independent_acceptance_agent",
+      "stage_status": "blocked_until_prior_stage_evidence",
+      "required_authoritative_evidence": [
+        "independent_acceptance_signoff",
+        "acceptance_agent_evidence_review_log",
+        "all_stage_receipts_verified",
+        "all_negative_cases_verified_blocked"
+      ],
+      "failure_issue_route": "role-studio-issue-ledger.md#commercial-chain-acceptance"
+    }
+  ],
+  "normal_commercialization_pass_conditions": {
+    "all_gui_steps_have_user_view_evidence": "required",
+    "all_user_view_gui_steps_covered": "required",
+    "cloud_receipt_chain_complete": "required",
+    "artifact_hash_consistent_upload_download_install": "required",
+    "entitlement_valid_at_download_and_install": "required",
+    "truzhenos_install_receipt_present": "required",
+    "six_installed_role_catalog_evidence_verified": "required",
+    "role_studio_lineage_verified": "required",
+    "capability_role_reference_after_install_verified": "required",
+    "team_binding_owner_gate_receipt_present": "required",
+    "negative_cases_blocked_with_receipts": "required",
+    "p11_execution_queue_phase_dependencies_verified": "required",
+    "independent_acceptance_signed": "required"
+  },
+  "blocking_cases": {
+    "missing_gui_screenshot": {
+      "expected_status": "blocked_missing_user_view_gui_evidence",
+      "expected_evidence": "issue card with missing surface_id and step_id"
+    },
+    "missing_cloud_upload_receipt": {
+      "expected_status": "blocked_missing_truzhen_cloud_upload_receipt",
+      "expected_evidence": "cloud upload step remains not verified"
+    },
+    "payment_without_sandbox_receipt": {
+      "expected_status": "blocked_payment_not_verified",
+      "expected_evidence": "sandbox payment receipt absent or not linked to order"
+    },
+    "download_without_entitlement": {
+      "expected_status": "blocked_entitlement_missing",
+      "expected_evidence": "download blocked receipt from truzhen-cloud"
+    },
+    "artifact_hash_mismatch": {
+      "expected_status": "blocked_artifact_hash_mismatch",
+      "expected_evidence": "upload/download/install hash comparison record"
+    },
+    "install_without_truzhenos_receipt": {
+      "expected_status": "blocked_install_receipt_missing",
+      "expected_evidence": "truzhenos install receipt absent"
+    },
+    "team_binding_without_owner_gate": {
+      "expected_status": "blocked_owner_gate_missing",
+      "expected_evidence": "TeamRoleSlotBinding blocked receipt"
+    },
+    "version_unpublished_or_revoked_download_install": {
+      "expected_status": "blocked_release_revoked_or_not_available",
+      "expected_evidence": "download or install block receipt proving release is unpublished or revoked"
+    },
+    "missing_independent_acceptance": {
+      "expected_status": "blocked_acceptance_signoff_missing",
+      "expected_evidence": "independent acceptance signoff absent"
+    }
+  },
+  "output_record_schema": {
+    "record_ref_prefix": "commercial-chain-verification-record://",
+    "required_fields": [
+      "record_ref",
+      "verifier_ref",
+      "candidate_set_ref",
+      "artifact_ref",
+      "stage_results",
+      "correlation_keys",
+      "hash_continuity_result",
+      "negative_case_results",
+      "independent_acceptance_ref",
+      "completion_claim_allowed",
+      "blocking_reasons"
+    ]
+  },
+  "related_artifacts": [
+    "tests/p11-sandbox-run-request-candidate.json",
+    "integration/commercial-cross-repo-execution-queue-candidate.json",
+    "tests/gui-user-agent-execution-script-candidate.json",
+    "tests/gui-evidence-capture-protocol.json",
+    "tests/product-readiness-evidence-matrix.json",
+    "tests/role-studio-phase-coverage-matrix-candidate.json",
+    "tests/independent-acceptance-signoff-matrix-candidate.json",
+    "tests/p0-p11-commercialization-blocker-register-candidate.json",
+    "tests/product-stage-frontend-backend-closure-report-candidate.json",
+    "tests/p11-normal-commercialization-acceptance-gate-candidate.json",
+    "tests/p11-normal-commercialization-verification-record-template.json",
+    "tests/p11-evidence-ingestion-binder-candidate.json",
+    "tests/p11-sandbox-execution-runbook-candidate.json",
+    "tests/p11-commercial-go-live-evidence-package-template.json",
+    "tests/commercial-evidence-gate-candidate.json",
+    "tests/e2e-evidence-run-record.json",
+    "commerce/commercial-receipt-chain-candidate.json",
+    "commerce/commercial-distribution-receipt-schema-candidate.json",
+    "commerce/buyer-library-install-state-candidate.json",
+    "integration/commercial-api-contract-candidate.json"
+  ],
+  "forbidden": [
+    "mark_complete_without_cross_repo_receipts",
+    "accept_backend_success_without_gui_evidence",
+    "accept_payment_without_sandbox_receipt",
+    "accept_download_without_entitlement",
+    "accept_install_without_truzhenos_receipt",
+    "accept_team_binding_without_owner_gate",
+    "store_raw_payment_token_or_secret"
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "approval_candidate_ref": "commercial-go-live-approval-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "listing_candidate_ref": "pack-listing-candidate://team-office-role-pack-v0",
+  "display_name": "团队办公室角色包商品化上线批准候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "approval_status": "not_approved_requires_cross_repo_evidence",
+  "commercial_go_no_go_gate_ref": "tests/commercial-go-no-go-gate-candidate.json",
+  "production_promotion_gate_ref": "commerce/commercial-production-promotion-gate-candidate.json",
+  "source_p11_evidence_acceptance_checklist": "tests/p11-evidence-acceptance-checklist-candidate.json",
+  "source_p11_go_live_evidence_package": "tests/p11-commercial-go-live-evidence-package-template.json",
+  "source_download_install_access_matrix": "commerce/download-install-access-matrix.json",
+  "source_execution_queue": "integration/commercial-cross-repo-execution-queue-candidate.json",
+  "source_p11_phase_dependency_contract": "tests/p11-sandbox-run-request-candidate.json#phase_dependency_contract",
+  "commerce_truth_source": "truzhen-cloud",
+  "package_contents_truth_source": "truzhen-packs",
+  "scope": "汇总角色制作、上传、审核、支付购买、entitlement、下载、安装、团队设置替换、负例阻断和独立验收的上线批准门；不保存正式上架、真实支付、正式 License、Entitlement、下载链接或安装事实。",
+  "truth_sources": {
+    "package_contents_truth": "truzhen-packs",
+    "cloud_commerce_truth": "truzhen-cloud",
+    "runtime_install_truth": "truzhenos",
+    "gui_truth": "truzhen-client-web-desktop",
+    "contract_truth": "truzhen-contracts_if_schema_is_promoted",
+    "acceptance_truth": "independent_user_agent_and_owner_signoff"
+  },
+  "production_policies": {
+    "production_publish_policy": "blocked_until_owner_authorizes_and_all_go_live_gates_pass",
+    "real_payment_policy": "blocked_until_owner_authorizes",
+    "production_endpoint_policy": "blocked_until_cross_repo_sandbox_evidence_passes",
+    "signed_download_secret_policy": "not_stored_in_pack",
+    "go_live_from_candidate_policy": "blocked_candidate_json_only_is_not_go_live",
+    "go_live_evidence_policy": "blocked_until_p11_evidence_acceptance_checklist_and_package_verified",
+    "download_install_access_policy": "blocked_until_download_install_access_matrix_verified",
+    "production_promotion_policy": "blocked_until_p11_evidence_and_owner_go_decision",
+    "rollback_policy": "must_preserve_receipts_and_block_future_download_when_revoked"
+  },
+  "required_go_live_gates": [
+    {
+      "gate_id": "role_candidate_gui_verified",
+      "truth_source": "truzhen-client-web-desktop",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "用户视角智能体通过 GUI 创建秘书长和五顾问角色候选的截图、页面状态、candidate_ref 和前端 trace",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "candidate_bundle_exported",
+      "truth_source": "truzhenos",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "角色制作台导出 candidate bundle 的 bundle_ref、bundle_sha256、artifact_manifest_ref 和导出回执",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "artifact_manifest_hash_verified",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "云端上传时校验 artifact manifest、bundle hash、release candidate hash 连续性的 upload receipt",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "terms_privacy_data_policy_accepted",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "购买前条款、隐私、数据边界和候选输出免责声明的可见截图与 terms_acceptance_receipt_ref",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "publisher_identity_settlement_verified",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_owner_decision",
+      "required_evidence": "发布者身份、定价审批、税务 / 发票和结算策略回执；真实收款资料不进入本仓",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "asset_rights_verified",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "秘书长音色 / VRM asset ref 授权、raw asset 阻断、provider readiness 和市场审核回执",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "sandbox_environment_ready",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "sandbox 卖家、买家、支付桩、签名下载、entitlement、安装目标和团队设置入口的 readiness receipts",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "commercial_api_contract_reviewed",
+      "truth_source": "multi_repo",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "上传、审核、购买、支付、entitlement、下载、安装、团队设置刷新 API 的 request / response / error / receipt 审核记录",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "commercial_observability_ready",
+      "truth_source": "multi_repo",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "GUI、云端、安装、团队绑定 trace、指标、告警、脱敏和 receipt correlation 均可查",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "sandbox_purchase_entitlement_download_verified",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "sandbox 下单、支付成功 / 失败、entitlement 发放 / 撤销、签名下载和 hash 校验的回执链",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "download_install_access_matrix_verified",
+      "truth_source": "multi_repo",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "commerce/download-install-access-matrix.json 已由云端、安装端和用户视角 GUI 权威 blocked 回执验证，覆盖 unpaid_download、refund_revoked_download、version_unpublished_or_revoked_download_install 和 artifact_hash_mismatch",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "local_install_team_binding_verified",
+      "truth_source": "truzhenos",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "下载安装后本地预检、Owner Gate、enabled version、团队设置秘书长 / 五顾问替换和回滚回执",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "negative_cases_blocked_verified",
+      "truth_source": "multi_repo",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "未购买下载、未授权真实支付、生产发布未授权、hash 变更、缺观测、负例未阻断等案例均有 blocked receipt",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "p11_evidence_acceptance_checklist_verified",
+      "truth_source": "multi_repo",
+      "status": "pending_cross_repo_execution",
+      "required_evidence": "tests/p11-evidence-acceptance-checklist-candidate.json 已由权威 GUI / 云端 / 安装 / 独立验收证据逐项验收，且包含 p11_execution_queue_phase_dependencies_verified 证明",
+      "blocking_if_missing": true
+    },
+    {
+      "gate_id": "independent_acceptance_signoff",
+      "truth_source": "multi_repo",
+      "status": "pending_owner_decision",
+      "required_evidence": "用户视角智能体 GUI 证据、验收智能体复核、Owner go / no-go 裁定和证据包 ref",
+      "blocking_if_missing": true
+    }
+  ],
+  "go_live_evidence_acceptance_gate": {
+    "gate_id": "p11_evidence_acceptance_checklist_verified",
+    "checklist_ref": "tests/p11-evidence-acceptance-checklist-candidate.json",
+    "go_live_evidence_package_ref": "tests/p11-commercial-go-live-evidence-package-template.json",
+    "phase_dependency_gate_ref": "tests/p11-evidence-acceptance-checklist-candidate.json#phase_dependency_acceptance_gate",
+    "required_phase_dependency_proof": "p11_execution_queue_phase_dependencies_verified",
+    "expected_verified_status": "verified_from_authoritative_evidence",
+    "current_status": "pending_cross_repo_execution",
+    "required_before_go_live_approval": true,
+    "can_approve_go_live_without_this_gate": false,
+    "required_evidence": [
+      "all_stage_acceptance_checks_verified",
+      "p11_execution_queue_phase_dependencies_verified",
+      "download_install_access_matrix_verified",
+      "p11_phase_dependency_report",
+      "owner_go_no_go_decision_recorded"
+    ],
+    "blocking_if_missing": [
+      "p11_evidence_acceptance_checklist_verified_missing",
+      "p11_execution_queue_phase_dependencies_verified_missing",
+      "download_install_access_matrix_verified_missing",
+      "owner_go_no_go_decision_missing"
+    ]
+  },
+  "owner_decision_record": {
+    "owner_decision_ref": "owner-decision://pending/team-office-role-pack-v0-commercial-go-live",
+    "scope": "pending_real_listing_real_payment_production_download_install",
+    "approved_channels": "none_until_owner_authorizes",
+    "explicit_real_payment_authorization": "pending_owner_decision",
+    "explicit_production_publish_authorization": "pending_owner_decision",
+    "rollback_authorization": "pending_owner_decision",
+    "evidence_pack_ref": "tests/e2e-evidence-run-record.json + tests/commercial-evidence-gate-candidate.json + tests/commercialization-execution-packet.json"
+  },
+  "rollback_plan": [
+    {
+      "stage_id": "listing_unpublish",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "cloud listing unpublish receipt with reason and actor_ref"
+    },
+    {
+      "stage_id": "entitlement_revoke_future_download",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "entitlement revocation receipt that blocks future downloads without deleting purchase history"
+    },
+    {
+      "stage_id": "release_revoke",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "release revocation receipt with artifact_hash and visible buyer reason"
+    },
+    {
+      "stage_id": "installed_role_disable_or_block_upgrade",
+      "truth_source": "truzhenos",
+      "evidence_required": "installed role disable or upgrade-block receipt preserving historical team binding receipts"
+    },
+    {
+      "stage_id": "buyer_notice",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "buyer notification receipt with support and refund route"
+    },
+    {
+      "stage_id": "receipt_preserve",
+      "truth_source": "truzhen-cloud",
+      "evidence_required": "audit receipt proving upload, purchase, entitlement, download and rollback receipts remain queryable"
+    }
+  ],
+  "negative_cases": {
+    "approval_without_sandbox_evidence": {
+      "expected_status": "blocked_sandbox_evidence_required",
+      "truth_source": "multi_repo",
+      "expected_evidence": "go_live_block_receipt_sandbox_evidence_missing"
+    },
+    "production_publish_without_owner_decision": {
+      "expected_status": "blocked_owner_decision_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "production_publish_block_receipt_owner_decision_missing"
+    },
+    "real_payment_without_owner_authorization": {
+      "expected_status": "blocked_real_payment_authorization_required",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "real_payment_block_receipt_owner_authorization_missing"
+    },
+    "go_live_with_missing_observability": {
+      "expected_status": "blocked_observability_required",
+      "truth_source": "multi_repo",
+      "expected_evidence": "go_live_block_receipt_observability_missing"
+    },
+    "go_live_with_unblocked_negative_case": {
+      "expected_status": "blocked_negative_case_evidence_required",
+      "truth_source": "multi_repo",
+      "expected_evidence": "go_live_block_receipt_negative_case_missing_or_passed_unexpectedly"
+    },
+    "package_hash_changed_after_approval": {
+      "expected_status": "blocked_artifact_hash_changed_after_approval",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "go_live_block_receipt_artifact_hash_changed"
+    },
+    "go_live_without_download_install_access_matrix": {
+      "expected_status": "blocked_download_install_access_matrix_required",
+      "truth_source": "multi_repo",
+      "expected_evidence": "go_live_block_receipt_download_install_access_matrix_missing"
+    }
+  },
+  "forbidden": [
+    "production_publish_without_owner_authorization",
+    "real_payment_capture_without_owner_authorization",
+    "go_live_from_candidate_json_only",
+    "approve_go_live_without_p11_evidence_acceptance_checklist",
+    "approve_go_live_without_download_install_access_matrix",
+    "store_cloud_order_payment_or_entitlement_truth_in_truzhen_packs",
+    "delete_receipts_during_rollback",
+    "change_artifact_hash_after_approval",
+    "store_signed_download_secret_in_truzhen_packs",
+    "claim_commercial_ready_without_gui_agent_evidence",
+    "claim_install_ready_without_truzhenos_receipt",
+    "claim_cloud_ready_without_truzhen_cloud_receipt"
+  ],
+  "non_completion_clause": "本文件只是商品化上线批准候选，当前状态明确为 not_approved_requires_cross_repo_evidence。没有 client GUI、truzhen-cloud、truzhenos、独立验收和 Owner 裁定证据前，不得声称已上架、已真实支付、已可生产下载、已安装或已正常商品化。"
+}

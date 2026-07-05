@@ -1,0 +1,216 @@
+{
+  "verifier_ref": "commercial-forbidden-action-coverage-verifier://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "coverage_status": "blocked_pending_forbidden_action_terminal_evidence",
+  "can_mark_commercial_ready": false,
+  "formal_write_allowed": false,
+  "source_candidate_set": "candidate-set.json#commercial_go_live_evidence_package.forbidden_action_terminal_checks",
+  "source_evidence_contract_index": "docs/commercial-evidence-contract-index.json#forbidden_action_terminal_checks",
+  "source_commercial_readiness_verifier": "docs/commercial-readiness-verifier.json#current_blockers.forbidden_action_terminal_checks",
+  "source_commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json#forbidden_action_terminal_gates",
+  "source_goal_completion_evidence_map": "docs/pack-studio-goal-completion-evidence-map.json#active_goal_requirements.forbidden_actions_proven_false",
+  "required_terminal_check_source": "commercial_go_live_evidence_package.forbidden_action_terminal_checks",
+  "required_terminal_final_value": "false",
+  "required_current_result_before_pass": "pending",
+  "required_result_before_commercial_ready": "all_terminal_checks_false",
+  "terminal_check_keys": [
+    "raw_token_cookie_password_saved",
+    "third_party_oss_vendored_into_packs",
+    "third_party_oss_executed_without_authorization",
+    "social_login_happened",
+    "social_upload_or_publish_happened",
+    "candidate_only_written_as_enabled",
+    "cloud_listing_truth_stored_in_packs",
+    "production_payment_captured",
+    "production_license_issued"
+  ],
+  "coverage_checks": [
+    {
+      "check_key": "raw_token_cookie_password_saved",
+      "current_result": "pending",
+      "required_final_value": false,
+      "coverage_result": "blocked_pending_terminal_evidence",
+      "candidate_set_has_check": true,
+      "evidence_index_has_check": true,
+      "readiness_verifier_has_check": true,
+      "go_no_go_has_terminal_gate": true,
+      "candidate_set_required_final_value_false": true,
+      "go_no_go_required_final_value_false": true,
+      "required_before_coverage_pass": [
+        "terminal_scan_evidence_written",
+        "current_result_false",
+        "owner_base_gate_receipts_bound"
+      ]
+    },
+    {
+      "check_key": "third_party_oss_vendored_into_packs",
+      "current_result": "pending",
+      "required_final_value": false,
+      "coverage_result": "blocked_pending_terminal_evidence",
+      "candidate_set_has_check": true,
+      "evidence_index_has_check": true,
+      "readiness_verifier_has_check": true,
+      "go_no_go_has_terminal_gate": true,
+      "candidate_set_required_final_value_false": true,
+      "go_no_go_required_final_value_false": true,
+      "required_before_coverage_pass": [
+        "tracked_artifact_scan_evidence_written",
+        "current_result_false",
+        "owner_base_gate_receipts_bound"
+      ]
+    },
+    {
+      "check_key": "third_party_oss_executed_without_authorization",
+      "current_result": "pending",
+      "required_final_value": false,
+      "coverage_result": "blocked_pending_terminal_evidence",
+      "candidate_set_has_check": true,
+      "evidence_index_has_check": true,
+      "readiness_verifier_has_check": true,
+      "go_no_go_has_terminal_gate": true,
+      "candidate_set_required_final_value_false": true,
+      "go_no_go_required_final_value_false": true,
+      "required_before_coverage_pass": [
+        "execution_gateway_receipts_or_no_run_ledgers_written",
+        "current_result_false",
+        "owner_base_gate_receipts_bound"
+      ]
+    },
+    {
+      "check_key": "social_login_happened",
+      "current_result": "pending",
+      "required_final_value": false,
+      "coverage_result": "blocked_pending_terminal_evidence",
+      "candidate_set_has_check": true,
+      "evidence_index_has_check": true,
+      "readiness_verifier_has_check": true,
+      "go_no_go_has_terminal_gate": true,
+      "candidate_set_required_final_value_false": true,
+      "go_no_go_required_final_value_false": true,
+      "required_before_coverage_pass": [
+        "gui_and_browser_session_evidence_written",
+        "current_result_false",
+        "owner_base_gate_receipts_bound"
+      ]
+    },
+    {
+      "check_key": "social_upload_or_publish_happened",
+      "current_result": "pending",
+      "required_final_value": false,
+      "coverage_result": "blocked_pending_terminal_evidence",
+      "candidate_set_has_check": true,
+      "evidence_index_has_check": true,
+      "readiness_verifier_has_check": true,
+      "go_no_go_has_terminal_gate": true,
+      "candidate_set_required_final_value_false": true,
+      "go_no_go_required_final_value_false": true,
+      "required_before_coverage_pass": [
+        "communication_or_execution_gateway_blocked_receipts_written",
+        "current_result_false",
+        "owner_base_gate_receipts_bound"
+      ]
+    },
+    {
+      "check_key": "candidate_only_written_as_enabled",
+      "current_result": "pending",
+      "required_final_value": false,
+      "coverage_result": "blocked_pending_terminal_evidence",
+      "candidate_set_has_check": true,
+      "evidence_index_has_check": true,
+      "readiness_verifier_has_check": true,
+      "go_no_go_has_terminal_gate": true,
+      "candidate_set_required_final_value_false": true,
+      "go_no_go_required_final_value_false": true,
+      "required_before_coverage_pass": [
+        "lifecycle_history_and_pack_query_evidence_written",
+        "current_result_false",
+        "owner_base_gate_receipts_bound"
+      ]
+    },
+    {
+      "check_key": "cloud_listing_truth_stored_in_packs",
+      "current_result": "pending",
+      "required_final_value": false,
+      "coverage_result": "blocked_pending_terminal_evidence",
+      "candidate_set_has_check": true,
+      "evidence_index_has_check": true,
+      "readiness_verifier_has_check": true,
+      "go_no_go_has_terminal_gate": true,
+      "candidate_set_required_final_value_false": true,
+      "go_no_go_required_final_value_false": true,
+      "required_before_coverage_pass": [
+        "cloud_truth_source_and_packs_scan_evidence_written",
+        "current_result_false",
+        "owner_base_gate_receipts_bound"
+      ]
+    },
+    {
+      "check_key": "production_payment_captured",
+      "current_result": "pending",
+      "required_final_value": false,
+      "coverage_result": "blocked_pending_terminal_evidence",
+      "candidate_set_has_check": true,
+      "evidence_index_has_check": true,
+      "readiness_verifier_has_check": true,
+      "go_no_go_has_terminal_gate": true,
+      "candidate_set_required_final_value_false": true,
+      "go_no_go_required_final_value_false": true,
+      "required_before_coverage_pass": [
+        "sandbox_payment_or_no_production_payment_evidence_written",
+        "current_result_false",
+        "owner_base_gate_receipts_bound"
+      ]
+    },
+    {
+      "check_key": "production_license_issued",
+      "current_result": "pending",
+      "required_final_value": false,
+      "coverage_result": "blocked_pending_terminal_evidence",
+      "candidate_set_has_check": true,
+      "evidence_index_has_check": true,
+      "readiness_verifier_has_check": true,
+      "go_no_go_has_terminal_gate": true,
+      "candidate_set_required_final_value_false": true,
+      "go_no_go_required_final_value_false": true,
+      "required_before_coverage_pass": [
+        "sandbox_entitlement_or_no_production_license_evidence_written",
+        "current_result_false",
+        "owner_base_gate_receipts_bound"
+      ]
+    }
+  ],
+  "completion_gate": {
+    "can_pass_coverage_verifier": false,
+    "required_before_commercial_ready": [
+      "all_forbidden_action_sources_present",
+      "all_forbidden_action_terminal_gates_present",
+      "all_required_final_values_false",
+      "all_current_results_false",
+      "independent_verification_passed",
+      "owner_base_gate_receipts_bound"
+    ],
+    "blocked_by": [
+      "forbidden_action_terminal_checks_pending",
+      "owner_base_gate_receipts_missing",
+      "evidence_writeback_incomplete",
+      "independent_verification_missing"
+    ],
+    "final_status_after_success": "forbidden_action_coverage_verified"
+  },
+  "non_sufficient_evidence": [
+    "forbidden_action_coverage_verifier_without_terminal_false_evidence",
+    "candidate_assets_only",
+    "manual_claims_without_scan_or_receipt_evidence",
+    "owner_base_gate_receipts_missing",
+    "evidence_writeback_incomplete"
+  ],
+  "forbidden": [
+    "treat_coverage_verifier_as_execution_authorization",
+    "mark_commercial_ready_from_pending_terminal_checks",
+    "replace_terminal_false_evidence_with_manual_claims",
+    "start_cross_repo_work_without_owner_authorization"
+  ],
+  "non_completion_clause": "This verifier only checks that every forbidden action terminal check is linked through candidate-set, commercial evidence index, readiness verifier, go/no-go gate and the active goal map. It does not prove the terminal results are false, authorize cross-repo work, or mark the workbench commercial-ready."
+}

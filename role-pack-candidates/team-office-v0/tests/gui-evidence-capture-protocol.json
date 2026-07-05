@@ -1,0 +1,259 @@
+{
+  "protocol_ref": "gui-evidence-capture-protocol://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包 GUI 证据采集协议候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "actor_role": "user_view_gui_agent",
+  "coordinator_role": "organizer_coordinator_recorder",
+  "purpose": "为后续角色制作、使用、上传、购买、下载、安装和团队设置替换的用户视角 GUI 验收定义统一证据格式，防止用后端接口调用、手工 JSON、文件复制或 mock 成功冒充商品化闭环。",
+  "operation_policy": {
+    "gui_only": true,
+    "allowed_actions": [
+      "open_page",
+      "click",
+      "type",
+      "select",
+      "toggle",
+      "upload_via_gui",
+      "download_via_gui",
+      "confirm_owner_gate",
+      "observe_page_state"
+    ],
+    "forbidden_actions": [
+      "direct_api_call",
+      "direct_database_write",
+      "manual_json_edit",
+      "filesystem_copy_to_cloud",
+      "terminal_command_as_user_action",
+      "backend_fixture_success",
+      "mock_success_without_gui_state"
+    ],
+    "coordinator_boundary": "组织者只登记截图、页面状态、网络 / 回执摘要、缺口和 issue，不替用户视角智能体完成 GUI 成功路径。"
+  },
+  "capture_contract": {
+    "required_fields_for_each_step": [
+      "evidence_id",
+      "scenario_id",
+      "stage_id",
+      "actor_id",
+      "surface_id",
+      "action_summary",
+      "timestamp",
+      "screenshot_path",
+      "page_state_ref",
+      "network_or_receipt_summary",
+      "candidate_or_receipt_ref",
+      "truth_source",
+      "blocked_reason_if_any",
+      "issue_id_if_failed"
+    ],
+    "redaction_required": "true",
+    "redaction_scope": [
+      "account_identifier",
+      "cookie",
+      "token",
+      "payment_method_detail",
+      "signed_download_url",
+      "local_absolute_private_path",
+      "personal_voice_or_vrm_source"
+    ],
+    "storage_policy": "evidence artifacts are collected by the executing repo or test runner; truzhen-packs stores only this protocol and candidate refs, not raw screenshots or runtime logs.",
+    "minimum_evidence_pair": [
+      "screenshot_path",
+      "page_state_ref",
+      "candidate_or_receipt_ref"
+    ]
+  },
+  "stage_capture_requirements": [
+    {
+      "stage_id": "role_create",
+      "target_phase": "P2",
+      "truth_source": "multi_repo",
+      "surface_id": "role_studio",
+      "required_evidence": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "candidate_only_badge",
+        "forbidden_phrase_validation_state"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-GUI-EVIDENCE-GAP"
+    },
+    {
+      "stage_id": "candidate_bundle_export",
+      "target_phase": "P3",
+      "truth_source": "truzhenos",
+      "surface_id": "role_studio_export",
+      "required_evidence": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "artifact_manifest_ref",
+        "file_sha256_list",
+        "forbidden_artifact_scan_result"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-BUNDLE-EVIDENCE-GAP"
+    },
+    {
+      "stage_id": "cloud_upload_draft",
+      "target_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "surface_id": "cloud_listing_draft",
+      "required_evidence": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "cloud_upload_receipt_ref",
+        "listing_draft_ref",
+        "artifact_hash_match"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-CLOUD-UPLOAD-EVIDENCE-GAP"
+    },
+    {
+      "stage_id": "marketplace_review_candidate",
+      "target_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "surface_id": "cloud_marketplace_review",
+      "required_evidence": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "marketplace_review_candidate_receipt",
+        "production_publish_block_receipt",
+        "candidate_role_disclaimer_visible"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-MARKETPLACE-REVIEW-EVIDENCE-GAP"
+    },
+    {
+      "stage_id": "sandbox_purchase",
+      "target_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "surface_id": "cloud_product_page",
+      "required_evidence": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "sandbox_order_ref",
+        "sandbox_payment_receipt_ref",
+        "real_payment_block_policy"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-SANDBOX-PURCHASE-EVIDENCE-GAP"
+    },
+    {
+      "stage_id": "entitlement_download",
+      "target_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "surface_id": "purchased_product_download",
+      "required_evidence": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "entitlement_ref",
+        "download_receipt_ref",
+        "signed_download_ref",
+        "download_artifact_hash_receipt"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-DOWNLOAD-EVIDENCE-GAP"
+    },
+    {
+      "stage_id": "local_install",
+      "target_phase": "P11",
+      "truth_source": "truzhenos",
+      "surface_id": "local_pack_install",
+      "required_evidence": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "entitlement_verification_ref",
+        "artifact_hash_verification_ref",
+        "install_receipt",
+        "enabled_role_pack_version"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-INSTALL-EVIDENCE-GAP"
+    },
+    {
+      "stage_id": "team_settings_replace",
+      "target_phase": "P5",
+      "truth_source": "truzhenos",
+      "surface_id": "team_settings_role_tab",
+      "required_evidence": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "owner_gate_decision_ref",
+        "team_binding_receipt_ref",
+        "history_not_rewritten_evidence"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-TEAM-BINDING-EVIDENCE-GAP"
+    },
+    {
+      "stage_id": "runtime_use",
+      "target_phase": "P7",
+      "truth_source": "truzhenos",
+      "surface_id": "team_office_runtime",
+      "required_evidence": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "runtime_receipt_candidate_ref",
+        "secretary_candidate_output_ref",
+        "five_advisor_candidate_output_refs"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-RUNTIME-EVIDENCE-GAP"
+    },
+    {
+      "stage_id": "negative_case",
+      "target_phase": "P8-P11",
+      "truth_source": "multi_repo",
+      "surface_id": "negative_case_surface",
+      "required_evidence": [
+        "screenshot_path",
+        "page_state_ref",
+        "candidate_or_receipt_ref",
+        "blocked_reason",
+        "expected_block_status",
+        "actual_block_status"
+      ],
+      "issue_when_missing": "ROLE-STUDIO-NEGATIVE-EVIDENCE-GAP"
+    }
+  ],
+  "proof_chain": {
+    "correlation_keys_required": [
+      "artifact_ref",
+      "artifact_sha256",
+      "role_pack_version",
+      "listing_draft_ref",
+      "sandbox_order_ref",
+      "entitlement_ref",
+      "download_receipt_ref",
+      "install_receipt_ref",
+      "team_binding_receipt_ref",
+      "runtime_receipt_candidate_ref"
+    ],
+    "hash_or_receipt_continuity_required": [
+      "upload_hash_equals_download_hash",
+      "download_hash_equals_install_hash",
+      "install_receipt_links_enabled_role_pack_version",
+      "team_binding_receipt_links_enabled_role_pack_version",
+      "runtime_receipt_links_team_binding_receipt"
+    ],
+    "completion_claim_allowed": false,
+    "completion_claim_blocked_until": [
+      "all_stage_capture_requirements_have_evidence",
+      "all_negative_cases_have_blocked_evidence",
+      "all_sensitive_fields_redacted",
+      "cross_repo_receipts_present",
+      "no_backend_only_success"
+    ]
+  },
+  "forbidden": [
+    "store_raw_screenshot_or_runtime_log_in_truzhen_packs",
+    "store_cookie_token_payment_method_or_signed_download_url",
+    "claim_gui_e2e_without_screenshot_and_receipt_pair",
+    "claim_cloud_download_without_entitlement_receipt",
+    "claim_local_install_without_install_receipt",
+    "claim_team_binding_without_owner_gate_receipt"
+  ],
+  "non_completion_clause": "本协议只是证据采集候选，不代表 GUI、云端、支付、下载、安装或团队绑定已经执行。真实证据必须由跨仓 GUI 测试和对应后端回执产生。"
+}

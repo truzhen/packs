@@ -1,0 +1,112 @@
+{
+  "gate_ref": "post-run-evidence-acceptance-gate://short-video-ops-v0/p15-gui-walkthrough-three-candidates",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "slice_key": "p15_gui_walkthrough_three_candidates",
+  "gate_status": "blocked_pending_p15_execution_evidence",
+  "can_mark_p15_complete": false,
+  "can_unlock_p16": false,
+  "can_mark_commercial_ready": false,
+  "previous_slice": "p13_gui_lifecycle_panel",
+  "next_slice": "p16_controlled_code_assistant_run",
+  "evidence_contract": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json",
+  "evidence_ledger": "docs/gui-walkthrough-evidence-ledger.md",
+  "execution_readiness_package": "docs/p15-execution-readiness-package.json",
+  "next_slice_execution_readiness_package": "docs/p16-execution-readiness-package.json",
+  "commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+  "commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json",
+  "commercial_evidence_writeback_gate_source": "commercial_go_no_go_gate.evidence_writeback_gate",
+  "acceptance_requirements": [
+    {
+      "evidence_id": "three_candidates_have_gui_screenshots",
+      "source_group": "required_frontend_evidence",
+      "current_status": "pending_execution_evidence",
+      "required_before_p15_complete": true,
+      "blocks_p16": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json#required_frontend_evidence.three_candidates_have_gui_screenshots"
+    },
+    {
+      "evidence_id": "clicked_steps_and_network_summaries_recorded",
+      "source_group": "required_frontend_evidence",
+      "current_status": "pending_execution_evidence",
+      "required_before_p15_complete": true,
+      "blocks_p16": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json#required_frontend_evidence.clicked_steps_and_network_summaries_recorded"
+    },
+    {
+      "evidence_id": "blocked_reasons_match_backend_lifecycle",
+      "source_group": "required_backend_evidence",
+      "current_status": "pending_execution_evidence",
+      "required_before_p15_complete": true,
+      "blocks_p16": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json#required_backend_evidence.blocked_reasons_match_backend_lifecycle"
+    },
+    {
+      "evidence_id": "no_codex_cli_run",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_execution_evidence",
+      "required_before_p15_complete": true,
+      "blocks_p16": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json#required_forbidden_action_checks.no_codex_cli_run"
+    },
+    {
+      "evidence_id": "no_third_party_oss_execution",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_execution_evidence",
+      "required_before_p15_complete": true,
+      "blocks_p16": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json#required_forbidden_action_checks.no_third_party_oss_execution"
+    },
+    {
+      "evidence_id": "no_social_login_upload_or_formal_enable",
+      "source_group": "required_forbidden_action_checks",
+      "current_status": "pending_execution_evidence",
+      "required_before_p15_complete": true,
+      "blocks_p16": true,
+      "evidence_ref_required": true,
+      "evidence_summary_required": true,
+      "independent_review_required": true,
+      "authoritative_source": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json#required_forbidden_action_checks.no_social_login_upload_or_formal_enable"
+    }
+  ],
+  "current_blockers": [
+    "p15_cross_repo_execution_not_run",
+    "owner_authorization_missing",
+    "p13_post_run_evidence_acceptance_gate_not_passed",
+    "owner_base_gate_receipts_missing",
+    "evidence_writeback_incomplete",
+    "independent_verification_missing"
+  ],
+  "required_before_p15_complete": [
+    "all_evidence_ids_written",
+    "all_evidence_refs_recorded",
+    "forbidden_action_checks_written",
+    "independent_verification_passed",
+    "owner_base_gate_receipts_bound",
+    "commercial_evidence_writeback_gate_updated"
+  ],
+  "non_sufficient_evidence": [
+    "authorization_card_without_owner_evidence",
+    "gui_screenshots_without_network_summary",
+    "manual_ledger_without_machine_evidence",
+    "test_logs_without_receipts",
+    "post_run_gate_candidate_only"
+  ],
+  "non_completion_clause": "This gate records the future post-run acceptance requirements for P15. It is not authorization, execution evidence, a Base receipt, a P16 unlock, or commercial readiness proof."
+}

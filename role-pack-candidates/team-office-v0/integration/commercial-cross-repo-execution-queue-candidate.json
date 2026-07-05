@@ -1,0 +1,528 @@
+{
+  "queue_ref": "commercial-cross-repo-execution-queue://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包商品化跨仓执行队列候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "queue_status": "blocked_pending_owner_authorization_and_stage_evidence",
+  "can_start_cross_repo_execution": false,
+  "owner_authorization_evidence_intake_ref": "integration/owner-authorization-evidence-intake-candidate.json",
+  "execution_readiness_package_ref": "integration/cross-repo-execution-readiness-package.json",
+  "cross_repo_execution_cards_ref": "integration/cross-repo-execution-cards.json",
+  "p11_runbook_ref": "tests/p11-sandbox-execution-runbook-candidate.json",
+  "p11_sandbox_preflight_gate_ref": "tests/p11-sandbox-preflight-gate-candidate.json",
+  "p11_sandbox_run_request_ref": "tests/p11-sandbox-run-request-candidate.json",
+  "p11_phase_dependency_contract_ref": "tests/p11-sandbox-run-request-candidate.json#phase_dependency_contract",
+  "phase_dependency_enforcement": {
+    "enabled": true,
+    "no_stage_can_start_if_previous_receipts_missing": true,
+    "same_correlation_id_required": true,
+    "same_bundle_tree_sha256_required_from_export_onward": true,
+    "missing_dependency_result": "blocked_previous_phase_evidence_missing",
+    "applies_to": [
+      "role_candidate_bundle_export",
+      "cloud_upload_listing_draft",
+      "marketplace_review_candidate",
+      "sandbox_order_payment_entitlement",
+      "entitled_signed_download",
+      "local_install_enabled_version",
+      "post_install_team_binding_runtime",
+      "negative_cases_and_independent_acceptance",
+      "production_promotion_controls"
+    ]
+  },
+  "p11_phase_dependency_links": [
+    {
+      "run_request_phase_id": "role_candidate_bundle_export",
+      "depends_on_phase_ids": ["preflight_authorization_and_status"],
+      "required_previous_receipts": ["owner_authorization_receipt", "preflight_gate_receipt"],
+      "queue_blocking_status": "blocked_previous_phase_evidence_missing",
+      "evidence_ledger_ref": "docs/commercial-cross-repo-evidence-ledger.json"
+    },
+    {
+      "run_request_phase_id": "cloud_upload_listing_draft",
+      "depends_on_phase_ids": ["role_candidate_bundle_export"],
+      "required_previous_receipts": ["candidate_bundle_export_receipt", "artifact_bundle_hash_receipt"],
+      "queue_blocking_status": "blocked_previous_phase_evidence_missing",
+      "evidence_ledger_ref": "docs/commercial-cross-repo-evidence-ledger.json"
+    },
+    {
+      "run_request_phase_id": "marketplace_review_candidate",
+      "depends_on_phase_ids": ["cloud_upload_listing_draft"],
+      "required_previous_receipts": ["cloud_upload_receipt", "listing_draft_receipt"],
+      "queue_blocking_status": "blocked_previous_phase_evidence_missing",
+      "evidence_ledger_ref": "docs/commercial-cross-repo-evidence-ledger.json"
+    },
+    {
+      "run_request_phase_id": "sandbox_order_payment_entitlement",
+      "depends_on_phase_ids": ["marketplace_review_candidate"],
+      "required_previous_receipts": ["listing_draft_receipt", "marketplace_review_candidate_receipt"],
+      "queue_blocking_status": "blocked_previous_phase_evidence_missing",
+      "evidence_ledger_ref": "docs/commercial-cross-repo-evidence-ledger.json"
+    },
+    {
+      "run_request_phase_id": "entitled_signed_download",
+      "depends_on_phase_ids": ["sandbox_order_payment_entitlement"],
+      "required_previous_receipts": ["entitlement_receipt", "sandbox_payment_receipt"],
+      "queue_blocking_status": "blocked_previous_phase_evidence_missing",
+      "evidence_ledger_ref": "docs/commercial-cross-repo-evidence-ledger.json"
+    },
+    {
+      "run_request_phase_id": "local_install_enabled_version",
+      "depends_on_phase_ids": ["entitled_signed_download"],
+      "required_previous_receipts": ["download_receipt", "download_artifact_hash_receipt"],
+      "queue_blocking_status": "blocked_previous_phase_evidence_missing",
+      "evidence_ledger_ref": "docs/commercial-cross-repo-evidence-ledger.json"
+    },
+    {
+      "run_request_phase_id": "post_install_team_binding_runtime",
+      "depends_on_phase_ids": ["local_install_enabled_version"],
+      "required_previous_receipts": ["role_pack_install_receipt", "enabled_role_pack_version_receipt"],
+      "queue_blocking_status": "blocked_previous_phase_evidence_missing",
+      "evidence_ledger_ref": "docs/commercial-cross-repo-evidence-ledger.json"
+    },
+    {
+      "run_request_phase_id": "negative_cases_and_independent_acceptance",
+      "depends_on_phase_ids": ["post_install_team_binding_runtime"],
+      "required_previous_receipts": ["team_binding_receipt", "runtime_candidate_output_receipt"],
+      "queue_blocking_status": "blocked_previous_phase_evidence_missing",
+      "evidence_ledger_ref": "docs/commercial-cross-repo-evidence-ledger.json"
+    },
+    {
+      "run_request_phase_id": "production_promotion_controls",
+      "depends_on_phase_ids": ["negative_cases_and_independent_acceptance"],
+      "required_previous_receipts": ["independent_acceptance_signoff", "owner_go_no_go_signoff"],
+      "queue_blocking_status": "blocked_previous_phase_evidence_missing",
+      "evidence_ledger_ref": "docs/commercial-cross-repo-evidence-ledger.json"
+    }
+  ],
+  "go_live_evidence_package_template_ref": "tests/p11-commercial-go-live-evidence-package-template.json",
+  "commercial_chain_verifier_ref": "tests/commercial-chain-verifier-candidate.json",
+  "production_promotion_gate_ref": "commerce/commercial-production-promotion-gate-candidate.json",
+  "product_readiness_evidence_matrix_ref": "tests/product-readiness-evidence-matrix.json",
+  "p0_p11_commercialization_blocker_register": "tests/p0-p11-commercialization-blocker-register-candidate.json",
+  "commercial_cross_repo_evidence_ledger_ref": "docs/commercial-cross-repo-evidence-ledger.json",
+  "purpose": "把角色制作、使用、上传、购买、下载、安装、团队设置替换、负例阻断、独立验收和 Owner go/no-go 裁定拆成授权后可逐项执行的队列。当前队列只组织顺序和证据闸门，不授权跨仓工作，不代表任何阶段已运行。",
+  "execution_order": [
+    "owner_authorization_intake",
+    "contracts_schema_review",
+    "backend_role_candidate_gate_receipt",
+    "frontend_user_view_gui_flow",
+    "cloud_sandbox_upload_purchase_download",
+    "local_install_team_binding",
+    "negative_cases_and_observability",
+    "independent_acceptance_go_no_go",
+    "production_promotion_controls"
+  ],
+  "execution_entries": [
+    {
+      "stage_id": "owner_authorization_intake",
+      "status": "blocked_pending_owner_authorization",
+      "depends_on": [
+        "role-pack-studio-team-office-test-plan-20260704.md"
+      ],
+      "target_repositories": [
+        "truzhen-packs-current"
+      ],
+      "required_input_refs": [
+        "integration/owner-authorization-evidence-intake-candidate.json",
+        "docs/plans/role-pack-studio-cross-repo-execution-authorization-20260704.md"
+      ],
+      "required_evidence_outputs": [
+        "owner_authorization_evidence_intake",
+        "owner_quote",
+        "repo_status_snapshot",
+        "allowed_actions_by_repo",
+        "forbidden_actions_ack"
+      ],
+      "evidence_record_targets": [
+        "integration/owner-authorization-evidence-intake-candidate.json",
+        "tests/p11-normal-commercialization-verification-record-template.json"
+      ],
+      "verification_commands_or_checks": [
+        "Owner quote contains required phrases",
+        "Every target repo has explicit allowed actions and forbidden boundaries"
+      ],
+      "owner_authorization_status": "missing",
+      "evidence_status": "pending",
+      "can_start_now": false,
+      "cross_repo_work_gate": {
+        "can_start_cross_repo_work": false,
+        "required_status_before_cross_repo_work": "owner_authorization_recorded_and_scope_matched",
+        "blocking_reason": "Owner authorization evidence has not been recorded."
+      }
+    },
+    {
+      "stage_id": "contracts_schema_review",
+      "status": "blocked_pending_prior_stage_evidence",
+      "depends_on": [
+        "owner_authorization_intake"
+      ],
+      "target_repositories": [
+        "truzhen-contracts"
+      ],
+      "required_input_refs": [
+        "integration/cross-repo-execution-readiness-package.json",
+        "integration/commercial-api-contract-candidate.json",
+        "tests/product-stage-frontend-backend-closure-report-candidate.json"
+      ],
+      "required_evidence_outputs": [
+        "schema_impact_report",
+        "compatibility_test_result",
+        "owner_decision_if_schema_change_needed"
+      ],
+      "evidence_record_targets": [
+        "tests/p0-p11-commercialization-blocker-register-candidate.json",
+        "tests/normal-commercialization-completion-audit-candidate.json"
+      ],
+      "verification_commands_or_checks": [
+        "truzhen-contracts governance tests",
+        "RolePackCandidate and TeamRoleSlotBinding compatibility audit"
+      ],
+      "owner_authorization_status": "missing",
+      "evidence_status": "pending",
+      "can_start_now": false,
+      "cross_repo_work_gate": {
+        "can_start_cross_repo_work": false,
+        "required_status_before_cross_repo_work": "owner_authorization_recorded_and_scope_matched",
+        "blocking_reason": "Contracts schema review requires explicit Owner authorization and current repo status."
+      }
+    },
+    {
+      "stage_id": "backend_role_candidate_gate_receipt",
+      "status": "blocked_pending_prior_stage_evidence",
+      "depends_on": [
+        "owner_authorization_intake",
+        "contracts_schema_review"
+      ],
+      "target_repositories": [
+        "truzhenos"
+      ],
+      "required_input_refs": [
+        "integration/commercial-api-contract-candidate.json",
+        "install/install-preflight-request-candidate.json",
+        "commerce/commercial-distribution-receipt-schema-candidate.json"
+      ],
+      "required_evidence_outputs": [
+        "RolePackCandidate_receipt",
+        "TeamRoleSlotBindingCandidate_receipt",
+        "Owner_Gate_decision_receipt",
+        "Receipt_lookup_result"
+      ],
+      "evidence_record_targets": [
+        "tests/p11-normal-commercialization-verification-record-template.json",
+        "tests/e2e-evidence-run-record.json",
+        "tests/commercial-chain-verifier-candidate.json"
+      ],
+      "verification_commands_or_checks": [
+        "focused truzhenos role candidate backend tests",
+        "receipt lookup smoke",
+        "candidate formal isolation check"
+      ],
+      "owner_authorization_status": "missing",
+      "evidence_status": "pending",
+      "can_start_now": false,
+      "cross_repo_work_gate": {
+        "can_start_cross_repo_work": false,
+        "required_status_before_cross_repo_work": "owner_authorization_recorded_and_contracts_evidence_complete",
+        "blocking_reason": "Backend RolePackCandidate and receipt work requires Owner authorization and prior schema review evidence."
+      }
+    },
+    {
+      "stage_id": "frontend_user_view_gui_flow",
+      "status": "blocked_pending_prior_stage_evidence",
+      "depends_on": [
+        "owner_authorization_intake",
+        "backend_role_candidate_gate_receipt"
+      ],
+      "target_repositories": [
+        "truzhen-client-web-desktop"
+      ],
+      "required_input_refs": [
+        "tests/gui-user-agent-execution-script-candidate.json",
+        "tests/gui-evidence-capture-protocol.json",
+        "integration/frontend-backend-contract-map.json"
+      ],
+      "required_evidence_outputs": [
+        "gui_operation_log",
+        "role_studio_gui_screenshots",
+        "team_settings_replacement_screenshots",
+        "voice_vrm_picker_screenshot",
+        "network_summary_with_candidate_or_receipt_refs",
+        "gui_api_traceability_matrix_verified",
+        "commercial_api_endpoint_trace",
+        "receipt_field_trace",
+        "gui_evidence_slot_trace"
+      ],
+      "evidence_record_targets": [
+        "tests/e2e-evidence-run-record.json",
+        "tests/p11-evidence-ingestion-binder-candidate.json",
+        "tests/p11-normal-commercialization-verification-record-template.json",
+        "tests/p11-commercial-go-live-evidence-package-template.json#gui_api_traceability_report",
+        "tests/p11-evidence-acceptance-checklist-candidate.json#gui_api_traceability_matrix",
+        "tests/product-stage-frontend-backend-closure-report-candidate.json#gui_api_traceability_matrix_verified"
+      ],
+      "verification_commands_or_checks": [
+        "user-view GUI smoke",
+        "screenshot and page-state evidence redaction check",
+        "GUI/API traceability matrix check",
+        "commercial API endpoint and receipt field trace",
+        "no backend-only success check"
+      ],
+      "owner_authorization_status": "missing",
+      "evidence_status": "pending",
+      "can_start_now": false,
+      "cross_repo_work_gate": {
+        "can_start_cross_repo_work": false,
+        "required_status_before_cross_repo_work": "owner_authorization_recorded_and_backend_receipts_available",
+        "blocking_reason": "GUI smoke requires backend receipt surfaces and explicit Owner authorization."
+      }
+    },
+    {
+      "stage_id": "cloud_sandbox_upload_purchase_download",
+      "status": "blocked_pending_prior_stage_evidence",
+      "depends_on": [
+        "owner_authorization_intake",
+        "frontend_user_view_gui_flow"
+      ],
+      "target_repositories": [
+        "truzhen-cloud",
+        "truzhen-client-web-desktop"
+      ],
+      "required_input_refs": [
+        "commerce/artifact-manifest.json",
+        "commerce/artifact-bundle-digest-candidate.json",
+        "commerce/cloud-listing-candidate.json",
+        "commerce/order-payment-state-machine-candidate.json",
+        "commerce/license-entitlement-policy-candidate.json"
+      ],
+      "required_evidence_outputs": [
+        "cloud_upload_receipt",
+        "listing_draft_receipt",
+        "sandbox_payment_receipt",
+        "license_entitlement_receipt",
+        "download_receipt",
+        "download_hash_match_receipt"
+      ],
+      "evidence_record_targets": [
+        "tests/p11-normal-commercialization-verification-record-template.json",
+        "tests/commercial-chain-verifier-candidate.json",
+        "commerce/commercial-receipt-chain-candidate.json"
+      ],
+      "verification_commands_or_checks": [
+        "truzhen-cloud sandbox upload tests",
+        "sandbox payment and entitlement tests",
+        "download artifact hash check"
+      ],
+      "owner_authorization_status": "missing",
+      "evidence_status": "pending",
+      "can_start_now": false,
+      "cross_repo_work_gate": {
+        "can_start_cross_repo_work": false,
+        "required_status_before_cross_repo_work": "owner_authorization_recorded_and_gui_evidence_complete",
+        "blocking_reason": "Cloud sandbox upload, purchase and download require Owner authorization and GUI evidence."
+      }
+    },
+    {
+      "stage_id": "local_install_team_binding",
+      "status": "blocked_pending_prior_stage_evidence",
+      "depends_on": [
+        "owner_authorization_intake",
+        "cloud_sandbox_upload_purchase_download"
+      ],
+      "target_repositories": [
+        "truzhenos",
+        "truzhen-client-web-desktop"
+      ],
+      "required_input_refs": [
+        "install/install-preflight-request-candidate.json",
+        "commerce/install-compatibility-matrix.json",
+        "bindings/team-settings-installed-role-catalog-candidate.json",
+        "bindings/team-office-role-binding-candidate.json"
+      ],
+      "required_evidence_outputs": [
+        "install_receipt",
+        "enabled_role_pack_version_receipt",
+        "team_binding_receipt",
+        "team_settings_refresh_screenshot"
+      ],
+      "evidence_record_targets": [
+        "tests/p11-normal-commercialization-verification-record-template.json",
+        "tests/e2e-evidence-run-record.json",
+        "commerce/commercial-receipt-chain-candidate.json"
+      ],
+      "verification_commands_or_checks": [
+        "install preflight entitlement check",
+        "hash and signature verification",
+        "team settings slot binding receipt lookup"
+      ],
+      "owner_authorization_status": "missing",
+      "evidence_status": "pending",
+      "can_start_now": false,
+      "cross_repo_work_gate": {
+        "can_start_cross_repo_work": false,
+        "required_status_before_cross_repo_work": "owner_authorization_recorded_and_cloud_download_evidence_complete",
+        "blocking_reason": "Local install and team binding require entitlement, download hash and Owner Gate evidence."
+      }
+    },
+    {
+      "stage_id": "negative_cases_and_observability",
+      "status": "blocked_pending_prior_stage_evidence",
+      "depends_on": [
+        "owner_authorization_intake",
+        "local_install_team_binding"
+      ],
+      "target_repositories": [
+        "multi_repo",
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-cloud"
+      ],
+      "required_input_refs": [
+        "tests/commercial-evidence-gate-candidate.json",
+        "tests/commercial-observability-diagnostics-candidate.json",
+        "commerce/download-install-access-matrix.json",
+        "appearance/secretary-appearance-asset-rights-candidate.json"
+      ],
+      "required_evidence_outputs": [
+        "blocked_receipt_download_without_entitlement",
+        "blocked_receipt_artifact_hash_mismatch",
+        "blocked_receipt_raw_asset",
+        "blocked_receipt_real_payment_without_authorization",
+        "trace_log_metric_refs"
+      ],
+      "evidence_record_targets": [
+        "tests/p0-p11-commercialization-blocker-register-candidate.json",
+        "tests/p11-normal-commercialization-verification-record-template.json",
+        "tests/commercial-chain-verifier-candidate.json"
+      ],
+      "verification_commands_or_checks": [
+        "negative case GUI scripts",
+        "blocked receipt lookup",
+        "diagnostics redaction check"
+      ],
+      "owner_authorization_status": "missing",
+      "evidence_status": "pending",
+      "can_start_now": false,
+      "cross_repo_work_gate": {
+        "can_start_cross_repo_work": false,
+        "required_status_before_cross_repo_work": "owner_authorization_recorded_and_install_binding_evidence_complete",
+        "blocking_reason": "Negative cases require prior install and team binding evidence."
+      }
+    },
+    {
+      "stage_id": "independent_acceptance_go_no_go",
+      "status": "blocked_pending_prior_stage_evidence",
+      "depends_on": [
+        "owner_authorization_intake",
+        "negative_cases_and_observability"
+      ],
+      "target_repositories": [
+        "acceptance",
+        "truzhen-packs-current"
+      ],
+      "required_input_refs": [
+        "tests/independent-acceptance-signoff-matrix-candidate.json",
+        "tests/p11-commercial-go-live-evidence-package-template.json",
+        "tests/p11-normal-commercialization-acceptance-gate-candidate.json",
+        "commerce/commercial-go-live-approval-candidate.json",
+        "commerce/commercial-production-promotion-gate-candidate.json"
+      ],
+      "required_evidence_outputs": [
+        "independent_acceptance_signoff",
+        "owner_go_no_go_decision",
+        "final_go_live_decision",
+        "commercial_chain_verifier_result"
+      ],
+      "evidence_record_targets": [
+        "tests/p11-commercial-go-live-evidence-package-template.json",
+        "tests/normal-commercialization-completion-audit-candidate.json",
+        "tests/product-readiness-evidence-matrix.json"
+      ],
+      "verification_commands_or_checks": [
+        "commercial chain verifier review",
+        "go-live evidence package review",
+        "production promotion gate review",
+        "Owner go/no-go decision recorded"
+      ],
+      "owner_authorization_status": "missing",
+      "evidence_status": "pending",
+      "can_start_now": false,
+      "cross_repo_work_gate": {
+        "can_start_cross_repo_work": false,
+        "required_status_before_cross_repo_work": "owner_authorization_recorded_and_all_stage_evidence_complete",
+        "blocking_reason": "Independent acceptance and go/no-go require all prior stage evidence."
+      }
+    },
+    {
+      "stage_id": "production_promotion_controls",
+      "status": "blocked_pending_prior_stage_evidence",
+      "depends_on": [
+        "owner_authorization_intake",
+        "independent_acceptance_go_no_go"
+      ],
+      "target_repositories": [
+        "truzhen-cloud",
+        "truzhenos",
+        "truzhen-client-web-desktop"
+      ],
+      "required_input_refs": [
+        "integration/commercial-api-contract-candidate.json",
+        "commerce/commercial-production-promotion-gate-candidate.json",
+        "commerce/commercial-go-live-approval-candidate.json",
+        "tests/p11-commercial-go-live-evidence-package-template.json"
+      ],
+      "required_evidence_outputs": [
+        "production_promotion_gate_pass_receipt",
+        "owner_go_no_go_decision_ref",
+        "production_go_live_request_receipt",
+        "real_payment_enable_request_receipt",
+        "production_signed_download_enable_receipt",
+        "production_listing_publish_request_receipt",
+        "production_install_observability_receipt"
+      ],
+      "evidence_record_targets": [
+        "docs/commercial-cross-repo-evidence-ledger.json",
+        "tests/normal-commercialization-completion-audit-candidate.json",
+        "tests/product-readiness-evidence-matrix.json",
+        "commerce/commercial-receipt-chain-candidate.json"
+      ],
+      "verification_commands_or_checks": [
+        "production promotion gate pass review",
+        "truzhen-cloud production go-live request dry-run or approved production test",
+        "real payment enable request blocked-or-allowed receipt",
+        "production signed download enable receipt",
+        "production listing publish request receipt",
+        "truzhenos production install observability check"
+      ],
+      "owner_authorization_status": "missing",
+      "evidence_status": "pending",
+      "can_start_now": false,
+      "cross_repo_work_gate": {
+        "can_start_cross_repo_work": false,
+        "required_status_before_cross_repo_work": "owner_authorization_recorded_and_production_promotion_gate_passed",
+        "blocking_reason": "Production promotion controls require P11 evidence, independent acceptance, Owner go/no-go, cloud production authorization and production endpoint receipts."
+      }
+    }
+  ],
+  "completion_gate": {
+    "can_mark_goal_complete_from_queue": false,
+    "required_before_first_cross_repo_run": "owner authorization intake must be recorded, each target repo must have independent git status, and each stage gate must open in order",
+    "required_before_commercial_ready": "all execution entries must have owner_authorization_status=authorized, evidence_status=evidence_complete_verified, can_start_now=false after completion, authoritative receipts, GUI evidence, negative blocked receipts, independent signoff, commercial production promotion gate pass and Owner go/no-go decision",
+    "commercial_status_after_queue_only": "not_commercial_ready"
+  },
+  "non_sufficient_evidence": [
+    "queue_defined_without_cross_repo_receipts",
+    "owner_authorization_missing",
+    "candidate_json_without_gui_evidence",
+    "single_repo_tests_only"
+  ],
+  "forbidden": [
+    "start_cross_repo_work_without_owner_authorization",
+    "real_payment",
+    "production_publish",
+    "mark_commercial_ready_from_queue_only",
+    "store_raw_secret_or_asset"
+  ],
+  "non_completion_clause": "本文件只是跨仓商品化执行队列候选，当前明确 blocked_pending_owner_authorization_and_stage_evidence。它不授权跨仓工作，不是 GUI、云端、支付、下载、安装、团队绑定或验收通过证据；不得据此声称角色包全链路畅通或正常商品化已完成。"
+}

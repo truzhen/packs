@@ -1,0 +1,408 @@
+{
+  "map_ref": "role-studio-goal-completion-evidence-map-candidate://team-office-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色制作台目标完成证据地图候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "completion_status": "not_achieved_requires_cross_repo_execution",
+  "can_mark_goal_complete": false,
+  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "source_normal_commercialization_completion_audit": "tests/normal-commercialization-completion-audit-candidate.json",
+  "source_role_studio_test_case_coverage_matrix": "tests/role-studio-test-case-coverage-matrix-candidate.json",
+  "source_role_studio_export_provenance_attestation": "tests/role-studio-export-provenance-attestation-candidate.json",
+  "source_commercial_readiness_verifier": "tests/commercial-readiness-verifier-candidate.json",
+  "source_commercial_go_no_go_gate": "tests/commercial-go-no-go-gate-candidate.json",
+  "source_commercial_production_promotion_gate": "commerce/commercial-production-promotion-gate-candidate.json",
+  "source_commercial_go_live_approval": "commerce/commercial-go-live-approval-candidate.json",
+  "source_product_readiness_evidence_matrix": "tests/product-readiness-evidence-matrix.json",
+  "source_p11_evidence_acceptance_checklist": "tests/p11-evidence-acceptance-checklist-candidate.json",
+  "source_p11_commercial_go_live_evidence_package": "tests/p11-commercial-go-live-evidence-package-template.json",
+  "source_frontend_backend_contract_map": "integration/frontend-backend-contract-map.json",
+  "next_required_authorization": "owner_authorization_intake",
+  "next_authorization_card": "integration/owner-authorization-evidence-intake-candidate.json",
+  "purpose": "把活跃目标“角色制作、使用、上传、下载全链路畅通，能过正常商品化”拆成可证明的权威证据要求。当前仅登记候选证据和缺口，不代表任何真实 GUI、云端、支付、下载、安装或 go/no-go 已通过。",
+  "active_goal_requirements": [
+    {
+      "requirement_id": "role_creation_gui",
+      "goal_keyword": "角色制作",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_authoritative_evidence": [
+        "secretary_and_five_advisors_gui_screenshots",
+        "RolePackCandidate_create_receipts",
+        "candidate_formal_isolation_receipt"
+      ],
+      "current_repo_candidate_evidence": [
+        "role-packs/team-office-secretary-general.rolepack.json",
+        "role-packs/team-office-strategy-advisor.rolepack.json",
+        "tests/role-studio-test-case-coverage-matrix-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "user_view_gui_screenshots_missing",
+        "RolePackCandidate_create_receipts_missing"
+      ],
+      "blocking_reasons": [
+        "cross_repo_authorization_missing",
+        "client_and_truzhenos_execution_not_run"
+      ]
+    },
+    {
+      "requirement_id": "role_runtime_use",
+      "goal_keyword": "使用",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_authoritative_evidence": [
+        "team_office_runtime_gui_screenshot",
+        "runtime_candidate_output_receipt",
+        "no_formal_task_memory_send_execution_receipt"
+      ],
+      "current_repo_candidate_evidence": [
+        "usage/team-office-runtime-usage-candidate.json",
+        "tests/commercial-chain-verifier-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "runtime_gui_screenshot_missing",
+        "runtime_candidate_output_receipt_missing"
+      ],
+      "blocking_reasons": [
+        "installed_role_pack_not_authoritatively_enabled",
+        "runtime_smoke_not_run"
+      ]
+    },
+    {
+      "requirement_id": "cloud_upload",
+      "goal_keyword": "上传",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "required_authoritative_evidence": [
+        "cloud_upload_gui_screenshot",
+        "cloud_upload_receipt",
+        "listing_draft_receipt",
+        "artifact_hash_match_receipt",
+        "cloud_upload_listing_verified"
+      ],
+      "current_repo_candidate_evidence": [
+        "commerce/cloud-listing-candidate.json",
+        "commerce/artifact-bundle-digest-candidate.json",
+        "tests/p11-normal-commercialization-acceptance-gate-candidate.json",
+        "tests/p11-commercial-go-live-evidence-package-template.json#cloud_upload_listing_report"
+      ],
+      "missing_authoritative_evidence": [
+        "cloud_upload_receipt_missing",
+        "listing_draft_screenshot_missing",
+        "cloud_upload_listing_verified_missing"
+      ],
+      "blocking_reasons": [
+        "truzhen_cloud_authorization_missing",
+        "cloud_sandbox_execution_not_run"
+      ]
+    },
+    {
+      "requirement_id": "sandbox_or_authorized_purchase",
+      "goal_keyword": "支付购买",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud",
+        "Owner"
+      ],
+      "required_authoritative_evidence": [
+        "sandbox_purchase_gui_screenshot",
+        "sandbox_order_receipt",
+        "sandbox_payment_receipt",
+        "entitlement_receipt",
+        "entitlement_team_scope_verification_receipt_ref",
+        "buyer_library_purchased_available_screenshot",
+        "no_real_payment_capture_receipt",
+        "real_payment_block_or_owner_authorization_receipt"
+      ],
+      "current_repo_candidate_evidence": [
+        "commerce/order-payment-state-machine-candidate.json",
+        "commerce/license-entitlement-policy-candidate.json",
+        "commerce/buyer-library-install-state-candidate.json",
+        "tests/p11-commercial-go-live-evidence-package-template.json",
+        "tests/role-studio-test-case-coverage-matrix-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "sandbox_order_receipt_missing",
+        "sandbox_payment_receipt_missing",
+        "entitlement_receipt_missing",
+        "purchase_entitlement_missing"
+      ],
+      "blocking_reasons": [
+        "truzhen_cloud_authorization_missing",
+        "real_payment_unapproved_red_action"
+      ]
+    },
+    {
+      "requirement_id": "entitled_download",
+      "goal_keyword": "下载",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "required_authoritative_evidence": [
+        "owned_library_download_gui_screenshot",
+        "download_receipt",
+        "entitlement_ref",
+        "signed_download_ref",
+        "download_artifact_sha256",
+        "download_artifact_hash_receipt",
+        "download_artifact_delivery_verified"
+      ],
+      "current_repo_candidate_evidence": [
+        "commerce/download-install-access-matrix.json",
+        "commerce/artifact-bundle-digest-candidate.json",
+        "tests/p11-evidence-ingestion-binder-candidate.json",
+        "tests/p11-normal-commercialization-verification-record-template.json#download_artifact_delivery_result",
+        "tests/p11-commercial-go-live-evidence-package-template.json#download_artifact_delivery_report"
+      ],
+      "missing_authoritative_evidence": [
+        "download_receipt_missing",
+        "download_hash_match_receipt_missing",
+        "download_artifact_delivery_verified_missing"
+      ],
+      "blocking_reasons": [
+        "entitlement_not_issued",
+        "signed_download_not_run"
+      ]
+    },
+    {
+      "requirement_id": "local_install_enabled",
+      "goal_keyword": "安装",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_authoritative_evidence": [
+        "local_install_gui_screenshot",
+        "artifact_hash_verification_receipt",
+        "entitlement_verification_receipt",
+        "install_receipt",
+        "enabled_role_pack_version_receipt",
+        "six_installed_role_catalog_evidence_verified"
+      ],
+      "current_repo_candidate_evidence": [
+        "install/install-preflight-request-candidate.json",
+        "commerce/install-compatibility-matrix.json",
+        "bindings/team-settings-installed-role-catalog-candidate.json",
+        "install/install-runtime-activation-map-candidate.json",
+        "tests/p11-commercial-go-live-evidence-package-template.json#install_catalog_and_slot_mapping_report"
+      ],
+      "missing_authoritative_evidence": [
+        "install_receipt_missing",
+        "enabled_role_pack_version_receipt_missing",
+        "six_installed_role_catalog_evidence_verified_missing"
+      ],
+      "blocking_reasons": [
+        "download_receipt_missing",
+        "truzhenos_install_execution_not_run"
+      ]
+    },
+    {
+      "requirement_id": "team_settings_replacement_after_install",
+      "goal_keyword": "团队设置替换",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_authoritative_evidence": [
+        "team_settings_installed_role_catalog_screenshot",
+        "secretary_and_five_advisors_replacement_screenshots",
+        "Owner_Gate_decision_receipt",
+        "team_binding_receipt",
+        "history_not_rewritten_receipt"
+      ],
+      "current_repo_candidate_evidence": [
+        "bindings/team-office-role-binding-candidate.json",
+        "bindings/team-settings-installed-role-catalog-candidate.json",
+        "docs/team-settings-binding-ledger.md"
+      ],
+      "missing_authoritative_evidence": [
+        "team_settings_replacement_screenshots_missing",
+        "team_binding_receipt_missing"
+      ],
+      "blocking_reasons": [
+        "install_receipt_missing",
+        "Owner_Gate_decision_receipt_missing"
+      ]
+    },
+    {
+      "requirement_id": "normal_commercialization_go_no_go",
+      "goal_keyword": "正常商品化",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud",
+        "truzhenos",
+        "independent_acceptance_agent",
+        "Owner"
+      ],
+      "required_authoritative_evidence": [
+        "commercial_readiness_verifier_passed",
+        "commercial_go_no_go_gate_passed",
+        "commercial_go_live_approval_verified",
+        "p11_evidence_acceptance_checklist_verified",
+        "gui_api_traceability_matrix_verified",
+        "marketplace_listing_review_compliance_verified",
+        "purchase_entitlement_verified",
+        "download_artifact_delivery_verified",
+        "role_studio_lineage_verified",
+        "independent_acceptance_signoff",
+        "owner_go_no_go_decision_recorded",
+        "all_negative_cases_blocked_verified"
+      ],
+      "current_repo_candidate_evidence": [
+        "tests/commercial-readiness-verifier-candidate.json",
+        "tests/commercial-go-no-go-gate-candidate.json",
+        "commerce/commercial-go-live-approval-candidate.json",
+        "tests/p11-evidence-acceptance-checklist-candidate.json",
+        "tests/p11-commercial-go-live-evidence-package-template.json",
+        "integration/frontend-backend-contract-map.json",
+        "commerce/cloud-listing-candidate.json",
+        "commerce/marketplace-review-submission-candidate.json",
+        "commerce/support-refund-revocation-policy-candidate.json",
+        "commerce/commercial-terms-privacy-policy-candidate.json",
+        "commerce/publisher-account-settlement-policy-candidate.json",
+        "commerce/order-payment-state-machine-candidate.json",
+        "commerce/license-entitlement-policy-candidate.json",
+        "commerce/buyer-library-install-state-candidate.json",
+        "commerce/commercial-receipt-chain-candidate.json",
+        "tests/commercial-chain-verifier-candidate.json",
+        "usage/team-office-runtime-usage-candidate.json",
+        "install/install-runtime-activation-map-candidate.json",
+        "bindings/team-settings-installed-role-catalog-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "independent_acceptance_signoff_missing",
+        "owner_go_no_go_decision_missing",
+        "commercial_go_live_approval_verified_missing",
+        "p11_evidence_acceptance_checklist_verified_missing",
+        "gui_api_traceability_matrix_missing",
+        "marketplace_listing_review_compliance_missing",
+        "purchase_entitlement_missing",
+        "role_studio_lineage_missing",
+        "commercial_readiness_verifier_not_passed"
+      ],
+      "blocking_reasons": [
+        "all_prior_goal_requirements_unverified",
+        "commercial_go_live_approval_not_verified",
+        "p11_evidence_acceptance_checklist_not_verified",
+        "go_no_go_gate_currently_blocked"
+      ]
+    },
+    {
+      "requirement_id": "production_promotion_gate",
+      "goal_keyword": "生产发布晋级门",
+      "current_status": "missing_authoritative_evidence",
+      "can_count_toward_goal_completion": false,
+      "truth_sources": [
+        "truzhen-cloud",
+        "truzhenos",
+        "independent_acceptance_agent",
+        "Owner"
+      ],
+      "required_authoritative_evidence": [
+        "commercial_production_promotion_gate_pass_receipt",
+        "production_publish_or_block_receipt",
+        "real_payment_enable_or_block_receipt",
+        "production_signed_download_or_block_receipt",
+        "Owner go/no-go signoff"
+      ],
+      "current_repo_candidate_evidence": [
+        "commerce/commercial-production-promotion-gate-candidate.json",
+        "commerce/commercial-go-live-approval-candidate.json",
+        "tests/commercial-readiness-verifier-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "commercial_production_promotion_gate_pass_receipt_missing",
+        "Owner_go_no_go_signoff_missing",
+        "production_publish_or_block_receipt_missing"
+      ],
+      "blocking_reasons": [
+        "p11_authoritative_evidence_package_not_filled",
+        "independent_acceptance_not_signed",
+        "Owner_go_no_go_not_recorded"
+      ]
+    }
+  ],
+  "goal_completion_barriers": [
+    "cross_repo_authorization_missing",
+    "user_view_gui_evidence_missing",
+    "truzhen_cloud_receipts_missing",
+    "truzhenos_install_and_binding_receipts_missing",
+    "independent_acceptance_and_owner_go_no_go_missing",
+    "commercial_go_live_approval_missing",
+    "p11_evidence_acceptance_checklist_missing",
+    "gui_api_traceability_matrix_missing",
+    "cloud_upload_listing_missing",
+    "marketplace_listing_review_compliance_missing",
+    "purchase_entitlement_missing",
+    "download_artifact_delivery_missing",
+    "six_installed_role_catalog_missing",
+    "role_studio_lineage_missing",
+    "commercial_production_promotion_gate_missing"
+  ],
+  "completion_claim_policy": {
+    "completion_claim_allowed": false,
+    "required_before_goal_complete": [
+      "all_active_goal_requirements_verified",
+      "all_user_view_gui_steps_covered",
+      "role_studio_export_provenance_attestation_verified",
+      "role_studio_goal_completion_evidence_map_verified",
+      "commercial_readiness_verifier_passed",
+      "role_studio_lineage_verified",
+      "issue_ledger_all_entries_triaged",
+      "product_stage_frontend_backend_closure_report_verified",
+      "gui_api_traceability_matrix_verified",
+      "cloud_upload_listing_verified",
+      "marketplace_listing_review_compliance_verified",
+      "purchase_entitlement_verified",
+      "download_artifact_delivery_verified",
+      "six_installed_role_catalog_evidence_verified",
+      "team_office_runtime_usage_smoke_verified",
+      "commercial_go_no_go_gate_passed",
+      "commercial_go_live_approval_verified",
+      "p11_evidence_acceptance_checklist_verified",
+      "commercial_production_promotion_gate_verified",
+      "owner_go_no_go_decision_recorded"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "candidate_assets_only",
+    "single_repo_go_test_only",
+    "manifest_digest_only",
+    "organizer_summary_without_receipts",
+    "go_live_approval_without_p11_acceptance_checklist",
+    "commercial_go_no_go_without_go_live_approval",
+    "goal_complete_without_gui_api_traceability_matrix",
+    "goal_complete_without_cloud_upload_listing_verified",
+    "goal_complete_without_marketplace_listing_review_compliance",
+    "goal_complete_without_purchase_entitlement",
+    "goal_complete_without_download_artifact_delivery_verified",
+    "goal_complete_without_six_installed_role_catalog_verified",
+    "goal_complete_without_role_studio_lineage",
+    "p11_templates_without_filled_authoritative_refs"
+  ],
+  "non_completion_clause": "本文件只是活跃目标完成证据地图。没有真实用户视角 GUI 证据、truzhen-cloud 上传 / 支付 / entitlement / 下载回执、truzhenos 安装 / enabled version / 团队绑定回执、负例 blocked 回执、独立验收签收和 Owner go/no-go 裁定前，不得把目标标记为完成。"
+}

@@ -1,0 +1,102 @@
+{
+  "verifier_ref": "commercial-machine-go-live-evidence-package-coverage-verifier://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "can_mark_commercial_ready": false,
+  "coverage_status": "blocked_pending_machine_go_live_evidence_package_verified",
+  "covered_machine_evidence_package": "docs/commercial-go-live-evidence-package.json",
+  "source_machine_go_live_evidence_package": "docs/commercial-go-live-evidence-package.json",
+  "source_commercial_readiness_verifier": "docs/commercial-readiness-verifier.json#current_blockers.machine_go_live_evidence_package",
+  "source_commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json#completion_rule",
+  "source_evidence_contract_index": "docs/commercial-evidence-contract-index.json#completion_gate",
+  "source_current_state_audit": "docs/commercial-readiness-current-state-audit.json#commercial_completion_gate",
+  "source_goal_completion_evidence_map": "docs/pack-studio-goal-completion-evidence-map.json#active_goal_requirements.machine_go_live_evidence_package_verified",
+  "required_source_field": "commercial_go_live_evidence_package.machine_evidence_package",
+  "required_pass_marker": "machine_go_live_evidence_package_verified",
+  "required_blocker_marker": "machine_go_live_evidence_package_blocked",
+  "required_commercial_gate_docs": [
+    "docs/commercial-readiness-verifier.json",
+    "docs/commercial-go-no-go-gate.json",
+    "docs/commercial-evidence-contract-index.json",
+    "docs/commercial-readiness-current-state-audit.json",
+    "docs/pack-studio-goal-completion-evidence-map.json",
+    "docs/commercial-frontend-backend-acceptance-contract.json",
+    "docs/commercial-frontend-backend-handoff-runbook.json"
+  ],
+  "coverage_checks": [
+    {
+      "doc_path": "docs/commercial-readiness-verifier.json",
+      "doc_references_machine_go_live_evidence_package": true,
+      "completion_gate_requires_machine_go_live_evidence_package": true,
+      "completion_gate_blocks_machine_go_live_evidence_package": true,
+      "can_count_toward_commercial_ready": false
+    },
+    {
+      "doc_path": "docs/commercial-go-no-go-gate.json",
+      "doc_references_machine_go_live_evidence_package": true,
+      "completion_gate_requires_machine_go_live_evidence_package": true,
+      "completion_gate_blocks_machine_go_live_evidence_package": true,
+      "can_count_toward_commercial_ready": false
+    },
+    {
+      "doc_path": "docs/commercial-evidence-contract-index.json",
+      "doc_references_machine_go_live_evidence_package": true,
+      "completion_gate_requires_machine_go_live_evidence_package": true,
+      "completion_gate_blocks_machine_go_live_evidence_package": true,
+      "can_count_toward_commercial_ready": false
+    },
+    {
+      "doc_path": "docs/commercial-readiness-current-state-audit.json",
+      "doc_references_machine_go_live_evidence_package": true,
+      "completion_gate_requires_machine_go_live_evidence_package": true,
+      "completion_gate_blocks_machine_go_live_evidence_package": true,
+      "can_count_toward_commercial_ready": false
+    },
+    {
+      "doc_path": "docs/pack-studio-goal-completion-evidence-map.json",
+      "doc_references_machine_go_live_evidence_package": true,
+      "completion_gate_requires_machine_go_live_evidence_package": true,
+      "completion_gate_blocks_machine_go_live_evidence_package": true,
+      "doc_references_machine_evidence_package_coverage_verifier": true,
+      "completion_gate_requires_machine_evidence_package_coverage_verifier": true,
+      "completion_gate_blocks_pending_machine_evidence_package_coverage_verifier": true,
+      "can_count_toward_commercial_ready": false
+    },
+    {
+      "doc_path": "docs/commercial-frontend-backend-acceptance-contract.json",
+      "doc_references_machine_go_live_evidence_package": true,
+      "completion_gate_requires_machine_go_live_evidence_package": true,
+      "completion_gate_blocks_machine_go_live_evidence_package": true,
+      "doc_references_machine_evidence_package_coverage_verifier": true,
+      "completion_gate_requires_machine_evidence_package_coverage_verifier": true,
+      "completion_gate_blocks_pending_machine_evidence_package_coverage_verifier": true,
+      "can_count_toward_commercial_ready": false
+    },
+    {
+      "doc_path": "docs/commercial-frontend-backend-handoff-runbook.json",
+      "doc_references_machine_go_live_evidence_package": true,
+      "completion_gate_requires_machine_go_live_evidence_package": true,
+      "completion_gate_blocks_machine_go_live_evidence_package": true,
+      "doc_references_machine_evidence_package_coverage_verifier": true,
+      "completion_gate_requires_machine_evidence_package_coverage_verifier": true,
+      "completion_gate_blocks_pending_machine_evidence_package_coverage_verifier": true,
+      "can_count_toward_commercial_ready": false
+    }
+  ],
+  "required_before_coverage_pass": [
+    "all_commercial_gate_docs_reference_machine_go_live_evidence_package",
+    "all_commercial_completion_gates_require_machine_go_live_evidence_package",
+    "all_frontend_backend_completion_gates_require_machine_evidence_package_coverage_verifier",
+    "machine_go_live_evidence_package_verified",
+    "all_evidence_writebacks_completed_and_verified",
+    "owner_base_gate_receipts_bound"
+  ],
+  "non_sufficient_evidence": [
+    "machine_evidence_package_coverage_verifier_pending",
+    "machine_go_live_evidence_package_blocked",
+    "evidence_writeback_incomplete",
+    "owner_base_gate_receipts_missing"
+  ],
+  "non_completion_clause": "This verifier only proves the candidate machine go-live evidence package is referenced by commercial completion gates. It is not Owner authorization, execution evidence, evidence writeback completion, or commercial readiness."
+}

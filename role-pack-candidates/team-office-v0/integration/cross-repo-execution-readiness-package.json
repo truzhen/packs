@@ -1,0 +1,260 @@
+{
+  "readiness_package_ref": "cross-repo-execution-readiness-package://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包跨仓执行就绪包候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "readiness_status": "ready_for_owner_authorization_not_executed",
+  "purpose": "把角色制作、使用、上传、支付购买、下载、安装和正常商品化目标整理成 Owner 授权后可逐仓执行的交接包；本文件不代表跨仓授权已给出，也不代表真实链路已跑通。",
+  "source_refs": [
+    "integration/cross-repo-execution-cards.json",
+    "integration/owner-authorization-evidence-intake-candidate.json",
+    "integration/commercial-cross-repo-execution-queue-candidate.json",
+    "tests/normal-commercialization-completion-audit-candidate.json",
+    "tests/e2e-evidence-run-record.json",
+    "tests/p11-sandbox-preflight-gate-candidate.json",
+    "tests/p11-sandbox-run-request-candidate.json",
+    "commerce/commercial-go-live-approval-candidate.json",
+    "commerce/commercial-production-promotion-gate-candidate.json",
+    "docs/plans/role-pack-studio-cross-repo-execution-authorization-20260704.md"
+  ],
+  "owner_authorization_evidence_intake_ref": "integration/owner-authorization-evidence-intake-candidate.json",
+  "commercial_cross_repo_execution_queue_ref": "integration/commercial-cross-repo-execution-queue-candidate.json",
+  "target_repositories": [
+    {
+      "repo_id": "truzhen-contracts",
+      "repo_path": "/Users/li/Documents/truzhen-contracts",
+      "authorization_status": "requires_owner_authorization",
+      "required_status_command": "git status --short --branch",
+      "allowed_actions_after_authorization": [
+        "read_governance_files",
+        "audit_existing_schema",
+        "run_schema_tests",
+        "write_schema_impact_report",
+        "request_owner_decision_before_schema_change"
+      ],
+      "required_evidence_outputs": [
+        "schema_impact_report",
+        "compatibility_test_result",
+        "owner_decision_receipt_if_schema_change_is_needed"
+      ],
+      "verification_commands": [
+        "schema test command from truzhen-contracts governance",
+        "reverse dependency check for RolePackCandidate and TeamRoleSlotBinding"
+      ],
+      "forbidden_boundaries": [
+        "no_schema_change_without_owner_confirmation",
+        "no_consumer_repo_defines_truth_shape_first",
+        "no_breaking_schema_change_without_compatibility_plan"
+      ]
+    },
+    {
+      "repo_id": "truzhenos",
+      "repo_path": "/Users/li/Documents/truzhenos",
+      "authorization_status": "requires_owner_authorization",
+      "required_status_command": "git status --short --branch",
+      "allowed_actions_after_authorization": [
+        "create_isolated_worktree",
+        "implement_role_candidate_backend_if_missing",
+        "wire_owner_gate_and_receipts",
+        "wire_install_preflight",
+        "run_backend_and_install_tests",
+        "produce_receipt_lookup_evidence"
+      ],
+      "required_evidence_outputs": [
+        "RolePackCandidate_receipt",
+        "TeamRoleSlotBindingCandidate_receipt",
+        "Owner_Gate_decision_receipt",
+        "install_receipt",
+        "enabled_role_pack_version_receipt",
+        "runtime_candidate_output_receipt"
+      ],
+      "verification_commands": [
+        "go test ./... focused role studio backend tests",
+        "isolated devserver install smoke",
+        "receipt lookup smoke",
+        "forbidden artifact scan"
+      ],
+      "forbidden_boundaries": [
+        "no_formal_binding_without_owner_gate",
+        "no_direct_gateway_bypass",
+        "no_install_without_entitlement",
+        "no_raw_voice_or_vrm_asset_storage"
+      ]
+    },
+    {
+      "repo_id": "truzhen-client-web-desktop",
+      "repo_path": "/Users/li/Documents/truzhen-client-web-desktop",
+      "authorization_status": "requires_owner_authorization",
+      "required_status_command": "git status --short --branch",
+      "allowed_actions_after_authorization": [
+        "create_isolated_worktree",
+        "implement_role_studio_gui_if_missing",
+        "implement_team_settings_role_tab_if_missing",
+        "wire_voice_vrm_asset_ref_picker",
+        "wire_cloud_purchase_download_install_surfaces",
+        "run_user_view_gui_agent_smoke"
+      ],
+      "required_evidence_outputs": [
+        "role_studio_gui_screenshot",
+        "capability_role_reference_gui_screenshot",
+        "team_settings_secretary_and_advisors_screenshot",
+        "voice_vrm_picker_screenshot",
+        "purchase_download_install_gui_screenshot",
+        "network_summary_with_candidate_or_receipt_ref"
+      ],
+      "verification_commands": [
+        "frontend typecheck",
+        "frontend role studio tests",
+        "Playwright user-view GUI smoke",
+        "visual screenshot review"
+      ],
+      "forbidden_boundaries": [
+        "no_frontend_only_success_state",
+        "no_terminal_command_as_user_action",
+        "no_mock_success_only",
+        "no_hidden_backend_fixture_success"
+      ]
+    },
+    {
+      "repo_id": "truzhen-cloud",
+      "repo_path": "/Users/li/Documents/truzhen-cloud",
+      "authorization_status": "requires_owner_authorization",
+      "required_status_command": "git status --short --branch",
+      "allowed_actions_after_authorization": [
+        "create_isolated_worktree",
+        "wire_upload_draft_if_missing",
+        "wire_marketplace_listing_draft_if_missing",
+        "wire_sandbox_order_payment_entitlement",
+        "wire_signed_download_hash_verification",
+        "run_cloud_sandbox_commerce_tests"
+      ],
+      "required_evidence_outputs": [
+        "cloud_upload_receipt",
+        "listing_draft_receipt",
+        "sandbox_order_receipt",
+        "sandbox_payment_receipt",
+        "entitlement_receipt",
+        "download_receipt",
+        "artifact_hash_match_receipt",
+        "negative_block_receipts"
+      ],
+      "verification_commands": [
+        "cloud upload draft tests",
+        "sandbox order payment entitlement tests",
+        "signed download authorization tests",
+        "artifact hash mismatch negative test"
+      ],
+      "forbidden_boundaries": [
+        "no_real_payment_without_owner_authorization",
+        "no_production_publish_without_owner_authorization",
+        "no_license_or_entitlement_truth_in_truzhen_packs",
+        "no_payment_webhook_secret_in_pack"
+      ]
+    },
+    {
+      "repo_id": "truzhen-packs-current",
+      "repo_path": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+      "authorization_status": "current_repo_authorized_for_candidate_assets_only",
+      "required_status_command": "git status --short --branch",
+      "allowed_actions_after_authorization": [
+        "maintain_candidate_assets",
+        "maintain_go_tests",
+        "maintain_feature_ledger",
+        "run_pack_validation"
+      ],
+      "required_evidence_outputs": [
+        "current_repo_go_test_receipt",
+        "json_validity_receipt",
+        "artifact_manifest_hash_receipt",
+        "feature_ledger_update_receipt"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "JSON validity scan",
+        "Pack structure audit",
+        "forbidden artifact scan"
+      ],
+      "forbidden_boundaries": [
+        "no_candidate_asset_claimed_as_formal_release",
+        "no_order_payment_license_entitlement_truth_in_packs",
+        "no_cross_repo_write_from_current_repo_without_owner_authorization"
+      ]
+    }
+  ],
+  "execution_stage_order": [
+    {
+      "stage_id": "contracts_schema_review",
+      "status": "pending_owner_authorization",
+      "entry_condition": "Owner authorizes truzhen-contracts read/test and schema impact audit.",
+      "target_repo": "truzhen-contracts",
+      "completion_evidence": "schema_impact_report + compatibility_test_result + Owner decision if schema change is required"
+    },
+    {
+      "stage_id": "backend_candidate_gate_receipt",
+      "status": "blocked_until_prior_stage_evidence",
+      "entry_condition": "Contracts impact is reviewed or Owner accepts candidate-only internal shape.",
+      "target_repo": "truzhenos",
+      "completion_evidence": "RolePackCandidate_receipt + Owner_Gate_decision_receipt + install_receipt + enabled_role_pack_version_receipt"
+    },
+    {
+      "stage_id": "frontend_user_gui_flow",
+      "status": "blocked_until_prior_stage_evidence",
+      "entry_condition": "Backend candidate, gate and receipt surfaces exist or return honest blocked / not_ready states.",
+      "target_repo": "truzhen-client-web-desktop",
+      "completion_evidence": "user_view_gui_agent screenshots + operation log + network summaries with candidate_or_receipt_ref"
+    },
+    {
+      "stage_id": "cloud_sandbox_commerce",
+      "status": "blocked_until_prior_stage_evidence",
+      "entry_condition": "Artifact bundle hash and cloud upload draft contract are stable.",
+      "target_repo": "truzhen-cloud",
+      "completion_evidence": "cloud_upload_receipt + sandbox_order_receipt + sandbox_payment_receipt + entitlement_receipt + download_receipt"
+    },
+    {
+      "stage_id": "local_install_binding",
+      "status": "blocked_until_prior_stage_evidence",
+      "entry_condition": "Cloud entitlement and signed download receipt exist for the same artifact hash.",
+      "target_repo": "truzhenos",
+      "completion_evidence": "artifact_hash_verification_receipt + entitlement_verification_receipt + install_receipt + team_binding_receipt"
+    },
+    {
+      "stage_id": "gui_e2e_acceptance",
+      "status": "blocked_until_prior_stage_evidence",
+      "entry_condition": "Frontend, backend and cloud sandbox paths are all wired in isolated environments.",
+      "target_repo": "multi_repo",
+      "completion_evidence": "Playwright user-view GUI E2E screenshots + cloud receipt bundle + truzhenos receipt lookup + negative block receipts"
+    },
+    {
+      "stage_id": "independent_acceptance_review",
+      "status": "blocked_until_prior_stage_evidence",
+      "entry_condition": "E2E run record is filled and all negative cases have blocked receipts.",
+      "target_repo": "acceptance",
+      "completion_evidence": "independent_acceptance_report + Owner go_no_go_decision_receipt"
+    },
+    {
+      "stage_id": "production_promotion_controls",
+      "status": "blocked_until_prior_stage_evidence",
+      "entry_condition": "commercial-production-promotion-gate passes after independent acceptance and Owner go/no-go decision.",
+      "target_repo": "multi_repo",
+      "completion_evidence": "production_go_live_request_receipt + real_payment_enable_request_receipt + production_signed_download_enable_receipt + production_listing_publish_request_receipt + production_install_observability_receipt"
+    }
+  ],
+  "owner_authorization_questions": [
+    "是否允许读取、修改、测试 truzhen-contracts？",
+    "是否允许读取、修改、测试 truzhenos？",
+    "是否允许读取、修改、测试 truzhen-client-web-desktop？",
+    "是否允许读取、修改、测试 truzhen-cloud？",
+    "是否允许在 truzhen-cloud 执行 sandbox payment、License / Entitlement 和 download flow？",
+    "是否确认 real payment remains blocked，未获单独授权不得真实扣款？",
+    "是否确认 production publish remains blocked，未获单独授权不得正式上架或推生产云？",
+    "是否确认生产发布、真实支付和生产签名下载必须先通过 commercial-production-promotion-gate，并取得 Owner go/no-go 裁定？",
+    "是否允许启动隔离后端、前端和云端 sandbox devserver 做用户视角 GUI E2E？",
+    "是否允许各仓创建 codex/role-pack-studio-commercial-flow 前缀的独立分支或 worktree？"
+  ],
+  "completion_update_policy": {
+    "may_mark_goal_complete_from_this_package": false,
+    "required_before_goal_completion": "必须取得用户视角 GUI 全链路截图、truzhen-cloud 上传 / 支付 / entitlement / 下载回执、truzhenos 安装 / enabled version / 团队绑定 / 运行回执、artifact hash 连续性、负例 blocked 回执、独立验收签收，并通过 commercial-production-promotion-gate 的 Owner go/no-go 晋级门；生产晋级还必须有 production_go_live_request_receipt、real_payment_enable_request_receipt、production_signed_download_enable_receipt、production_listing_publish_request_receipt 和 production_install_observability_receipt。"
+  },
+  "non_completion_clause": "本就绪包只是跨仓授权前交接资产，不是跨仓授权、不是运行记录、不是商品化完成证据。没有目标仓独立 git status、真实实现、用户视角 GUI 操作、云端回执、安装回执和独立验收前，目标仍未完成。"
+}

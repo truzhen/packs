@@ -1,0 +1,186 @@
+{
+  "readiness_package_ref": "p16-execution-readiness-package://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "slice_key": "p16_controlled_code_assistant_run",
+  "readiness_status": "blocked_pending_owner_authorization_and_p15_evidence",
+  "depends_on": [
+    "p12_safe_lifecycle_sample",
+    "p13_gui_lifecycle_panel",
+    "p15_gui_walkthrough_three_candidates"
+  ],
+  "allowed_outputs": [
+    "PatchCandidate",
+    "summary",
+    "adapter_scaffold_candidate"
+  ],
+  "controlled_code_assistant_run_allowed_now": false,
+  "patch_auto_apply_allowed": false,
+  "requires_11_gateway": true,
+  "requires_owner_base_gate": true,
+  "requires_03_receipt": true,
+  "authorization_scope_contract": "docs/p16-cross-repo-authorization-scope.json",
+  "authorization_evidence_intake_contract": "docs/p16-owner-authorization-evidence-intake.json",
+  "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
+  "evidence_contract": "docs/p16-controlled-code-assistant-run-evidence-contract.json",
+  "source_p15_post_run_evidence_acceptance_gate": "docs/p15-post-run-evidence-acceptance-gate.json",
+  "frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
+  "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-controlled-code-assistant-run-spec-20260704.md",
+  "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-cross-repo-execution-authorization-20260704.md",
+  "target_repositories": [
+    "truzhenos",
+    "truzhen-client-web-desktop",
+    "truzhen-packs"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "uncontrolled_codex_cli_run",
+    "auto_apply_patch",
+    "commit_or_push_patch_candidate",
+    "provider_ready_claim"
+  ],
+  "allowed_scope_summary": {
+    "truzhenos": "11 Gateway / 04 Studio controlled Code Assistant run, Gate, Receipt and tests after Owner authorization",
+    "truzhen-client-web-desktop": "GUI display for run receipt, PatchCandidate refs and review-required state after Owner authorization",
+    "truzhen-packs": "P16 controlled run ledger and candidate status maintenance"
+  },
+  "required_preconditions": [
+    "p12_safe_lifecycle_sample_evidence_complete_verified",
+    "p13_gui_lifecycle_panel_evidence_complete_verified",
+    "p15_three_candidate_gui_walkthrough_evidence_complete_verified",
+    "p15_post_run_evidence_acceptance_gate_passed",
+    "p16_owner_authorization_recorded",
+    "p16_authorization_scope_matched",
+    "owner_base_gate_ready_for_11_gateway_run"
+  ],
+  "required_verification_commands": [
+    "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1",
+    "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx src/components/pack-lifecycle/CodeAssistantPackPanel.test.tsx src/api/__tests__/executionLiveSmokeScript.test.ts",
+    "npm run typecheck",
+    "npm run smoke:frontend-shell",
+    "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenos GOWORK=off npm run smoke:frontend-behavior",
+    "go test ./... -run TestShortVideoP16ExecutionReadinessPackageIsMachineCheckable -count=1"
+  ],
+  "required_evidence_outputs": [
+    "owner_authorization_evidence_intake_recorded",
+    "p15_evidence_completion_ref",
+    "owner_base_gate_decision_ref",
+    "gateway_11_run_receipt_ref",
+    "patch_candidate_refs",
+    "artifact_refs",
+    "stdout_stderr_redacted_summary",
+    "no_auto_apply_evidence",
+    "forbidden_action_noop_evidence"
+  ],
+  "evidence_writeback_plan": {
+    "candidate_only": true,
+    "write_status": "pending_authorization",
+    "ledger_path": "docs/code-assistant-controlled-run-ledger.md",
+    "evidence_contract": "docs/p16-controlled-code-assistant-run-evidence-contract.json",
+    "can_write_completion_claim": false,
+    "required_before_marking_slice_complete": [
+      "owner_authorization_recorded",
+      "pack_studio_issue_ledger_closed",
+      "all_evidence_ids_written",
+      "all_evidence_refs_recorded",
+      "forbidden_action_checks_written",
+      "independent_verification_passed"
+    ],
+    "required_entries": [
+      {
+        "evidence_id": "owner_base_gate_approved_11_run_request",
+        "source_group": "required_execution_evidence",
+        "target_ledger": "docs/code-assistant-controlled-run-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "patch_candidate_created_no_auto_apply",
+        "source_group": "required_execution_evidence",
+        "target_ledger": "docs/code-assistant-controlled-run-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "gui_displays_run_receipt_and_candidate_refs",
+        "source_group": "required_execution_evidence",
+        "target_ledger": "docs/code-assistant-controlled-run-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "third_party_oss_not_executed",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/code-assistant-controlled-run-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "no_social_login_upload",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/code-assistant-controlled-run-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "no_auto_apply_no_formal_enable",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/code-assistant-controlled-run-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      }
+    ],
+    "non_completion_clause": "This writeback plan maps future evidence IDs to the candidate ledger only. It is not execution evidence and does not permit a completion claim."
+  },
+  "cross_repo_work_gate": {
+    "can_start_cross_repo_work": false,
+    "required_authorization_attempt_coverage_verifier_source": "commercial_go_live_evidence_package.authorization_attempt_coverage_verifier",
+    "authorization_attempt_coverage_verifier_must_pass": true,
+    "required_next_authorization_start_guard_source": "commercial_go_live_evidence_package.next_authorization_start_guard",
+    "next_authorization_start_guard_must_open": true,
+    "required_pack_studio_issue_ledger_source": "candidate_set.pack_studio_issue_ledger",
+    "pack_studio_issue_ledger_must_close": true,
+    "required_status_before_cross_repo_work": "owner_authorization_recorded_and_p15_evidence_complete_and_authorization_attempt_coverage_verifier_passed_and_next_authorization_start_guard_open_and_pack_studio_issue_ledger_closed_and_no_rejected_authorization_attempt_substitution",
+    "must_record_before_cross_repo_work": true,
+    "required_rejected_authorization_attempt_source": "commercial_go_live_evidence_package.latest_rejected_authorization_attempt",
+    "rejected_authorization_attempt_can_satisfy_owner_authorization": false,
+    "rejected_authorization_attempt_can_start_cross_repo_work": false,
+    "blocked_attempt_refs": [
+      "owner-message://2026-07-05-p11-card-mismatch-for-p12"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "owner_authorization_missing",
+    "p15_evidence_incomplete",
+    "authorization_attempt_coverage_verifier_pending",
+    "next_authorization_start_guard_pending",
+    "pack_studio_issue_ledger_open",
+    "execution_readiness_package_without_open_gate",
+    "rejected_authorization_attempt_is_not_owner_authorization",
+    "static_glue_code_without_11_gateway_receipt",
+    "owner_local_codex_cli_login_without_controlled_run",
+    "manual_patch_candidate_file_without_gateway_receipt",
+    "p8_run_request_candidate_without_11_receipt"
+  ],
+  "non_completion_clause": "This readiness package does not execute Codex CLI. It only defines the P16 gate for a future Owner-authorized 11 Gateway controlled Code Assistant run that must produce Receipt-bound PatchCandidate evidence without auto-apply, provider readiness claims, third-party OSS execution, social login or upload."
+}

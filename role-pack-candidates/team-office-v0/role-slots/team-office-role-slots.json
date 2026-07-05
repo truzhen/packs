@@ -1,0 +1,111 @@
+{
+  "candidate_only": true,
+  "non_formal": true,
+  "role_slots": [
+    {
+      "slot_id": "team_office.secretary_general",
+      "display_name": "秘书长",
+      "responsibility": "组织团队办公室对话、召集五顾问、汇总候选和待 Owner 裁定项。",
+      "required_role": "团队秘书长",
+      "node_type": "coordination",
+      "default_role_pack_ref": "role_pack://team-office-secretary-general",
+      "slice_scope_policy": "team_scoped",
+      "formal_authority": "none",
+      "replaceable_in_team_settings": true,
+      "appearance_supported": true
+    },
+    {
+      "slot_id": "team_office.advisor.strategy",
+      "display_name": "战略顾问",
+      "responsibility": "提出方向、优先级、取舍和护城河建议候选。",
+      "required_role": "战略顾问",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://team-office-strategy-advisor",
+      "slice_scope_policy": "team_scoped",
+      "formal_authority": "none",
+      "replaceable_in_team_settings": true,
+      "appearance_supported": false
+    },
+    {
+      "slot_id": "team_office.advisor.product",
+      "display_name": "产品顾问",
+      "responsibility": "提出用户任务、产品路径、体验和最小闭环建议候选。",
+      "required_role": "产品顾问",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://team-office-product-advisor",
+      "slice_scope_policy": "team_scoped",
+      "formal_authority": "none",
+      "replaceable_in_team_settings": true,
+      "appearance_supported": false
+    },
+    {
+      "slot_id": "team_office.advisor.operations",
+      "display_name": "运营顾问",
+      "responsibility": "提出执行节奏、流程、资源、交付风险和复盘指标候选。",
+      "required_role": "运营顾问",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://team-office-operations-advisor",
+      "slice_scope_policy": "team_scoped",
+      "formal_authority": "none",
+      "replaceable_in_team_settings": true,
+      "appearance_supported": false
+    },
+    {
+      "slot_id": "team_office.advisor.finance",
+      "display_name": "财务顾问",
+      "responsibility": "提出成本、现金流、ROI、预算和收入风险候选。",
+      "required_role": "财务顾问",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://team-office-finance-advisor",
+      "slice_scope_policy": "team_scoped",
+      "formal_authority": "none",
+      "replaceable_in_team_settings": true,
+      "appearance_supported": false
+    },
+    {
+      "slot_id": "team_office.advisor.legal_risk",
+      "display_name": "法务风控顾问",
+      "responsibility": "提出合规、合同、授权、支付和上架风险质询候选。",
+      "required_role": "法务风控顾问",
+      "node_type": "challenge",
+      "default_role_pack_ref": "role_pack://team-office-legal-risk-advisor",
+      "slice_scope_policy": "team_scoped",
+      "formal_authority": "none",
+      "replaceable_in_team_settings": true,
+      "appearance_supported": false
+    }
+  ],
+  "bindings": [
+    {
+      "slot_id": "team_office.secretary_general",
+      "role_pack_id": "role_pack://team-office-secretary-general",
+      "binding_status": "candidate_pending_owner"
+    },
+    {
+      "slot_id": "team_office.advisor.strategy",
+      "role_pack_id": "role_pack://team-office-strategy-advisor",
+      "binding_status": "candidate_pending_owner"
+    },
+    {
+      "slot_id": "team_office.advisor.product",
+      "role_pack_id": "role_pack://team-office-product-advisor",
+      "binding_status": "candidate_pending_owner"
+    },
+    {
+      "slot_id": "team_office.advisor.operations",
+      "role_pack_id": "role_pack://team-office-operations-advisor",
+      "binding_status": "candidate_pending_owner"
+    },
+    {
+      "slot_id": "team_office.advisor.finance",
+      "role_pack_id": "role_pack://team-office-finance-advisor",
+      "binding_status": "candidate_pending_owner"
+    },
+    {
+      "slot_id": "team_office.advisor.legal_risk",
+      "role_pack_id": "role_pack://team-office-legal-risk-advisor",
+      "binding_status": "candidate_pending_owner"
+    }
+  ],
+  "note": "团队设置替换必须生成 TeamRoleSlotBindingCandidate，经 Owner Gate 后由 truzhenos 写绑定回执；历史对话和历史 Receipt 不回写。"
+}

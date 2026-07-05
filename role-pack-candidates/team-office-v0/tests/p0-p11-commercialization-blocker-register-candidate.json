@@ -1,0 +1,460 @@
+{
+  "register_ref": "p0-p11-commercialization-blocker-register://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色制作台 P0-P11 商品化阻塞清单候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "register_status": "candidate_blockers_defined_pending_cross_repo_execution",
+  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "purpose": "把角色制作、能力 Pack 引用、秘书长 / 五顾问替换、音色 / VRM、上传、购买、下载、安装和独立验收的缺口登记成可追踪问题；未获跨仓授权和真实回执前不得声明商品化完成。",
+  "actor_model": {
+    "user_view_gui_agent": "从用户视角通过 GUI 操作产出截图、页面状态和操作日志。",
+    "organizer_coordinator_recorder": "组织、协调、记录证据和缺口；不能作为完成验收主体。",
+    "independent_acceptance_agent": "逐项复核 P0-P11、负例、hash 连续性、云端回执、本地安装回执和 Owner go / no-go。",
+    "owner_go_no_go_decider": "裁定是否授权跨仓执行、sandbox 购买、真实支付或生产发布。"
+  },
+  "allowed_lifecycle_statuses": [
+    "设计中",
+    "契约已定",
+    "已接线"
+  ],
+  "blocker_rows": [
+    {
+      "issue_id": "ROLE-STUDIO-P0-AUTH-001",
+      "phase_id": "P0",
+      "phase_order": 1,
+      "phase_name": "目标和授权确认",
+      "target_repos": [
+        "truzhen-packs"
+      ],
+      "risk_color": "orange",
+      "contract_impact": "cross_repo_boundary",
+      "current_blocking_reason": "缺少 Owner 对当前客户主线、最小可交付和后续跨仓执行范围的正式裁定。",
+      "required_authoritative_evidence": [
+        "owner_scope_decision",
+        "cross_repo_authorization_record",
+        "per_repo_allowed_action_matrix"
+      ],
+      "reproduction_or_execution_steps": [
+        "展示角色制作台 P0-P11 计划和当前候选资产索引。",
+        "记录 Owner 对目标、范围、禁止边界和是否进入跨仓执行的裁定。",
+        "未获裁定时保持所有后续阶段为 pending_cross_repo_execution。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "issue_card_with_owner_decision",
+        "authorization_scope_receipt_or_marked_blocked"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P1-AUDIT-001",
+      "phase_id": "P1",
+      "phase_order": 2,
+      "phase_name": "前后端现状盘点",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "risk_color": "orange",
+      "contract_impact": "cross_repo_boundary",
+      "current_blocking_reason": "缺少角色制作台入口、团队设置 tab、后端候选对象和回执链的真实盘点结果。",
+      "required_authoritative_evidence": [
+        "frontend_gui_inventory_screenshot",
+        "backend_role_candidate_inventory_log",
+        "receipt_surface_inventory",
+        "per_repo_git_status_record"
+      ],
+      "reproduction_or_execution_steps": [
+        "用户视角智能体打开角色制作台、团队设置和已购库入口。",
+        "记录每个入口是否存在、是否可操作、是否显示 candidate-only 状态。",
+        "后端记录 RolePackCandidate、TeamRoleSlotBindingCandidate、Receipt 和 Gate 支持情况。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "gui_inventory_issue_card",
+        "backend_inventory_issue_card",
+        "missing_surface_or_missing_api_receipt"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P2-CREATE-001",
+      "phase_id": "P2",
+      "phase_order": 3,
+      "phase_name": "角色制作与保存",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "risk_color": "yellow",
+      "contract_impact": "implementation_only",
+      "current_blocking_reason": "缺少通过 GUI 创建秘书长和五顾问角色，并由后端生成候选回执的证据。",
+      "required_authoritative_evidence": [
+        "gui_role_create_secretary_screenshot",
+        "gui_role_create_five_advisors_screenshot",
+        "RolePackCandidate_create_receipt",
+        "candidate_formal_isolation_receipt"
+      ],
+      "reproduction_or_execution_steps": [
+        "用户视角智能体创建秘书长角色并保存为候选。",
+        "用户视角智能体创建五顾问角色并保存为候选。",
+        "核对所有保存结果仍是 candidate-only，不产生正式角色事实。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "role_create_gui_issue_card",
+        "RolePackCandidate_create_receipt_or_blocked_reason"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P3-EXPORT-001",
+      "phase_id": "P3",
+      "phase_order": 4,
+      "phase_name": "导出与哈希连续性",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "risk_color": "yellow",
+      "contract_impact": "implementation_only",
+      "current_blocking_reason": "缺少 GUI 导出候选包、后端生成 bundle hash、manifest hash 与本仓候选资产一致性的真实证据。",
+      "required_authoritative_evidence": [
+        "gui_export_bundle_screenshot",
+        "candidate_bundle_export_receipt",
+        "artifact_manifest_hash_receipt",
+        "bundle_tree_sha256_receipt"
+      ],
+      "reproduction_or_execution_steps": [
+        "从角色制作台 GUI 触发导出。",
+        "记录下载或导出包的 artifact ref、manifest hash 和 payload tree hash。",
+        "比对导出包文件清单与候选集 artifact_files。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "export_hash_issue_card",
+        "bundle_tree_hash_receipt_or_mismatch_receipt"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P4-CAP-REF-001",
+      "phase_id": "P4",
+      "phase_order": 5,
+      "phase_name": "能力 Pack 引用角色",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "risk_color": "yellow",
+      "contract_impact": "implementation_only",
+      "current_blocking_reason": "缺少能力 Pack 在 GUI 中选择角色候选、后端校验兼容槽位和记录引用回执的证据。",
+      "required_authoritative_evidence": [
+        "gui_capability_pack_role_reference_screenshot",
+        "CapabilityRoleRequirementCandidate_receipt",
+        "role_slot_compatibility_receipt",
+        "blocked_incompatible_role_receipt"
+      ],
+      "reproduction_or_execution_steps": [
+        "打开能力 Pack 设置或制作台中的角色引用控件。",
+        "选择秘书长或顾问角色作为能力执行建议角色。",
+        "测试不兼容角色被阻断并留下 blocked 回执。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "capability_role_reference_issue_card",
+        "compatible_or_blocked_reference_receipt"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P5-TEAM-SECRETARY-001",
+      "phase_id": "P5",
+      "phase_order": 6,
+      "phase_name": "团队设置替换秘书长和五顾问",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "risk_color": "yellow",
+      "contract_impact": "implementation_only",
+      "current_blocking_reason": "缺少团队设置页面通过 tab 替换秘书长和五顾问，并由 Owner Gate 生成绑定回执的证据。",
+      "required_authoritative_evidence": [
+        "team_settings_tab_screenshot",
+        "secretary_replacement_screenshot",
+        "five_advisor_replacement_screenshot",
+        "TeamRoleSlotBindingCandidate_receipt",
+        "Owner_Gate_decision_receipt"
+      ],
+      "reproduction_or_execution_steps": [
+        "进入团队设置页面的角色 tab。",
+        "替换秘书长角色并记录候选绑定和 Owner Gate 状态。",
+        "逐项替换五顾问角色并记录候选绑定和回滚入口。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "team_settings_binding_issue_card",
+        "TeamRoleSlotBindingCandidate_receipt_or_blocked_reason"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P6-VOICE-VRM-001",
+      "phase_id": "P6",
+      "phase_order": 7,
+      "phase_name": "秘书长音色与 VRM 形象",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-software"
+      ],
+      "risk_color": "orange",
+      "contract_impact": "cross_repo_boundary",
+      "current_blocking_reason": "缺少音色 / VRM 只能保存 asset_ref、授权证据、provider readiness 和 raw asset 阻断回执的真实证据。",
+      "required_authoritative_evidence": [
+        "voice_selection_screenshot",
+        "vrm_selection_screenshot",
+        "SecretaryAppearancePreference_receipt",
+        "asset_rights_receipt",
+        "provider_readiness_receipt",
+        "blocked_raw_voice_asset_receipt",
+        "blocked_raw_vrm_asset_receipt"
+      ],
+      "reproduction_or_execution_steps": [
+        "在秘书长设置中选择音色 ref。",
+        "选择 VRM asset ref，并确认页面不上传 raw 资产到 packs。",
+        "模拟缺授权或 provider not_ready，确认 GUI 与后端都阻断。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "appearance_asset_rights_issue_card",
+        "asset_ref_only_receipt",
+        "raw_asset_blocked_receipt"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P7-RUNTIME-001",
+      "phase_id": "P7",
+      "phase_order": 8,
+      "phase_name": "安装后运行使用",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "risk_color": "yellow",
+      "contract_impact": "implementation_only",
+      "current_blocking_reason": "缺少安装后秘书长和五顾问在团队办公室中以 Proposer 身份被调用，并留下候选输出和回执的证据。",
+      "required_authoritative_evidence": [
+        "runtime_secretary_invocation_screenshot",
+        "runtime_five_advisor_comparison_screenshot",
+        "proposer_only_output_receipt",
+        "blocked_formal_action_without_owner_gate_receipt"
+      ],
+      "reproduction_or_execution_steps": [
+        "在团队办公室触发秘书长建议。",
+        "触发五顾问对同一议题给出候选意见。",
+        "确认角色输出不能直接正式执行、发送或写入正式记忆。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "runtime_usage_issue_card",
+        "proposer_only_receipt_or_formalization_block_receipt"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P8-NEGATIVE-001",
+      "phase_id": "P8",
+      "phase_order": 9,
+      "phase_name": "负例和安全阻断",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-cloud",
+        "truzhen-packs"
+      ],
+      "risk_color": "orange",
+      "contract_impact": "sovereignty_chain",
+      "current_blocking_reason": "缺少不兼容角色、越权正式化、未购买下载、hash 不匹配、真实支付未授权等负例阻断证据。",
+      "required_authoritative_evidence": [
+        "blocked_forbidden_phrase_receipt",
+        "blocked_incompatible_role_receipt",
+        "blocked_download_without_entitlement_receipt",
+        "blocked_artifact_hash_mismatch_receipt",
+        "blocked_real_payment_without_owner_authorization_receipt"
+      ],
+      "reproduction_or_execution_steps": [
+        "尝试让角色声明已批准或已正式执行。",
+        "尝试未购买下载和 hash 不匹配安装。",
+        "尝试未授权真实支付或生产发布，确认被阻断。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "negative_case_issue_card",
+        "blocked_receipt_for_each_negative_case"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P9-REPORT-001",
+      "phase_id": "P9",
+      "phase_order": 10,
+      "phase_name": "缺口报告与复测入口",
+      "target_repos": [
+        "truzhen-packs",
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-cloud"
+      ],
+      "risk_color": "green",
+      "contract_impact": "none",
+      "current_blocking_reason": "缺少把 P0-P11 所有失败项登记为 issue、附带复现步骤、截图 / 日志引用、目标仓和复测状态的统一台账。",
+      "required_authoritative_evidence": [
+        "issue_id_for_each_blocker",
+        "reproduction_steps_for_each_blocker",
+        "target_repo_for_each_blocker",
+        "screenshot_or_log_ref_for_each_blocker",
+        "retest_status_for_each_blocker"
+      ],
+      "reproduction_or_execution_steps": [
+        "将每个缺口映射到一个 issue_id。",
+        "记录目标仓、风险颜色、契约影响、复现步骤和证据引用。",
+        "独立验收前确认无未解释的 open blocker。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "p0_p11_blocker_register",
+        "issue_ledger_review_record"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P10-FE-BE-001",
+      "phase_id": "P10",
+      "phase_order": 11,
+      "phase_name": "商品阶段前端和后端完善",
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-contracts"
+      ],
+      "risk_color": "orange",
+      "contract_impact": "schema_or_dto_review",
+      "current_blocking_reason": "缺少商品阶段前端 surface 与后端候选、Gate、Receipt、云 API DTO 的一致性验证。",
+      "required_authoritative_evidence": [
+        "frontend_backend_contract_review",
+        "commercial_api_schema_impact_review",
+        "typecheck_or_schema_test_log",
+        "gui_to_receipt_trace_record"
+      ],
+      "reproduction_or_execution_steps": [
+        "核对角色制作、上传、购买、下载、安装、团队设置每个前端操作都有后端候选或回执承接。",
+        "若需要 contracts 变更，先输出影响清单和兼容策略。",
+        "完成前端 typecheck、后端相关测试和 GUI smoke 证据采集。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "frontend_backend_contract_issue_card",
+        "schema_review_receipt_or_no_contract_change_record"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    },
+    {
+      "issue_id": "ROLE-STUDIO-P11-CLOUD-INSTALL-001",
+      "phase_id": "P11",
+      "phase_order": 12,
+      "phase_name": "云上传、购买、下载、安装闭环",
+      "target_repos": [
+        "truzhen-cloud",
+        "truzhenos",
+        "truzhen-client-web-desktop",
+        "truzhen-packs"
+      ],
+      "risk_color": "red",
+      "contract_impact": "sovereignty_chain",
+      "current_blocking_reason": "缺少云端 sandbox 上传、审核、下单、支付、entitlement、签名下载、本地安装、团队绑定和独立验收的真实回执链。",
+      "required_authoritative_evidence": [
+        "cloud_upload_receipt",
+        "marketplace_review_receipt",
+        "sandbox_order_receipt",
+        "sandbox_payment_receipt",
+        "entitlement_receipt",
+        "download_receipt",
+        "download_artifact_hash_receipt",
+        "install_receipt",
+        "enabled_role_pack_version_receipt",
+        "team_binding_receipt",
+        "independent_acceptance_agent_receipt",
+        "owner_go_no_go_decision"
+      ],
+      "reproduction_or_execution_steps": [
+        "发布者用户视角智能体从 GUI 上传角色候选包到云端 sandbox。",
+        "买家用户视角智能体在 sandbox 完成购买、支付、entitlement 发放和下载。",
+        "在本地安装包并通过团队设置替换秘书长和五顾问。",
+        "独立验收智能体复核回执链、hash 连续性、负例阻断和 Owner go / no-go。"
+      ],
+      "blocking_receipt_or_issue_requirements": [
+        "cloud_commerce_issue_card",
+        "commercial_distribution_receipt_chain",
+        "install_and_team_binding_receipt",
+        "independent_acceptance_signoff"
+      ],
+      "owner_authorization_required": true,
+      "acceptance_signoff_required": true,
+      "must_not_claim_complete": true,
+      "lifecycle_status": "设计中"
+    }
+  ],
+  "completion_claim_policy": {
+    "completion_claim_allowed": false,
+    "required_before_completion_claim": [
+      "all_blockers_resolved_or_owner_accepted",
+      "all_p0_to_p11_authoritative_evidence_present",
+      "independent_acceptance_signoff",
+      "owner_go_no_go_decision"
+    ],
+    "non_sufficient_evidence": [
+      "candidate_json_only",
+      "organizer_self_attestation_only",
+      "single_repo_go_test_only",
+      "mock_payment_success_only",
+      "cloud_upload_request_without_receipt",
+      "download_without_entitlement",
+      "install_without_truzhenos_receipt"
+    ]
+  },
+  "forbidden_closure_rules": [
+    "不得用本仓候选 JSON 声称云端已上架。",
+    "不得用 sandbox 计划声称已支付或已购买。",
+    "不得用导出清单声称已下载安装。",
+    "不得由组织者自述替代独立验收签收。",
+    "不得在未获 Owner 授权前触发真实支付或生产发布。"
+  ]
+}

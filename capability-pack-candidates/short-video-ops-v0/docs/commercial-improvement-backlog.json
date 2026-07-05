@@ -1,0 +1,282 @@
+{
+  "backlog_ref": "commercial-improvement-backlog://short-video-ops-v0/2026-07-05",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "backlog_status": "blocked_pending_cross_repo_authorization_and_evidence",
+  "can_start_cross_repo_work": false,
+  "source_cross_repo_execution_queue": "docs/commercial-cross-repo-execution-queue.json",
+  "source_frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
+  "source_commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+  "source_current_state_audit": "docs/commercial-readiness-current-state-audit.json",
+  "commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json",
+  "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
+  "authorization_attempt_coverage_verifier": "docs/commercial-authorization-attempt-coverage-verifier.json",
+  "execution_readiness_guard_coverage_verifier": "docs/commercial-execution-readiness-guard-coverage-verifier.json",
+  "next_authorization_start_guard": "docs/commercial-next-authorization-start-guard.json",
+  "latest_rejected_authorization_attempt": {
+    "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+    "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",
+    "target_slice_key": "p12_safe_lifecycle_sample",
+    "rejection_reason": "authorization_card_mismatch_p11_not_p12",
+    "required_p12_phrase_matched": false,
+    "can_treat_as_owner_authorization": false,
+    "missing_required_phrase_parts": [
+      "授权按 P12 授权卡",
+      "只使用基座内置安全样本或 fixture"
+    ]
+  },
+  "improvement_cards": [
+    {
+      "card_id": "CAP-STUDIO-P12-LIFECYCLE-SAFE-SAMPLE",
+      "source_slice": "p12_safe_lifecycle_sample",
+      "title": "安全内置能力 lifecycle 最小闭环",
+      "risk_color": "yellow",
+      "target_repositories": [
+        "truzhenos",
+        "truzhen-client-web-desktop"
+      ],
+      "execution_readiness_package": "docs/p12-execution-readiness-package.json",
+      "evidence_contract": "docs/p12-safe-lifecycle-evidence-contract.json",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "safe_lifecycle_sample_evidence_missing"
+      ],
+      "acceptance_evidence_required": [
+        "backend draft/readiness/promote/confirm endpoint evidence",
+        "frontend safe sample control evidence",
+        "Owner/Base Gate and Receipt evidence"
+      ],
+      "forbidden_actions": [
+        "mark_commercial_ready_from_candidate_assets_only",
+        "run_real_codex_cli",
+        "execute_third_party_oss",
+        "social_login_or_upload",
+        "store_raw_secret_or_browser_cookie"
+      ]
+    },
+    {
+      "card_id": "CAP-STUDIO-P13-GUI-LIFECYCLE-PANEL",
+      "source_slice": "p13_gui_lifecycle_panel",
+      "title": "GUI lifecycle 面板和阻断态展示",
+      "risk_color": "yellow",
+      "target_repositories": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "execution_readiness_package": "docs/p13-execution-readiness-package.json",
+      "evidence_contract": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "p12_evidence_missing"
+      ],
+      "acceptance_evidence_required": [
+        "lifecycle status panel screenshot or test output",
+        "readiness issue panel evidence",
+        "disabled unsafe enable action evidence"
+      ],
+      "forbidden_actions": [
+        "mark_commercial_ready_from_candidate_assets_only",
+        "bypass_readiness_gate",
+        "hide_candidate_only_status",
+        "run_real_codex_cli",
+        "execute_third_party_oss",
+        "social_login_or_upload",
+        "store_raw_secret_or_browser_cookie"
+      ]
+    },
+    {
+      "card_id": "CAP-STUDIO-P15-THREE-CANDIDATE-GUI-WALKTHROUGH",
+      "source_slice": "p15_gui_walkthrough_three_candidates",
+      "title": "三类短视频候选 Pack GUI 实操",
+      "risk_color": "orange",
+      "target_repositories": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "execution_readiness_package": "docs/p15-execution-readiness-package.json",
+      "evidence_contract": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-cross-repo-execution-authorization-20260704.md",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "p13_evidence_missing"
+      ],
+      "acceptance_evidence_required": [
+        "MoneyPrinterTurbo candidate GUI walkthrough evidence",
+        "Pixelle-Video candidate GUI walkthrough evidence",
+        "social-auto-upload candidate GUI walkthrough evidence",
+        "candidate bundle and preflight evidence"
+      ],
+      "forbidden_actions": [
+        "mark_commercial_ready_from_candidate_assets_only",
+        "execute_third_party_oss",
+        "vendor_third_party_repo_into_packs",
+        "run_real_codex_cli",
+        "social_login_or_upload",
+        "store_raw_secret_or_browser_cookie"
+      ]
+    },
+    {
+      "card_id": "CAP-STUDIO-P16-CONTROLLED-CODE-ASSISTANT-RUN",
+      "source_slice": "p16_controlled_code_assistant_run",
+      "title": "受控 Code Assistant 最小 run",
+      "risk_color": "orange",
+      "target_repositories": [
+        "truzhenos",
+        "truzhen-client-web-desktop",
+        "truzhen-packs"
+      ],
+      "execution_readiness_package": "docs/p16-execution-readiness-package.json",
+      "evidence_contract": "docs/p16-controlled-code-assistant-run-evidence-contract.json",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-cross-repo-execution-authorization-20260704.md",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "p15_evidence_missing",
+        "execution_gateway_receipt_missing"
+      ],
+      "acceptance_evidence_required": [
+        "11 Gateway run envelope evidence",
+        "Owner/Base Gate evidence",
+        "PatchCandidate artifact and receipt evidence",
+        "token/raw credential non-exposure evidence"
+      ],
+      "forbidden_actions": [
+        "mark_commercial_ready_from_candidate_assets_only",
+        "run_real_codex_cli_without_11_gateway_and_owner_base_gate",
+        "execute_third_party_oss",
+        "store_raw_token_cookie_password",
+        "social_login_or_upload"
+      ]
+    },
+    {
+      "card_id": "CAP-STUDIO-P17-PROVIDER-ADAPTER-CANDIDATE",
+      "source_slice": "p17_provider_adapter_candidate",
+      "title": "provider / adapter candidate 归属和 readiness",
+      "risk_color": "orange",
+      "target_repositories": [
+        "truzhen-software",
+        "truzhenos",
+        "truzhen-client-web-desktop",
+        "truzhen-packs"
+      ],
+      "execution_readiness_package": "docs/p17-execution-readiness-package.json",
+      "evidence_contract": "docs/p17-provider-adapter-candidate-evidence-contract.json",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "p16_evidence_missing",
+        "provider_truth_source_not_connected"
+      ],
+      "acceptance_evidence_required": [
+        "provider candidate location evidence",
+        "readiness not_ready/provider_missing mapping evidence",
+        "packs repository contains no provider implementation evidence"
+      ],
+      "forbidden_actions": [
+        "mark_commercial_ready_from_candidate_assets_only",
+        "place_provider_runtime_in_packs",
+        "execute_third_party_oss",
+        "run_real_codex_cli_without_11_gateway_and_owner_base_gate",
+        "store_raw_secret_or_browser_cookie",
+        "social_login_or_upload"
+      ]
+    },
+    {
+      "card_id": "CAP-STUDIO-P18-CLOUD-MARKET-SANDBOX",
+      "source_slice": "p18_cloud_market_sandbox",
+      "title": "云市场 sandbox 商品化闭环",
+      "risk_color": "red",
+      "target_repositories": [
+        "truzhen-cloud",
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "execution_readiness_package": "docs/p18-execution-readiness-package.json",
+      "evidence_contract": "docs/p18-cloud-market-sandbox-evidence-contract.json",
+      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "p17_evidence_missing",
+        "cloud_truth_source_not_authorized"
+      ],
+      "acceptance_evidence_required": [
+        "sandbox listing evidence owned by truzhen-cloud",
+        "sandbox entitlement evidence",
+        "no production payment/license evidence",
+        "client/os readmodel boundary evidence"
+      ],
+      "forbidden_actions": [
+        "mark_commercial_ready_from_candidate_assets_only",
+        "store_cloud_listing_truth_in_packs",
+        "production_cloud_market_action",
+        "production_payment_captured",
+        "production_license_issued",
+        "store_raw_secret_or_browser_cookie",
+        "social_login_or_upload"
+      ]
+    }
+  ],
+  "completion_gate": {
+    "can_mark_backlog_done": false,
+    "required_evidence_writeback_gate_source": "commercial_go_no_go_gate.evidence_writeback_gate",
+    "evidence_writeback_gate_must_pass": true,
+    "required_execution_readiness_guard_coverage_verifier_source": "commercial_go_live_evidence_package.execution_readiness_guard_coverage_verifier",
+    "execution_readiness_guard_coverage_verifier_must_pass": true,
+    "required_pack_studio_issue_ledger_source": "candidate_set.pack_studio_issue_ledger",
+    "pack_studio_issue_ledger_must_close": true,
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "blocking_owner_base_gate": "owner_base_gate_receipts_missing",
+    "required_before_backlog_done": "all improvement cards must have owner_authorization_status=authorized, implementation_status=implemented, evidence_status=evidence_complete_verified, forbidden terminal checks proven false, execution_readiness_guard_coverage_verifier_passed, pack_studio_issue_ledger_closed, all_evidence_writebacks_completed_and_verified, and owner_base_gate_receipts_bound",
+    "non_sufficient_evidence": [
+      "execution_readiness_guard_coverage_verifier_pending",
+      "pack_studio_issue_ledger_open",
+      "owner_base_gate_receipts_missing",
+      "evidence_writeback_incomplete",
+      "candidate_cards_without_cross_repo_evidence"
+    ],
+    "commercial_status_after_backlog_only": "not_commercial_ready"
+  },
+  "non_sufficient_evidence": [
+    "candidate_cards_without_cross_repo_evidence",
+    "backlog_defined_without_owner_authorization",
+    "readiness_package_without_gateway_receipts",
+    "manual_backlog_without_frontend_backend_smoke",
+    "execution_readiness_guard_coverage_verifier_pending",
+    "pack_studio_issue_ledger_open",
+    "evidence_writeback_incomplete"
+  ],
+  "forbidden": [
+    "treat_backlog_as_execution_authorization",
+    "mark_commercial_ready_from_candidate_assets_only",
+    "start_cross_repo_work_without_owner_authorization",
+    "run_real_codex_cli_without_11_gateway_and_owner_base_gate",
+    "execute_third_party_oss_without_authorization",
+    "store_raw_secret_or_browser_cookie",
+    "social_login_or_upload",
+    "production_cloud_market_action"
+  ],
+  "non_completion_clause": "This backlog is a candidate-only improvement organizer. It does not authorize cross-repo work, does not prove implementation, and does not make the Capability Pack Studio commercial-ready."
+}

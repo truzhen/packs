@@ -1,0 +1,307 @@
+{
+  "schema_ref": "commercial-distribution-receipt-schema://team-office-role-pack-v0",
+  "display_name": "团队办公室角色包商业分发回执记录规格候选",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "schema_status": "candidate_not_run_requires_cross_repo_receipts",
+  "bundle_tree_sha256_source": "commerce/artifact-bundle-digest-candidate.json",
+  "purpose": "约束角色包从候选导出、云端上传、审核、sandbox 下单支付、授权发放、签名下载、本地安装、团队设置替换到运行使用的回执字段和关联键，防止用单仓候选资产冒充正常商品化完成。",
+  "truth_sources": {
+    "candidate_set": "truzhen-packs",
+    "frontend": "truzhen-client-web-desktop",
+    "cloud": "truzhen-cloud",
+    "install": "truzhenos",
+    "acceptance": "independent_acceptance_agent"
+  },
+  "record_schema": {
+    "record_ref_prefix": "commercial-distribution-receipt://",
+    "required_fields": [
+      "receipt_ref",
+      "stage_id",
+      "actor_ref",
+      "truth_source",
+      "timestamp",
+      "correlation_id",
+      "candidate_set_ref",
+      "artifact_ref",
+      "bundle_tree_sha256",
+      "artifact_sha256",
+      "previous_receipt_ref",
+      "result_status",
+      "blocked_reason",
+      "redaction_status"
+    ],
+    "redaction_policy": "refs_and_redacted_summaries_only_no_raw_secret_no_payment_token_no_raw_voice_no_raw_vrm"
+  },
+  "required_receipt_types": [
+    {
+      "receipt_type": "candidate_bundle_export_receipt",
+      "truth_source": "truzhenos",
+      "stage_ids": ["candidate_bundle_export"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "candidate_set_ref", "artifact_ref", "bundle_tree_sha256", "artifact_sha256", "result_status"]
+    },
+    {
+      "receipt_type": "cloud_upload_receipt",
+      "truth_source": "truzhen-cloud",
+      "stage_ids": ["cloud_upload"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "candidate_set_ref", "artifact_ref", "bundle_tree_sha256", "artifact_sha256", "result_status"]
+    },
+    {
+      "receipt_type": "listing_review_receipt",
+      "truth_source": "truzhen-cloud",
+      "stage_ids": ["listing_review"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "listing_ref", "bundle_tree_sha256", "result_status", "blocked_reason"]
+    },
+    {
+      "receipt_type": "sandbox_order_receipt",
+      "truth_source": "truzhen-cloud",
+      "stage_ids": ["sandbox_order"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "sandbox_order_ref", "artifact_ref", "bundle_tree_sha256", "result_status"]
+    },
+    {
+      "receipt_type": "sandbox_payment_receipt",
+      "truth_source": "truzhen-cloud",
+      "stage_ids": ["sandbox_payment"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "sandbox_payment_ref", "sandbox_order_ref", "bundle_tree_sha256", "result_status"]
+    },
+    {
+      "receipt_type": "license_entitlement_receipt",
+      "truth_source": "truzhen-cloud",
+      "stage_ids": ["license_entitlement"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "license_ref", "entitlement_ref", "bundle_tree_sha256", "result_status"]
+    },
+    {
+      "receipt_type": "signed_download_receipt",
+      "truth_source": "truzhen-cloud",
+      "stage_ids": ["signed_download"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "download_receipt_ref", "entitlement_ref", "bundle_tree_sha256", "artifact_sha256", "result_status"]
+    },
+    {
+      "receipt_type": "install_preflight_receipt",
+      "truth_source": "truzhenos",
+      "stage_ids": ["install_preflight"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "download_receipt_ref", "entitlement_ref", "bundle_tree_sha256", "artifact_sha256", "result_status"]
+    },
+    {
+      "receipt_type": "install_receipt",
+      "truth_source": "truzhenos",
+      "stage_ids": ["install"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "install_receipt_ref", "enabled_role_pack_version_ref", "bundle_tree_sha256", "result_status"]
+    },
+    {
+      "receipt_type": "team_binding_receipt",
+      "truth_source": "truzhenos",
+      "stage_ids": ["team_binding"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "team_binding_receipt_ref", "owner_gate_receipt_ref", "bundle_tree_sha256", "result_status"]
+    },
+    {
+      "receipt_type": "runtime_candidate_receipt",
+      "truth_source": "truzhenos",
+      "stage_ids": ["runtime_candidate_use"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "runtime_session_ref", "candidate_output_ref", "bundle_tree_sha256", "result_status"]
+    },
+    {
+      "receipt_type": "negative_block_receipt",
+      "truth_source": "multi_repo",
+      "stage_ids": ["negative_block_cases"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "case_id", "truth_source", "bundle_tree_sha256", "result_status", "blocked_reason"]
+    },
+    {
+      "receipt_type": "independent_acceptance_signoff",
+      "truth_source": "independent_acceptance_agent",
+      "stage_ids": ["independent_acceptance_signoff"],
+      "must_reference_bundle_tree_sha256": true,
+      "required_fields": ["receipt_ref", "correlation_id", "acceptance_agent_ref", "reviewed_receipt_refs", "bundle_tree_sha256", "result_status"]
+    }
+  ],
+  "stage_receipt_chain": [
+    {
+      "stage_id": "candidate_bundle_export",
+      "stage_order": 1,
+      "truth_source": "truzhenos",
+      "required_receipt_type": "candidate_bundle_export_receipt",
+      "previous_stage_id": "none",
+      "next_stage_id": "cloud_upload",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "cloud_upload",
+      "stage_order": 2,
+      "truth_source": "truzhen-cloud",
+      "required_receipt_type": "cloud_upload_receipt",
+      "previous_stage_id": "candidate_bundle_export",
+      "next_stage_id": "listing_review",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "listing_review",
+      "stage_order": 3,
+      "truth_source": "truzhen-cloud",
+      "required_receipt_type": "listing_review_receipt",
+      "previous_stage_id": "cloud_upload",
+      "next_stage_id": "sandbox_order",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "sandbox_order",
+      "stage_order": 4,
+      "truth_source": "truzhen-cloud",
+      "required_receipt_type": "sandbox_order_receipt",
+      "previous_stage_id": "listing_review",
+      "next_stage_id": "sandbox_payment",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "sandbox_payment",
+      "stage_order": 5,
+      "truth_source": "truzhen-cloud",
+      "required_receipt_type": "sandbox_payment_receipt",
+      "previous_stage_id": "sandbox_order",
+      "next_stage_id": "license_entitlement",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "license_entitlement",
+      "stage_order": 6,
+      "truth_source": "truzhen-cloud",
+      "required_receipt_type": "license_entitlement_receipt",
+      "previous_stage_id": "sandbox_payment",
+      "next_stage_id": "signed_download",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "signed_download",
+      "stage_order": 7,
+      "truth_source": "truzhen-cloud",
+      "required_receipt_type": "signed_download_receipt",
+      "previous_stage_id": "license_entitlement",
+      "next_stage_id": "install_preflight",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "install_preflight",
+      "stage_order": 8,
+      "truth_source": "truzhenos",
+      "required_receipt_type": "install_preflight_receipt",
+      "previous_stage_id": "signed_download",
+      "next_stage_id": "install",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "install",
+      "stage_order": 9,
+      "truth_source": "truzhenos",
+      "required_receipt_type": "install_receipt",
+      "previous_stage_id": "install_preflight",
+      "next_stage_id": "team_binding",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "team_binding",
+      "stage_order": 10,
+      "truth_source": "truzhenos",
+      "required_receipt_type": "team_binding_receipt",
+      "previous_stage_id": "install",
+      "next_stage_id": "runtime_candidate_use",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "runtime_candidate_use",
+      "stage_order": 11,
+      "truth_source": "truzhenos",
+      "required_receipt_type": "runtime_candidate_receipt",
+      "previous_stage_id": "team_binding",
+      "next_stage_id": "negative_block_cases",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "negative_block_cases",
+      "stage_order": 12,
+      "truth_source": "multi_repo",
+      "required_receipt_type": "negative_block_receipt",
+      "previous_stage_id": "runtime_candidate_use",
+      "next_stage_id": "independent_acceptance_signoff",
+      "correlation_policy": "same_correlation_id_across_chain"
+    },
+    {
+      "stage_id": "independent_acceptance_signoff",
+      "stage_order": 13,
+      "truth_source": "independent_acceptance_agent",
+      "required_receipt_type": "independent_acceptance_signoff",
+      "previous_stage_id": "negative_block_cases",
+      "next_stage_id": "none",
+      "correlation_policy": "same_correlation_id_across_chain"
+    }
+  ],
+  "negative_receipt_requirements": [
+    {
+      "case_id": "download_without_entitlement",
+      "truth_source": "truzhen-cloud",
+      "expected_status": "blocked_entitlement_missing",
+      "required_receipt_type": "negative_block_receipt"
+    },
+    {
+      "case_id": "artifact_hash_mismatch",
+      "truth_source": "truzhen-cloud/truzhenos",
+      "expected_status": "blocked_artifact_hash_mismatch",
+      "required_receipt_type": "negative_block_receipt"
+    },
+    {
+      "case_id": "install_without_receipt",
+      "truth_source": "truzhenos",
+      "expected_status": "blocked_install_receipt_missing",
+      "required_receipt_type": "negative_block_receipt"
+    },
+    {
+      "case_id": "team_binding_without_owner_gate",
+      "truth_source": "truzhenos",
+      "expected_status": "blocked_owner_gate_missing",
+      "required_receipt_type": "negative_block_receipt"
+    },
+    {
+      "case_id": "real_payment_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "expected_status": "blocked_real_payment_without_owner_authorization",
+      "required_receipt_type": "negative_block_receipt"
+    }
+  ],
+  "completion_claim_policy": {
+    "completion_claim_allowed": false,
+    "required_before_completion_claim": [
+      "all_required_receipts_present",
+      "bundle_tree_sha256_consistent",
+      "negative_block_receipts_present",
+      "independent_acceptance_signoff"
+    ],
+    "non_sufficient_evidence": [
+      "candidate_json_only",
+      "artifact_manifest_only",
+      "cloud_listing_without_upload_receipt",
+      "payment_state_without_sandbox_payment_receipt",
+      "download_without_entitlement_receipt",
+      "install_without_truzhenos_receipt",
+      "team_binding_without_owner_gate_receipt"
+    ]
+  },
+  "forbidden": [
+    "store_raw_payment_token",
+    "store_raw_secret",
+    "store_raw_voice_or_vrm_asset",
+    "mark_commercial_complete_without_receipt_chain",
+    "accept_paid_download_without_entitlement",
+    "accept_install_without_hash_match"
+  ]
+}

@@ -1,0 +1,350 @@
+{
+  "gate_ref": "commercial-go-no-go-gate://short-video-ops-v0/2026-07-05",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "decision_status": "blocked_not_ready_for_commercial_go_live",
+  "can_mark_commercial_ready": false,
+  "can_request_owner_go_live_signoff": false,
+  "source_evidence_contract_index": "docs/commercial-evidence-contract-index.json",
+  "source_commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+  "source_post_run_gate_coverage_verifier": "docs/commercial-post-run-gate-coverage-verifier.json",
+  "source_forbidden_action_coverage_verifier": "docs/commercial-forbidden-action-coverage-verifier.json",
+  "source_authorization_attempt_coverage_verifier": "docs/commercial-authorization-attempt-coverage-verifier.json",
+  "next_authorization_start_guard": "docs/commercial-next-authorization-start-guard.json",
+  "source_execution_readiness_guard_coverage_verifier": "docs/commercial-execution-readiness-guard-coverage-verifier.json",
+  "machine_go_live_evidence_package": "docs/commercial-go-live-evidence-package.json",
+  "machine_evidence_package_coverage_verifier": "docs/commercial-machine-go-live-evidence-package-coverage-verifier.json",
+  "independent_acceptance_signoff_matrix": "docs/commercial-independent-acceptance-signoff-matrix.json",
+  "source_current_state_audit": "docs/commercial-readiness-current-state-audit.json",
+  "source_cross_repo_execution_queue": "docs/commercial-cross-repo-execution-queue.json",
+  "source_improvement_backlog": "docs/commercial-improvement-backlog.json",
+  "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
+  "source_frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
+  "frontend_backend_handoff_runbook": "docs/commercial-frontend-backend-handoff-runbook.json",
+  "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+  "owner_base_gate_receipts_must_exist": true,
+  "next_required_authorization": "p12_safe_lifecycle_sample",
+  "next_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "latest_rejected_authorization_attempt": {
+    "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
+    "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",
+    "target_slice_key": "p12_safe_lifecycle_sample",
+    "rejection_reason": "authorization_card_mismatch_p11_not_p12",
+    "required_p12_phrase_matched": false,
+    "can_treat_as_owner_authorization": false,
+    "can_request_owner_go_live_signoff_after_attempt": false
+  },
+  "required_slice_gates": [
+    {
+      "slice_key": "p12_safe_lifecycle_sample",
+      "source_improvement_card": "CAP-STUDIO-P12-LIFECYCLE-SAFE-SAMPLE",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "can_pass_gate": false,
+      "execution_readiness_package": "docs/p12-execution-readiness-package.json",
+      "evidence_contract": "docs/p12-safe-lifecycle-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p12-post-run-evidence-acceptance-gate.json",
+      "post_run_evidence_acceptance_status": "blocked_pending_p12_execution_evidence",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "safe_lifecycle_sample_evidence_missing",
+        "p12_post_run_evidence_acceptance_gate_not_passed",
+        "owner_base_gate_receipt_missing"
+      ]
+    },
+    {
+      "slice_key": "p13_gui_lifecycle_panel",
+      "source_improvement_card": "CAP-STUDIO-P13-GUI-LIFECYCLE-PANEL",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "can_pass_gate": false,
+      "execution_readiness_package": "docs/p13-execution-readiness-package.json",
+      "evidence_contract": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p13-post-run-evidence-acceptance-gate.json",
+      "post_run_evidence_acceptance_status": "blocked_pending_p13_execution_evidence",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "p12_evidence_missing",
+        "p13_post_run_evidence_acceptance_gate_not_passed",
+        "frontend_backend_lifecycle_panel_evidence_missing"
+      ]
+    },
+    {
+      "slice_key": "p15_gui_walkthrough_three_candidates",
+      "source_improvement_card": "CAP-STUDIO-P15-THREE-CANDIDATE-GUI-WALKTHROUGH",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "can_pass_gate": false,
+      "execution_readiness_package": "docs/p15-execution-readiness-package.json",
+      "evidence_contract": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p15-post-run-evidence-acceptance-gate.json",
+      "post_run_evidence_acceptance_status": "blocked_pending_p15_execution_evidence",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "p13_evidence_missing",
+        "three_candidate_gui_walkthrough_evidence_missing",
+        "p15_post_run_evidence_acceptance_gate_not_passed"
+      ]
+    },
+    {
+      "slice_key": "p16_controlled_code_assistant_run",
+      "source_improvement_card": "CAP-STUDIO-P16-CONTROLLED-CODE-ASSISTANT-RUN",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "can_pass_gate": false,
+      "execution_readiness_package": "docs/p16-execution-readiness-package.json",
+      "evidence_contract": "docs/p16-controlled-code-assistant-run-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p16-post-run-evidence-acceptance-gate.json",
+      "post_run_evidence_acceptance_status": "blocked_pending_p16_execution_evidence",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "p15_evidence_missing",
+        "execution_gateway_receipt_missing",
+        "patch_candidate_artifact_missing",
+        "p16_post_run_evidence_acceptance_gate_not_passed"
+      ]
+    },
+    {
+      "slice_key": "p17_provider_adapter_candidate",
+      "source_improvement_card": "CAP-STUDIO-P17-PROVIDER-ADAPTER-CANDIDATE",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "can_pass_gate": false,
+      "execution_readiness_package": "docs/p17-execution-readiness-package.json",
+      "evidence_contract": "docs/p17-provider-adapter-candidate-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p17-post-run-evidence-acceptance-gate.json",
+      "post_run_evidence_acceptance_status": "blocked_pending_p17_provider_adapter_evidence",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "p16_evidence_missing",
+        "provider_truth_source_not_connected",
+        "provider_readiness_evidence_missing",
+        "p17_post_run_evidence_acceptance_gate_not_passed"
+      ]
+    },
+    {
+      "slice_key": "p18_cloud_market_sandbox",
+      "source_improvement_card": "CAP-STUDIO-P18-CLOUD-MARKET-SANDBOX",
+      "owner_authorization_status": "missing",
+      "implementation_status": "not_started",
+      "evidence_status": "pending",
+      "can_pass_gate": false,
+      "execution_readiness_package": "docs/p18-execution-readiness-package.json",
+      "evidence_contract": "docs/p18-cloud-market-sandbox-evidence-contract.json",
+      "post_run_evidence_acceptance_gate": "docs/p18-post-run-evidence-acceptance-gate.json",
+      "post_run_evidence_acceptance_status": "blocked_pending_p18_cloud_sandbox_evidence",
+      "blocked_by": [
+        "owner_authorization_missing",
+        "p17_evidence_missing",
+        "cloud_truth_source_not_authorized",
+        "sandbox_entitlement_evidence_missing",
+        "p18_post_run_evidence_acceptance_gate_not_passed"
+      ]
+    }
+  ],
+  "forbidden_action_terminal_gates": [
+    {
+      "check_key": "raw_token_cookie_password_saved",
+      "current_result": "pending",
+      "required_final_value": false,
+      "can_pass_gate": false,
+      "evidence_required": "secret scan + execution log redaction review + GUI/network evidence"
+    },
+    {
+      "check_key": "third_party_oss_vendored_into_packs",
+      "current_result": "pending",
+      "required_final_value": false,
+      "can_pass_gate": false,
+      "evidence_required": "git tracked file scan + artifact manifest review"
+    },
+    {
+      "check_key": "third_party_oss_executed_without_authorization",
+      "current_result": "pending",
+      "required_final_value": false,
+      "can_pass_gate": false,
+      "evidence_required": "11 Gateway run receipts or explicit no-run ledgers"
+    },
+    {
+      "check_key": "social_login_happened",
+      "current_result": "pending",
+      "required_final_value": false,
+      "can_pass_gate": false,
+      "evidence_required": "GUI walkthrough evidence + browser/session access denial evidence"
+    },
+    {
+      "check_key": "social_upload_or_publish_happened",
+      "current_result": "pending",
+      "required_final_value": false,
+      "can_pass_gate": false,
+      "evidence_required": "communication/execution gateway receipts showing blocked or no-op"
+    },
+    {
+      "check_key": "candidate_only_written_as_enabled",
+      "current_result": "pending",
+      "required_final_value": false,
+      "can_pass_gate": false,
+      "evidence_required": "lifecycle history + packs query + receipt refs"
+    },
+    {
+      "check_key": "cloud_listing_truth_stored_in_packs",
+      "current_result": "pending",
+      "required_final_value": false,
+      "can_pass_gate": false,
+      "evidence_required": "cloud sandbox receipt refs + packs artifact scan"
+    },
+    {
+      "check_key": "production_payment_captured",
+      "current_result": "pending",
+      "required_final_value": false,
+      "can_pass_gate": false,
+      "evidence_required": "truzhen-cloud sandbox payment evidence + no production payment receipt"
+    },
+    {
+      "check_key": "production_license_issued",
+      "current_result": "pending",
+      "required_final_value": false,
+      "can_pass_gate": false,
+      "evidence_required": "sandbox entitlement refs + no production license evidence"
+    }
+  ],
+  "completion_rule": {
+    "all_slice_gates_must_pass": true,
+    "all_terminal_gates_must_pass": true,
+    "owner_base_gate_receipts_required": true,
+    "frontend_backend_acceptance_required": true,
+    "provider_adapter_readiness_required": true,
+    "cloud_sandbox_entitlement_required": true,
+    "required_final_decision_status": "commercial_ready_candidate",
+    "evidence_writeback_gate_must_pass": true,
+    "next_authorization_start_guard_must_open": true,
+    "required_machine_go_live_evidence_package_source": "commercial_go_live_evidence_package.machine_evidence_package",
+    "machine_go_live_evidence_package_must_pass": true,
+    "required_machine_evidence_package_coverage_verifier_source": "commercial_go_live_evidence_package.machine_evidence_package_coverage_verifier",
+    "machine_evidence_package_coverage_verifier_must_pass": true,
+    "required_independent_acceptance_signoff_matrix_source": "commercial_go_live_evidence_package.independent_acceptance_signoff_matrix",
+    "independent_acceptance_signoff_matrix_must_pass": true,
+    "required_before_go_live_signoff": [
+      "all_slice_gates_passed",
+      "p12_post_run_evidence_acceptance_gate_passed",
+      "p13_post_run_evidence_acceptance_gate_passed",
+      "p15_post_run_evidence_acceptance_gate_passed",
+      "p16_post_run_evidence_acceptance_gate_passed",
+      "p17_post_run_evidence_acceptance_gate_passed",
+      "p18_post_run_evidence_acceptance_gate_passed",
+      "post_run_gate_coverage_verifier_passed",
+      "forbidden_action_coverage_verifier_passed",
+      "authorization_attempt_coverage_verifier_passed",
+      "next_authorization_start_guard_open",
+      "execution_readiness_guard_coverage_verifier_passed",
+      "machine_evidence_package_coverage_verifier_passed",
+      "machine_go_live_evidence_package_verified",
+      "all_authoritative_runtime_receipts_bound",
+      "frontend_backend_runtime_receipts_bound",
+      "p12_p18_slice_receipts_bound",
+      "coverage_verifiers_backed_by_terminal_evidence",
+      "pack_studio_issue_ledger_closed",
+      "gui_api_receipt_traceability_verified",
+      "independent_acceptance_signoff_matrix_passed",
+      "all_terminal_gates_passed",
+      "owner_base_gate_receipts_bound",
+      "frontend_backend_acceptance_passed",
+      "provider_adapter_readiness_verified",
+      "cloud_sandbox_entitlement_verified",
+      "all_evidence_writebacks_completed_and_verified",
+      "pack_studio_issue_resolution_evidence_schema_verified"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "commercial_go_no_go_gate_without_cross_repo_receipts",
+    "candidate_assets_only",
+    "authorization_cards_without_owner_authorization",
+    "green_packs_tests_without_frontend_backend_runtime_evidence",
+    "frontend_screenshot_without_api_receipt_trace",
+    "backend_test_without_gui_api_trace",
+    "network_summary_without_receipt_lookup",
+    "independent_acceptance_signoff_missing",
+    "self_attestation_without_independent_reviewer",
+    "green_tests_without_independent_review",
+    "manual_ledgers_without_machine_evidence",
+    "evidence_writeback_summary_without_completed_rows",
+    "p12_post_run_evidence_acceptance_gate_pending",
+    "p13_post_run_evidence_acceptance_gate_pending",
+    "p15_post_run_evidence_acceptance_gate_pending",
+    "p16_post_run_evidence_acceptance_gate_pending",
+    "p17_post_run_evidence_acceptance_gate_pending",
+    "p18_post_run_evidence_acceptance_gate_pending",
+    "post_run_gate_coverage_verifier_pending",
+    "forbidden_action_coverage_verifier_pending",
+    "authorization_attempt_coverage_verifier_pending",
+    "next_authorization_start_guard_pending",
+    "execution_readiness_guard_coverage_verifier_pending",
+    "machine_evidence_package_coverage_verifier_pending",
+    "machine_go_live_evidence_package_blocked",
+    "coverage_verifiers_without_runtime_receipts",
+    "machine_go_live_summary_without_slice_receipts",
+    "go_no_go_candidate_without_owner_base_receipts",
+    "frontend_backend_contract_without_runtime_receipts",
+    "pack_studio_issue_ledger_open",
+    "owner_base_gate_receipts_missing",
+    "manual_resolution_note_without_authoritative_refs",
+    "closed_status_without_resolution_evidence_refs",
+    "tests_without_gui_or_receipt_evidence"
+  ],
+  "forbidden": [
+    "treat_go_no_go_gate_as_execution_authorization",
+    "mark_commercial_ready_from_candidate_assets_only",
+    "request_owner_go_live_signoff_before_all_gates_pass",
+    "start_cross_repo_work_without_owner_authorization",
+    "run_real_codex_cli_without_11_gateway_and_owner_base_gate",
+    "execute_third_party_oss_without_authorization",
+    "store_raw_secret_or_browser_cookie",
+    "social_login_or_upload",
+    "production_cloud_market_action"
+  ],
+  "non_completion_clause": "This gate is a candidate-only commercial decision checklist. It currently blocks go-live and does not authorize cross-repo work, real Codex CLI execution, third-party OSS execution, social platform login/upload, production payment, production license, or formal enablement.",
+  "evidence_writeback_gate": {
+    "source_commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+    "source_cross_repo_execution_queue": "docs/commercial-cross-repo-execution-queue.json",
+    "writeback_status": "blocked_pending_authorization_and_evidence",
+    "can_pass_gate": false,
+    "total_required_entry_count": 45,
+    "total_pending_entry_count": 45,
+    "total_completed_entry_count": 0,
+    "blocked_by": [
+      "evidence_writeback_incomplete",
+      "owner_authorization_missing",
+      "cross_repo_execution_receipts_missing"
+    ],
+    "required_before_pass": [
+      "all_evidence_writebacks_completed_and_verified",
+      "all_slice_gates_passed",
+      "independent_verification_passed"
+    ],
+    "non_completion_clause": "This writeback gate mirrors the verifier counts. It blocks go-live until every evidence writeback row is completed and independently verified."
+  },
+  "p11_reverification_baseline": {
+    "source_candidate_set_slice": "p11_lifecycle_preflight",
+    "source_ledger": "docs/lifecycle-preflight-commercial-gap-ledger.md",
+    "verified_at": "2026-07-05",
+    "verified_blocked_status": "lifecycle_preflight_blocked",
+    "verified_blocked_reason": "candidate_bundle_not_delivery",
+    "commercial_status_after_reverification": "not_commercial_ready",
+    "must_be_current_before_p12_execution": true,
+    "required_before_p12_cross_repo_work": [
+      "p11_lifecycle_preflight_reverification_current",
+      "p11_preflight_still_blocks_candidate_bundle_not_delivery",
+      "p11_forbidden_actions_still_false"
+    ],
+    "non_sufficient_evidence": [
+      "missing_p11_lifecycle_preflight_reverification",
+      "stale_or_missing_p11_lifecycle_preflight_reverification",
+      "p11_reverification_without_live_smoke_evidence"
+    ]
+  }
+}

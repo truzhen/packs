@@ -1,0 +1,692 @@
+{
+  "matrix_ref": "role-studio-test-case-coverage-matrix-candidate://team-office-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色制作台测试用例覆盖矩阵候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "coverage_status": "candidate_coverage_defined_pending_cross_repo_execution",
+  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "phase_coverage_matrix_ref": "tests/role-studio-phase-coverage-matrix-candidate.json",
+  "gui_execution_script_ref": "tests/gui-user-agent-execution-script-candidate.json",
+  "evidence_capture_protocol_ref": "tests/gui-evidence-capture-protocol.json",
+  "commercial_evidence_gate_ref": "tests/commercial-evidence-gate-candidate.json",
+  "p11_acceptance_gate_ref": "tests/p11-normal-commercialization-acceptance-gate-candidate.json",
+  "purpose": "把计划第 8 节的 TC-* 测试任务逐项映射到用户视角 GUI 证据、权威回执或 blocked 证据、目标仓和当前阻断状态，防止后续只跑 P11 或只看候选 JSON 就声称全链路商品化完成。",
+  "test_case_coverage": [
+    {
+      "test_case_id": "TC-ROLE-01",
+      "plan_phase": "P2",
+      "test_goal": "创建秘书长角色候选",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "secretary_role_create_form_screenshot",
+        "candidate_only_page_state",
+        "user_view_operation_log"
+      ],
+      "required_authoritative_evidence": [
+        "RolePackCandidate_create_receipt",
+        "candidate_formal_isolation_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "role-packs/team-office-secretary-general.rolepack.json"
+      ],
+      "missing_authoritative_evidence": [
+        "GUI create screenshot and backend receipt are missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-ROLE-02",
+      "plan_phase": "P2",
+      "test_goal": "创建五顾问角色候选",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "five_advisors_create_flow_screenshots",
+        "slot_compatibility_page_state",
+        "user_view_operation_log"
+      ],
+      "required_authoritative_evidence": [
+        "five_RolePackCandidate_create_receipts",
+        "candidate_formal_isolation_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "role-packs/team-office-strategy-advisor.rolepack.json",
+        "role-packs/team-office-product-advisor.rolepack.json",
+        "role-packs/team-office-operations-advisor.rolepack.json",
+        "role-packs/team-office-finance-advisor.rolepack.json",
+        "role-packs/team-office-legal-risk-advisor.rolepack.json"
+      ],
+      "missing_authoritative_evidence": [
+        "five advisor GUI create screenshots and receipts are missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-ROLE-03",
+      "plan_phase": "P8",
+      "test_goal": "forbidden phrase 检查",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "forbidden_phrase_save_block_screenshot",
+        "field_level_error_page_state"
+      ],
+      "required_authoritative_evidence": [
+        "forbidden_phrase_block_receipt",
+        "blocked_validation_result"
+      ],
+      "current_repo_candidate_artifacts": [
+        "tests/commercial-evidence-gate-candidate.json",
+        "tests/gui-user-agent-scenarios.json"
+      ],
+      "missing_authoritative_evidence": [
+        "forbidden phrase blocked receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-GUI-USER-01",
+      "plan_phase": "P1",
+      "test_goal": "用户视角智能体只走 GUI",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop"
+      ],
+      "required_gui_evidence": [
+        "full_user_view_operation_log",
+        "route_and_surface_screenshots",
+        "no_direct_api_or_file_edit_trace"
+      ],
+      "required_authoritative_evidence": [
+        "gui_agent_run_receipt",
+        "no_direct_json_edit_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "tests/gui-user-agent-execution-script-candidate.json",
+        "tests/gui-evidence-capture-protocol.json"
+      ],
+      "missing_authoritative_evidence": [
+        "user-view GUI execution log is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-EXPORT-01",
+      "plan_phase": "P3",
+      "test_goal": "导出候选 bundle",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "required_gui_evidence": [
+        "candidate_bundle_export_screenshot",
+        "export_result_page_state"
+      ],
+      "required_authoritative_evidence": [
+        "candidate_bundle_export_receipt",
+        "artifact_manifest_hash_receipt",
+        "forbidden_artifact_scan_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "candidate-set.json",
+        "commerce/artifact-manifest.json",
+        "commerce/artifact-bundle-digest-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "GUI export receipt and authoritative bundle hash are missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-CAP-ROLE-01",
+      "plan_phase": "P4",
+      "test_goal": "能力 Pack 引用角色需求",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "capability_role_requirement_picker_screenshot",
+        "compatible_role_selected_page_state"
+      ],
+      "required_authoritative_evidence": [
+        "CapabilityRoleRequirement_validation_receipt",
+        "role_body_not_copied_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "capability-role-requirements/sample-team-research.role-requirements.json"
+      ],
+      "missing_authoritative_evidence": [
+        "capability role requirement GUI and validation receipt are missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-CAP-ROLE-02",
+      "plan_phase": "P8",
+      "test_goal": "不兼容角色引用",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "incompatible_role_selection_block_screenshot",
+        "compatibility_error_page_state"
+      ],
+      "required_authoritative_evidence": [
+        "incompatible_role_block_receipt",
+        "blocked_validation_result"
+      ],
+      "current_repo_candidate_artifacts": [
+        "capability-role-requirements/sample-team-research.role-requirements.json",
+        "tests/commercial-evidence-gate-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "incompatible role blocked receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-TEAM-01",
+      "plan_phase": "P5",
+      "test_goal": "替换秘书长",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "team_settings_secretary_replace_screenshot",
+        "owner_gate_confirmation_page_state"
+      ],
+      "required_authoritative_evidence": [
+        "TeamRoleSlotBindingCandidate_receipt",
+        "Owner_Gate_decision_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "bindings/team-office-role-binding-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "secretary binding candidate and Owner Gate receipts are missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-TEAM-02",
+      "plan_phase": "P5",
+      "test_goal": "替换五顾问",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "five_advisors_replace_screenshots",
+        "slot_compatibility_state"
+      ],
+      "required_authoritative_evidence": [
+        "five_TeamRoleSlotBindingCandidate_receipts",
+        "Owner_Gate_decision_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "role-slots/team-office-role-slots.json",
+        "bindings/team-office-role-binding-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "five advisor binding receipts are missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-TEAM-03",
+      "plan_phase": "P5",
+      "test_goal": "回滚角色绑定",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "team_role_binding_rollback_screenshot",
+        "history_not_rewritten_page_state"
+      ],
+      "required_authoritative_evidence": [
+        "rollback_binding_receipt",
+        "history_not_rewritten_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "bindings/team-office-role-binding-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "rollback binding receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-VOICE-01",
+      "plan_phase": "P6",
+      "test_goal": "秘书长选择音色",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "secretary_voice_picker_screenshot",
+        "voice_provider_readiness_state"
+      ],
+      "required_authoritative_evidence": [
+        "SecretaryAppearancePreference_receipt",
+        "voice_asset_ref_validation_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "appearance/secretary-appearance-preferences.json",
+        "appearance/secretary-appearance-asset-rights-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "voice asset ref validation receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-VRM-01",
+      "plan_phase": "P6",
+      "test_goal": "秘书长选择 VRM",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "secretary_vrm_picker_screenshot",
+        "vrm_provider_readiness_state"
+      ],
+      "required_authoritative_evidence": [
+        "SecretaryAppearancePreference_receipt",
+        "vrm_asset_ref_validation_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "appearance/secretary-appearance-preferences.json",
+        "appearance/secretary-appearance-asset-rights-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "VRM asset ref validation receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-NEG-01",
+      "plan_phase": "P8",
+      "test_goal": "raw 音频路径",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "raw_audio_path_rejected_screenshot",
+        "asset_ref_only_error_page_state"
+      ],
+      "required_authoritative_evidence": [
+        "raw_audio_path_block_receipt",
+        "blocked_validation_result"
+      ],
+      "current_repo_candidate_artifacts": [
+        "appearance/secretary-appearance-asset-rights-candidate.json",
+        "tests/commercial-evidence-gate-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "raw audio block receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-NEG-02",
+      "plan_phase": "P8",
+      "test_goal": "角色直接批准",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "direct_approval_language_block_screenshot",
+        "proposer_only_warning_state"
+      ],
+      "required_authoritative_evidence": [
+        "sovereignty_language_block_receipt",
+        "blocked_validation_result"
+      ],
+      "current_repo_candidate_artifacts": [
+        "role-packs/team-office-secretary-general.rolepack.json",
+        "tests/commercial-evidence-gate-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "sovereignty language block receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-NEG-03",
+      "plan_phase": "P8",
+      "test_goal": "provider 缺失",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "provider_missing_display_screenshot",
+        "text_role_candidate_still_available_state"
+      ],
+      "required_authoritative_evidence": [
+        "provider_missing_receipt",
+        "blocked_or_not_ready_result"
+      ],
+      "current_repo_candidate_artifacts": [
+        "appearance/secretary-appearance-asset-rights-candidate.json",
+        "tests/sandbox-environment-readiness-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "provider readiness receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-PRODUCT-FE-01",
+      "plan_phase": "P10",
+      "test_goal": "商品阶段前端收口",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop"
+      ],
+      "required_gui_evidence": [
+        "front_end_full_path_screenshots",
+        "error_recovery_screenshots",
+        "receipt_display_page_states"
+      ],
+      "required_authoritative_evidence": [
+        "frontend_smoke_receipt",
+        "playwright_user_view_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "tests/product-stage-frontend-backend-closure-report-candidate.json",
+        "integration/frontend-backend-contract-map.json"
+      ],
+      "missing_authoritative_evidence": [
+        "frontend smoke receipt and screenshots are missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-PRODUCT-BE-01",
+      "plan_phase": "P10",
+      "test_goal": "商品阶段后端收口",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "receipt_lookup_visible_in_gui_screenshot",
+        "honest_failure_state_screenshot"
+      ],
+      "required_authoritative_evidence": [
+        "backend_candidate_gate_receipts",
+        "receipt_lookup_smoke_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "tests/product-stage-frontend-backend-closure-report-candidate.json",
+        "integration/commercial-api-contract-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "backend candidate, Gate and Receipt proof is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-CLOUD-01",
+      "plan_phase": "P11",
+      "test_goal": "上传角色包到云端草稿",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "required_gui_evidence": [
+        "cloud_upload_draft_screenshot",
+        "listing_draft_page_state"
+      ],
+      "required_authoritative_evidence": [
+        "cloud_upload_receipt",
+        "artifact_hash_match_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "commerce/cloud-listing-candidate.json",
+        "commerce/artifact-bundle-digest-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "cloud upload receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-CLOUD-02",
+      "plan_phase": "P11",
+      "test_goal": "提交审核 / 上架候选",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "required_gui_evidence": [
+        "marketplace_review_submission_screenshot",
+        "production_publish_block_state"
+      ],
+      "required_authoritative_evidence": [
+        "marketplace_review_candidate_receipt",
+        "production_publish_block_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "commerce/marketplace-review-submission-candidate.json",
+        "commerce/commercial-go-live-approval-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "review candidate receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-PAY-01",
+      "plan_phase": "P11",
+      "test_goal": "sandbox 支付购买",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "required_gui_evidence": [
+        "sandbox_purchase_screenshot",
+        "payment_result_page_state",
+        "owned_library_entitlement_screenshot"
+      ],
+      "required_authoritative_evidence": [
+        "sandbox_order_receipt",
+        "sandbox_payment_receipt",
+        "entitlement_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "commerce/order-payment-state-machine-candidate.json",
+        "commerce/license-entitlement-policy-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "sandbox order, payment and entitlement receipts are missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-DOWNLOAD-01",
+      "plan_phase": "P11",
+      "test_goal": "已购下载",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhen-cloud"
+      ],
+      "required_gui_evidence": [
+        "owned_library_download_screenshot",
+        "download_hash_visible_state"
+      ],
+      "required_authoritative_evidence": [
+        "download_receipt",
+        "artifact_hash_match_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "commerce/download-install-access-matrix.json",
+        "commerce/artifact-bundle-digest-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "download receipt and hash match receipt are missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-INSTALL-01",
+      "plan_phase": "P11",
+      "test_goal": "下载后安装角色包",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_gui_evidence": [
+        "local_install_entry_screenshot",
+        "enabled_role_pack_version_screenshot",
+        "team_settings_installed_role_catalog_screenshot"
+      ],
+      "required_authoritative_evidence": [
+        "install_receipt",
+        "enabled_role_pack_version_receipt",
+        "team_binding_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "install/install-preflight-request-candidate.json",
+        "bindings/team-settings-installed-role-catalog-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "install and enabled version receipts are missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-INSTALL-NEG-01",
+      "plan_phase": "P11",
+      "test_goal": "未购买安装",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-cloud"
+      ],
+      "required_gui_evidence": [
+        "unpaid_install_block_screenshot",
+        "entitlement_missing_error_state"
+      ],
+      "required_authoritative_evidence": [
+        "entitlement_missing_block_receipt",
+        "install_preflight_blocked_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "commerce/download-install-access-matrix.json",
+        "install/install-preflight-request-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "unpaid install block receipt is missing"
+      ]
+    },
+    {
+      "test_case_id": "TC-INSTALL-NEG-02",
+      "plan_phase": "P11",
+      "test_goal": "包 hash 不一致",
+      "execution_mode": "user_view_gui_agent_only",
+      "coverage_status": "pending_cross_repo_execution",
+      "can_count_toward_completion_now": false,
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-cloud"
+      ],
+      "required_gui_evidence": [
+        "artifact_hash_mismatch_block_screenshot",
+        "install_preflight_hash_error_state"
+      ],
+      "required_authoritative_evidence": [
+        "artifact_hash_mismatch_block_receipt",
+        "install_preflight_blocked_receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "commerce/artifact-bundle-digest-candidate.json",
+        "install/install-preflight-request-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "hash mismatch block receipt is missing"
+      ]
+    }
+  ],
+  "completion_claim_policy": {
+    "completion_claim_allowed": false,
+    "required_before_completion_claim": [
+      "all_plan_test_cases_have_authoritative_evidence",
+      "user_view_gui_agent_operation_log_present",
+      "cloud_install_and_binding_receipts_present",
+      "all_negative_cases_blocked_verified",
+      "independent_acceptance_signed"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "candidate_json_only",
+    "manual_json_edit",
+    "phase_coverage_without_tc_rows",
+    "single_repo_go_test_only",
+    "p11_only_without_p2_to_p10_evidence"
+  ],
+  "non_completion_clause": "本矩阵只是计划测试任务到证据要求的候选映射。所有 TC 行当前均缺真实用户视角 GUI 证据、权威 receipt 或 blocked 回执，不得据此声称角色制作、使用、上传、下载、安装或正常商品化已畅通。"
+}

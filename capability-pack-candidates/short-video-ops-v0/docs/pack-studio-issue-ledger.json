@@ -1,0 +1,596 @@
+{
+  "issue_ledger_ref": "pack-studio-issue-ledger://short-video-ops-v0/2026-07-05",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "issue_ledger_status": "blocked_pending_issue_resolution_evidence",
+  "source_plan_requirement": "M7_issue_backfill",
+  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/gui-capability-pack-workbench-github-oss-test-plan-20260704.md#7-问题回填",
+  "route_to_improvement_backlog": "docs/commercial-improvement-backlog.json",
+  "can_mark_commercial_ready": false,
+  "issues": [
+    {
+      "issue_id": "CAP-STUDIO-ISSUE-P10-CAPABILITY-PACK-LOADER-MISSING",
+      "source_slice": "p10_candidate_bundle_dry_run",
+      "title": "Capability Pack candidate bundle dry-run blocked by missing formal loader path",
+      "risk_color": "yellow",
+      "status": "open_blocked_pending_loader_design_and_evidence",
+      "blocked_reason": "capability_pack_loader_missing",
+      "source_artifact": "docs/candidate-bundle-dry-run-ledger.md",
+      "target_layer": "truzhenos capability studio lifecycle",
+      "required_resolution_evidence": [
+        "formal lifecycle entry remains separated from candidate bundle dry-run",
+        "loader or delivery path has backend tests and GUI blocked state evidence",
+        "Owner/Base Gate and Receipt behavior is proven before enablement"
+      ],
+      "forbidden_resolutions": [
+        "manual_edit_without_gui_or_gateway_evidence",
+        "treat_candidate_bundle_as_formal_delivery",
+        "enable_capability_pack_without_owner_base_gate",
+        "close_issue_with_manual_summary_only",
+        "close_issue_without_receipt_or_candidate_ref"
+      ],
+      "can_count_toward_commercial_ready": false,
+      "resolution_evidence_status": "missing_authoritative_evidence",
+      "resolution_evidence_requirements": [
+        {
+          "evidence_type": "implementation_or_authorization_evidence",
+          "evidence_status": "missing",
+          "required_source": "target repository diff, authorization intake record, or execution package for the issue source_slice",
+          "authority": "target layer owner plus Owner/Base Gate when runtime behavior changes",
+          "required_ref_field": "diff_ref_or_authorization_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "verification_command_evidence",
+          "evidence_status": "missing",
+          "required_source": "fresh verification command output from the target repository or authorized sandbox",
+          "authority": "target repository test runner or independent verifier",
+          "required_ref_field": "verification_command_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "gui_api_or_readmodel_evidence",
+          "evidence_status": "missing",
+          "required_source": "GUI walkthrough, API smoke, or backend ReadModel evidence matching the issue source_slice",
+          "authority": "truzhen-client-web-desktop and/or truzhenos runtime evidence",
+          "required_ref_field": "gui_api_readmodel_evidence_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "receipt_or_candidate_ref_evidence",
+          "evidence_status": "missing",
+          "required_source": "Owner/Base Gate receipt, Gateway receipt, or candidate ref proving candidate/formal isolation",
+          "authority": "Owner + Base Gate + Gateway + Receipt",
+          "required_ref_field": "receipt_ref_or_candidate_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "forbidden_resolution_absence_evidence",
+          "evidence_status": "missing",
+          "required_source": "artifact scan, log review, or gate evidence proving forbidden resolutions did not occur",
+          "authority": "independent verification plus repository scan",
+          "required_ref_field": "forbidden_absence_evidence_ref",
+          "can_substitute_with_manual_note": false
+        }
+      ]
+    },
+    {
+      "issue_id": "CAP-STUDIO-ISSUE-P11-CANDIDATE-BUNDLE-NOT-DELIVERY",
+      "source_slice": "p11_lifecycle_preflight",
+      "title": "Lifecycle preflight correctly blocks candidate bundle but still needs formal delivery path",
+      "risk_color": "yellow",
+      "status": "open_blocked_pending_formal_delivery_path",
+      "blocked_reason": "candidate_bundle_not_delivery",
+      "source_artifact": "docs/lifecycle-preflight-commercial-gap-ledger.md",
+      "target_layer": "truzhenos capability studio lifecycle",
+      "required_resolution_evidence": [
+        "formal studio delivery artifact exists separately from candidate bundle",
+        "preflight keeps candidate-only bundle blocked",
+        "draft/readiness/promote/confirm evidence is collected through lifecycle endpoints"
+      ],
+      "forbidden_resolutions": [
+        "manual_edit_without_gui_or_gateway_evidence",
+        "mark_candidate_bundle_as_delivery",
+        "write_enabled_pointer_without_receipt",
+        "close_issue_with_manual_summary_only",
+        "close_issue_without_receipt_or_candidate_ref"
+      ],
+      "can_count_toward_commercial_ready": false,
+      "resolution_evidence_status": "missing_authoritative_evidence",
+      "resolution_evidence_requirements": [
+        {
+          "evidence_type": "implementation_or_authorization_evidence",
+          "evidence_status": "missing",
+          "required_source": "target repository diff, authorization intake record, or execution package for the issue source_slice",
+          "authority": "target layer owner plus Owner/Base Gate when runtime behavior changes",
+          "required_ref_field": "diff_ref_or_authorization_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "verification_command_evidence",
+          "evidence_status": "missing",
+          "required_source": "fresh verification command output from the target repository or authorized sandbox",
+          "authority": "target repository test runner or independent verifier",
+          "required_ref_field": "verification_command_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "gui_api_or_readmodel_evidence",
+          "evidence_status": "missing",
+          "required_source": "GUI walkthrough, API smoke, or backend ReadModel evidence matching the issue source_slice",
+          "authority": "truzhen-client-web-desktop and/or truzhenos runtime evidence",
+          "required_ref_field": "gui_api_readmodel_evidence_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "receipt_or_candidate_ref_evidence",
+          "evidence_status": "missing",
+          "required_source": "Owner/Base Gate receipt, Gateway receipt, or candidate ref proving candidate/formal isolation",
+          "authority": "Owner + Base Gate + Gateway + Receipt",
+          "required_ref_field": "receipt_ref_or_candidate_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "forbidden_resolution_absence_evidence",
+          "evidence_status": "missing",
+          "required_source": "artifact scan, log review, or gate evidence proving forbidden resolutions did not occur",
+          "authority": "independent verification plus repository scan",
+          "required_ref_field": "forbidden_absence_evidence_ref",
+          "can_substitute_with_manual_note": false
+        }
+      ]
+    },
+    {
+      "issue_id": "CAP-STUDIO-ISSUE-P12-OWNER-AUTHORIZATION-MISSING",
+      "source_slice": "p12_safe_lifecycle_sample",
+      "title": "P12 safe lifecycle sample cannot start without exact Owner authorization",
+      "risk_color": "yellow",
+      "status": "blocked_missing_exact_p12_owner_authorization",
+      "blocked_reason": "owner_authorization_missing",
+      "source_artifact": "docs/p12-owner-authorization-evidence-intake.json",
+      "target_layer": "truzhenos and truzhen-client-web-desktop",
+      "required_resolution_evidence": [
+        "Owner quote contains the P12 authorization card phrase",
+        "authorized repositories and forbidden repositories match P12 scope",
+        "next authorization start guard opens before cross-repo work starts"
+      ],
+      "forbidden_resolutions": [
+        "manual_edit_without_gui_or_gateway_evidence",
+        "reuse_p11_authorization_for_p12",
+        "start_cross_repo_work_without_owner_authorization",
+        "close_issue_with_manual_summary_only",
+        "close_issue_without_receipt_or_candidate_ref"
+      ],
+      "can_count_toward_commercial_ready": false,
+      "resolution_evidence_status": "missing_authoritative_evidence",
+      "resolution_evidence_requirements": [
+        {
+          "evidence_type": "implementation_or_authorization_evidence",
+          "evidence_status": "missing",
+          "required_source": "target repository diff, authorization intake record, or execution package for the issue source_slice",
+          "authority": "target layer owner plus Owner/Base Gate when runtime behavior changes",
+          "required_ref_field": "diff_ref_or_authorization_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "verification_command_evidence",
+          "evidence_status": "missing",
+          "required_source": "fresh verification command output from the target repository or authorized sandbox",
+          "authority": "target repository test runner or independent verifier",
+          "required_ref_field": "verification_command_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "gui_api_or_readmodel_evidence",
+          "evidence_status": "missing",
+          "required_source": "GUI walkthrough, API smoke, or backend ReadModel evidence matching the issue source_slice",
+          "authority": "truzhen-client-web-desktop and/or truzhenos runtime evidence",
+          "required_ref_field": "gui_api_readmodel_evidence_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "receipt_or_candidate_ref_evidence",
+          "evidence_status": "missing",
+          "required_source": "Owner/Base Gate receipt, Gateway receipt, or candidate ref proving candidate/formal isolation",
+          "authority": "Owner + Base Gate + Gateway + Receipt",
+          "required_ref_field": "receipt_ref_or_candidate_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "forbidden_resolution_absence_evidence",
+          "evidence_status": "missing",
+          "required_source": "artifact scan, log review, or gate evidence proving forbidden resolutions did not occur",
+          "authority": "independent verification plus repository scan",
+          "required_ref_field": "forbidden_absence_evidence_ref",
+          "can_substitute_with_manual_note": false
+        }
+      ]
+    },
+    {
+      "issue_id": "CAP-STUDIO-ISSUE-P13-GUI-LIFECYCLE-EVIDENCE-MISSING",
+      "source_slice": "p13_gui_lifecycle_panel",
+      "title": "GUI lifecycle panel evidence is missing",
+      "risk_color": "yellow",
+      "status": "open_pending_frontend_backend_runtime_evidence",
+      "blocked_reason": "frontend_backend_evidence_pending",
+      "source_artifact": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
+      "target_layer": "truzhen-client-web-desktop and truzhenos",
+      "required_resolution_evidence": [
+        "GUI shows candidate-only lifecycle status and backend issue keys",
+        "promote and confirm controls stay disabled until Gate and Receipt evidence exists",
+        "frontend smoke evidence is linked to backend lifecycle evidence"
+      ],
+      "forbidden_resolutions": [
+        "manual_edit_without_gui_or_gateway_evidence",
+        "hide_candidate_only_status",
+        "accept_frontend_only_success_without_backend_receipt",
+        "close_issue_with_manual_summary_only",
+        "close_issue_without_receipt_or_candidate_ref"
+      ],
+      "can_count_toward_commercial_ready": false,
+      "resolution_evidence_status": "missing_authoritative_evidence",
+      "resolution_evidence_requirements": [
+        {
+          "evidence_type": "implementation_or_authorization_evidence",
+          "evidence_status": "missing",
+          "required_source": "target repository diff, authorization intake record, or execution package for the issue source_slice",
+          "authority": "target layer owner plus Owner/Base Gate when runtime behavior changes",
+          "required_ref_field": "diff_ref_or_authorization_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "verification_command_evidence",
+          "evidence_status": "missing",
+          "required_source": "fresh verification command output from the target repository or authorized sandbox",
+          "authority": "target repository test runner or independent verifier",
+          "required_ref_field": "verification_command_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "gui_api_or_readmodel_evidence",
+          "evidence_status": "missing",
+          "required_source": "GUI walkthrough, API smoke, or backend ReadModel evidence matching the issue source_slice",
+          "authority": "truzhen-client-web-desktop and/or truzhenos runtime evidence",
+          "required_ref_field": "gui_api_readmodel_evidence_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "receipt_or_candidate_ref_evidence",
+          "evidence_status": "missing",
+          "required_source": "Owner/Base Gate receipt, Gateway receipt, or candidate ref proving candidate/formal isolation",
+          "authority": "Owner + Base Gate + Gateway + Receipt",
+          "required_ref_field": "receipt_ref_or_candidate_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "forbidden_resolution_absence_evidence",
+          "evidence_status": "missing",
+          "required_source": "artifact scan, log review, or gate evidence proving forbidden resolutions did not occur",
+          "authority": "independent verification plus repository scan",
+          "required_ref_field": "forbidden_absence_evidence_ref",
+          "can_substitute_with_manual_note": false
+        }
+      ]
+    },
+    {
+      "issue_id": "CAP-STUDIO-ISSUE-P15-THREE-CANDIDATE-WALKTHROUGH-MISSING",
+      "source_slice": "p15_gui_walkthrough_three_candidates",
+      "title": "Three short-video Capability Pack candidates lack GUI walkthrough evidence",
+      "risk_color": "orange",
+      "status": "open_pending_three_candidate_gui_walkthrough",
+      "blocked_reason": "three_candidate_gui_walkthrough_missing",
+      "source_artifact": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json",
+      "target_layer": "truzhen-client-web-desktop, truzhenos, truzhen-packs",
+      "required_resolution_evidence": [
+        "MoneyPrinterTurbo candidate walkthrough evidence",
+        "Pixelle-Video candidate walkthrough evidence",
+        "social-auto-upload candidate walkthrough evidence",
+        "blocked reasons and provider ownership are visible in GUI"
+      ],
+      "forbidden_resolutions": [
+        "manual_edit_without_gui_or_gateway_evidence",
+        "execute_third_party_oss",
+        "social_login_or_upload",
+        "close_issue_with_manual_summary_only",
+        "close_issue_without_receipt_or_candidate_ref"
+      ],
+      "can_count_toward_commercial_ready": false,
+      "resolution_evidence_status": "missing_authoritative_evidence",
+      "resolution_evidence_requirements": [
+        {
+          "evidence_type": "implementation_or_authorization_evidence",
+          "evidence_status": "missing",
+          "required_source": "target repository diff, authorization intake record, or execution package for the issue source_slice",
+          "authority": "target layer owner plus Owner/Base Gate when runtime behavior changes",
+          "required_ref_field": "diff_ref_or_authorization_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "verification_command_evidence",
+          "evidence_status": "missing",
+          "required_source": "fresh verification command output from the target repository or authorized sandbox",
+          "authority": "target repository test runner or independent verifier",
+          "required_ref_field": "verification_command_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "gui_api_or_readmodel_evidence",
+          "evidence_status": "missing",
+          "required_source": "GUI walkthrough, API smoke, or backend ReadModel evidence matching the issue source_slice",
+          "authority": "truzhen-client-web-desktop and/or truzhenos runtime evidence",
+          "required_ref_field": "gui_api_readmodel_evidence_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "receipt_or_candidate_ref_evidence",
+          "evidence_status": "missing",
+          "required_source": "Owner/Base Gate receipt, Gateway receipt, or candidate ref proving candidate/formal isolation",
+          "authority": "Owner + Base Gate + Gateway + Receipt",
+          "required_ref_field": "receipt_ref_or_candidate_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "forbidden_resolution_absence_evidence",
+          "evidence_status": "missing",
+          "required_source": "artifact scan, log review, or gate evidence proving forbidden resolutions did not occur",
+          "authority": "independent verification plus repository scan",
+          "required_ref_field": "forbidden_absence_evidence_ref",
+          "can_substitute_with_manual_note": false
+        }
+      ]
+    },
+    {
+      "issue_id": "CAP-STUDIO-ISSUE-P16-CODE-ASSISTANT-RUN-NOT-AUTHORIZED",
+      "source_slice": "p16_controlled_code_assistant_run",
+      "title": "Controlled Code Assistant run is not authorized or receipted",
+      "risk_color": "orange",
+      "status": "blocked_pending_11_gateway_and_owner_base_gate_receipts",
+      "blocked_reason": "code_assistant_run_not_authorized",
+      "source_artifact": "docs/p16-controlled-code-assistant-run-evidence-contract.json",
+      "target_layer": "11 Execution Gateway and Pack Studio",
+      "required_resolution_evidence": [
+        "11 Gateway run envelope with Owner/Base Gate decision",
+        "PatchCandidate artifact and receipt references",
+        "logs prove no raw GPT or Codex token was saved"
+      ],
+      "forbidden_resolutions": [
+        "manual_edit_without_gui_or_gateway_evidence",
+        "run_real_codex_cli_without_11_gateway_and_owner_base_gate",
+        "store_raw_token_cookie_password",
+        "close_issue_with_manual_summary_only",
+        "close_issue_without_receipt_or_candidate_ref"
+      ],
+      "can_count_toward_commercial_ready": false,
+      "resolution_evidence_status": "missing_authoritative_evidence",
+      "resolution_evidence_requirements": [
+        {
+          "evidence_type": "implementation_or_authorization_evidence",
+          "evidence_status": "missing",
+          "required_source": "target repository diff, authorization intake record, or execution package for the issue source_slice",
+          "authority": "target layer owner plus Owner/Base Gate when runtime behavior changes",
+          "required_ref_field": "diff_ref_or_authorization_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "verification_command_evidence",
+          "evidence_status": "missing",
+          "required_source": "fresh verification command output from the target repository or authorized sandbox",
+          "authority": "target repository test runner or independent verifier",
+          "required_ref_field": "verification_command_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "gui_api_or_readmodel_evidence",
+          "evidence_status": "missing",
+          "required_source": "GUI walkthrough, API smoke, or backend ReadModel evidence matching the issue source_slice",
+          "authority": "truzhen-client-web-desktop and/or truzhenos runtime evidence",
+          "required_ref_field": "gui_api_readmodel_evidence_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "receipt_or_candidate_ref_evidence",
+          "evidence_status": "missing",
+          "required_source": "Owner/Base Gate receipt, Gateway receipt, or candidate ref proving candidate/formal isolation",
+          "authority": "Owner + Base Gate + Gateway + Receipt",
+          "required_ref_field": "receipt_ref_or_candidate_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "forbidden_resolution_absence_evidence",
+          "evidence_status": "missing",
+          "required_source": "artifact scan, log review, or gate evidence proving forbidden resolutions did not occur",
+          "authority": "independent verification plus repository scan",
+          "required_ref_field": "forbidden_absence_evidence_ref",
+          "can_substitute_with_manual_note": false
+        }
+      ]
+    },
+    {
+      "issue_id": "CAP-STUDIO-ISSUE-P17-PROVIDER-ADAPTER-OWNERSHIP-MISSING",
+      "source_slice": "p17_provider_adapter_candidate",
+      "title": "Provider adapter candidate ownership and readiness evidence are missing",
+      "risk_color": "orange",
+      "status": "open_pending_provider_adapter_candidate_evidence",
+      "blocked_reason": "provider_adapter_ownership_missing",
+      "source_artifact": "docs/p17-provider-adapter-candidate-evidence-contract.json",
+      "target_layer": "truzhen-software or external provider repository",
+      "required_resolution_evidence": [
+        "provider or adapter candidate is outside truzhen-packs",
+        "readiness defaults to blocked/provider_missing until implementation exists",
+        "no provider execution code is stored in Pack assets"
+      ],
+      "forbidden_resolutions": [
+        "manual_edit_without_gui_or_gateway_evidence",
+        "put_provider_implementation_inside_truzhen_packs",
+        "claim_provider_ready_without_health_and_receipt_evidence",
+        "close_issue_with_manual_summary_only",
+        "close_issue_without_receipt_or_candidate_ref"
+      ],
+      "can_count_toward_commercial_ready": false,
+      "resolution_evidence_status": "missing_authoritative_evidence",
+      "resolution_evidence_requirements": [
+        {
+          "evidence_type": "implementation_or_authorization_evidence",
+          "evidence_status": "missing",
+          "required_source": "target repository diff, authorization intake record, or execution package for the issue source_slice",
+          "authority": "target layer owner plus Owner/Base Gate when runtime behavior changes",
+          "required_ref_field": "diff_ref_or_authorization_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "verification_command_evidence",
+          "evidence_status": "missing",
+          "required_source": "fresh verification command output from the target repository or authorized sandbox",
+          "authority": "target repository test runner or independent verifier",
+          "required_ref_field": "verification_command_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "gui_api_or_readmodel_evidence",
+          "evidence_status": "missing",
+          "required_source": "GUI walkthrough, API smoke, or backend ReadModel evidence matching the issue source_slice",
+          "authority": "truzhen-client-web-desktop and/or truzhenos runtime evidence",
+          "required_ref_field": "gui_api_readmodel_evidence_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "receipt_or_candidate_ref_evidence",
+          "evidence_status": "missing",
+          "required_source": "Owner/Base Gate receipt, Gateway receipt, or candidate ref proving candidate/formal isolation",
+          "authority": "Owner + Base Gate + Gateway + Receipt",
+          "required_ref_field": "receipt_ref_or_candidate_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "forbidden_resolution_absence_evidence",
+          "evidence_status": "missing",
+          "required_source": "artifact scan, log review, or gate evidence proving forbidden resolutions did not occur",
+          "authority": "independent verification plus repository scan",
+          "required_ref_field": "forbidden_absence_evidence_ref",
+          "can_substitute_with_manual_note": false
+        }
+      ]
+    },
+    {
+      "issue_id": "CAP-STUDIO-ISSUE-P18-CLOUD-SANDBOX-NOT-AUTHORIZED",
+      "source_slice": "p18_cloud_market_sandbox",
+      "title": "Cloud market sandbox is not authorized and has no entitlement receipts",
+      "risk_color": "orange",
+      "status": "blocked_pending_cloud_sandbox_authorization_and_receipts",
+      "blocked_reason": "cloud_sandbox_not_authorized",
+      "source_artifact": "docs/p18-cloud-market-sandbox-evidence-contract.json",
+      "target_layer": "truzhen-cloud sandbox",
+      "required_resolution_evidence": [
+        "sandbox listing, entitlement, download and install receipts are linked",
+        "production listing, payment and license issuance remain blocked",
+        "cloud truth source is not stored in truzhen-packs"
+      ],
+      "forbidden_resolutions": [
+        "manual_edit_without_gui_or_gateway_evidence",
+        "production_cloud_market_action",
+        "store_cloud_listing_truth_in_packs",
+        "close_issue_with_manual_summary_only",
+        "close_issue_without_receipt_or_candidate_ref"
+      ],
+      "can_count_toward_commercial_ready": false,
+      "resolution_evidence_status": "missing_authoritative_evidence",
+      "resolution_evidence_requirements": [
+        {
+          "evidence_type": "implementation_or_authorization_evidence",
+          "evidence_status": "missing",
+          "required_source": "target repository diff, authorization intake record, or execution package for the issue source_slice",
+          "authority": "target layer owner plus Owner/Base Gate when runtime behavior changes",
+          "required_ref_field": "diff_ref_or_authorization_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "verification_command_evidence",
+          "evidence_status": "missing",
+          "required_source": "fresh verification command output from the target repository or authorized sandbox",
+          "authority": "target repository test runner or independent verifier",
+          "required_ref_field": "verification_command_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "gui_api_or_readmodel_evidence",
+          "evidence_status": "missing",
+          "required_source": "GUI walkthrough, API smoke, or backend ReadModel evidence matching the issue source_slice",
+          "authority": "truzhen-client-web-desktop and/or truzhenos runtime evidence",
+          "required_ref_field": "gui_api_readmodel_evidence_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "receipt_or_candidate_ref_evidence",
+          "evidence_status": "missing",
+          "required_source": "Owner/Base Gate receipt, Gateway receipt, or candidate ref proving candidate/formal isolation",
+          "authority": "Owner + Base Gate + Gateway + Receipt",
+          "required_ref_field": "receipt_ref_or_candidate_ref",
+          "can_substitute_with_manual_note": false
+        },
+        {
+          "evidence_type": "forbidden_resolution_absence_evidence",
+          "evidence_status": "missing",
+          "required_source": "artifact scan, log review, or gate evidence proving forbidden resolutions did not occur",
+          "authority": "independent verification plus repository scan",
+          "required_ref_field": "forbidden_absence_evidence_ref",
+          "can_substitute_with_manual_note": false
+        }
+      ]
+    }
+  ],
+  "completion_gate": {
+    "can_close_issue_ledger": false,
+    "required_before_close": [
+      "all_issue_cards_resolved_with_evidence",
+      "all_resolution_evidence_refs_recorded",
+      "all_forbidden_resolutions_proven_absent",
+      "owner_base_gate_receipts_bound_for_runtime_changes",
+      "all_issue_resolution_evidence_schema_verified",
+      "all_issue_resolution_evidence_refs_authoritative",
+      "manual_resolution_notes_rejected"
+    ],
+    "required_before_commercial_ready": [
+      "pack_studio_issue_ledger_closed",
+      "commercial_improvement_backlog_done",
+      "all_evidence_writebacks_completed_and_verified"
+    ],
+    "non_sufficient_evidence": [
+      "pack_studio_issue_ledger_open",
+      "issue_resolution_evidence_missing",
+      "owner_base_gate_receipts_missing",
+      "manual_resolution_note_without_authoritative_refs",
+      "closed_status_without_resolution_evidence_refs",
+      "tests_without_gui_or_receipt_evidence"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "pack_studio_issue_ledger_open",
+    "issue_resolution_evidence_missing",
+    "candidate_issue_cards_without_cross_repo_evidence",
+    "manual_resolution_note_without_authoritative_refs",
+    "closed_status_without_resolution_evidence_refs",
+    "tests_without_gui_or_receipt_evidence"
+  ],
+  "non_completion_clause": "This issue ledger is a candidate-only backfill ledger for Pack Studio gaps. It is not proof that any issue is resolved and cannot authorize cross-repo work or commercial readiness.",
+  "resolution_evidence_schema": {
+    "schema_ref": "pack-studio-issue-resolution-evidence-schema://short-video-ops-v0/2026-07-05",
+    "manual_resolution_note_can_close_issue": false,
+    "summary_only_can_close_issue": false,
+    "required_evidence_types": [
+      "implementation_or_authorization_evidence",
+      "verification_command_evidence",
+      "gui_api_or_readmodel_evidence",
+      "receipt_or_candidate_ref_evidence",
+      "forbidden_resolution_absence_evidence"
+    ],
+    "required_before_issue_status_resolved": [
+      "all_required_resolution_evidence_refs_recorded",
+      "all_required_resolution_evidence_refs_authoritative",
+      "verification_command_evidence_passed",
+      "gui_api_or_readmodel_evidence_bound",
+      "receipt_or_candidate_ref_evidence_bound",
+      "forbidden_resolution_absence_evidence_verified"
+    ]
+  }
+}

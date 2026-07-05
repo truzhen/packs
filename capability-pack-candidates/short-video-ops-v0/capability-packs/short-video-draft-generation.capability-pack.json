@@ -1,0 +1,96 @@
+{
+  "pack_type": "Capability Pack",
+  "capability_pack_ref": "capability-pack://short-video-draft-generation",
+  "display_name": "短视频草稿生成能力包",
+  "version": "0.1.0",
+  "lifecycle_status": "契约已定",
+  "candidate_only": true,
+  "non_formal": true,
+  "capability_domain": "short_video_ops",
+  "capability_operation": "generate_video_draft_candidate",
+  "input_contract": [
+    {
+      "name": "short_video_brief_ref",
+      "type": "artifact_ref",
+      "required": true,
+      "description": "脚本、分镜和素材打包后的短视频制作简报引用。"
+    }
+  ],
+  "output_contract": [
+    {
+      "name": "video_draft_ref",
+      "type": "artifact_ref",
+      "required": true,
+      "description": "候选短视频草稿产物引用。"
+    }
+  ],
+  "risk": {
+    "risk_class": "medium",
+    "side_effect_class": "local_draft",
+    "owner_decision_required": true,
+    "base_gate_required_for_execution": true
+  },
+  "provider_requirements": [
+    {
+      "requirement_ref": "provider-requirement://short-video/video-draft-generation-candidate",
+      "gateway_class": "11-execution-gateway",
+      "provider_family": "short_video_generation",
+      "required_readiness": "ready_or_provider_missing",
+      "fallback_policy": "provider_missing",
+      "notes": "真实视频生成 provider 不在本仓实现；未接通时只返回 provider_missing。"
+    }
+  ],
+  "oss_candidates": [
+    {
+      "name": "MoneyPrinterTurbo",
+      "source_registry": "github",
+      "source_url": "https://github.com/harry0703/MoneyPrinterTurbo",
+      "observed_license": "MIT",
+      "evidence_refs": [
+        "evidence://github/harry0703/MoneyPrinterTurbo/license",
+        "evidence://github/harry0703/MoneyPrinterTurbo/readme",
+        "evidence://github/harry0703/MoneyPrinterTurbo/maintenance"
+      ],
+      "verification_status": "pending_human_review",
+      "risk_notes": [
+        "可能依赖模型、素材站或本地视频工具；必须通过 Gateway provider 绑定。",
+        "Pack 只生成胶水补丁候选，不复制或运行第三方仓库。"
+      ]
+    }
+  ],
+  "integration_plan": {
+    "integration_kind": "glue_code_candidate",
+    "allowed_actions": [
+      "adapter",
+      "mapping",
+      "config",
+      "validation",
+      "packaging",
+      "receipt_binding"
+    ],
+    "no_direct_execution": true,
+    "candidate_only": true,
+    "non_formal": true,
+    "code_assistant_policy": {
+      "capability_pack_ref": "capability-pack://software-code-assistant",
+      "allowed_skill_ids": [
+        "code.change_candidate",
+        "test.run"
+      ],
+      "patch_candidate_only": true,
+      "credential_policy": "credential_ref_only_no_raw_token",
+      "no_raw_token": true
+    }
+  },
+  "acceptance": [
+    "同一 short_video_brief_ref 生成可复核 video_draft_ref 候选。",
+    "所有 OSS 来源、license、维护状态和 docs 证据贯通到 MinimalGluePlan.AssemblyManifest。",
+    "缺 provider 时必须 provider_missing，不得伪装 ready。"
+  ],
+  "forbidden": [
+    "direct_video_publish",
+    "raw_account_credential",
+    "direct_codex_cli_call_from_pack",
+    "third_party_repo_execution_from_pack"
+  ]
+}

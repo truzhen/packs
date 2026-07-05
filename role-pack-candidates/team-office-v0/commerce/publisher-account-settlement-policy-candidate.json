@@ -1,0 +1,122 @@
+{
+  "policy_candidate_ref": "publisher-account-settlement-policy-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "listing_candidate_ref": "pack-listing-candidate://team-office-role-pack-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "cloud_truth_source": "truzhen-cloud",
+  "package_contents_truth_source": "truzhen-packs",
+  "real_payment_policy": "blocked_until_owner_authorizes",
+  "scope": "声明团队办公室角色包进入云市场前的发布者身份、定价审批、结算和税务发票候选边界；不保存正式账号、KYC、银行账户、税务资料、结算或发票事实。",
+  "publisher_identity_policy": {
+    "publisher_account_required": true,
+    "sandbox_identity_allowed": true,
+    "no_identity_document_in_packs": true,
+    "publisher_identity_truth_source": "truzhen-cloud",
+    "kyc_status_policy": "required_before_real_listing_or_real_payout",
+    "evidence_required": "publisher_account_receipt + kyc_or_sandbox_identity_receipt"
+  },
+  "pricing_approval_policy": {
+    "price_candidate_required": true,
+    "owner_price_approval_required": true,
+    "currency": "CNY",
+    "pricing_truth_source": "truzhen-cloud",
+    "real_price_status": "pending_owner_decision_before_real_listing",
+    "evidence_required": "owner_price_approval_receipt + cloud_listing_price_candidate_ref"
+  },
+  "settlement_policy": {
+    "settlement_receipt_required": true,
+    "no_bank_account_in_packs": true,
+    "payout_truth_source": "truzhen-cloud",
+    "sandbox_payout_policy": "sandbox_receipt_only_no_real_bank_transfer",
+    "real_payout_policy": "blocked_until_owner_authorizes_and_tax_profile_ready",
+    "evidence_required": "settlement_account_receipt + payout_policy_receipt"
+  },
+  "tax_invoice_policy": {
+    "tax_profile_required_before_real_payout": true,
+    "tax_profile_in_packs": false,
+    "invoice_truth_source": "truzhen-cloud",
+    "buyer_invoice_policy": "cloud_generates_or_records_invoice_receipt_after_owner_policy",
+    "evidence_required": "tax_profile_receipt + invoice_policy_receipt"
+  },
+  "commercial_go_live_gates": [
+    {
+      "gate_id": "publisher_identity_verified",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_owner_decision",
+      "evidence_required": "publisher_account_receipt + identity_verification_receipt"
+    },
+    {
+      "gate_id": "pricing_owner_approved",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_owner_decision",
+      "evidence_required": "owner_price_approval_receipt"
+    },
+    {
+      "gate_id": "tax_invoice_policy_recorded",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_owner_decision",
+      "evidence_required": "tax_profile_policy_receipt"
+    },
+    {
+      "gate_id": "settlement_policy_recorded",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_owner_decision",
+      "evidence_required": "settlement_policy_receipt"
+    },
+    {
+      "gate_id": "support_refund_policy_ready",
+      "truth_source": "truzhen-cloud",
+      "status": "candidate_ready",
+      "evidence_required": "commerce/support-refund-revocation-policy-candidate.json + cloud support/refund receipt"
+    },
+    {
+      "gate_id": "real_payment_authorized_or_blocked",
+      "truth_source": "truzhen-cloud",
+      "status": "pending_owner_decision",
+      "evidence_required": "owner_real_payment_authorization_receipt_or_block_receipt"
+    }
+  ],
+  "negative_cases": {
+    "publish_without_publisher_identity": {
+      "expected_status": "blocked_publisher_identity_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "publisher_identity_block_receipt"
+    },
+    "real_payout_without_tax_profile": {
+      "expected_status": "blocked_tax_profile_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "tax_profile_block_receipt"
+    },
+    "bank_account_in_pack": {
+      "expected_status": "blocked_bank_account_in_pack",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "secret_or_financial_data_scan_receipt"
+    },
+    "price_live_without_owner_approval": {
+      "expected_status": "blocked_owner_price_approval_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "pricing_owner_gate_block_receipt"
+    },
+    "invoice_truth_in_packs": {
+      "expected_status": "blocked_wrong_truth_source",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "invoice_truth_source_boundary_receipt"
+    },
+    "settlement_truth_in_packs": {
+      "expected_status": "blocked_wrong_truth_source",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "settlement_truth_source_boundary_receipt"
+    }
+  },
+  "forbidden": [
+    "store_bank_account_in_truzhen_packs",
+    "store_tax_profile_truth_in_truzhen_packs",
+    "store_settlement_truth_in_truzhen_packs",
+    "real_payout_without_owner_authorization",
+    "publish_without_publisher_identity_verification",
+    "real_payment_capture_without_owner_authorization",
+    "store_invoice_truth_in_truzhen_packs"
+  ],
+  "non_completion_clause": "本文件只是发布者账号、定价、结算和税务发票策略候选，不代表账号已认证、价格已批准、真实收款已启用、结算已发生或发票已开具。正式事实必须由 truzhen-cloud 持有并产生可反查回执。"
+}

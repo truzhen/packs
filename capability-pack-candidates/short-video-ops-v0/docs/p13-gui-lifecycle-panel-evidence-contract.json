@@ -1,0 +1,74 @@
+{
+  "contract_ref": "p13-gui-lifecycle-panel-evidence-contract://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p13_gui_lifecycle_panel",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "pending_authorization",
+  "depends_on": [
+    "p12_safe_lifecycle_sample"
+  ],
+  "required_repositories": [
+    "truzhen-client-web-desktop",
+    "truzhenos"
+  ],
+  "required_frontend_evidence": [
+    {
+      "evidence_id": "candidate_delivery_readiness_panel_rendered",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "frontend test and screenshot/smoke summary showing candidate bundle, delivery, readiness, promote, confirm, enabled pointer and receipt ref sections render together",
+      "expected_command": "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx -t lifecycle"
+    },
+    {
+      "evidence_id": "enable_controls_gate_blocked",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI assertions proving enable/confirm controls stay disabled until readiness, Owner/Base Gate and Receipt prerequisites exist",
+      "expected_command": "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx -t lifecycle"
+    },
+    {
+      "evidence_id": "blocked_reasons_and_repo_ownership_visible",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "screen or test evidence showing provider_missing/not_ready/blocked messages include owner repository and next required action",
+      "expected_command": "npm run smoke:frontend-shell"
+    }
+  ],
+  "required_backend_evidence": [
+    {
+      "evidence_id": "lifecycle_status_summary_readable_by_gui",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "API or handler test evidence that GUI can read lifecycle status, issue keys, enabled pointer and receipt ref without contracts changes",
+      "expected_command": "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+    }
+  ],
+  "required_forbidden_action_checks": [
+    {
+      "evidence_id": "third_party_oss_run_from_gui_blocked",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI tests proving MoneyPrinterTurbo, Pixelle-Video and social-auto-upload are not presented as runnable providers"
+    },
+    {
+      "evidence_id": "codex_cli_run_without_11_gateway_blocked",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI tests proving no control invokes Codex CLI directly or consumes GPT/Codex token outside 11 Gateway"
+    }
+  ],
+  "completion_gate": {
+    "can_mark_slice_complete": false,
+    "required_status_before_completion": "p12_complete_and_all_p13_frontend_backend_forbidden_evidence_passed_and_owner_authorization_recorded_and_pack_studio_issue_ledger_closed_and_all_evidence_ids_written_and_all_evidence_refs_recorded_and_forbidden_action_checks_written_and_independent_verification_passed_and_owner_base_gate_receipts_bound",
+    "commercial_status_after_slice_only": "not_commercial_ready",
+    "next_required_slice": "p15_gui_walkthrough_three_candidates",
+    "required_evidence_writeback_plan_source": "docs/p13-execution-readiness-package.json#evidence_writeback_plan",
+    "evidence_writeback_plan_must_complete": true,
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "blocking_owner_base_gate": "owner_base_gate_receipts_missing"
+  },
+  "non_sufficient_evidence": [
+    "evidence_writeback_incomplete",
+    "owner_base_gate_receipts_missing"
+  ]
+}

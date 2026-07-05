@@ -1,0 +1,370 @@
+{
+  "acceptance_gate_ref": "p11-normal-commercialization-acceptance-gate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包 P11 正常商品化通过门候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "gate_status": "not_run_requires_cross_repo_authoritative_receipts",
+  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "verification_record_template_ref": "tests/p11-normal-commercialization-verification-record-template.json",
+  "test_case_coverage_matrix_ref": "tests/role-studio-test-case-coverage-matrix-candidate.json",
+  "purpose": "把 P11 上传、审核、sandbox 购买、支付、授权、下载、安装、团队绑定、运行使用、负例阻断和独立验收拆成可判定的 go / no-go 门；本文件只定义验收算法，不代表真实链路已经运行。",
+  "plan_test_case_refs": [
+    "TC-CLOUD-01",
+    "TC-CLOUD-02",
+    "TC-PAY-01",
+    "TC-DOWNLOAD-01",
+    "TC-INSTALL-01",
+    "TC-INSTALL-NEG-01",
+    "TC-INSTALL-NEG-02"
+  ],
+  "ordered_decision_stages": [
+    {
+      "stage_id": "role_candidate_bundle_export",
+      "stage_order": 1,
+      "target_plan_phase": "P2-P3",
+      "truth_source": "truzhenos",
+      "stage_status": "pending_cross_repo_execution",
+      "gui_evidence_required": [
+        "role_studio_export_screenshot",
+        "candidate_only_page_state",
+        "user_view_gui_operation_log"
+      ],
+      "receipt_evidence_required": [
+        "candidate_bundle_export_receipt",
+        "artifact_manifest_ref",
+        "bundle_tree_sha256",
+        "forbidden_artifact_scan_receipt"
+      ],
+      "go_condition": "candidate bundle exported through GUI and truzhenos receipt references the manifest and bundle hash.",
+      "no_go_conditions": [
+        "manual_json_edit_or_filesystem_copy_used",
+        "bundle_hash_missing",
+        "forbidden_artifact_scan_missing_or_failed"
+      ],
+      "issue_route": "docs/role-studio-issue-ledger.md#p11-bundle-export"
+    },
+    {
+      "stage_id": "cloud_upload_listing_draft",
+      "stage_order": 2,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "stage_status": "pending_cross_repo_execution",
+      "gui_evidence_required": [
+        "cloud_upload_draft_screenshot",
+        "listing_draft_page_state",
+        "risk_license_price_visible_state"
+      ],
+      "receipt_evidence_required": [
+        "cloud_upload_receipt",
+        "listing_draft_ref",
+        "uploaded_artifact_sha256",
+        "bundle_tree_sha256_match_receipt"
+      ],
+      "go_condition": "cloud draft upload receipt and listing draft both reference the same candidate_set_ref, artifact_ref and bundle_tree_sha256.",
+      "no_go_conditions": [
+        "upload_without_gui_step",
+        "listing_missing_role_slot_or_risk_statement",
+        "artifact_hash_mismatch"
+      ],
+      "issue_route": "docs/cloud-commerce-ledger.md#p11-cloud-upload"
+    },
+    {
+      "stage_id": "marketplace_review_candidate",
+      "stage_order": 3,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "stage_status": "pending_cross_repo_execution",
+      "gui_evidence_required": [
+        "marketplace_review_submission_screenshot",
+        "review_state_page",
+        "asset_rights_boundary_visible_state"
+      ],
+      "receipt_evidence_required": [
+        "marketplace_review_candidate_receipt",
+        "listing_status_ref",
+        "production_publish_block_receipt",
+        "asset_rights_review_receipt"
+      ],
+      "go_condition": "sandbox review candidate is recorded while production publish remains blocked unless Owner explicitly authorizes.",
+      "no_go_conditions": [
+        "production_publish_attempted_without_owner_authorization",
+        "asset_rights_missing",
+        "review_state_missing"
+      ],
+      "issue_route": "docs/cloud-commerce-ledger.md#p11-review"
+    },
+    {
+      "stage_id": "sandbox_order_payment_entitlement",
+      "stage_order": 4,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "stage_status": "pending_cross_repo_execution",
+      "gui_evidence_required": [
+        "sandbox_purchase_screenshot",
+        "payment_result_page_state",
+        "owned_library_entitlement_screenshot"
+      ],
+      "receipt_evidence_required": [
+        "sandbox_order_receipt",
+        "sandbox_payment_receipt",
+        "license_ref",
+        "entitlement_ref",
+        "terms_acceptance_receipt",
+        "real_payment_block_policy_receipt"
+      ],
+      "go_condition": "sandbox order, sandbox payment and entitlement receipts are linked, and real payment capture remains blocked.",
+      "no_go_conditions": [
+        "payment_success_without_order_receipt",
+        "entitlement_without_paid_sandbox_receipt",
+        "real_payment_capture_attempted"
+      ],
+      "issue_route": "docs/cloud-commerce-ledger.md#p11-payment-entitlement"
+    },
+    {
+      "stage_id": "entitled_signed_download",
+      "stage_order": 5,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhen-cloud",
+      "stage_status": "pending_cross_repo_execution",
+      "gui_evidence_required": [
+        "owned_library_download_button_screenshot",
+        "download_result_page_state",
+        "download_hash_visible_state"
+      ],
+      "receipt_evidence_required": [
+        "download_receipt",
+        "signed_download_ref",
+        "entitlement_ref",
+        "download_artifact_sha256",
+        "artifact_hash_matches_upload",
+        "bundle_tree_sha256_match"
+      ],
+      "go_condition": "only entitled buyer can download, and download hash matches upload hash and bundle_tree_sha256.",
+      "no_go_conditions": [
+        "download_without_entitlement",
+        "signed_download_ref_missing",
+        "artifact_hash_mismatch"
+      ],
+      "issue_route": "docs/cloud-commerce-ledger.md#p11-download"
+    },
+    {
+      "stage_id": "local_install_enabled_version",
+      "stage_order": 6,
+      "target_plan_phase": "P11",
+      "truth_source": "truzhenos",
+      "stage_status": "pending_cross_repo_execution",
+      "gui_evidence_required": [
+        "local_install_entry_screenshot",
+        "install_preflight_result_page_state",
+        "enabled_role_pack_version_screenshot"
+      ],
+      "receipt_evidence_required": [
+        "install_receipt",
+        "artifact_hash_verification_receipt",
+        "entitlement_verification_receipt",
+        "role_pack_schema_validation_receipt",
+        "forbidden_artifact_scan",
+        "enabled_role_pack_version_ref"
+      ],
+      "go_condition": "truzhenos install preflight verifies entitlement, hash, signature, schema and forbidden artifacts before enabling the role pack.",
+      "no_go_conditions": [
+        "install_without_entitlement_verification",
+        "install_without_hash_verification",
+        "forbidden_artifact_scan_missing",
+        "enabled_version_missing"
+      ],
+      "issue_route": "docs/role-pack-export-ledger.md#p11-install"
+    },
+    {
+      "stage_id": "post_install_team_binding_runtime",
+      "stage_order": 7,
+      "target_plan_phase": "P5-P7-P11",
+      "truth_source": "multi_repo",
+      "stage_status": "pending_cross_repo_execution",
+      "gui_evidence_required": [
+        "team_settings_installed_role_catalog_screenshot",
+        "secretary_and_five_advisors_replaceable_screenshot",
+        "runtime_team_office_session_screenshot"
+      ],
+      "receipt_evidence_required": [
+        "team_binding_receipt",
+        "owner_gate_decision_receipt",
+        "runtime_candidate_output_receipt",
+        "history_not_rewritten_receipt"
+      ],
+      "go_condition": "installed role pack appears in team settings, replacement still requires Owner Gate, and runtime output remains candidate-only.",
+      "no_go_conditions": [
+        "team_binding_without_owner_gate",
+        "installed_role_not_visible_in_team_settings",
+        "runtime_output_formalized_without_owner_gate"
+      ],
+      "issue_route": "docs/team-settings-binding-ledger.md#p11-team-binding-runtime"
+    },
+    {
+      "stage_id": "negative_cases_and_independent_acceptance",
+      "stage_order": 8,
+      "target_plan_phase": "P8-P9-P10-P11",
+      "truth_source": "independent_acceptance_agent",
+      "stage_status": "blocked_until_prior_stage_evidence",
+      "gui_evidence_required": [
+        "negative_case_screenshots",
+        "acceptance_review_screen_or_report",
+        "owner_go_no_go_page_or_decision_record"
+      ],
+      "receipt_evidence_required": [
+        "all_negative_block_receipts",
+        "independent_acceptance_signoff",
+        "owner_go_no_go_decision",
+        "no_open_p0_p11_blockers"
+      ],
+      "go_condition": "independent acceptance agent verifies every positive stage and every negative case before Owner go / no-go.",
+      "no_go_conditions": [
+        "organizer_self_attestation_only",
+        "missing_negative_case_receipt",
+        "missing_owner_go_no_go_decision"
+      ],
+      "issue_route": "docs/role-studio-issue-ledger.md#p11-acceptance"
+    }
+  ],
+  "evidence_intake_contract": {
+    "record_ref_prefix": "p11-normal-commercialization-evidence://",
+    "required_top_level_fields": [
+      "gui_evidence_records",
+      "cloud_receipt_records",
+      "install_receipt_records",
+      "team_binding_receipt_records",
+      "negative_case_records",
+      "hash_continuity_record",
+      "independent_acceptance_ref",
+      "owner_go_no_go_decision_ref"
+    ],
+    "correlation_keys_required": [
+      "candidate_set_ref",
+      "artifact_ref",
+      "bundle_tree_sha256",
+      "cloud_upload_receipt",
+      "sandbox_payment_receipt",
+      "entitlement_ref",
+      "download_receipt",
+      "install_receipt",
+      "team_binding_receipt"
+    ],
+    "forbidden_payloads": [
+      "raw_payment_token",
+      "signed_download_url_secret",
+      "cloud_access_token",
+      "raw_voice_asset",
+      "raw_vrm_asset",
+      "production_payment_method",
+      "identity_document"
+    ],
+    "redaction_policy": "保存 ref、hash 和脱敏摘要；不保存账号密钥、签名 URL、支付凭据、身份文件、raw 音频或 raw VRM。"
+  },
+  "negative_case_decisions": [
+    {
+      "case_id": "unpaid_download",
+      "expected_status": "blocked_entitlement_missing",
+      "truth_source": "truzhen-cloud",
+      "required_gui_evidence": "unpaid_download_block_screenshot",
+      "required_block_receipt": "download_block_receipt_entitlement_missing",
+      "user_visible_reason": "未购买或授权缺失，不能下载该角色包。"
+    },
+    {
+      "case_id": "refund_revoked_download",
+      "expected_status": "blocked_entitlement_revoked",
+      "truth_source": "truzhen-cloud",
+      "required_gui_evidence": "refund_revoked_download_block_screenshot",
+      "required_block_receipt": "download_block_receipt_entitlement_revoked",
+      "user_visible_reason": "订单退款或授权撤销后，不能继续下载。"
+    },
+    {
+      "case_id": "expired_entitlement_install",
+      "expected_status": "blocked_entitlement_expired",
+      "truth_source": "truzhenos",
+      "required_gui_evidence": "expired_entitlement_install_block_screenshot",
+      "required_block_receipt": "install_preflight_block_receipt_entitlement_expired",
+      "user_visible_reason": "授权已过期，不能安装。"
+    },
+    {
+      "case_id": "version_unpublished_or_revoked_download_install",
+      "expected_status": "blocked_release_revoked_or_not_available",
+      "truth_source": "truzhen-cloud + truzhenos",
+      "required_gui_evidence": "release_revoked_or_unpublished_download_install_block_screenshot",
+      "required_block_receipt": "release_revoked_or_unpublished_download_install_block_receipt",
+      "user_visible_reason": "商品版本已下架或撤回，不能继续下载或安装。"
+    },
+    {
+      "case_id": "artifact_hash_mismatch_install",
+      "expected_status": "blocked_artifact_hash_mismatch",
+      "truth_source": "truzhenos",
+      "required_gui_evidence": "artifact_hash_mismatch_install_block_screenshot",
+      "required_block_receipt": "install_preflight_block_receipt_artifact_hash_mismatch",
+      "user_visible_reason": "下载包 hash 与云端记录不一致，不能安装。"
+    },
+    {
+      "case_id": "real_payment_without_owner_authorization",
+      "expected_status": "blocked_real_payment_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "required_gui_evidence": "real_payment_without_owner_authorization_block_screenshot",
+      "required_block_receipt": "payment_block_receipt_owner_authorization_missing",
+      "user_visible_reason": "真实扣款未获 Owner 授权，只允许 sandbox 支付。"
+    },
+    {
+      "case_id": "production_publish_without_owner_authorization",
+      "expected_status": "blocked_production_publish_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "required_gui_evidence": "production_publish_without_owner_authorization_block_screenshot",
+      "required_block_receipt": "production_publish_block_receipt_owner_authorization_missing",
+      "user_visible_reason": "正式上架 / 生产发布未获 Owner 授权。"
+    }
+  ],
+  "pass_fail_algorithm": {
+    "normal_commercialization_pass_allowed_now": false,
+    "required_all": [
+      "user_view_gui_evidence_for_every_stage",
+      "cloud_upload_receipt",
+      "listing_draft_ref",
+      "sandbox_payment_receipt",
+      "entitlement_ref",
+      "download_receipt",
+      "download_hash_matches_upload",
+      "install_receipt",
+      "enabled_role_pack_version_ref",
+      "team_binding_receipt",
+      "negative_cases_blocked",
+      "independent_acceptance_signoff",
+      "owner_go_no_go_decision"
+    ],
+    "allowed_output_decisions": [
+      "passed_verified",
+      "blocked_missing_authoritative_evidence",
+      "failed_requires_issue",
+      "not_run"
+    ],
+    "decision_rule": "只有 required_all 全部有权威证据且无 open P0-P11 blocker 时，才可输出 passed_verified；否则必须输出 blocked_missing_authoritative_evidence 或 failed_requires_issue。"
+  },
+  "completion_claim_policy": {
+    "completion_claim_allowed": false,
+    "required_before_completion_claim": [
+      "cloud_upload_receipt",
+      "sandbox_payment_receipt",
+      "download_receipt",
+      "install_receipt",
+      "team_binding_receipt",
+      "negative_case_block_receipts",
+      "independent_acceptance_signoff",
+      "owner_go_no_go_decision"
+    ],
+    "non_sufficient_evidence": [
+      "candidate_json_only",
+      "current_repo_tests_only",
+      "mock_payment_success_only",
+      "cloud_upload_request_without_receipt",
+      "download_without_entitlement",
+      "install_without_truzhenos_receipt",
+      "organizer_self_attestation_only"
+    ]
+  },
+  "non_completion_clause": "本通过门当前未运行，且明确 normal_commercialization_pass_allowed_now=false。没有用户视角 GUI 证据、truzhen-cloud 上传 / 支付 / entitlement / 下载回执、truzhenos 安装 / 团队绑定回执、hash 连续性、负例阻断、独立验收和 Owner go / no-go 前，不得声称正常商品化通过。"
+}

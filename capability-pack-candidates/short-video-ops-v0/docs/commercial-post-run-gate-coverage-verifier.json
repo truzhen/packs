@@ -1,0 +1,180 @@
+{
+  "verifier_ref": "commercial-post-run-gate-coverage-verifier://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "coverage_status": "blocked_pending_all_post_run_gates_passed",
+  "can_mark_commercial_ready": false,
+  "formal_write_allowed": false,
+  "source_evidence_contract_index": "docs/commercial-evidence-contract-index.json",
+  "source_commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
+  "source_commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json",
+  "required_order_source": "commercial_go_live_evidence_package.required_slices",
+  "required_slice_keys": [
+    "p12_safe_lifecycle_sample",
+    "p13_gui_lifecycle_panel",
+    "p15_gui_walkthrough_three_candidates",
+    "p16_controlled_code_assistant_run",
+    "p17_provider_adapter_candidate",
+    "p18_cloud_market_sandbox"
+  ],
+  "coverage_checks": [
+    {
+      "slice_key": "p12_safe_lifecycle_sample",
+      "post_run_evidence_acceptance_gate": "docs/p12-post-run-evidence-acceptance-gate.json",
+      "verifier_blocker_key": "p12_post_run_evidence_acceptance_gate",
+      "go_no_go_required_status": "p12_post_run_evidence_acceptance_gate_passed",
+      "go_no_go_pending_marker": "p12_post_run_evidence_acceptance_gate_pending",
+      "coverage_result": "blocked_pending_execution_evidence",
+      "candidate_set_has_gate": true,
+      "evidence_index_has_gate": true,
+      "readiness_verifier_has_blocker": true,
+      "go_no_go_gate_has_gate": true,
+      "go_no_go_completion_status_required": true,
+      "go_no_go_pending_marker_present": true,
+      "required_before_coverage_pass": [
+        "p12_post_run_evidence_acceptance_gate_passed",
+        "owner_base_gate_receipts_bound",
+        "commercial_evidence_writeback_gate_updated",
+        "independent_verification_passed"
+      ]
+    },
+    {
+      "slice_key": "p13_gui_lifecycle_panel",
+      "post_run_evidence_acceptance_gate": "docs/p13-post-run-evidence-acceptance-gate.json",
+      "verifier_blocker_key": "p13_post_run_evidence_acceptance_gate",
+      "go_no_go_required_status": "p13_post_run_evidence_acceptance_gate_passed",
+      "go_no_go_pending_marker": "p13_post_run_evidence_acceptance_gate_pending",
+      "coverage_result": "blocked_pending_execution_evidence",
+      "candidate_set_has_gate": true,
+      "evidence_index_has_gate": true,
+      "readiness_verifier_has_blocker": true,
+      "go_no_go_gate_has_gate": true,
+      "go_no_go_completion_status_required": true,
+      "go_no_go_pending_marker_present": true,
+      "required_before_coverage_pass": [
+        "p13_post_run_evidence_acceptance_gate_passed",
+        "p12_post_run_evidence_acceptance_gate_passed",
+        "owner_base_gate_receipts_bound",
+        "commercial_evidence_writeback_gate_updated",
+        "independent_verification_passed"
+      ]
+    },
+    {
+      "slice_key": "p15_gui_walkthrough_three_candidates",
+      "post_run_evidence_acceptance_gate": "docs/p15-post-run-evidence-acceptance-gate.json",
+      "verifier_blocker_key": "p15_post_run_evidence_acceptance_gate",
+      "go_no_go_required_status": "p15_post_run_evidence_acceptance_gate_passed",
+      "go_no_go_pending_marker": "p15_post_run_evidence_acceptance_gate_pending",
+      "coverage_result": "blocked_pending_execution_evidence",
+      "candidate_set_has_gate": true,
+      "evidence_index_has_gate": true,
+      "readiness_verifier_has_blocker": true,
+      "go_no_go_gate_has_gate": true,
+      "go_no_go_completion_status_required": true,
+      "go_no_go_pending_marker_present": true,
+      "required_before_coverage_pass": [
+        "p15_post_run_evidence_acceptance_gate_passed",
+        "p13_post_run_evidence_acceptance_gate_passed",
+        "owner_base_gate_receipts_bound",
+        "commercial_evidence_writeback_gate_updated",
+        "independent_verification_passed"
+      ]
+    },
+    {
+      "slice_key": "p16_controlled_code_assistant_run",
+      "post_run_evidence_acceptance_gate": "docs/p16-post-run-evidence-acceptance-gate.json",
+      "verifier_blocker_key": "p16_post_run_evidence_acceptance_gate",
+      "go_no_go_required_status": "p16_post_run_evidence_acceptance_gate_passed",
+      "go_no_go_pending_marker": "p16_post_run_evidence_acceptance_gate_pending",
+      "coverage_result": "blocked_pending_execution_evidence",
+      "candidate_set_has_gate": true,
+      "evidence_index_has_gate": true,
+      "readiness_verifier_has_blocker": true,
+      "go_no_go_gate_has_gate": true,
+      "go_no_go_completion_status_required": true,
+      "go_no_go_pending_marker_present": true,
+      "required_before_coverage_pass": [
+        "p16_post_run_evidence_acceptance_gate_passed",
+        "p15_post_run_evidence_acceptance_gate_passed",
+        "owner_base_gate_receipts_bound",
+        "commercial_evidence_writeback_gate_updated",
+        "independent_verification_passed"
+      ]
+    },
+    {
+      "slice_key": "p17_provider_adapter_candidate",
+      "post_run_evidence_acceptance_gate": "docs/p17-post-run-evidence-acceptance-gate.json",
+      "verifier_blocker_key": "p17_post_run_evidence_acceptance_gate",
+      "go_no_go_required_status": "p17_post_run_evidence_acceptance_gate_passed",
+      "go_no_go_pending_marker": "p17_post_run_evidence_acceptance_gate_pending",
+      "coverage_result": "blocked_pending_execution_evidence",
+      "candidate_set_has_gate": true,
+      "evidence_index_has_gate": true,
+      "readiness_verifier_has_blocker": true,
+      "go_no_go_gate_has_gate": true,
+      "go_no_go_completion_status_required": true,
+      "go_no_go_pending_marker_present": true,
+      "required_before_coverage_pass": [
+        "p17_post_run_evidence_acceptance_gate_passed",
+        "p16_post_run_evidence_acceptance_gate_passed",
+        "owner_base_gate_receipts_bound",
+        "commercial_evidence_writeback_gate_updated",
+        "independent_verification_passed"
+      ]
+    },
+    {
+      "slice_key": "p18_cloud_market_sandbox",
+      "post_run_evidence_acceptance_gate": "docs/p18-post-run-evidence-acceptance-gate.json",
+      "verifier_blocker_key": "p18_post_run_evidence_acceptance_gate",
+      "go_no_go_required_status": "p18_post_run_evidence_acceptance_gate_passed",
+      "go_no_go_pending_marker": "p18_post_run_evidence_acceptance_gate_pending",
+      "coverage_result": "blocked_pending_execution_evidence",
+      "candidate_set_has_gate": true,
+      "evidence_index_has_gate": true,
+      "readiness_verifier_has_blocker": true,
+      "go_no_go_gate_has_gate": true,
+      "go_no_go_completion_status_required": true,
+      "go_no_go_pending_marker_present": true,
+      "required_before_coverage_pass": [
+        "p18_post_run_evidence_acceptance_gate_passed",
+        "p17_post_run_evidence_acceptance_gate_passed",
+        "owner_base_gate_receipts_bound",
+        "commercial_evidence_writeback_gate_updated",
+        "independent_verification_passed"
+      ]
+    }
+  ],
+  "completion_gate": {
+    "can_pass_coverage_verifier": false,
+    "required_before_commercial_ready": [
+      "all_post_run_gate_sources_present",
+      "all_post_run_gate_blockers_present",
+      "all_go_no_go_completion_statuses_required",
+      "all_pending_markers_present",
+      "all_post_run_gates_passed",
+      "owner_base_gate_receipts_bound"
+    ],
+    "blocked_by": [
+      "post_run_gates_not_passed",
+      "owner_base_gate_receipts_missing",
+      "evidence_writeback_incomplete",
+      "independent_verification_missing"
+    ],
+    "final_status_after_success": "post_run_gate_coverage_verified"
+  },
+  "non_sufficient_evidence": [
+    "post_run_gate_coverage_verifier_without_passed_gates",
+    "candidate_assets_only",
+    "manual_ledgers_without_machine_evidence",
+    "owner_base_gate_receipts_missing",
+    "evidence_writeback_incomplete"
+  ],
+  "forbidden": [
+    "treat_coverage_verifier_as_execution_authorization",
+    "mark_commercial_ready_from_coverage_links_only",
+    "ignore_missing_owner_base_gate_receipts",
+    "start_cross_repo_work_without_owner_authorization"
+  ],
+  "non_completion_clause": "This verifier only checks that P12-P18 post-run evidence acceptance gates are linked through the candidate set, commercial evidence index, readiness verifier, and go/no-go gate. It does not prove execution evidence, authorize cross-repo work, or mark the workbench commercial-ready."
+}

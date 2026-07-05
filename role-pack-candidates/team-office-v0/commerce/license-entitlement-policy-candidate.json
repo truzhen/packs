@@ -1,0 +1,129 @@
+{
+  "policy_candidate_ref": "license-entitlement-policy-candidate://team-office-role-pack-v0",
+  "display_name": "团队办公室角色包 License / Entitlement 策略候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "commerce_truth_source": "truzhen-cloud",
+  "install_truth_source": "truzhenos",
+  "real_payment_policy": "blocked_until_owner_authorizes",
+  "scope": "声明购买、授权、下载和安装的候选策略；不保存真实订单、支付、License、Entitlement 或下载链接。",
+  "license_candidate": {
+    "license_candidate_ref": "license-candidate://team-office-role-pack-v0/team-scoped",
+    "status": "candidate_not_formal",
+    "scope": "team_scoped",
+    "license_truth_source": "truzhen-cloud",
+    "permitted_use": [
+      "download_signed_artifact_after_purchase",
+      "install_role_pack_candidate_to_authorized_team",
+      "replace_team_office_role_slots_after_owner_gate"
+    ],
+    "not_permitted": [
+      "resell_without_authorization",
+      "bypass_owner_gate",
+      "copy_role_pack_to_unlicensed_team",
+      "extract_raw_voice_or_vrm_assets"
+    ]
+  },
+  "entitlement_candidate": {
+    "entitlement_candidate_ref": "entitlement-candidate://team-office-role-pack-v0/sandbox",
+    "status": "candidate_not_formal",
+    "entitlement_truth_source": "truzhen-cloud",
+    "issue_trigger": "sandbox_payment_success_receipt",
+    "download_requirement": "valid_entitlement_for_artifact_ref",
+    "install_requirement": "valid_entitlement_plus_artifact_hash_match",
+    "team_scope_binding": {
+      "licensed_team_ref_source": "truzhen-cloud_entitlement",
+      "target_team_ref_must_match": true,
+      "cross_team_install_policy": "blocked_entitlement_team_scope_mismatch",
+      "expected_evidence": "entitlement_team_scope_verification_receipt_ref"
+    },
+    "revocation_triggers": [
+      "refund_success",
+      "chargeback",
+      "license_expired",
+      "artifact_version_revoked",
+      "owner_or_cloud_policy_block"
+    ]
+  },
+  "validation_checks": [
+    {
+      "check_id": "purchase_before_download",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "entitlement_receipt_candidate_ref",
+      "blocked_status": "blocked_entitlement_missing"
+    },
+    {
+      "check_id": "entitlement_before_install",
+      "truth_source": "truzhenos",
+      "expected_evidence": "entitlement_verification_receipt_candidate_ref",
+      "blocked_status": "blocked_entitlement_missing"
+    },
+    {
+      "check_id": "artifact_hash_match",
+      "truth_source": "truzhenos",
+      "expected_evidence": "artifact_hash_verification_receipt_candidate_ref",
+      "blocked_status": "blocked_artifact_hash_mismatch"
+    },
+    {
+      "check_id": "entitlement_team_scope_matches_target_team",
+      "truth_source": "truzhen-cloud + truzhenos",
+      "expected_evidence": "entitlement_team_scope_verification_receipt_ref",
+      "blocked_status": "blocked_entitlement_team_scope_mismatch"
+    },
+    {
+      "check_id": "refund_blocks_future_download",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "refund_or_revocation_receipt_candidate_ref",
+      "blocked_status": "blocked_entitlement_revoked"
+    },
+    {
+      "check_id": "expired_entitlement_blocks_install",
+      "truth_source": "truzhenos",
+      "expected_evidence": "expired_entitlement_block_receipt_candidate_ref",
+      "blocked_status": "blocked_entitlement_expired"
+    }
+  ],
+  "negative_cases": {
+    "download_without_purchase": {
+      "expected_status": "blocked_entitlement_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "download_block_receipt_candidate_ref"
+    },
+    "install_without_entitlement": {
+      "expected_status": "blocked_entitlement_missing",
+      "truth_source": "truzhenos",
+      "expected_evidence": "install_block_receipt_candidate_ref"
+    },
+    "refund_after_purchase": {
+      "expected_status": "blocked_entitlement_revoked",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "revocation_receipt_candidate_ref"
+    },
+    "expired_entitlement": {
+      "expected_status": "blocked_entitlement_expired",
+      "truth_source": "truzhenos",
+      "expected_evidence": "expired_entitlement_receipt_candidate_ref"
+    },
+    "cross_team_install": {
+      "expected_status": "blocked_entitlement_team_scope_mismatch",
+      "truth_source": "truzhen-cloud + truzhenos",
+      "expected_evidence": "entitlement_team_scope_verification_receipt_ref"
+    },
+    "real_payment_without_owner_authorization": {
+      "expected_status": "blocked_real_payment_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "payment_block_receipt_candidate_ref"
+    }
+  },
+  "forbidden": [
+    "store_order_truth_in_truzhen_packs",
+    "store_payment_truth_in_truzhen_packs",
+    "store_license_truth_in_truzhen_packs",
+    "store_entitlement_truth_in_truzhen_packs",
+    "store_signed_download_url_in_truzhen_packs",
+    "real_payment_capture_without_owner_authorization",
+    "install_without_entitlement_verification",
+    "team_role_binding_without_owner_gate"
+  ]
+}

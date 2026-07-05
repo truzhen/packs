@@ -1,0 +1,87 @@
+{
+  "contract_ref": "p18-cloud-market-sandbox-evidence-contract://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p18_cloud_market_sandbox",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "pending_authorization",
+  "depends_on": [
+    "p12_safe_lifecycle_sample",
+    "p13_gui_lifecycle_panel",
+    "p15_gui_walkthrough_three_candidates",
+    "p16_controlled_code_assistant_run",
+    "p17_provider_adapter_candidate"
+  ],
+  "required_repositories": [
+    "truzhen-cloud",
+    "truzhen-client-web-desktop",
+    "truzhenos",
+    "truzhen-packs"
+  ],
+  "required_cloud_evidence": [
+    {
+      "evidence_id": "sandbox_listing_created_in_cloud",
+      "repository": "truzhen-cloud",
+      "current_status": "pending_authorization",
+      "evidence_required": "sandbox cloud receipt showing listing draft/status is stored in truzhen-cloud, not truzhen-packs",
+      "expected_command": "cloud sandbox test command from P18 execution spec"
+    },
+    {
+      "evidence_id": "sandbox_entitlement_download_install_preflight_receipts",
+      "repository": "truzhen-cloud",
+      "current_status": "pending_authorization",
+      "evidence_required": "sandbox receipts for entitlement, signed download, and install preflight; no production payment/license",
+      "expected_command": "cloud sandbox test command from P18 execution spec"
+    },
+    {
+      "evidence_id": "gui_cloud_sandbox_status_visible",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI evidence showing sandbox listing/license/download/install states and blocked production status",
+      "expected_command": "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx"
+    }
+  ],
+  "required_forbidden_action_checks": [
+    {
+      "evidence_id": "no_real_payment",
+      "current_status": "pending_authorization",
+      "evidence_required": "cloud sandbox evidence proving no production payment was captured"
+    },
+    {
+      "evidence_id": "no_production_release_or_license",
+      "current_status": "pending_authorization",
+      "evidence_required": "cloud evidence proving no production listing release or production license was issued"
+    },
+    {
+      "evidence_id": "packs_do_not_store_cloud_truth",
+      "current_status": "pending_authorization",
+      "evidence_required": "packs artifact scan proving Pack files contain only candidate references and no cloud listing/order/license truth"
+    }
+  ],
+  "completion_gate": {
+    "can_mark_slice_complete": false,
+    "required_before_completion": [
+      "p18_post_run_evidence_acceptance_gate_passed",
+      "cloud_sandbox_receipts_bound",
+      "sandbox_entitlement_receipt_bound",
+      "packs_listing_truth_absence_verified"
+    ],
+    "required_status_before_completion": "p12_p13_p15_p16_p17_complete_and_cloud_sandbox_receipts_forbidden_checks_passed_and_owner_authorization_recorded_and_pack_studio_issue_ledger_closed_and_all_evidence_ids_written_and_all_evidence_refs_recorded_and_forbidden_action_checks_written_and_independent_verification_passed_and_owner_base_gate_receipts_bound",
+    "commercial_status_after_slice_only": "not_commercial_ready",
+    "next_required_slice": "commercial_go_live_evidence_package",
+    "required_evidence_writeback_plan_source": "docs/p18-execution-readiness-package.json#evidence_writeback_plan",
+    "evidence_writeback_plan_must_complete": true,
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "blocking_owner_base_gate": "owner_base_gate_receipts_missing"
+  },
+  "non_sufficient_evidence": [
+    "packs_listing_draft_without_cloud_listing_receipt",
+    "sandbox_runbook_without_cloud_receipts",
+    "license_or_entitlement_text_without_cloud_truth",
+    "manual_order_status_without_cloud_receipt",
+    "production_release_claim_without_cloud_receipt",
+    "evidence_writeback_incomplete",
+    "owner_base_gate_receipts_missing"
+  ]
+}

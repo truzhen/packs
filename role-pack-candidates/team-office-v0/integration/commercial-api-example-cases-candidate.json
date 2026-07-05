@@ -1,0 +1,477 @@
+{
+  "example_cases_ref": "commercial-api-example-cases-candidate://team-office-role-pack-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色包商品化 API 请求响应样例候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "commercial_api_contract_ref": "integration/commercial-api-contract-candidate.json",
+  "purpose": "为后续 client、truzhen-cloud 和 truzhenos 授权施工提供逐端点请求 / 成功响应 / 失败响应样例，减少 GUI 网络摘要、后端回执和错误态接线时的字段歧义。本文只保存 ref-only 示例，不是可执行接口、不是 fixture 成功、不是云端或基座回执。",
+  "example_policy": {
+    "examples_are_non_executable": true,
+    "refs_only_no_secret_payload": true,
+    "user_view_gui_evidence_required_before_use": true,
+    "idempotency_key_examples_are_placeholders": true,
+    "receipt_examples_are_placeholders": true
+  },
+  "endpoint_examples": [
+    {
+      "endpoint_id": "role_bundle_export",
+      "method": "POST",
+      "path_candidate": "/candidate/role-packs/team-office-v0/export-bundle",
+      "request_example": {
+        "actor_ref": "actor://publisher-user-view-agent",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://role-bundle-export/example",
+        "role_pack_candidate_refs": ["role_pack://team-office-secretary-general", "role_pack://team-office-strategy-advisor"],
+        "role_slot_candidate_ref": "role-slots/team-office-role-slots.json",
+        "artifact_manifest_ref": "commerce/artifact-manifest.json",
+        "forbidden_artifact_scan_required": true
+      },
+      "success_response_example": {
+        "status": "candidate_bundle_exported",
+        "receipt_ref": "receipt-candidate://bundle-export/example",
+        "bundle_ref": "bundle-candidate://team-office-role-pack-v0/example",
+        "artifact_sha256": "sha256://bundle-export/example",
+        "file_sha256_list": "commerce/artifact-manifest.json#files",
+        "candidate_or_receipt_ref": "receipt-candidate://bundle-export/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_forbidden_artifact",
+        "receipt_ref": "receipt-candidate://bundle-export/blocked-forbidden-artifact",
+        "blocked_reason": "forbidden artifact scan receipt missing or failed",
+        "candidate_or_receipt_ref": "receipt-candidate://bundle-export/blocked-forbidden-artifact"
+      }
+    },
+    {
+      "endpoint_id": "cloud_upload_draft",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/role-pack-artifacts/upload-draft",
+      "request_example": {
+        "actor_ref": "actor://publisher-user-view-agent",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://cloud-upload-draft/example",
+        "bundle_ref": "bundle-candidate://team-office-role-pack-v0/example",
+        "artifact_sha256": "sha256://bundle-export/example",
+        "artifact_manifest_ref": "commerce/artifact-manifest.json",
+        "publisher_sandbox_identity_ref": "publisher-sandbox://team-office/example",
+        "listing_metadata_candidate": "commerce/cloud-listing-candidate.json"
+      },
+      "success_response_example": {
+        "status": "cloud_upload_draft_recorded",
+        "receipt_ref": "receipt-candidate://cloud-upload/example",
+        "cloud_upload_receipt_ref": "receipt-candidate://cloud-upload/example",
+        "listing_draft_ref": "listing-draft-candidate://team-office-role-pack-v0/example",
+        "artifact_sha256": "sha256://bundle-export/example",
+        "candidate_or_receipt_ref": "receipt-candidate://cloud-upload/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_artifact_hash_missing",
+        "receipt_ref": "receipt-candidate://cloud-upload/blocked-artifact-hash-missing",
+        "blocked_reason": "artifact hash is required before cloud upload",
+        "candidate_or_receipt_ref": "receipt-candidate://cloud-upload/blocked-artifact-hash-missing"
+      }
+    },
+    {
+      "endpoint_id": "marketplace_review_submit",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/listings/submit-review",
+      "request_example": {
+        "actor_ref": "actor://publisher-user-view-agent",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://marketplace-review/example",
+        "listing_draft_ref": "listing-draft-candidate://team-office-role-pack-v0/example",
+        "artifact_manifest_ref": "commerce/artifact-manifest.json",
+        "risk_statement_ref": "commerce/marketplace-review-submission-candidate.json#risk_statement",
+        "terms_privacy_policy_ref": "commerce/commercial-terms-privacy-policy-candidate.json",
+        "asset_rights_policy_ref": "appearance/secretary-appearance-asset-rights-candidate.json"
+      },
+      "success_response_example": {
+        "status": "marketplace_review_candidate_recorded",
+        "receipt_ref": "receipt-candidate://marketplace-review/example",
+        "review_candidate_ref": "review-candidate://team-office-role-pack-v0/example",
+        "review_state_ref": "review-state-candidate://team-office-role-pack-v0/pending",
+        "production_publish_block_ref": "block-candidate://production-publish-owner-authorization-required",
+        "candidate_or_receipt_ref": "receipt-candidate://marketplace-review/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_asset_rights_missing",
+        "receipt_ref": "receipt-candidate://marketplace-review/blocked-asset-rights-missing",
+        "blocked_reason": "asset rights evidence is required before review submission",
+        "candidate_or_receipt_ref": "receipt-candidate://marketplace-review/blocked-asset-rights-missing"
+      }
+    },
+    {
+      "endpoint_id": "sandbox_order_create",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/orders/sandbox-create",
+      "request_example": {
+        "actor_ref": "actor://buyer-user-view-agent",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://sandbox-order-create/example",
+        "listing_draft_ref": "listing-draft-candidate://team-office-role-pack-v0/example",
+        "buyer_sandbox_identity_ref": "buyer-sandbox://team-office/example",
+        "terms_acceptance_ref": "terms-acceptance-candidate://team-office/example",
+        "license_terms_ref": "commerce/license-entitlement-policy-candidate.json"
+      },
+      "success_response_example": {
+        "status": "sandbox_order_created",
+        "receipt_ref": "receipt-candidate://sandbox-order/example",
+        "sandbox_order_ref": "sandbox-order-candidate://team-office-role-pack-v0/example",
+        "terms_acceptance_receipt_ref": "receipt-candidate://terms-acceptance/example",
+        "payment_required_state": "sandbox_payment_pending",
+        "candidate_or_receipt_ref": "receipt-candidate://sandbox-order/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_terms_acceptance_required",
+        "receipt_ref": "receipt-candidate://sandbox-order/blocked-terms-required",
+        "blocked_reason": "terms acceptance is required before sandbox order creation",
+        "candidate_or_receipt_ref": "receipt-candidate://sandbox-order/blocked-terms-required"
+      }
+    },
+    {
+      "endpoint_id": "sandbox_payment_confirm",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/payments/sandbox-confirm",
+      "request_example": {
+        "actor_ref": "actor://buyer-user-view-agent",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://sandbox-payment-confirm/example",
+        "sandbox_order_ref": "sandbox-order-candidate://team-office-role-pack-v0/example",
+        "sandbox_payment_method_ref": "payment-method-sandbox://team-office/example",
+        "real_payment_authorization_ref": "owner-authorization://real-payment/not-authorized"
+      },
+      "success_response_example": {
+        "status": "sandbox_payment_confirmed",
+        "receipt_ref": "receipt-candidate://sandbox-payment/example",
+        "sandbox_payment_receipt_ref": "receipt-candidate://sandbox-payment/example",
+        "sandbox_order_ref": "sandbox-order-candidate://team-office-role-pack-v0/example",
+        "real_payment_block_policy": "blocked_until_owner_authorizes",
+        "candidate_or_receipt_ref": "receipt-candidate://sandbox-payment/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_real_payment_without_owner_authorization",
+        "receipt_ref": "receipt-candidate://sandbox-payment/blocked-real-payment",
+        "blocked_reason": "real payment capture is not authorized for this run",
+        "candidate_or_receipt_ref": "receipt-candidate://sandbox-payment/blocked-real-payment"
+      }
+    },
+    {
+      "endpoint_id": "entitlement_issue",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/entitlements/issue",
+      "request_example": {
+        "actor_ref": "actor://cloud-commerce-service",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://entitlement-issue/example",
+        "sandbox_order_ref": "sandbox-order-candidate://team-office-role-pack-v0/example",
+        "sandbox_payment_receipt_ref": "receipt-candidate://sandbox-payment/example",
+        "artifact_ref": "role-pack-artifact://team-office-v0",
+        "license_scope": "team_office_role_pack_sandbox"
+      },
+      "success_response_example": {
+        "status": "entitlement_issued",
+        "receipt_ref": "receipt-candidate://entitlement/example",
+        "entitlement_ref": "entitlement-candidate://team-office-role-pack-v0/example",
+        "license_candidate_ref": "license-candidate://team-office-role-pack-v0/example",
+        "artifact_ref": "role-pack-artifact://team-office-v0",
+        "candidate_or_receipt_ref": "receipt-candidate://entitlement/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_payment_receipt_missing",
+        "receipt_ref": "receipt-candidate://entitlement/blocked-payment-receipt-missing",
+        "blocked_reason": "sandbox payment receipt is required before entitlement issue",
+        "candidate_or_receipt_ref": "receipt-candidate://entitlement/blocked-payment-receipt-missing"
+      }
+    },
+    {
+      "endpoint_id": "signed_download_create",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/downloads/signed-create",
+      "request_example": {
+        "actor_ref": "actor://buyer-user-view-agent",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://signed-download-create/example",
+        "entitlement_ref": "entitlement-candidate://team-office-role-pack-v0/example",
+        "artifact_ref": "role-pack-artifact://team-office-v0",
+        "artifact_sha256": "sha256://bundle-export/example",
+        "buyer_sandbox_identity_ref": "buyer-sandbox://team-office/example"
+      },
+      "success_response_example": {
+        "status": "signed_download_created",
+        "receipt_ref": "receipt-candidate://download/example",
+        "download_receipt_ref": "receipt-candidate://download/example",
+        "signed_download_ref": "signed-download-candidate://team-office-role-pack-v0/example",
+        "artifact_sha256": "sha256://bundle-export/example",
+        "candidate_or_receipt_ref": "receipt-candidate://download/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_entitlement_missing",
+        "receipt_ref": "receipt-candidate://download/blocked-entitlement-missing",
+        "blocked_reason": "entitlement is required before signed download",
+        "candidate_or_receipt_ref": "receipt-candidate://download/blocked-entitlement-missing"
+      }
+    },
+    {
+      "endpoint_id": "production_go_live_request",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/go-live/request",
+      "request_example": {
+        "actor_ref": "actor://owner-go-no-go-decider",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://production-go-live-request/example",
+        "production_promotion_gate_ref": "commerce/commercial-production-promotion-gate-candidate.json",
+        "owner_go_no_go_decision_ref": "owner-decision-candidate://go-no-go/example",
+        "p11_go_live_evidence_package_ref": "tests/p11-commercial-go-live-evidence-package-template.json",
+        "commercial_readiness_verifier_ref": "tests/commercial-readiness-verifier-candidate.json",
+        "commercial_go_no_go_gate_ref": "tests/commercial-go-no-go-gate-candidate.json",
+        "bundle_tree_sha256": "bundle-tree-sha256://current-candidate"
+      },
+      "success_response_example": {
+        "status": "production_go_live_request_recorded",
+        "receipt_ref": "receipt-candidate://production-go-live-request/example",
+        "production_go_live_request_receipt_ref": "receipt-candidate://production-go-live-request/example",
+        "blocked_or_allowed_result": "blocked_pending_owner_authoritative_evidence",
+        "required_followup_endpoint_refs": ["real_payment_enable_request", "production_signed_download_enable", "production_listing_publish_request"],
+        "candidate_or_receipt_ref": "receipt-candidate://production-go-live-request/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_commercial_production_promotion_gate_missing",
+        "receipt_ref": "receipt-candidate://production-go-live-request/blocked-gate-missing",
+        "blocked_reason": "commercial production promotion gate receipt is required",
+        "candidate_or_receipt_ref": "receipt-candidate://production-go-live-request/blocked-gate-missing"
+      },
+      "failure_response_examples": [
+        {
+          "status": "blocked_p11_evidence_package_incomplete",
+          "receipt_ref": "receipt-candidate://production-go-live-request/blocked-p11-package",
+          "blocked_reason": "P11 final go-live evidence package is required before production go-live request can be recorded",
+          "candidate_or_receipt_ref": "receipt-candidate://production-go-live-request/blocked-p11-package"
+        },
+        {
+          "status": "blocked_team_office_runtime_usage_smoke_missing",
+          "receipt_ref": "receipt-candidate://production-go-live-request/blocked-runtime-smoke",
+          "blocked_reason": "Team Office runtime usage smoke proof team_office_runtime_usage_smoke_verified is required before production go-live request can be recorded",
+          "candidate_or_receipt_ref": "receipt-candidate://production-go-live-request/blocked-runtime-smoke"
+        }
+      ]
+    },
+    {
+      "endpoint_id": "real_payment_enable_request",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/payments/real-enable-request",
+      "request_example": {
+        "actor_ref": "actor://owner-go-no-go-decider",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://real-payment-enable-request/example",
+        "production_promotion_gate_ref": "commerce/commercial-production-promotion-gate-candidate.json",
+        "owner_go_no_go_decision_ref": "owner-decision-candidate://go-no-go/example",
+        "p11_go_live_evidence_package_ref": "tests/p11-commercial-go-live-evidence-package-template.json",
+        "production_go_live_request_receipt_ref": "receipt-candidate://production-go-live-request/example",
+        "bundle_tree_sha256": "bundle-tree-sha256://current-candidate"
+      },
+      "success_response_example": {
+        "status": "real_payment_enable_request_recorded",
+        "receipt_ref": "receipt-candidate://real-payment-enable/example",
+        "real_payment_enable_request_receipt_ref": "receipt-candidate://real-payment-enable/example",
+        "blocked_or_allowed_result": "blocked_until_owner_authorizes_real_payment",
+        "payment_mode_after_request": "sandbox_only_until_owner_authorizes_real_payment",
+        "candidate_or_receipt_ref": "receipt-candidate://real-payment-enable/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_payment_provider_not_ready",
+        "receipt_ref": "receipt-candidate://real-payment-enable/blocked-provider-not-ready",
+        "blocked_reason": "real payment provider readiness is required before enabling real payment",
+        "candidate_or_receipt_ref": "receipt-candidate://real-payment-enable/blocked-provider-not-ready"
+      },
+      "failure_response_examples": [
+        {
+          "status": "blocked_p11_evidence_package_incomplete",
+          "receipt_ref": "receipt-candidate://real-payment-enable/blocked-p11-package",
+          "blocked_reason": "P11 final go-live evidence package is required before real payment enable request can be recorded",
+          "candidate_or_receipt_ref": "receipt-candidate://real-payment-enable/blocked-p11-package"
+        },
+        {
+          "status": "blocked_team_office_runtime_usage_smoke_missing",
+          "receipt_ref": "receipt-candidate://real-payment-enable/blocked-runtime-smoke",
+          "blocked_reason": "Team Office runtime usage smoke proof team_office_runtime_usage_smoke_verified is required before real payment enable request can be recorded",
+          "candidate_or_receipt_ref": "receipt-candidate://real-payment-enable/blocked-runtime-smoke"
+        }
+      ]
+    },
+    {
+      "endpoint_id": "production_signed_download_enable",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/downloads/production-signed-enable",
+      "request_example": {
+        "actor_ref": "actor://owner-go-no-go-decider",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://production-signed-download-enable/example",
+        "production_promotion_gate_ref": "commerce/commercial-production-promotion-gate-candidate.json",
+        "owner_go_no_go_decision_ref": "owner-decision-candidate://go-no-go/example",
+        "p11_go_live_evidence_package_ref": "tests/p11-commercial-go-live-evidence-package-template.json",
+        "production_go_live_request_receipt_ref": "receipt-candidate://production-go-live-request/example",
+        "bundle_tree_sha256": "bundle-tree-sha256://current-candidate",
+        "artifact_ref": "role-pack-artifact://team-office-v0"
+      },
+      "success_response_example": {
+        "status": "production_signed_download_enable_recorded",
+        "receipt_ref": "receipt-candidate://production-signed-download-enable/example",
+        "production_signed_download_enable_receipt_ref": "receipt-candidate://production-signed-download-enable/example",
+        "blocked_or_allowed_result": "blocked_until_production_gate_passes",
+        "production_download_policy_ref": "production-download-policy-candidate://team-office-role-pack-v0/example",
+        "candidate_or_receipt_ref": "receipt-candidate://production-signed-download-enable/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_artifact_hash_mismatch",
+        "receipt_ref": "receipt-candidate://production-signed-download-enable/blocked-hash-mismatch",
+        "blocked_reason": "production signed download requires the same bundle tree hash",
+        "candidate_or_receipt_ref": "receipt-candidate://production-signed-download-enable/blocked-hash-mismatch"
+      },
+      "failure_response_examples": [
+        {
+          "status": "blocked_p11_evidence_package_incomplete",
+          "receipt_ref": "receipt-candidate://production-signed-download-enable/blocked-p11-package",
+          "blocked_reason": "P11 final go-live evidence package is required before production signed download enable request can be recorded",
+          "candidate_or_receipt_ref": "receipt-candidate://production-signed-download-enable/blocked-p11-package"
+        },
+        {
+          "status": "blocked_team_office_runtime_usage_smoke_missing",
+          "receipt_ref": "receipt-candidate://production-signed-download-enable/blocked-runtime-smoke",
+          "blocked_reason": "Team Office runtime usage smoke proof team_office_runtime_usage_smoke_verified is required before production signed download enable request can be recorded",
+          "candidate_or_receipt_ref": "receipt-candidate://production-signed-download-enable/blocked-runtime-smoke"
+        }
+      ]
+    },
+    {
+      "endpoint_id": "production_listing_publish_request",
+      "method": "POST",
+      "path_candidate": "/candidate/marketplace/listings/production-publish-request",
+      "request_example": {
+        "actor_ref": "actor://owner-go-no-go-decider",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://production-listing-publish-request/example",
+        "production_promotion_gate_ref": "commerce/commercial-production-promotion-gate-candidate.json",
+        "owner_go_no_go_decision_ref": "owner-decision-candidate://go-no-go/example",
+        "p11_go_live_evidence_package_ref": "tests/p11-commercial-go-live-evidence-package-template.json",
+        "production_go_live_request_receipt_ref": "receipt-candidate://production-go-live-request/example",
+        "bundle_tree_sha256": "bundle-tree-sha256://current-candidate",
+        "listing_draft_ref": "listing-draft-candidate://team-office-role-pack-v0/example"
+      },
+      "success_response_example": {
+        "status": "production_listing_publish_request_recorded",
+        "receipt_ref": "receipt-candidate://production-listing-publish/example",
+        "production_listing_publish_request_receipt_ref": "receipt-candidate://production-listing-publish/example",
+        "blocked_or_allowed_result": "blocked_until_owner_go_no_go_and_review_pass",
+        "listing_visibility_after_request": "not_public_until_owner_final_approval",
+        "candidate_or_receipt_ref": "receipt-candidate://production-listing-publish/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_listing_review_not_passed",
+        "receipt_ref": "receipt-candidate://production-listing-publish/blocked-review-not-passed",
+        "blocked_reason": "production listing publish requires review pass evidence",
+        "candidate_or_receipt_ref": "receipt-candidate://production-listing-publish/blocked-review-not-passed"
+      },
+      "failure_response_examples": [
+        {
+          "status": "blocked_p11_evidence_package_incomplete",
+          "receipt_ref": "receipt-candidate://production-listing-publish/blocked-p11-package",
+          "blocked_reason": "P11 final go-live evidence package is required before production listing publish request can be recorded",
+          "candidate_or_receipt_ref": "receipt-candidate://production-listing-publish/blocked-p11-package"
+        },
+        {
+          "status": "blocked_team_office_runtime_usage_smoke_missing",
+          "receipt_ref": "receipt-candidate://production-listing-publish/blocked-runtime-smoke",
+          "blocked_reason": "Team Office runtime usage smoke proof team_office_runtime_usage_smoke_verified is required before production listing publish request can be recorded",
+          "candidate_or_receipt_ref": "receipt-candidate://production-listing-publish/blocked-runtime-smoke"
+        }
+      ]
+    },
+    {
+      "endpoint_id": "local_install_request",
+      "method": "POST",
+      "path_candidate": "/candidate/local-role-pack-install/request",
+      "request_example": {
+        "actor_ref": "actor://buyer-user-view-agent",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://local-install-request/example",
+        "signed_download_ref": "signed-download-candidate://team-office-role-pack-v0/example",
+        "download_receipt_ref": "receipt-candidate://download/example",
+        "artifact_manifest_ref": "commerce/artifact-manifest.json",
+        "artifact_sha256": "sha256://bundle-export/example",
+        "entitlement_ref": "entitlement-candidate://team-office-role-pack-v0/example",
+        "team_ref": "team://sandbox-owner-default",
+        "owner_gate_decision_ref": "owner-gate-candidate://team-office/install/example"
+      },
+      "success_response_example": {
+        "status": "local_install_recorded",
+        "receipt_ref": "receipt-candidate://local-install/example",
+        "install_receipt_ref": "receipt-candidate://local-install/example",
+        "enabled_role_pack_version": "enabled-role-pack-version-candidate://team-office-v0/example",
+        "artifact_hash_verification_ref": "receipt-candidate://artifact-hash-verification/example",
+        "entitlement_verification_ref": "receipt-candidate://entitlement-verification/example",
+        "candidate_or_receipt_ref": "receipt-candidate://local-install/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_entitlement_missing",
+        "receipt_ref": "receipt-candidate://local-install/blocked-entitlement-missing",
+        "blocked_reason": "local install requires entitlement verification",
+        "candidate_or_receipt_ref": "receipt-candidate://local-install/blocked-entitlement-missing"
+      }
+    },
+    {
+      "endpoint_id": "team_settings_installed_roles_refresh",
+      "method": "GET",
+      "path_candidate": "/candidate/team-settings/installed-role-packs",
+      "request_example": {
+        "actor_ref": "actor://buyer-user-view-agent",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "team_ref": "team://sandbox-owner-default",
+        "enabled_role_pack_version": "enabled-role-pack-version-candidate://team-office-v0/example"
+      },
+      "success_response_example": {
+        "status": "installed_role_catalog_returned",
+        "receipt_ref": "receipt-candidate://team-settings-installed-roles-refresh/example",
+        "installed_role_catalog_ref": "bindings/team-settings-installed-role-catalog-candidate.json",
+        "replaceable_slot_refs": ["team_office.secretary_general", "team_office.advisor.strategy"],
+        "compatibility_results": "compatibility-results-candidate://team-office/example",
+        "candidate_or_receipt_ref": "receipt-candidate://team-settings-installed-roles-refresh/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_role_pack_not_installed",
+        "receipt_ref": "receipt-candidate://team-settings-installed-roles-refresh/blocked-not-installed",
+        "blocked_reason": "installed role pack catalog requires enabled role pack version",
+        "candidate_or_receipt_ref": "receipt-candidate://team-settings-installed-roles-refresh/blocked-not-installed"
+      }
+    },
+    {
+      "endpoint_id": "team_role_binding_replace",
+      "method": "POST",
+      "path_candidate": "/candidate/team-settings/role-slot-binding/replace",
+      "request_example": {
+        "actor_ref": "actor://buyer-user-view-agent",
+        "correlation_id": "corr://team-office-role-pack/p11/example",
+        "idempotency_key": "idem://team-role-binding-replace/example",
+        "team_ref": "team://sandbox-owner-default",
+        "slot_ref": "team_office.secretary_general",
+        "replacement_role_pack_ref": "role_pack://team-office-secretary-general",
+        "enabled_role_pack_version": "enabled-role-pack-version-candidate://team-office-v0/example",
+        "owner_gate_decision_ref": "owner-gate-candidate://team-role-binding/example"
+      },
+      "success_response_example": {
+        "status": "team_role_binding_replace_recorded",
+        "receipt_ref": "receipt-candidate://team-role-binding/example",
+        "team_binding_receipt_ref": "receipt-candidate://team-role-binding/example",
+        "team_role_slot_binding_candidate_ref": "binding-candidate://team-office/secretary-general/example",
+        "rollback_receipt_ref": "receipt-candidate://team-role-binding-rollback-ready/example",
+        "candidate_or_receipt_ref": "receipt-candidate://team-role-binding/example"
+      },
+      "failure_response_example": {
+        "status": "blocked_owner_gate_required",
+        "receipt_ref": "receipt-candidate://team-role-binding/blocked-owner-gate-required",
+        "blocked_reason": "Owner Gate decision is required before replacing a team role slot",
+        "candidate_or_receipt_ref": "receipt-candidate://team-role-binding/blocked-owner-gate-required"
+      }
+    }
+  ],
+  "non_completion_clause": "这些样例只用于跨仓施工时对齐字段，不代表接口存在、请求已执行或回执真实可查。真实通过必须由用户视角 GUI 操作、truzhen-cloud / truzhenos 回执和独立验收共同证明。"
+}

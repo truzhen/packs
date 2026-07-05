@@ -1,0 +1,165 @@
+{
+  "handoff_candidate_ref": "product-handoff-candidate://team-office-role-pack-v0",
+  "display_name": "团队办公室角色包商品化交接候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "artifact_ref": "role-pack-artifact://team-office-v0",
+  "artifact_manifest": "commerce/artifact-manifest.json",
+  "commercial_truth_source": "truzhen-cloud",
+  "install_truth_source": "truzhenos",
+  "scope": "只声明云端商品化与本地安装的交接形状，不是 contracts schema，不是云服务实现，也不是正式订单、License 或安装记录。",
+  "cloud_handoff": {
+    "upload_request": {
+      "truth_source": "truzhen-cloud",
+      "required_inputs": [
+        "artifact_manifest",
+        "candidate_bundle",
+        "file_sha256_list",
+        "listing_candidate"
+      ],
+      "success_status": "sandbox_upload_draft_candidate",
+      "expected_evidence": "cloud_upload_receipt_candidate_ref",
+      "forbidden": [
+        "production_publish_without_owner_authorization",
+        "store_raw_secret"
+      ]
+    },
+    "listing_draft_request": {
+      "truth_source": "truzhen-cloud",
+      "required_inputs": [
+        "upload_receipt_candidate_ref",
+        "display_name",
+        "version",
+        "risk_statement",
+        "price_candidate",
+        "license_candidate"
+      ],
+      "success_status": "listing_draft_candidate",
+      "expected_evidence": "listing_draft_candidate_ref",
+      "forbidden": [
+        "formal_publish_without_owner_authorization"
+      ]
+    },
+    "sandbox_purchase_request": {
+      "truth_source": "truzhen-cloud",
+      "required_inputs": [
+        "listing_draft_candidate_ref",
+        "sandbox_buyer_ref",
+        "sandbox_payment_method_ref"
+      ],
+      "success_status": "sandbox_order_paid_candidate",
+      "expected_evidence": "sandbox_payment_receipt_candidate_ref",
+      "real_payment_policy": "blocked_until_owner_authorizes",
+      "forbidden": [
+        "real_payment_capture_without_owner_authorization"
+      ]
+    },
+    "entitlement_issue_request": {
+      "truth_source": "truzhen-cloud",
+      "required_inputs": [
+        "sandbox_payment_receipt_candidate_ref",
+        "listing_draft_candidate_ref",
+        "artifact_ref"
+      ],
+      "success_status": "sandbox_entitlement_issued_candidate",
+      "expected_evidence": "entitlement_receipt_candidate_ref",
+      "forbidden": [
+        "store_entitlement_truth_in_truzhen_packs"
+      ]
+    },
+    "download_request": {
+      "truth_source": "truzhen-cloud",
+      "required_inputs": [
+        "entitlement_receipt_candidate_ref",
+        "artifact_ref",
+        "artifact_hash"
+      ],
+      "success_status": "signed_download_url_candidate",
+      "expected_evidence": "download_receipt_candidate_ref",
+      "forbidden": [
+        "download_without_entitlement",
+        "ship_artifact_with_hash_mismatch"
+      ]
+    }
+  },
+  "install_handoff": {
+    "artifact_verification": {
+      "truth_source": "truzhenos",
+      "required_inputs": [
+        "downloaded_artifact",
+        "artifact_manifest",
+        "file_sha256_list"
+      ],
+      "success_status": "candidate_artifact_verified",
+      "receipt_required": "true",
+      "expected_evidence": "artifact_verification_receipt_candidate_ref"
+    },
+    "entitlement_verification": {
+      "truth_source": "truzhenos",
+      "required_inputs": [
+        "entitlement_receipt_candidate_ref",
+        "download_receipt_candidate_ref",
+        "team_ref"
+      ],
+      "success_status": "candidate_entitlement_verified",
+      "receipt_required": "true",
+      "expected_evidence": "entitlement_verification_receipt_candidate_ref"
+    },
+    "role_pack_install": {
+      "truth_source": "truzhenos",
+      "required_inputs": [
+        "role_pack_files",
+        "role_slot_file",
+        "capability_role_requirement_file",
+        "appearance_preference_file"
+      ],
+      "success_status": "role_pack_candidate_installed",
+      "receipt_required": "true",
+      "owner_gate_required": "true",
+      "expected_evidence": "role_pack_install_receipt_candidate_ref"
+    },
+    "team_role_binding": {
+      "truth_source": "truzhenos",
+      "required_inputs": [
+        "team_ref",
+        "slot_ref",
+        "role_pack_ref",
+        "owner_decision_ref"
+      ],
+      "success_status": "team_role_slot_binding_candidate_created",
+      "receipt_required": "true",
+      "owner_gate_required": "true",
+      "expected_evidence": "team_role_binding_receipt_candidate_ref"
+    }
+  },
+  "negative_cases": {
+    "download_without_entitlement": {
+      "expected_status": "blocked_entitlement_missing",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "download_block_receipt_candidate_ref"
+    },
+    "install_hash_mismatch": {
+      "expected_status": "blocked_artifact_hash_mismatch",
+      "truth_source": "truzhenos",
+      "expected_evidence": "install_block_receipt_candidate_ref"
+    },
+    "bind_without_owner_gate": {
+      "expected_status": "blocked_owner_gate_required",
+      "truth_source": "truzhenos",
+      "expected_evidence": "binding_block_receipt_candidate_ref"
+    },
+    "real_payment_without_owner_authorization": {
+      "expected_status": "blocked_real_payment_without_owner_authorization",
+      "truth_source": "truzhen-cloud",
+      "expected_evidence": "payment_block_receipt_candidate_ref"
+    }
+  },
+  "forbidden": [
+    "store_order_truth_in_truzhen_packs",
+    "store_license_truth_in_truzhen_packs",
+    "store_entitlement_truth_in_truzhen_packs",
+    "real_payment_capture_without_owner_authorization",
+    "production_publish_without_owner_authorization",
+    "bypass_owner_gate_for_team_role_binding"
+  ]
+}

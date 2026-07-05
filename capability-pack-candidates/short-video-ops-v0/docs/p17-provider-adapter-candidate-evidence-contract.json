@@ -1,0 +1,82 @@
+{
+  "contract_ref": "p17-provider-adapter-candidate-evidence-contract://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "slice_key": "p17_provider_adapter_candidate",
+  "candidate_only": true,
+  "non_formal": true,
+  "status": "pending_authorization",
+  "depends_on": [
+    "p16_controlled_code_assistant_run"
+  ],
+  "required_repositories": [
+    "truzhen-software",
+    "truzhenos",
+    "truzhen-client-web-desktop",
+    "truzhen-packs"
+  ],
+  "required_provider_evidence": [
+    {
+      "evidence_id": "adapter_candidate_lands_outside_packs",
+      "repository": "truzhen-software",
+      "current_status": "pending_authorization",
+      "evidence_required": "diff and artifact evidence showing provider/adapter candidate files are outside truzhen-packs and contain no raw secret",
+      "expected_command": "git status --short --branch && git diff --check"
+    },
+    {
+      "evidence_id": "readiness_reports_provider_missing_or_blocked",
+      "repository": "truzhenos",
+      "current_status": "pending_authorization",
+      "evidence_required": "readiness API evidence showing provider_missing/blocked by default unless a provider is explicitly connected through the authorized path",
+      "expected_command": "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+    },
+    {
+      "evidence_id": "gui_shows_provider_ownership_and_blocked_state",
+      "repository": "truzhen-client-web-desktop",
+      "current_status": "pending_authorization",
+      "evidence_required": "GUI evidence showing provider ownership is truzhen-software/external provider and packs only keeps ProviderRequirement",
+      "expected_command": "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx"
+    }
+  ],
+  "required_forbidden_action_checks": [
+    {
+      "evidence_id": "provider_implementation_not_in_packs",
+      "current_status": "pending_authorization",
+      "evidence_required": "artifact scan proving truzhen-packs contains no provider runtime, sidecar, third-party source or build output"
+    },
+    {
+      "evidence_id": "no_third_party_oss_execution",
+      "current_status": "pending_authorization",
+      "evidence_required": "provider readiness evidence proving no third-party OSS was run without authorization"
+    },
+    {
+      "evidence_id": "no_raw_secret",
+      "current_status": "pending_authorization",
+      "evidence_required": "secret scan proving no raw token, cookie, password or account credential is stored"
+    }
+  ],
+  "completion_gate": {
+    "can_mark_slice_complete": false,
+    "required_status_before_completion": "p16_complete_and_provider_candidate_readiness_ownership_forbidden_checks_passed_and_owner_authorization_recorded_and_pack_studio_issue_ledger_closed_and_all_evidence_ids_written_and_all_evidence_refs_recorded_and_forbidden_action_checks_written_and_independent_verification_passed_and_owner_base_gate_receipts_bound",
+    "required_before_completion": [
+      "p17_post_run_evidence_acceptance_gate_passed",
+      "external_provider_repository_evidence_bound",
+      "provider_readiness_receipt_bound",
+      "packs_provider_runtime_absence_verified"
+    ],
+    "commercial_status_after_slice_only": "not_commercial_ready",
+    "next_required_slice": "p18_cloud_market_sandbox",
+    "required_evidence_writeback_plan_source": "docs/p17-execution-readiness-package.json#evidence_writeback_plan",
+    "evidence_writeback_plan_must_complete": true,
+    "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
+    "owner_base_gate_receipts_must_exist": true,
+    "blocking_owner_base_gate": "owner_base_gate_receipts_missing"
+  },
+  "non_sufficient_evidence": [
+    "evidence_writeback_incomplete",
+    "owner_base_gate_receipts_missing",
+    "adapter_scaffold_inside_packs_without_external_repo_evidence",
+    "provider_manifest_without_readiness_receipt",
+    "provider_ready_claim_without_owner_base_receipt",
+    "vendored_third_party_oss_source_in_packs"
+  ]
+}

@@ -1,0 +1,360 @@
+{
+  "matrix_ref": "role-studio-phase-coverage-matrix-candidate://team-office-v0",
+  "candidate_set_ref": "role-pack-candidate-set://team-office-v0",
+  "display_name": "团队办公室角色制作台 P0-P11 覆盖矩阵候选",
+  "candidate_only": true,
+  "non_formal": true,
+  "coverage_status": "candidate_coverage_defined_pending_cross_repo_execution",
+  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "blocker_register_ref": "tests/p0-p11-commercialization-blocker-register-candidate.json",
+  "phase_coverage": [
+    {
+      "phase_id": "P0",
+      "phase_order": 1,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "truzhen-packs"
+      ],
+      "target_repos": [
+        "truzhen-packs"
+      ],
+      "required_user_view_evidence": [
+        "plan and candidate artifact review"
+      ],
+      "required_backend_evidence": [
+        "candidate JSON legality and hash registration"
+      ],
+      "current_repo_candidate_artifacts": [
+        "candidate-set.json",
+        "tests/role-studio-phase-coverage-matrix-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "Owner signoff that P0 scope is accepted"
+      ],
+      "blocking_status": "blocked_pending_owner_acceptance",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P1",
+      "phase_order": 2,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_user_view_evidence": [
+        "role studio entry screenshot and operation log"
+      ],
+      "required_backend_evidence": [
+        "role studio capability discovery response"
+      ],
+      "current_repo_candidate_artifacts": [
+        "tests/gui-user-agent-scenarios.json",
+        "integration/frontend-backend-contract-map.json"
+      ],
+      "missing_authoritative_evidence": [
+        "GUI agent evidence and backend receipt are missing"
+      ],
+      "blocking_status": "blocked_missing_cross_repo_gui_backend_evidence",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P2",
+      "phase_order": 3,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_user_view_evidence": [
+        "secretary and advisor creation form screenshots"
+      ],
+      "required_backend_evidence": [
+        "RolePackCandidate creation receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "role-packs/team-office-secretary-general.rolepack.json",
+        "role-packs/team-office-strategy-advisor.rolepack.json"
+      ],
+      "missing_authoritative_evidence": [
+        "role candidate create receipts are missing"
+      ],
+      "blocking_status": "blocked_missing_candidate_receipts",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P3",
+      "phase_order": 4,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "target_repos": [
+        "truzhenos",
+        "truzhen-packs"
+      ],
+      "required_user_view_evidence": [
+        "candidate bundle export page state"
+      ],
+      "required_backend_evidence": [
+        "bundle export receipt and artifact hash"
+      ],
+      "current_repo_candidate_artifacts": [
+        "commerce/artifact-manifest.json",
+        "commerce/artifact-bundle-digest-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "export receipt and bundle hash continuity are missing"
+      ],
+      "blocking_status": "blocked_missing_bundle_export_receipt",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P4",
+      "phase_order": 5,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_user_view_evidence": [
+        "capability role requirement selection screenshot"
+      ],
+      "required_backend_evidence": [
+        "capability role requirement validation receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "capability-role-requirements/sample-team-research.role-requirements.json"
+      ],
+      "missing_authoritative_evidence": [
+        "capability reference validation receipt is missing"
+      ],
+      "blocking_status": "blocked_missing_capability_reference_evidence",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P5",
+      "phase_order": 6,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_user_view_evidence": [
+        "team settings secretary replacement screenshot"
+      ],
+      "required_backend_evidence": [
+        "TeamRoleSlotBindingCandidate receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "bindings/team-office-role-binding-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "secretary replacement binding receipt is missing"
+      ],
+      "blocking_status": "blocked_missing_team_binding_evidence",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P6",
+      "phase_order": 7,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_user_view_evidence": [
+        "five advisor replacement screenshots"
+      ],
+      "required_backend_evidence": [
+        "advisor slot binding receipts"
+      ],
+      "current_repo_candidate_artifacts": [
+        "role-slots/team-office-role-slots.json",
+        "bindings/team-settings-installed-role-catalog-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "five advisor binding receipts are missing"
+      ],
+      "blocking_status": "blocked_missing_advisor_binding_evidence",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P7",
+      "phase_order": 8,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_user_view_evidence": [
+        "team office runtime use screenshot"
+      ],
+      "required_backend_evidence": [
+        "runtime candidate-only output receipt"
+      ],
+      "current_repo_candidate_artifacts": [
+        "usage/team-office-runtime-usage-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "runtime use receipt and GUI evidence are missing"
+      ],
+      "blocking_status": "blocked_missing_runtime_evidence",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P8",
+      "phase_order": 9,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "multi_repo"
+      ],
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos",
+        "truzhen-cloud"
+      ],
+      "required_user_view_evidence": [
+        "negative case screenshots"
+      ],
+      "required_backend_evidence": [
+        "blocked receipts for forbidden phrases, incompatible roles and entitlement gaps"
+      ],
+      "current_repo_candidate_artifacts": [
+        "tests/commercial-evidence-gate-candidate.json",
+        "tests/e2e-evidence-run-record.json"
+      ],
+      "missing_authoritative_evidence": [
+        "negative case blocked receipts are missing"
+      ],
+      "blocking_status": "blocked_missing_negative_case_evidence",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P9",
+      "phase_order": 10,
+      "coverage_status": "pending_owner_authorization",
+      "truth_sources": [
+        "truzhen-packs"
+      ],
+      "target_repos": [
+        "truzhen-packs"
+      ],
+      "required_user_view_evidence": [
+        "independent acceptance checklist review"
+      ],
+      "required_backend_evidence": [
+        "candidate evidence gate remains non-formal"
+      ],
+      "current_repo_candidate_artifacts": [
+        "tests/product-readiness-evidence-matrix.json",
+        "tests/commercial-chain-verifier-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "independent acceptance signoff is missing"
+      ],
+      "blocking_status": "blocked_missing_independent_acceptance",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P10",
+      "phase_order": 11,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "target_repos": [
+        "truzhen-client-web-desktop",
+        "truzhenos"
+      ],
+      "required_user_view_evidence": [
+        "front-back contract smoke summary"
+      ],
+      "required_backend_evidence": [
+        "commercial API contract test logs"
+      ],
+      "current_repo_candidate_artifacts": [
+        "integration/frontend-backend-contract-map.json",
+        "integration/commercial-api-contract-candidate.json"
+      ],
+      "missing_authoritative_evidence": [
+        "frontend/backend integration evidence is missing"
+      ],
+      "blocking_status": "blocked_missing_frontend_backend_evidence",
+      "must_not_claim_complete": true
+    },
+    {
+      "phase_id": "P11",
+      "phase_order": 12,
+      "coverage_status": "pending_cross_repo_execution",
+      "truth_sources": [
+        "truzhen-cloud",
+        "truzhenos"
+      ],
+      "target_repos": [
+        "truzhen-cloud",
+        "truzhenos"
+      ],
+      "required_user_view_evidence": [
+        "cloud upload, sandbox purchase, download, local install and team binding screenshots"
+      ],
+      "required_backend_evidence": [
+        "cloud receipts, entitlement receipts, download hash receipts, truzhenos install receipts and team binding receipts"
+      ],
+      "current_repo_candidate_artifacts": [
+        "commerce/commercial-receipt-chain-candidate.json",
+        "commerce/commercial-distribution-receipt-schema-candidate.json",
+        "commerce/download-install-access-matrix.json"
+      ],
+      "missing_authoritative_evidence": [
+        "cloud commerce receipts and local install receipts are missing"
+      ],
+      "blocking_status": "blocked_missing_cloud_and_install_receipts",
+      "must_not_claim_complete": true
+    }
+  ],
+  "completion_claim_policy": {
+    "completion_claim_allowed": false,
+    "required_before_completion_claim": [
+      "all_p0_to_p11_phases_have_authoritative_evidence",
+      "user_view_gui_agent_evidence_present",
+      "truzhenos_receipts_present",
+      "truzhen_cloud_receipts_present",
+      "independent_acceptance_signoff",
+      "no_direct_json_edit_claim"
+    ],
+    "non_sufficient_evidence": [
+      "candidate_json_only",
+      "single_repo_test_only",
+      "manual_json_edit",
+      "organizer_self_attestation_only"
+    ]
+  },
+  "non_completion_clause": "本矩阵只是团队办公室 Role Pack 制作台 P0-P11 覆盖候选。没有跨仓 GUI 证据、truzhenos / truzhen-cloud 回执、独立验收和 Owner 授权前，不得声称制作、使用、上传、购买、下载、安装或正常商品化闭环完成。"
+}

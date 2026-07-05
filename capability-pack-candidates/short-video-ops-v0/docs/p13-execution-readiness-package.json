@@ -1,0 +1,161 @@
+{
+  "readiness_package_ref": "p13-execution-readiness-package://short-video-ops-v0",
+  "candidate_set_ref": "capability-pack-candidate-set://short-video-ops-v0",
+  "candidate_only": true,
+  "non_formal": true,
+  "slice_key": "p13_gui_lifecycle_panel",
+  "readiness_status": "blocked_pending_owner_authorization_and_p12_evidence",
+  "depends_on": [
+    "p12_safe_lifecycle_sample"
+  ],
+  "authorization_scope_contract": "docs/p13-cross-repo-authorization-scope.json",
+  "authorization_evidence_intake_contract": "docs/p13-owner-authorization-evidence-intake.json",
+  "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
+  "evidence_contract": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
+  "source_p12_post_run_evidence_acceptance_gate": "docs/p12-post-run-evidence-acceptance-gate.json",
+  "frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
+  "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-gui-lifecycle-panel-execution-spec-20260704.md",
+  "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md",
+  "target_repositories": [
+    "truzhen-client-web-desktop",
+    "truzhenos"
+  ],
+  "disallowed_repositories": [
+    "truzhen-contracts",
+    "truzhen-software",
+    "truzhen-cloud"
+  ],
+  "forbidden_actions": [
+    "run_real_codex_cli",
+    "execute_third_party_oss",
+    "social_login_or_upload",
+    "store_raw_secret",
+    "production_cloud_market_action",
+    "change_contracts_schema",
+    "enable_without_readiness_gate_receipt"
+  ],
+  "allowed_scope_summary": {
+    "truzhen-client-web-desktop": "Capability Pack Studio lifecycle panel, disabled unsafe actions, tests and frontend smoke only",
+    "truzhenos": "Only if P13 read-only panel aggregation fields are missing from existing responses"
+  },
+  "required_preconditions": [
+    "p12_owner_authorization_recorded",
+    "p12_safe_lifecycle_sample_evidence_complete_verified",
+    "p12_post_run_evidence_acceptance_gate_passed",
+    "p13_owner_authorization_recorded",
+    "p13_authorization_scope_matched"
+  ],
+  "required_verification_commands": [
+    "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx src/components/pack-lifecycle/CodeAssistantPackPanel.test.tsx",
+    "npm run typecheck",
+    "npm run smoke:frontend-shell",
+    "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1"
+  ],
+  "required_evidence_outputs": [
+    "owner_authorization_evidence_intake_recorded",
+    "p12_evidence_completion_ref",
+    "frontend_lifecycle_panel_test_and_smoke_logs",
+    "backend_lifecycle_status_summary_test_logs_if_backend_touched",
+    "disabled_unsafe_action_evidence",
+    "forbidden_action_noop_evidence"
+  ],
+  "evidence_writeback_plan": {
+    "candidate_only": true,
+    "write_status": "pending_authorization",
+    "ledger_path": "docs/gui-lifecycle-panel-ledger.md",
+    "evidence_contract": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
+    "can_write_completion_claim": false,
+    "required_before_marking_slice_complete": [
+      "owner_authorization_recorded",
+      "pack_studio_issue_ledger_closed",
+      "all_evidence_ids_written",
+      "all_evidence_refs_recorded",
+      "forbidden_action_checks_written",
+      "independent_verification_passed"
+    ],
+    "required_entries": [
+      {
+        "evidence_id": "candidate_delivery_readiness_panel_rendered",
+        "source_group": "required_frontend_evidence",
+        "target_ledger": "docs/gui-lifecycle-panel-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "enable_controls_gate_blocked",
+        "source_group": "required_frontend_evidence",
+        "target_ledger": "docs/gui-lifecycle-panel-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "blocked_reasons_and_repo_ownership_visible",
+        "source_group": "required_frontend_evidence",
+        "target_ledger": "docs/gui-lifecycle-panel-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "lifecycle_status_summary_readable_by_gui",
+        "source_group": "required_backend_evidence",
+        "target_ledger": "docs/gui-lifecycle-panel-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "third_party_oss_run_from_gui_blocked",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/gui-lifecycle-panel-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      },
+      {
+        "evidence_id": "codex_cli_run_without_11_gateway_blocked",
+        "source_group": "required_forbidden_action_checks",
+        "target_ledger": "docs/gui-lifecycle-panel-ledger.md",
+        "current_status": "pending_authorization",
+        "write_required": true,
+        "evidence_ref_required": true,
+        "evidence_summary_required": true
+      }
+    ],
+    "non_completion_clause": "This writeback plan maps future evidence IDs to the candidate ledger only. It is not execution evidence and does not permit a completion claim."
+  },
+  "cross_repo_work_gate": {
+    "can_start_cross_repo_work": false,
+    "required_authorization_attempt_coverage_verifier_source": "commercial_go_live_evidence_package.authorization_attempt_coverage_verifier",
+    "authorization_attempt_coverage_verifier_must_pass": true,
+    "required_next_authorization_start_guard_source": "commercial_go_live_evidence_package.next_authorization_start_guard",
+    "next_authorization_start_guard_must_open": true,
+    "required_pack_studio_issue_ledger_source": "candidate_set.pack_studio_issue_ledger",
+    "pack_studio_issue_ledger_must_close": true,
+    "required_status_before_cross_repo_work": "owner_authorization_recorded_and_p12_evidence_complete_and_authorization_attempt_coverage_verifier_passed_and_next_authorization_start_guard_open_and_pack_studio_issue_ledger_closed_and_no_rejected_authorization_attempt_substitution",
+    "must_record_before_cross_repo_work": true,
+    "required_rejected_authorization_attempt_source": "commercial_go_live_evidence_package.latest_rejected_authorization_attempt",
+    "rejected_authorization_attempt_can_satisfy_owner_authorization": false,
+    "rejected_authorization_attempt_can_start_cross_repo_work": false,
+    "blocked_attempt_refs": [
+      "owner-message://2026-07-05-p11-card-mismatch-for-p12"
+    ]
+  },
+  "non_sufficient_evidence": [
+    "owner_authorization_missing",
+    "p12_evidence_incomplete",
+    "authorization_attempt_coverage_verifier_pending",
+    "next_authorization_start_guard_pending",
+    "pack_studio_issue_ledger_open",
+    "execution_readiness_package_without_open_gate",
+    "rejected_authorization_attempt_is_not_owner_authorization"
+  ],
+  "non_completion_clause": "This readiness package only makes the P13 GUI lifecycle panel executable after explicit Owner authorization and verified P12 evidence. It is not authorization, not frontend/backend execution evidence, and not proof of commercial readiness."
+}
