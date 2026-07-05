@@ -58,13 +58,17 @@ R4 是「发现问题」轮：它挖出 ENV-R4-01（知识大域召回被 09 单
 | REG-R5-03 | flow-stall（run-start 不被请求 deadline 截断） | truzhenos `658e495`（以 git log 为准） | 冷起 advice→主权 wait **停稳**不卡 running；请求 ctx 超时不打断 run 编排。 |
 | REG-R5-04 | advice node_type 四层透传（不误判 challenge） | contracts/os/packs/client node_type 链（以 git log 为准） | 单角色 advice 节点 `node_type='advice'`（责任含"风险"仍 advice），双角色对照节点正确；GUI 按钮文案与 node_type 一致。 |
 | REG-R5-05 | R3 三修现状无回归 | `bc6f2e0`/`dca2179`/`d2b5e58`（以 git log 为准） | 前端 flowId 正确、双角色本地冷起不超时、交互批 6 项 GUI 可操作。 |
+| REG-R5-06 | **provider 机器态投影贯通**（本轮 pack-suite hardening land） | os `b4ee07b` + client `966c2f1` | capability-invoke 步骤卡显示 `能力/requirement/provider_family/fallback/状态`（来自 candidate 机器态，非前端写死）；候选带 `provider_status`（`blocked`/`provider_missing`/`not_ready`）**诚实态**，未接通不伪造读取；env 各 capability 节点投影正确。 |
+| REG-R5-07 | **「在 03 反查」按钮默认可见**（不折叠） | client `966c2f1` | TransactionTimeline 每条带 receiptRef 的事件「在 03 反查」按钮默认可见（不藏在 `<details>` 内）；点击真反查 03，非真回执→404 blocked 原样呈现。 |
+| REG-R5-08 | **详情页 flow/knowledge 错误分域** | client `966c2f1` | ScenePackManagePage 详情：流程图失败不遮蔽知识库、反之亦然（两个独立错误态）；知识按域逐查绕 100 上限。 |
+| REG-R5-09 | **Base Gate 冷起忙态提示** | client `966c2f1` | CreateTransactionObjectDialog 起 run 时显式忙态提示（经 Base Gate 几十秒 + 勿重复提交），呼应 flow-stall（REG-R5-03）UX。 |
 
 ## 6. 深水区（R4 未竟）
 
 | 编号 | 深水对象 | 归属 | 判定 |
 | --- | --- | --- | --- |
 | DW-R5-01 | `screening` 缺 `pdf_parse_status` blocker | **05-business-object-workbench** | 定性：run 停 screening 是**受控 blocked（诚实留痕，可解释）**还是**无 GUI 恢复的死卡（缺口）**。若 Owner 给测试 PDF 样本→验 upload→parse→screening 解阻→下一 stage 闭环；不给样本→止于 blocker 诚实性定性 + 出影响清单。 |
-| DW-R5-02 | 九阶段全链路诚实态 | 06/09/10/11 | `monitoring_data_fetch`→`provider_missing`、`legal_doc_draft`/`enforcement_exec`→`blocked`、文书送达→`manual_handoff`，**全程无假成功、无自铸 ref、无假读**。 |
+| DW-R5-02 | 九阶段全链路诚实态（含 provider 机器态投影 REG-R5-06） | 06/09/10/11 | `monitoring_data_fetch`→`provider_missing`、`legal_doc_draft`/`enforcement_exec`→`blocked`、文书送达→`manual_handoff`，**全程无假成功、无自铸 ref、无假读**；每 capability 步骤的 provider 机器态与实际网关可达性一致（不接通即 `provider_missing`/`not_ready`，不显示虚构 provider）。 |
 
 ## 7. 四画像（沿用 R3，GUI-only）
 
