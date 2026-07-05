@@ -152,7 +152,7 @@ def main():
         provider_reqs = []
         for p in caps.get("provider_requirements", []):
             provider_reqs.append({k: p[k] for k in ("requirement_id", "capability", "gateway_class",
-                                                    "risk_class", "fallback_policy") if k in p}
+                                                    "risk_class", "fallback_policy", "provider_family") if k in p}
                                  | ({"optional": p["optional"]} if p.get("optional") else {}))
         ks = []
         for s in scopes_doc.get("scopes", []):
