@@ -18,6 +18,11 @@ import urllib.parse
 import urllib.request
 
 PACK_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_DIR = os.path.dirname(PACK_DIR)
+if REPO_DIR not in sys.path:
+    sys.path.insert(0, REPO_DIR)
+from pack_diagnostics import emit_pack_error
+
 BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080")
 OWNER = os.environ.get("TRUZHEN_PACK_OWNER", "owner://local/default")
 
@@ -42,6 +47,7 @@ def call(method, path, body=None):
 
 
 def die(msg):
+    emit_pack_error(pack_dir=PACK_DIR, base=BASE, action="uninstall", error_code="TZ-PACK-UNINSTALL-001", message=msg)
     print("卸载失败：" + msg, file=sys.stderr)
     sys.exit(1)
 

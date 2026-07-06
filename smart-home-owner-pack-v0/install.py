@@ -25,6 +25,11 @@ import urllib.parse
 import urllib.request
 
 PACK_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_DIR = os.path.dirname(PACK_DIR)
+if REPO_DIR not in sys.path:
+    sys.path.insert(0, REPO_DIR)
+from pack_diagnostics import emit_pack_error
+
 BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080")
 # 用本地规范 Owner（前端记忆中心默认查询 owner_id='owner://local/default'，后端运行时
 # 也用此 owner）：知识/挂载/角色/绑定都落在这个 owner 下，记忆中心与运行时 advice 才看得到。
@@ -87,6 +92,7 @@ def call(method, path, body=None):
 
 
 def die(msg):
+    emit_pack_error(pack_dir=PACK_DIR, base=BASE, action="install", error_code="TZ-PACK-INSTALL-001", message=msg)
     print("装入失败：" + msg, file=sys.stderr)
     sys.exit(1)
 
