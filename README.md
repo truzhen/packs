@@ -6,6 +6,8 @@
 
 [三类 Pack](docs/pack-types.md) · [作者指南](docs/author-guide.md) · [如何提交](docs/submit-pack.md) · [收益与市场](docs/revenue-and-market.md) · [审核与上架](docs/review-and-listing.md)
 
+简体中文 · [繁體中文](docs/i18n.md#zh-tw) · [English](docs/i18n.md#en) · [日本語](docs/i18n.md#ja) · [Русский](docs/i18n.md#ru) · [Deutsch](docs/i18n.md#de) · [Français](docs/i18n.md#fr) · [Español](docs/i18n.md#es)
+
 </div>
 
 ---
