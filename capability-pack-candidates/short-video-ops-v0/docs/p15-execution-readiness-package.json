@@ -19,8 +19,8 @@
   "evidence_contract": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json",
   "source_p13_post_run_evidence_acceptance_gate": "docs/p13-post-run-evidence-acceptance-gate.json",
   "frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
-  "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-three-candidate-gui-walkthrough-spec-20260704.md",
-  "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-cross-repo-execution-authorization-20260704.md",
+  "implementation_spec": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-three-candidate-gui-walkthrough-spec-20260704.md",
+  "cross_repo_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-cross-repo-execution-authorization-20260704.md",
   "target_repositories": [
     "truzhen-client-web-desktop",
     "truzhenos",
@@ -55,7 +55,7 @@
   "required_verification_commands": [
     "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx",
     "npm run smoke:frontend-shell",
-    "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenos GOWORK=off npm run smoke:frontend-behavior",
+    "TRUZHENOS_BACKEND_ROOT=repo_ref://truzhenos/main GOWORK=off npm run smoke:frontend-behavior",
     "GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1",
     "go test ./... -run TestShortVideoP15ExecutionReadinessPackageIsMachineCheckable -count=1"
   ],

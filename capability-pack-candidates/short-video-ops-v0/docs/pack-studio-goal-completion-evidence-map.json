@@ -9,7 +9,7 @@
   "coverage_verifiers_without_runtime_receipts_can_mark_goal_complete": false,
   "machine_go_live_summary_without_slice_receipts_can_mark_goal_complete": false,
   "go_no_go_candidate_without_owner_base_receipts_can_mark_goal_complete": false,
-  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/gui-capability-pack-workbench-github-oss-test-plan-20260704.md",
+  "source_plan": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/gui-capability-pack-workbench-github-oss-test-plan-20260704.md",
   "source_commercial_readiness_verifier": "docs/commercial-readiness-verifier.json",
   "source_commercial_go_no_go_gate": "docs/commercial-go-no-go-gate.json",
   "source_post_run_gate_coverage_verifier": "docs/commercial-post-run-gate-coverage-verifier.json",
@@ -25,7 +25,7 @@
   "source_frontend_backend_acceptance": "docs/commercial-frontend-backend-acceptance-contract.json",
   "source_cross_repo_execution_queue": "docs/commercial-cross-repo-execution-queue.json",
   "next_required_authorization": "p12_safe_lifecycle_sample",
-  "next_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "next_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
   "latest_rejected_authorization_attempt": {
     "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
     "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",

@@ -6,7 +6,7 @@
   "non_formal": true,
   "completion_status": "not_achieved_requires_cross_repo_execution",
   "can_mark_goal_complete": false,
-  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "source_plan": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "source_normal_commercialization_completion_audit": "tests/normal-commercialization-completion-audit-candidate.json",
   "source_role_studio_test_case_coverage_matrix": "tests/role-studio-test-case-coverage-matrix-candidate.json",
   "source_role_studio_export_provenance_attestation": "tests/role-studio-export-provenance-attestation-candidate.json",

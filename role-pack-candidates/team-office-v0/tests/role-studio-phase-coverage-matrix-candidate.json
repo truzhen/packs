@@ -5,7 +5,7 @@
   "candidate_only": true,
   "non_formal": true,
   "coverage_status": "candidate_coverage_defined_pending_cross_repo_execution",
-  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "objective_source": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "blocker_register_ref": "tests/p0-p11-commercialization-blocker-register-candidate.json",
   "phase_coverage": [
     {

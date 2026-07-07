@@ -134,7 +134,7 @@
       "target_repository": "truzhenos + truzhen-client-web-desktop",
       "current_status": "pending_authorization",
       "evidence_required": "live smoke or equivalent run proving draft/readiness/promote/confirm safe fixture round trip with receipt-bound enabled pointer",
-      "expected_command": "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenos GOWORK=off npm run smoke:frontend-behavior"
+      "expected_command": "TRUZHENOS_BACKEND_ROOT=repo_ref://truzhenos/main GOWORK=off npm run smoke:frontend-behavior"
     },
     {
       "evidence_id": "three_short_video_candidates_gui_walkthrough",

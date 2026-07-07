@@ -10,7 +10,7 @@
   "commercial_cross_repo_execution_queue_ref": "integration/commercial-cross-repo-execution-queue-candidate.json",
   "p11_runbook_ref": "tests/p11-sandbox-execution-runbook-candidate.json",
   "go_live_evidence_package_ref": "tests/p11-commercial-go-live-evidence-package-template.json",
-  "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-cross-repo-execution-authorization-20260704.md",
+  "accepted_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-cross-repo-execution-authorization-20260704.md",
   "authorization_truth_source": "Owner explicit authorization in the current thread or signed authorization card; not inferred from plan text, candidate assets, prior runs, or narrow test success.",
   "evidence_output_policy": "record_refs_only_in_truzhen_packs_raw_evidence_stays_in_execution_repos",
   "current_authorization_boundary": "no_cross_repo_work_without_recorded_matching_owner_authorization",
@@ -30,7 +30,7 @@
   "authorized_repository_scopes": [
     {
       "repo_id": "truzhen-client-web-desktop",
-      "repo_path": "/Users/li/Documents/truzhen-client-web-desktop",
+      "repo_path": "repo_ref://truzhen-client-web-desktop/main",
       "authorization_status": "missing",
       "required_status_command": "git status --short --branch",
       "allowed_actions_after_authorization": [
@@ -51,7 +51,7 @@
     },
     {
       "repo_id": "truzhenos",
-      "repo_path": "/Users/li/Documents/truzhenos",
+      "repo_path": "repo_ref://truzhenos/main",
       "authorization_status": "missing",
       "required_status_command": "git status --short --branch",
       "allowed_actions_after_authorization": [
@@ -72,7 +72,7 @@
     },
     {
       "repo_id": "truzhen-cloud",
-      "repo_path": "/Users/li/Documents/truzhen-cloud",
+      "repo_path": "repo_ref://truzhen-cloud/main",
       "authorization_status": "missing",
       "required_status_command": "git status --short --branch",
       "allowed_actions_after_authorization": [
@@ -93,7 +93,7 @@
     },
     {
       "repo_id": "truzhen-contracts",
-      "repo_path": "/Users/li/Documents/truzhen-contracts",
+      "repo_path": "repo_ref://truzhen-contracts/main",
       "authorization_status": "missing",
       "required_status_command": "git status --short --branch",
       "allowed_actions_after_authorization": [
@@ -114,7 +114,7 @@
     },
     {
       "repo_id": "truzhen-packs-current",
-      "repo_path": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+      "repo_path": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan",
       "authorization_status": "missing",
       "required_status_command": "git status --short --branch",
       "allowed_actions_after_authorization": [

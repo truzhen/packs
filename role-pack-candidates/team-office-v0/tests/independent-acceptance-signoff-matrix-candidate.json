@@ -5,7 +5,7 @@
   "candidate_only": true,
   "non_formal": true,
   "signoff_status": "candidate_not_run_requires_authoritative_evidence",
-  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "objective_source": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "blocker_register_ref": "tests/p0-p11-commercialization-blocker-register-candidate.json",
   "purpose": "定义独立验收智能体如何逐阶段复核角色制作、使用、上传、购买、下载、安装、团队设置替换、负例阻断和正常商品化证据；组织者只能协调和记录，不能自证完成。",
   "reviewer_policy": {

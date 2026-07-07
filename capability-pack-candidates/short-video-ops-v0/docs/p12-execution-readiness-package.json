@@ -10,8 +10,8 @@
   "pack_studio_issue_ledger": "docs/pack-studio-issue-ledger.json",
   "evidence_contract": "docs/p12-safe-lifecycle-evidence-contract.json",
   "frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
-  "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-safe-lifecycle-sample-execution-spec-20260704.md",
-  "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "implementation_spec": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-safe-lifecycle-sample-execution-spec-20260704.md",
+  "cross_repo_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
   "target_repositories": [
     "truzhenos",
     "truzhen-client-web-desktop"
@@ -41,7 +41,7 @@
     "npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx src/components/pack-lifecycle/CodeAssistantPackPanel.test.tsx src/api/__tests__/executionLiveSmokeScript.test.ts",
     "npm run typecheck",
     "npm run smoke:frontend-shell",
-    "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenos GOWORK=off npm run smoke:frontend-behavior"
+    "TRUZHENOS_BACKEND_ROOT=repo_ref://truzhenos/main GOWORK=off npm run smoke:frontend-behavior"
   ],
   "required_evidence_outputs": [
     "owner_authorization_evidence_intake_recorded",

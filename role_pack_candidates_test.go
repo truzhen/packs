@@ -6424,11 +6424,11 @@ func TestTeamOfficeCrossRepoExecutionReadinessPackageDefinesAuthorizationReadyHa
 		t.Fatalf("target_repositories missing")
 	}
 	requiredRepos := map[string]string{
-		"truzhen-contracts":          "/Users/li/Documents/truzhen-contracts",
-		"truzhenos":                  "/Users/li/Documents/truzhenos",
-		"truzhen-client-web-desktop": "/Users/li/Documents/truzhen-client-web-desktop",
-		"truzhen-cloud":              "/Users/li/Documents/truzhen-cloud",
-		"truzhen-packs-current":      "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+		"truzhen-contracts":          "repo_ref://truzhen-contracts/main",
+		"truzhenos":                  "repo_ref://truzhenos/main",
+		"truzhen-client-web-desktop": "repo_ref://truzhen-client-web-desktop/main",
+		"truzhen-cloud":              "repo_ref://truzhen-cloud/main",
+		"truzhen-packs-current":      "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan",
 	}
 	for _, raw := range rawRepos {
 		repo, ok := raw.(map[string]any)
@@ -9772,7 +9772,7 @@ func TestTeamOfficeRoleStudioTestCaseCoverageMatrixMapsPlanTCsToEvidence(t *test
 	}
 	for key, want := range map[string]string{
 		"candidate_set_ref":             "role-pack-candidate-set://team-office-v0",
-		"source_plan":                   "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+		"source_plan":                   "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
 		"phase_coverage_matrix_ref":     "tests/role-studio-phase-coverage-matrix-candidate.json",
 		"gui_execution_script_ref":      "tests/gui-user-agent-execution-script-candidate.json",
 		"evidence_capture_protocol_ref": "tests/gui-evidence-capture-protocol.json",
@@ -13106,7 +13106,7 @@ func TestTeamOfficeOwnerAuthorizationEvidenceIntakeBlocksCrossRepoWorkUntilScope
 		"execution_cards_ref":            "integration/cross-repo-execution-cards.json",
 		"p11_runbook_ref":                "tests/p11-sandbox-execution-runbook-candidate.json",
 		"go_live_evidence_package_ref":   "tests/p11-commercial-go-live-evidence-package-template.json",
-		"accepted_authorization_card":    "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-cross-repo-execution-authorization-20260704.md",
+		"accepted_authorization_card":    "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-cross-repo-execution-authorization-20260704.md",
 		"authorization_truth_source":     "Owner explicit authorization in the current thread or signed authorization card; not inferred from plan text, candidate assets, prior runs, or narrow test success.",
 		"evidence_output_policy":         "record_refs_only_in_truzhen_packs_raw_evidence_stays_in_execution_repos",
 		"current_authorization_boundary": "no_cross_repo_work_without_recorded_matching_owner_authorization",

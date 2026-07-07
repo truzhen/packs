@@ -25,7 +25,7 @@
   "required_owner_base_gate_source": "Owner + Base Gate + Gateway + Receipt",
   "owner_base_gate_receipts_must_exist": true,
   "next_required_authorization": "p12_safe_lifecycle_sample",
-  "next_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "next_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
   "latest_rejected_authorization_attempt": {
     "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
     "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",

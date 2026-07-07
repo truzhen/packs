@@ -31,7 +31,7 @@
       "repository": "truzhen-client-web-desktop",
       "current_status": "pending_authorization",
       "evidence_required": "walkthrough ledger records click sequence, endpoint, request/response summary and artifact refs for all three candidates",
-      "expected_command": "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenv3worktree/truzhenos-mod-04-capability-pack-studio-short-video-oss GOWORK=off npm run smoke:frontend-behavior"
+      "expected_command": "TRUZHENOS_BACKEND_ROOT=process_worktree_ref://truzhenos/truzhenos-mod-04-capability-pack-studio-short-video-oss GOWORK=off npm run smoke:frontend-behavior"
     }
   ],
   "required_backend_evidence": [

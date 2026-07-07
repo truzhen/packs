@@ -14,8 +14,8 @@
   "evidence_contract": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
   "source_p12_post_run_evidence_acceptance_gate": "docs/p12-post-run-evidence-acceptance-gate.json",
   "frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
-  "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-gui-lifecycle-panel-execution-spec-20260704.md",
-  "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md",
+  "implementation_spec": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-gui-lifecycle-panel-execution-spec-20260704.md",
+  "cross_repo_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md",
   "target_repositories": [
     "truzhen-client-web-desktop",
     "truzhenos"

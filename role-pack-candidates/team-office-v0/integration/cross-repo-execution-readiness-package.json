@@ -23,7 +23,7 @@
   "target_repositories": [
     {
       "repo_id": "truzhen-contracts",
-      "repo_path": "/Users/li/Documents/truzhen-contracts",
+      "repo_path": "repo_ref://truzhen-contracts/main",
       "authorization_status": "requires_owner_authorization",
       "required_status_command": "git status --short --branch",
       "allowed_actions_after_authorization": [
@@ -50,7 +50,7 @@
     },
     {
       "repo_id": "truzhenos",
-      "repo_path": "/Users/li/Documents/truzhenos",
+      "repo_path": "repo_ref://truzhenos/main",
       "authorization_status": "requires_owner_authorization",
       "required_status_command": "git status --short --branch",
       "allowed_actions_after_authorization": [
@@ -84,7 +84,7 @@
     },
     {
       "repo_id": "truzhen-client-web-desktop",
-      "repo_path": "/Users/li/Documents/truzhen-client-web-desktop",
+      "repo_path": "repo_ref://truzhen-client-web-desktop/main",
       "authorization_status": "requires_owner_authorization",
       "required_status_command": "git status --short --branch",
       "allowed_actions_after_authorization": [
@@ -118,7 +118,7 @@
     },
     {
       "repo_id": "truzhen-cloud",
-      "repo_path": "/Users/li/Documents/truzhen-cloud",
+      "repo_path": "repo_ref://truzhen-cloud/main",
       "authorization_status": "requires_owner_authorization",
       "required_status_command": "git status --short --branch",
       "allowed_actions_after_authorization": [
@@ -154,7 +154,7 @@
     },
     {
       "repo_id": "truzhen-packs-current",
-      "repo_path": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+      "repo_path": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan",
       "authorization_status": "current_repo_authorized_for_candidate_assets_only",
       "required_status_command": "git status --short --branch",
       "allowed_actions_after_authorization": [

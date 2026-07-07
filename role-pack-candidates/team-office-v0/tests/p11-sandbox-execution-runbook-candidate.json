@@ -32,7 +32,7 @@
   "target_repositories": [
     {
       "repo_id": "truzhen-client-web-desktop",
-      "absolute_path": "/Users/li/Documents/truzhen-client-web-desktop",
+      "absolute_path": "repo_ref://truzhen-client-web-desktop/main",
       "allowed_actions": [
         "read_current_gui_routes",
         "run_user_view_gui_smoke",
@@ -55,7 +55,7 @@
     },
     {
       "repo_id": "truzhenos",
-      "absolute_path": "/Users/li/Documents/truzhenos",
+      "absolute_path": "repo_ref://truzhenos/main",
       "allowed_actions": [
         "read_role_candidate_and_binding_contracts",
         "run_install_preflight_in_sandbox",
@@ -79,7 +79,7 @@
     },
     {
       "repo_id": "truzhen-cloud",
-      "absolute_path": "/Users/li/Documents/truzhen-cloud",
+      "absolute_path": "repo_ref://truzhen-cloud/main",
       "allowed_actions": [
         "run_sandbox_upload_listing_draft",
         "run_sandbox_order_payment",
@@ -104,7 +104,7 @@
     },
     {
       "repo_id": "truzhen-contracts",
-      "absolute_path": "/Users/li/Documents/truzhen-contracts",
+      "absolute_path": "repo_ref://truzhen-contracts/main",
       "allowed_actions": [
         "read_only_schema_check",
         "record_no_contract_change_if_compatible",

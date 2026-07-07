@@ -8,7 +8,7 @@
   "next_required_slice_key": "p12_safe_lifecycle_sample",
   "source_authorization_scope_contract": "docs/p12-cross-repo-authorization-scope.json",
   "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
-  "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "accepted_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
   "authorization_attempt_coverage_verifier": "docs/commercial-authorization-attempt-coverage-verifier.json",
   "required_commercial_gate_docs": [
     "docs/commercial-evidence-contract-index.json",

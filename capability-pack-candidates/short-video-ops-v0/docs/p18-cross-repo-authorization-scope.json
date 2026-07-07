@@ -9,7 +9,7 @@
   "authorized_repositories": [
     {
       "repo": "truzhen-cloud",
-      "path": "/Users/li/Documents/truzhen-cloud",
+      "path": "repo_ref://truzhen-cloud/main",
       "allowed_actions": [
         "modify",
         "test"
@@ -18,7 +18,7 @@
     },
     {
       "repo": "truzhen-client-web-desktop",
-      "path": "/Users/li/.config/superpowers/worktrees/truzhen-client-web-desktop/capability-pack-studio-short-video-gui",
+      "path": "process_worktree_ref://truzhen-client-web-desktop/capability-pack-studio-short-video-gui",
       "allowed_actions": [
         "modify",
         "test"
@@ -27,7 +27,7 @@
     },
     {
       "repo": "truzhenos",
-      "path": "/Users/li/Documents/truzhenv3worktree/truzhenos-mod-04-capability-pack-studio-short-video-oss",
+      "path": "process_worktree_ref://truzhenos/truzhenos-mod-04-capability-pack-studio-short-video-oss",
       "allowed_actions": [
         "modify",
         "test"
@@ -36,7 +36,7 @@
     },
     {
       "repo": "truzhen-packs",
-      "path": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+      "path": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan",
       "allowed_actions": [
         "document",
         "candidate_asset_maintenance",
@@ -71,7 +71,7 @@
   "current_authorization_evidence": {
     "status": "missing",
     "owner_thread_quote_required": true,
-    "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md",
+    "accepted_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md",
     "evidence_intake_contract": "docs/p18-owner-authorization-evidence-intake.json",
     "must_be_recorded_before_cross_repo_work": true
   }

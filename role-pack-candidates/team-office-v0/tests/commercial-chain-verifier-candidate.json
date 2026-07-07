@@ -5,7 +5,7 @@
   "non_formal": true,
   "verifier_status": "not_run_requires_cross_repo_receipts",
   "verifier_role": "organizer_coordinator_recorder",
-  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "objective_source": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "source_p11_sandbox_run_request": "tests/p11-sandbox-run-request-candidate.json",
   "source_execution_queue": "integration/commercial-cross-repo-execution-queue-candidate.json",
   "source_p11_phase_dependency_contract": "tests/p11-sandbox-run-request-candidate.json#phase_dependency_contract",

@@ -5,7 +5,7 @@
   "candidate_only": true,
   "non_formal": true,
   "gate_status": "not_run_requires_cross_repo_authoritative_receipts",
-  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "objective_source": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "verification_record_template_ref": "tests/p11-normal-commercialization-verification-record-template.json",
   "test_case_coverage_matrix_ref": "tests/role-studio-test-case-coverage-matrix-candidate.json",
   "purpose": "把 P11 上传、审核、sandbox 购买、支付、授权、下载、安装、团队绑定、运行使用、负例阻断和独立验收拆成可判定的 go / no-go 门；本文件只定义验收算法，不代表真实链路已经运行。",

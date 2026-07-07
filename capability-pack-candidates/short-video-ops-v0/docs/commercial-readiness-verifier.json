@@ -28,7 +28,7 @@
   "machine_evidence_package_coverage_verifier": "docs/commercial-machine-go-live-evidence-package-coverage-verifier.json",
   "independent_acceptance_signoff_matrix": "docs/commercial-independent-acceptance-signoff-matrix.json",
   "next_required_authorization": "p12_safe_lifecycle_sample",
-  "next_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "next_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
   "latest_rejected_authorization_attempt": {
     "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
     "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",

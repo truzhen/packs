@@ -7,7 +7,7 @@
   "package_status": "blocked_not_commercial_ready",
   "current_go_live_status": "not_commercial_ready",
   "source_candidate_set": "candidate-set.json#commercial_go_live_evidence_package",
-  "source_human_evidence_package": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-commercial-go-live-evidence-package-20260704.md",
+  "source_human_evidence_package": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-commercial-go-live-evidence-package-20260704.md",
   "can_request_owner_signoff": false,
   "can_mark_commercial_ready": false,
   "hard_gate_sources": {

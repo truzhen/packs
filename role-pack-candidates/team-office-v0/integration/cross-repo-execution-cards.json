@@ -6,7 +6,7 @@
   "non_formal": true,
   "execution_status": "pending_owner_authorization",
   "purpose": "把角色制作、使用、上传、购买、下载、安装和团队设置替换的商品阶段目标拆成授权后可逐仓执行、验证和验收的工作卡。",
-  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "source_plan": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "execution_cards": [
     {
       "card_id": "contracts_schema_impact_review",

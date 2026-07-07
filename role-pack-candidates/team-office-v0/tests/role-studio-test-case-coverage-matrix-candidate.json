@@ -5,7 +5,7 @@
   "candidate_only": true,
   "non_formal": true,
   "coverage_status": "candidate_coverage_defined_pending_cross_repo_execution",
-  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "source_plan": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "phase_coverage_matrix_ref": "tests/role-studio-phase-coverage-matrix-candidate.json",
   "gui_execution_script_ref": "tests/gui-user-agent-execution-script-candidate.json",
   "evidence_capture_protocol_ref": "tests/gui-evidence-capture-protocol.json",

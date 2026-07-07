@@ -67,7 +67,7 @@ python3 packs/environmental-enforcement-pack-v0/uninstall.py
 
 ```sh
 python3 tools/build-knowledge-from-source.py [权威资料知识库路径]
-# 默认源：/Users/li/Documents/trae/knowledge_base
+# 默认源不写入 Pack；由本机过程文档或受控导入配置提供。
 # 会重写 knowledge/ 下各域文件 + knowledge-scopes.json + knowledge-index.json
 ```
 

@@ -5,7 +5,7 @@
   "candidate_only": true,
   "non_formal": true,
   "register_status": "candidate_blockers_defined_pending_cross_repo_execution",
-  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "objective_source": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "purpose": "把角色制作、能力 Pack 引用、秘书长 / 五顾问替换、音色 / VRM、上传、购买、下载、安装和独立验收的缺口登记成可追踪问题；未获跨仓授权和真实回执前不得声明商品化完成。",
   "actor_model": {
     "user_view_gui_agent": "从用户视角通过 GUI 操作产出截图、页面状态和操作日志。",

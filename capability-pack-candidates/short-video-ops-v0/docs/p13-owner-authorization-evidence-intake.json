@@ -6,7 +6,7 @@
   "non_formal": true,
   "status": "missing_owner_authorization",
   "authorization_scope_contract": "docs/p13-cross-repo-authorization-scope.json",
-  "accepted_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md",
+  "accepted_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md",
   "authorization_truth_source": "Owner explicit authorization in the current thread or signed authorization card; not inferred from plan text or previous slice authorization.",
   "required_owner_quote_contains": [
     "授权按 P13 授权卡",

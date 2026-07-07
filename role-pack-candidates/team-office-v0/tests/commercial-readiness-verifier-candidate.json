@@ -9,7 +9,7 @@
   "can_mark_commercial_ready": false,
   "formal_write_allowed": false,
   "verifier_role": "organizer_coordinator_recorder",
-  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "objective_source": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "purpose": "在 Owner 授权真实 GUI、云端、安装和独立验收前，汇总当前商品化阻断状态、证据回写缺口和 go/no-go 依赖，防止把候选资产或单仓测试误判为可上线商品。",
   "source_p11_sandbox_run_request": "tests/p11-sandbox-run-request-candidate.json",
   "source_execution_queue": "integration/commercial-cross-repo-execution-queue-candidate.json",

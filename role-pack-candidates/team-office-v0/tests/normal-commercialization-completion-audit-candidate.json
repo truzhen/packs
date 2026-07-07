@@ -5,7 +5,7 @@
   "candidate_only": true,
   "non_formal": true,
   "completion_status": "not_achieved_requires_cross_repo_execution",
-  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "objective_source": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "phase_coverage_matrix_ref": "tests/role-studio-phase-coverage-matrix-candidate.json",
   "independent_acceptance_signoff_matrix_ref": "tests/independent-acceptance-signoff-matrix-candidate.json",
   "product_stage_frontend_backend_closure_report_ref": "tests/product-stage-frontend-backend-closure-report-candidate.json",

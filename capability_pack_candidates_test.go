@@ -1113,7 +1113,7 @@ func TestShortVideoP12ExecutionReadinessPackageIsMachineCheckable(t *testing.T) 
 	for _, command := range []string{
 		"GOWORK=off go test ./backend/tests/capability -run 'TestCapabilityPackLifecycleSafeFixtureDraftIsServerDerived' -count=1",
 		"npm run smoke:frontend-shell",
-		"TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenos GOWORK=off npm run smoke:frontend-behavior",
+		"TRUZHENOS_BACKEND_ROOT=repo_ref://truzhenos/main GOWORK=off npm run smoke:frontend-behavior",
 	} {
 		requireStringSliceContains(t, asStringSlice(t, readiness["required_verification_commands"]), command)
 	}
@@ -2235,7 +2235,7 @@ func TestShortVideoP15ExecutionReadinessPackageIsMachineCheckable(t *testing.T) 
 	for _, command := range []string{
 		"npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx",
 		"npm run smoke:frontend-shell",
-		"TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenos GOWORK=off npm run smoke:frontend-behavior",
+		"TRUZHENOS_BACKEND_ROOT=repo_ref://truzhenos/main GOWORK=off npm run smoke:frontend-behavior",
 		"GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1",
 		"go test ./... -run TestShortVideoP15ExecutionReadinessPackageIsMachineCheckable -count=1",
 	} {
@@ -2434,7 +2434,7 @@ func TestShortVideoP16ExecutionReadinessPackageIsMachineCheckable(t *testing.T) 
 		"npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx src/components/pack-lifecycle/CodeAssistantPackPanel.test.tsx src/api/__tests__/executionLiveSmokeScript.test.ts",
 		"npm run typecheck",
 		"npm run smoke:frontend-shell",
-		"TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenos GOWORK=off npm run smoke:frontend-behavior",
+		"TRUZHENOS_BACKEND_ROOT=repo_ref://truzhenos/main GOWORK=off npm run smoke:frontend-behavior",
 		"go test ./... -run TestShortVideoP16ExecutionReadinessPackageIsMachineCheckable -count=1",
 	} {
 		requireStringSliceContains(t, asStringSlice(t, readiness["required_verification_commands"]), command)
@@ -3494,7 +3494,7 @@ func TestShortVideoAuthorizationCardsMirrorMachineScopeReferencesAndPhraseGates(
 			scope := readJSON(t, filepath.Join(base, scopePath))
 
 			cardPath := requireString(t, slice, "cross_repo_authorization_card")
-			cardBytes, err := os.ReadFile(cardPath)
+			cardBytes, err := os.ReadFile(resolveReferencePath(cardPath))
 			if err != nil {
 				t.Fatalf("read authorization card %s: %v", cardPath, err)
 			}
@@ -3986,7 +3986,7 @@ func TestShortVideoCommercialReadinessAuditRequiresEvidenceWritebackGate(t *test
 
 	auditPath := requireString(t, p14, "audit_file")
 	requireExistingPath(t, auditPath, "")
-	raw, err := os.ReadFile(auditPath)
+	raw, err := os.ReadFile(resolveReferencePath(auditPath))
 	if err != nil {
 		t.Fatalf("read %s: %v", auditPath, err)
 	}
@@ -5871,12 +5871,12 @@ func TestShortVideoPackStudioGoalCompletionEvidenceMapBlocksGoalCompletionUntilC
 		"safe_lifecycle_enabled_path":               {"lifecycle", "missing_authoritative_evidence"},
 		"three_short_video_candidates_gui":          {"三候选", "missing_authoritative_evidence"},
 		"controlled_code_assistant_run":             {"Code Assistant", "missing_authoritative_evidence"},
-			"provider_adapter_readiness":                {"Provider", "missing_authoritative_evidence"},
-			"cloud_market_sandbox":                      {"云市场", "missing_authoritative_evidence"},
-			"gui_api_receipt_traceability":              {"GUI/API/Receipt", "missing_authoritative_evidence"},
-			"forbidden_actions_proven_false":            {"禁入动作", "missing_authoritative_evidence"},
-			"forbidden_action_coverage_verified":        {"禁入动作覆盖", "missing_authoritative_evidence"},
-			"owner_base_gate_receipts_bound":            {"Owner/Base Gate", "missing_authoritative_evidence"},
+		"provider_adapter_readiness":                {"Provider", "missing_authoritative_evidence"},
+		"cloud_market_sandbox":                      {"云市场", "missing_authoritative_evidence"},
+		"gui_api_receipt_traceability":              {"GUI/API/Receipt", "missing_authoritative_evidence"},
+		"forbidden_actions_proven_false":            {"禁入动作", "missing_authoritative_evidence"},
+		"forbidden_action_coverage_verified":        {"禁入动作覆盖", "missing_authoritative_evidence"},
+		"owner_base_gate_receipts_bound":            {"Owner/Base Gate", "missing_authoritative_evidence"},
 		"commercial_go_no_go_passed":                {"go/no-go", "missing_authoritative_evidence"},
 		"post_run_gate_coverage_verified":           {"后验收门覆盖", "missing_authoritative_evidence"},
 		"machine_go_live_evidence_package_verified": {"商用最终机器证据包", "blocked_not_commercial_ready"},
@@ -6030,9 +6030,9 @@ func TestShortVideoCommercialGatesRequireGuiApiReceiptTraceability(t *testing.T)
 
 	for label, values := range map[string][]string{
 		"readiness required_before_commercial_ready": asStringSlice(t, readiness["required_before_commercial_ready"]),
-		"go/no-go required_before_go_live_signoff":  asStringSlice(t, requireObject(t, goNoGo, "completion_rule")["required_before_go_live_signoff"]),
-		"machine package required_before_ready":     asStringSlice(t, machinePackage["required_before_commercial_ready"]),
-		"goal map required_before_goal_complete":    asStringSlice(t, requireObject(t, goalMap, "completion_claim_policy")["required_before_goal_complete"]),
+		"go/no-go required_before_go_live_signoff":   asStringSlice(t, requireObject(t, goNoGo, "completion_rule")["required_before_go_live_signoff"]),
+		"machine package required_before_ready":      asStringSlice(t, machinePackage["required_before_commercial_ready"]),
+		"goal map required_before_goal_complete":     asStringSlice(t, requireObject(t, goalMap, "completion_claim_policy")["required_before_goal_complete"]),
 	} {
 		if label == "" {
 			t.Fatalf("unreachable")
@@ -6165,7 +6165,7 @@ func TestShortVideoCommercialReadinessAuditIncludesFrontendBackendAcceptanceBloc
 		"required_e2e_scenarios",
 		"required_forbidden_action_checks",
 	} {
-	requireStringSliceContains(t, asStringSlice(t, blocker["pending_evidence_groups"]), group)
+		requireStringSliceContains(t, asStringSlice(t, blocker["pending_evidence_groups"]), group)
 	}
 	requireStringSliceContains(t, asStringSlice(t, audit["non_sufficient_evidence"]), "frontend_backend_contract_without_cross_repo_evidence")
 }
@@ -6279,9 +6279,9 @@ func TestShortVideoCommercialReadinessRequiresIndependentAcceptanceSignoffMatrix
 
 	for label, values := range map[string][]string{
 		"readiness required_before_commercial_ready": asStringSlice(t, readiness["required_before_commercial_ready"]),
-		"go/no-go required_before_go_live_signoff":  asStringSlice(t, requireObject(t, goNoGo, "completion_rule")["required_before_go_live_signoff"]),
-		"machine package required_before_ready":     asStringSlice(t, machinePackage["required_before_commercial_ready"]),
-		"goal map required_before_goal_complete":    asStringSlice(t, requireObject(t, goalMap, "completion_claim_policy")["required_before_goal_complete"]),
+		"go/no-go required_before_go_live_signoff":   asStringSlice(t, requireObject(t, goNoGo, "completion_rule")["required_before_go_live_signoff"]),
+		"machine package required_before_ready":      asStringSlice(t, machinePackage["required_before_commercial_ready"]),
+		"goal map required_before_goal_complete":     asStringSlice(t, requireObject(t, goalMap, "completion_claim_policy")["required_before_goal_complete"]),
 	} {
 		if label == "" {
 			t.Fatalf("unreachable")
@@ -6601,7 +6601,19 @@ func requireExistingPath(t *testing.T, path string, base string) {
 	if base != "" && !filepath.IsAbs(path) {
 		path = filepath.Join(base, path)
 	}
-	if _, err := os.Stat(path); err != nil {
+	if _, err := os.Stat(resolveReferencePath(path)); err != nil {
 		t.Fatalf("expected path %s to exist: %v", path, err)
 	}
+}
+
+func resolveReferencePath(path string) string {
+	replacements := map[string]string{
+		"process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+	}
+	for prefix, actual := range replacements {
+		if strings.HasPrefix(path, prefix) {
+			return actual + strings.TrimPrefix(path, prefix)
+		}
+	}
+	return path
 }

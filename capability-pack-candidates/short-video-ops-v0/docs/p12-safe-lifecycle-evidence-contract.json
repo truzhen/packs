@@ -88,7 +88,7 @@
       "repository": "truzhen-client-web-desktop",
       "current_status": "pending_authorization",
       "evidence_required": "GUI test or smoke evidence that MoneyPrinterTurbo, Pixelle-Video and social-auto-upload remain evidence/blocked samples and are not runnable providers",
-      "expected_command": "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenv3worktree/truzhenos-mod-04-capability-pack-studio-short-video-oss GOWORK=off npm run smoke:frontend-behavior"
+      "expected_command": "TRUZHENOS_BACKEND_ROOT=process_worktree_ref://truzhenos/truzhenos-mod-04-capability-pack-studio-short-video-oss GOWORK=off npm run smoke:frontend-behavior"
     }
   ],
   "required_forbidden_action_checks": [

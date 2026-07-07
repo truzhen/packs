@@ -5,7 +5,7 @@
   "non_formal": true,
   "issue_ledger_status": "blocked_pending_issue_resolution_evidence",
   "source_plan_requirement": "M7_issue_backfill",
-  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/gui-capability-pack-workbench-github-oss-test-plan-20260704.md#7-问题回填",
+  "source_plan": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/gui-capability-pack-workbench-github-oss-test-plan-20260704.md#7-问题回填",
   "route_to_improvement_backlog": "docs/commercial-improvement-backlog.json",
   "can_mark_commercial_ready": false,
   "issues": [

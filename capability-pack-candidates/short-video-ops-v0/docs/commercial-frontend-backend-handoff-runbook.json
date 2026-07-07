@@ -15,7 +15,7 @@
   "machine_evidence_package_coverage_verifier": "docs/commercial-machine-go-live-evidence-package-coverage-verifier.json",
   "next_authorization_start_guard": "docs/commercial-next-authorization-start-guard.json",
   "next_required_authorization": "p12_safe_lifecycle_sample",
-  "next_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+  "next_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
   "latest_rejected_authorization_attempt": {
     "source_authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
     "attempt_ref": "owner-message://2026-07-05-p11-card-mismatch-for-p12",
@@ -220,7 +220,7 @@
           {
             "evidence_id": "safe_fixture_lifecycle_round_trip",
             "target_repository": "truzhenos + truzhen-client-web-desktop",
-            "expected_command": "TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenos GOWORK=off npm run smoke:frontend-behavior",
+            "expected_command": "TRUZHENOS_BACKEND_ROOT=repo_ref://truzhenos/main GOWORK=off npm run smoke:frontend-behavior",
             "evidence_required": "live smoke or equivalent run proving draft/readiness/promote/confirm safe fixture round trip with receipt-bound enabled pointer",
             "current_status": "pending_authorization"
           },

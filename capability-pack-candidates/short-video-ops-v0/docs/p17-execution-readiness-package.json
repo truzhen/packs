@@ -26,8 +26,8 @@
   "evidence_contract": "docs/p17-provider-adapter-candidate-evidence-contract.json",
   "source_p16_post_run_evidence_acceptance_gate": "docs/p16-post-run-evidence-acceptance-gate.json",
   "frontend_backend_acceptance_contract": "docs/commercial-frontend-backend-acceptance-contract.json",
-  "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-provider-adapter-candidate-spec-20260704.md",
-  "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md",
+  "implementation_spec": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-provider-adapter-candidate-spec-20260704.md",
+  "cross_repo_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md",
   "target_repositories": [
     "truzhen-software",
     "truzhenos",

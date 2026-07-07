@@ -8,7 +8,7 @@
   "digest_status": "current_repo_candidate_digest_not_cloud_receipt",
   "hash_algorithm": "sha256",
   "payload_hash_policy": "manifest_and_digest_self_excluded",
-  "bundle_tree_sha256": "26342a428015dd54a56ecda5d2b7875a2e3e487b88eea2032dc6141a7ff44a44",
+  "bundle_tree_sha256": "9d1384d7a58a6ba1163db2da11df0cbcb4a6dfdf477ff0e39ebfec1d0ea7864b",
   "payload_file_count": 77,
   "cloud_upload_receipt_required": true,
   "download_install_must_match_bundle_tree_sha256": true,
@@ -23,7 +23,7 @@
     },
     {
       "path": "candidate-set.json",
-      "sha256": "8d900b667a2dc3e86248cbdad678e418d49afc1d56914f56bdf076a1b32ed08e"
+      "sha256": "6ff2380959337dc627cc44c74f79ebcf8b960c404b1d10b6f1f73da88e4f91b1"
     },
     {
       "path": "role-packs/team-office-secretary-general.rolepack.json",
@@ -183,7 +183,7 @@
     },
     {
       "path": "tests/role-studio-goal-completion-evidence-map-candidate.json",
-      "sha256": "8af4f8372b0f2c0d96805d59e8b3918b47b415444da466f805454cc0b13fd85f"
+      "sha256": "1e6bda8c4a974e95d6ed40076acf0b03ece21c29554e9aa958c0abf6d336c111"
     },
     {
       "path": "tests/commercialization-execution-packet.json",
@@ -207,11 +207,11 @@
     },
     {
       "path": "tests/normal-commercialization-completion-audit-candidate.json",
-      "sha256": "0a70598e66b646dfc3a9404c5252c5989910e505f80b1adf334138b244248600"
+      "sha256": "d86b3816883c2ae96504276408fc6edc9f0f867cb6dd3bad26c253f2a128d765"
     },
     {
       "path": "tests/commercial-chain-verifier-candidate.json",
-      "sha256": "37f8066ac7af1755696ff734b9a01ee45e15765bda5add09c60489cb68b9304c"
+      "sha256": "bcdb6e816fc9d0c313f8b6ad660a858c52406f72559a84c585f795db82e64ec0"
     },
     {
       "path": "tests/commercial-go-no-go-gate-candidate.json",
@@ -219,31 +219,31 @@
     },
     {
       "path": "tests/commercial-readiness-verifier-candidate.json",
-      "sha256": "427efa75427d334d5395be3ef767572acb92eb0f44b74b8bc0a7a67998d52553"
+      "sha256": "fb1f75fc91815a46073f42676925ea8923f9368b25b36e38b8054131514d189c"
     },
     {
       "path": "tests/role-studio-phase-coverage-matrix-candidate.json",
-      "sha256": "32b15c1aa54822c3418e79966f6b64190f130652b50a8b81054367b6e85089d1"
+      "sha256": "9b680919435839ee486c864c1581b8f23f9d0d891fcb01e633f3d02479630fc5"
     },
     {
       "path": "tests/role-studio-test-case-coverage-matrix-candidate.json",
-      "sha256": "30d17aa669bc6bd16fdf8366f043cdae52d9f5d65b73124e90fa148ab43d682e"
+      "sha256": "968432e6029ae3d8b6db12bee2cd4f27c35669427389a19de2a3582cc6b898bf"
     },
     {
       "path": "tests/independent-acceptance-signoff-matrix-candidate.json",
-      "sha256": "7503de6b44e72ef44a422091478804fdc6eba6c069525490d76791a9368a8f8d"
+      "sha256": "bebce302205feca4fc936e4d9c43270ace2ffeb15514f6c4b099db7f5ba00e95"
     },
     {
       "path": "tests/p0-p11-commercialization-blocker-register-candidate.json",
-      "sha256": "320f839a8c32c307137084baeb44a606b9071b3915e07b2afdcaf2d23202fe82"
+      "sha256": "83738a20895690cefeefe159901849681174074a819776ad08100874f0f018d9"
     },
     {
       "path": "tests/product-stage-frontend-backend-closure-report-candidate.json",
-      "sha256": "4b8ea03ed540558e354d59c1f498d16036689ee6490cb16a0c15d81d8bfda7bf"
+      "sha256": "b3815ed670818f933b5ddb1c3b050fe2b1e1995df3411f4060ccf52c41944a6e"
     },
     {
       "path": "tests/p11-normal-commercialization-acceptance-gate-candidate.json",
-      "sha256": "f6692c35f61491411f555ade1b10dfd3f5c4b059b678df41100c16e2a0ba110c"
+      "sha256": "45a9bfa161d5717ec35d33f7cfa7fc6e64bf0ba2c4a50ad9c57311f9ca9019a3"
     },
     {
       "path": "tests/p11-normal-commercialization-verification-record-template.json",
@@ -255,7 +255,7 @@
     },
     {
       "path": "tests/p11-sandbox-execution-runbook-candidate.json",
-      "sha256": "3412ae0c53c7d80ba1a20732d61bf8dc8838e55ade3b80315088f991cc37ab3c"
+      "sha256": "ad316e79008bc5787cbe08e01f7b7b43c05d7e9f8929231b4de81b757dcf27bb"
     },
     {
       "path": "tests/p11-sandbox-preflight-gate-candidate.json",
@@ -275,15 +275,15 @@
     },
     {
       "path": "integration/cross-repo-execution-cards.json",
-      "sha256": "0db9438775d25d7585d3b43f4115fc2218ef87dcddb4cf249d67fe8f8f647a6e"
+      "sha256": "a913ea81af00a7c4497d8f93e5ff79f78918a04badacb132f1e5f66b50c09961"
     },
     {
       "path": "integration/cross-repo-execution-readiness-package.json",
-      "sha256": "97513962a9ae56a07145c2faa76f5fd3fdc6dc2c9345cfd2ab82905f2fe616e8"
+      "sha256": "ec1266f1d4426ce4b7a40b4afd47462f277526fcf79d5c973192574c7607e1ff"
     },
     {
       "path": "integration/owner-authorization-evidence-intake-candidate.json",
-      "sha256": "36bfe5ffbf3135b052eaee67f220ab745e870d94988e84767a5d9b08c9a84ae2"
+      "sha256": "c3c4a9ba8c647f8dc76c291174b66525a159bea043879ec6ff1350512ca20f23"
     },
     {
       "path": "integration/commercial-cross-repo-execution-queue-candidate.json",

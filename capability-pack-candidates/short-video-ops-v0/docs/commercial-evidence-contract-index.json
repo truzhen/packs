@@ -54,8 +54,8 @@
       "post_run_evidence_acceptance_gate": "docs/p12-post-run-evidence-acceptance-gate.json",
       "evidence_contract": "docs/p12-safe-lifecycle-evidence-contract.json",
       "evidence_ledger": "docs/safe-lifecycle-sample-ledger.md",
-      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-safe-lifecycle-sample-execution-spec-20260704.md",
-      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md"
+      "implementation_spec": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-safe-lifecycle-sample-execution-spec-20260704.md",
+      "cross_repo_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md"
     },
     {
       "slice_key": "p13_gui_lifecycle_panel",
@@ -73,8 +73,8 @@
       "evidence_contract": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
       "post_run_evidence_acceptance_gate": "docs/p13-post-run-evidence-acceptance-gate.json",
       "evidence_ledger": "docs/gui-lifecycle-panel-ledger.md",
-      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-gui-lifecycle-panel-execution-spec-20260704.md",
-      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md"
+      "implementation_spec": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-gui-lifecycle-panel-execution-spec-20260704.md",
+      "cross_repo_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md"
     },
     {
       "slice_key": "p15_gui_walkthrough_three_candidates",
@@ -93,8 +93,8 @@
       "evidence_contract": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json",
       "post_run_evidence_acceptance_gate": "docs/p15-post-run-evidence-acceptance-gate.json",
       "evidence_ledger": "docs/gui-walkthrough-evidence-ledger.md",
-      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-three-candidate-gui-walkthrough-spec-20260704.md",
-      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-cross-repo-execution-authorization-20260704.md"
+      "implementation_spec": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-three-candidate-gui-walkthrough-spec-20260704.md",
+      "cross_repo_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-cross-repo-execution-authorization-20260704.md"
     },
     {
       "slice_key": "p16_controlled_code_assistant_run",
@@ -115,8 +115,8 @@
       "evidence_contract": "docs/p16-controlled-code-assistant-run-evidence-contract.json",
       "post_run_evidence_acceptance_gate": "docs/p16-post-run-evidence-acceptance-gate.json",
       "evidence_ledger": "docs/code-assistant-controlled-run-ledger.md",
-      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-controlled-code-assistant-run-spec-20260704.md",
-      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-cross-repo-execution-authorization-20260704.md"
+      "implementation_spec": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-controlled-code-assistant-run-spec-20260704.md",
+      "cross_repo_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-cross-repo-execution-authorization-20260704.md"
     },
     {
       "slice_key": "p17_provider_adapter_candidate",
@@ -136,8 +136,8 @@
       "evidence_contract": "docs/p17-provider-adapter-candidate-evidence-contract.json",
       "post_run_evidence_acceptance_gate": "docs/p17-post-run-evidence-acceptance-gate.json",
       "evidence_ledger": "docs/provider-adapter-candidate-ledger.md",
-      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-provider-adapter-candidate-spec-20260704.md",
-      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md"
+      "implementation_spec": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-provider-adapter-candidate-spec-20260704.md",
+      "cross_repo_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md"
     },
     {
       "slice_key": "p18_cloud_market_sandbox",
@@ -161,8 +161,8 @@
       "evidence_contract": "docs/p18-cloud-market-sandbox-evidence-contract.json",
       "post_run_evidence_acceptance_gate": "docs/p18-post-run-evidence-acceptance-gate.json",
       "evidence_ledger": "docs/cloud-market-sandbox-ledger.md",
-      "implementation_spec": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cloud-market-sandbox-spec-20260704.md",
-      "cross_repo_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md"
+      "implementation_spec": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cloud-market-sandbox-spec-20260704.md",
+      "cross_repo_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md"
     }
   ],
   "forbidden_action_terminal_checks": {
@@ -251,7 +251,7 @@
       "owner_base_gate_receipts_bound"
     ],
     "required_next_authorization": "p12_safe_lifecycle_sample",
-    "next_authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md"
+    "next_authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md"
   },
   "commercial_signoff_matrix": {
     "matrix_status": "blocked_pending_authorization_and_evidence",
@@ -280,7 +280,7 @@
         "owner_authorization_status": "pending_authorization",
         "evidence_status": "pending",
         "can_count_toward_commercial_ready": false,
-        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
+        "authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md",
         "authorization_scope_contract": "docs/p12-cross-repo-authorization-scope.json",
         "authorization_evidence_intake_contract": "docs/p12-owner-authorization-evidence-intake.json",
         "evidence_contract": "docs/p12-safe-lifecycle-evidence-contract.json",
@@ -291,7 +291,7 @@
         "owner_authorization_status": "pending_authorization",
         "evidence_status": "pending",
         "can_count_toward_commercial_ready": false,
-        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md",
+        "authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p13-cross-repo-execution-authorization-20260704.md",
         "authorization_scope_contract": "docs/p13-cross-repo-authorization-scope.json",
         "authorization_evidence_intake_contract": "docs/p13-owner-authorization-evidence-intake.json",
         "evidence_contract": "docs/p13-gui-lifecycle-panel-evidence-contract.json",
@@ -302,7 +302,7 @@
         "owner_authorization_status": "pending_authorization",
         "evidence_status": "pending",
         "can_count_toward_commercial_ready": false,
-        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-cross-repo-execution-authorization-20260704.md",
+        "authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p15-cross-repo-execution-authorization-20260704.md",
         "authorization_scope_contract": "docs/p15-cross-repo-authorization-scope.json",
         "authorization_evidence_intake_contract": "docs/p15-owner-authorization-evidence-intake.json",
         "evidence_contract": "docs/p15-three-candidate-gui-walkthrough-evidence-contract.json",
@@ -313,7 +313,7 @@
         "owner_authorization_status": "pending_authorization",
         "evidence_status": "pending",
         "can_count_toward_commercial_ready": false,
-        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-cross-repo-execution-authorization-20260704.md",
+        "authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p16-cross-repo-execution-authorization-20260704.md",
         "authorization_scope_contract": "docs/p16-cross-repo-authorization-scope.json",
         "authorization_evidence_intake_contract": "docs/p16-owner-authorization-evidence-intake.json",
         "evidence_contract": "docs/p16-controlled-code-assistant-run-evidence-contract.json",
@@ -324,7 +324,7 @@
         "owner_authorization_status": "pending_authorization",
         "evidence_status": "pending",
         "can_count_toward_commercial_ready": false,
-        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md",
+        "authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p17-cross-repo-execution-authorization-20260704.md",
         "authorization_scope_contract": "docs/p17-cross-repo-authorization-scope.json",
         "authorization_evidence_intake_contract": "docs/p17-owner-authorization-evidence-intake.json",
         "evidence_contract": "docs/p17-provider-adapter-candidate-evidence-contract.json",
@@ -335,7 +335,7 @@
         "owner_authorization_status": "pending_authorization",
         "evidence_status": "pending",
         "can_count_toward_commercial_ready": false,
-        "authorization_card": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md",
+        "authorization_card": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p18-cross-repo-execution-authorization-20260704.md",
         "authorization_scope_contract": "docs/p18-cross-repo-authorization-scope.json",
         "authorization_evidence_intake_contract": "docs/p18-owner-authorization-evidence-intake.json",
         "evidence_contract": "docs/p18-cloud-market-sandbox-evidence-contract.json",

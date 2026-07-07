@@ -32,11 +32,11 @@ P10 candidate bundle dry-run 已能证明候选文件清单静态可校验，并
 
 ## 4.1 2026-07-05 复验记录
 
-- 后端工作树：`/Users/li/Documents/truzhenv3worktree/truzhenos-mod-04-capability-pack-studio-short-video-oss`。
-- 前端工作树：`/Users/li/.config/superpowers/worktrees/truzhen-client-web-desktop/capability-pack-studio-short-video-gui`。
+- 后端工作树：`process_worktree_ref://truzhenos/truzhenos-mod-04-capability-pack-studio-short-video-oss`。
+- 前端工作树：`process_worktree_ref://truzhen-client-web-desktop/capability-pack-studio-short-video-gui`。
 - 后端定向验证：`GOWORK=off go test ./backend/internal/capability/... ./backend/tests/capability/... -count=1` 通过；`git diff --check` 通过。
 - 前端验证：`npm test -- src/pages/__tests__/capabilityStudioWizard.test.tsx src/components/pack-lifecycle/CodeAssistantPackPanel.test.tsx src/api/__tests__/executionLiveSmokeScript.test.ts` 通过，34 tests passed；`npm run typecheck` 通过；`npm run smoke:frontend-shell` 通过；`npm run build` 通过；`git diff --check` 通过。
-- 跨仓 live smoke：`TRUZHENOS_BACKEND_ROOT=/Users/li/Documents/truzhenv3worktree/truzhenos-mod-04-capability-pack-studio-short-video-oss GOWORK=off npm run smoke:frontend-behavior` 通过，确认 `lifecycle_preflight_blocked / candidate_bundle_not_delivery`，并确认 candidate bundle 不保存 draft、不安装、不启用。
+- 跨仓 live smoke：`TRUZHENOS_BACKEND_ROOT=process_worktree_ref://truzhenos/truzhenos-mod-04-capability-pack-studio-short-video-oss GOWORK=off npm run smoke:frontend-behavior` 通过，确认 `lifecycle_preflight_blocked / candidate_bundle_not_delivery`，并确认 candidate bundle 不保存 draft、不安装、不启用。
 - 后端全量门禁：`GOWORK=off bash scripts/verify.sh` 通过；其中 `TRUZHEN_REAL_E2E_COMMUNICATION` 未开启，通信真实 E2E 按脚本策略跳过。
 - 复验边界：未运行真实 Codex CLI，未执行 MoneyPrinterTurbo / Pixelle-Video / social-auto-upload，未登录或上传社媒，未修改 `truzhen-contracts`、`truzhen-software`、`truzhen-cloud`。
 
@@ -51,6 +51,6 @@ P10 candidate bundle dry-run 已能证明候选文件清单静态可校验，并
 
 若 Owner 继续授权，下一步建议进入 P12 安全内置能力 lifecycle 样本：只使用基座安全 fixture 验证 draft / readiness / promote / confirm 最小闭环。短视频第三方 OSS 仍保持 evidence-only / blocked；本批到 P11 preflight 为止，不进入正式 enabled。
 
-P12 执行规格：`/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-safe-lifecycle-sample-execution-spec-20260704.md`
+P12 执行规格：`process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-safe-lifecycle-sample-execution-spec-20260704.md`
 
-P12 授权卡：`/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md`
+P12 授权卡：`process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/capability-pack-studio-p12-cross-repo-execution-authorization-20260704.md`

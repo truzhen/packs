@@ -5,7 +5,7 @@
   "candidate_only": true,
   "non_formal": true,
   "closure_status": "not_achieved_requires_cross_repo_execution",
-  "objective_source": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "objective_source": "process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
   "purpose": "把 P10 商品阶段前端与后端收口要求集中成可复核报告，明确哪些 GUI 能力、后端候选 / Gate / Receipt、字段一致性和错误态仍缺权威证据。",
   "required_participants": [
     "user_view_gui_agent",
