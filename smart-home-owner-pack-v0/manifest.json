@@ -157,5 +157,23 @@
     "*.sqlite",
     "*.log",
     "*.jsonl"
+  ],
+  "software_requirements": [
+    {
+      "requirement_id": "frappe-runtime",
+      "software_family": "frappe-erpnext-stack",
+      "provider_family": "frappe",
+      "version_range": ">=16.0.0,<17.0.0",
+      "required_capabilities": [
+        "project_external_snapshot",
+        "customer_relationship_snapshot",
+        "project_milestone_write_candidate"
+      ],
+      "license_policy": "review_required",
+      "isolation_policy": "reuse_preferred",
+      "fallback_policy": "provider_missing",
+      "gateway_class": "execution",
+      "risk_class": "medium"
+    }
   ]
 }

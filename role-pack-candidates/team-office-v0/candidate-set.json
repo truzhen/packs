@@ -6,7 +6,7 @@
   "lifecycle_status": "设计中",
   "candidate_only": true,
   "non_formal": true,
-  "source_plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/docs/plans/role-pack-studio-team-office-test-plan-20260704.md",
+  "source_plan": "process_doc://role-pack-studio-team-office-test-plan-20260704",
   "purpose": "为角色制作台压测秘书长、五顾问、能力 Pack 引用、团队设置替换、表现层资源和云端商品化草稿闭环。",
   "truth_sources": {
     "role_candidate_truth": "04 Role Studio candidate artifact",

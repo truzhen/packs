@@ -105,7 +105,8 @@
       "risk_class": "medium",
       "binding": "registry_to_gateway_to_base",
       "fallback_policy": "manual_handoff",
-      "description": "检测报告/笔录/台账 PDF 与扫描件的文本与表格识别，用于证据数字化。"
+      "description": "检测报告/笔录/台账 PDF 与扫描件的文本与表格识别，用于证据数字化。",
+      "provider_family": "pdf_ocr"
     },
     {
       "requirement_id": "legal_doc_draft",
@@ -114,7 +115,8 @@
       "risk_class": "medium",
       "binding": "registry_to_gateway_to_base",
       "fallback_policy": "blocked",
-      "description": "经 08 模型网关真实生成执法文书草稿（责令改正通知书/行政处罚决定书等），非模板拼接。模型未接入时受控阻断（blocked），不假成功。"
+      "description": "经 08 模型网关真实生成执法文书草稿（责令改正通知书/行政处罚决定书等），非模板拼接。模型未接入时受控阻断（blocked），不假成功。",
+      "provider_family": "model_gateway"
     },
     {
       "requirement_id": "doc_delivery",
@@ -123,7 +125,8 @@
       "risk_class": "high",
       "binding": "registry_to_gateway_to_base",
       "fallback_policy": "manual_handoff",
-      "description": "执法文书对外送达，经 10 沟通网关受控发送并留 Receipt，未裁定前一律候选/草稿态。"
+      "description": "执法文书对外送达，经 10 沟通网关受控发送并留 Receipt，未裁定前一律候选/草稿态。",
+      "provider_family": "communication_gateway"
     },
     {
       "requirement_id": "enforcement_exec",
@@ -132,7 +135,8 @@
       "risk_class": "high",
       "binding": "registry_to_gateway_to_base",
       "fallback_policy": "blocked",
-      "description": "责令改正/查封扣押等执法动作的受控执行，必须经 Owner 主权确认 + Base Gate。"
+      "description": "责令改正/查封扣押等执法动作的受控执行，必须经 Owner 主权确认 + Base Gate。",
+      "provider_family": "execution_gateway"
     },
     {
       "requirement_id": "monitoring_data_fetch",
@@ -142,7 +146,8 @@
       "binding": "registry_to_gateway_to_base",
       "fallback_policy": "provider_missing",
       "optional": true,
-      "description": "在线监测/自动监控数据获取，用于线索研判与证据补强；可选能力，未接入时 provider_missing 受控降级。"
+      "description": "在线监测/自动监控数据获取，用于线索研判与证据补强；可选能力，未接入时 provider_missing 受控降级。",
+      "provider_family": "monitoring_data_provider"
     }
   ],
   "knowledge_scopes": [
@@ -221,5 +226,35 @@
     "*.sqlite",
     "*.log",
     "*.jsonl"
+  ],
+  "software_requirements": [
+    {
+      "requirement_id": "environmental-document-ocr",
+      "software_family": "pdf-ocr-family",
+      "provider_family": "pdf_ocr",
+      "version_range": ">=0.0.0,<1.0.0",
+      "required_capabilities": [
+        "document_ocr"
+      ],
+      "license_policy": "review_required",
+      "isolation_policy": "reuse_preferred",
+      "fallback_policy": "manual_handoff",
+      "gateway_class": "execution",
+      "risk_class": "medium"
+    },
+    {
+      "requirement_id": "environmental-model-drafting",
+      "software_family": "managed-cloud-model-family",
+      "provider_family": "model_gateway",
+      "version_range": ">=0.0.0,<999.0.0",
+      "required_capabilities": [
+        "legal_document_drafting"
+      ],
+      "license_policy": "review_required",
+      "isolation_policy": "reuse_preferred",
+      "fallback_policy": "blocked",
+      "gateway_class": "model",
+      "risk_class": "medium"
+    }
   ]
 }

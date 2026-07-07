@@ -3,13 +3,14 @@
 """
 环保执法 Pack 知识库构建器。
 
-从权威资料知识库（默认 /Users/li/Documents/trae/knowledge_base）把真实的
+从 Owner 显式指定的权威资料知识库把真实的
 法规/执法指南/案例/索引导入到本 pack 的 knowledge/ 目录（自包含、可分发），
 并生成两个权威清单（loader 据此装入）：
   - knowledge/knowledge-scopes.json   各知识域声明（mount_on_pack_enable）
   - knowledge/knowledge-index.json    每条知识 → scope/kind/source_ref/title/scene/生效日期
 
 用法：
+  TRUZHEN_ENV_PACK_SOURCE_DIR=/path/to/source python3 tools/build-knowledge-from-source.py
   python3 tools/build-knowledge-from-source.py [源知识库路径]
 
 知识内容来自 Owner 提供的权威资料。每条以 verification_status=pending_human_review
@@ -22,7 +23,7 @@ import shutil
 import sys
 
 PACK_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_SRC = "/Users/li/Documents/trae/knowledge_base"
+DEFAULT_SRC = os.environ.get("TRUZHEN_ENV_PACK_SOURCE_DIR", "")
 SCENE_REF = "scene://environmental-enforcement"
 
 # 路径片段（按出现顺序匹配，先具体后笼统）→ (scope_short, display_name, kind)
