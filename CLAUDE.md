@@ -79,3 +79,9 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 <pack>/install.py
 ```
 
 没有 devserver 铁证时，不得声称 E2E 通过。
+
+## 7. P6 防回潮纪律
+
+- Pack 仓只保存行业工作台声明、流程、角色、知识、能力引用、manifest、示例和可复核验收材料；不得保存业务数据、正式 `decision_ref` / `receipt_ref` / `pack_version_ref`、License / Entitlement 真相或内部运营计划。
+- Pack 只能声明需求和引用能力，不持主权、不持凭据、不保存客户生产数据、不执行真实动作；真实可用性由 truzhenos / cloud / software 的受控链路证明。
+- 提交前必须运行 forbidden artifact / business data 静态扫描，确认构建产物、数据库、日志、密钥和本地临时文件未进入 Git。
