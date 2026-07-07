@@ -48,6 +48,12 @@
 
 需要参考基座范式时，只读 `/Users/li/Documents/truzhenos` 根治理文件（旧 `truzhenv3` 已封棺冻结）；需要修改或测试基座仓时，必须先获 Owner 重新授权。
 
+## 4.1 固定主仓与 main 基准
+
+六仓固定主仓目录为 `/Users/li/Documents/truzhen-client-web-desktop`、`/Users/li/Documents/truzhen-cloud`、`/Users/li/Documents/truzhen-software`、`/Users/li/Documents/truzhen-contracts`、`/Users/li/Documents/truzhenos`、`/Users/li/Documents/truzhen-packs`。拉新分支、合并后同步和主线核查都以这些目录为准。
+
+若 `git worktree list --porcelain` 显示某仓 `refs/heads/main` 检出在旁路 worktree，或固定主仓不在 `main` / 落后 `origin/main`，先停工记录，不得从旧 feature worktree 继续派生。Owner 确认合并后，必须逐仓把 `origin/main` 和固定主仓同步到同一提交。
+
 ## 5. 当前包导航
 
 见 `MODULES.md`。当前主要资产：
