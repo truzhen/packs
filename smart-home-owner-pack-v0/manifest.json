@@ -174,6 +174,35 @@
       "fallback_policy": "provider_missing",
       "gateway_class": "execution",
       "risk_class": "medium"
+    },
+    {
+      "requirement_id": "baserow-runtime-a",
+      "software_family": "baserow-family",
+      "provider_family": "baserow",
+      "version_range": ">=2.2.0,<2.3.0",
+      "required_capabilities": [
+        "structured_table_storage",
+        "workflow_record_snapshot"
+      ],
+      "license_policy": "review_required",
+      "isolation_policy": "reuse_preferred",
+      "fallback_policy": "provider_missing",
+      "gateway_class": "execution",
+      "risk_class": "medium"
+    },
+    {
+      "requirement_id": "shared-document-ocr",
+      "software_family": "pdf-ocr-family",
+      "provider_family": "pdf_ocr",
+      "version_range": ">=1.0.0,<2.0.0",
+      "required_capabilities": [
+        "document_ocr"
+      ],
+      "license_policy": "review_required",
+      "isolation_policy": "reuse_preferred",
+      "fallback_policy": "manual_handoff",
+      "gateway_class": "execution",
+      "risk_class": "medium"
     }
   ]
 }

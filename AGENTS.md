@@ -93,6 +93,7 @@ Pack、Role Pack、Capability Pack 都只能生成候选、声明约束或提供
 - 判事策略：`formalization_requirement`，说明哪些对象仍是 candidate，哪些动作需要正式化。
 - 门控：`gates`，说明 Owner Gate、Base Gate、角色对照门、执行门、发送门等。
 - Provider 需求：`provider_requirements`，只声明能力和风险，不绑定死具体实现。
+- 底层软件需求：`software_requirements`，只声明 Baserow / OCR 等软件 family、版本范围、能力标签、reuse / isolation / fallback / license 策略；复用、需安装、版本冲突、需隔离和用户侧 lock 由 `truzhenos` resolver 产出。Pack 仓不得包含软件本体、镜像、模型权重、真实 DB、路径、端口、账号、secret 或 runtime state。
 - 通知 / 命令候选 / 回报路由：`notification_command_report_routes`。
 - 多角色对照：`multi_role_comparison`，必须显式节点编排，禁止 runtime 内隐藏 agent 回路。
 - 护城河：`moat_justification`。
