@@ -1,0 +1,56 @@
+{
+  "scene_ref": "scene://shuxuejia-large-home-renovation",
+  "count": 5,
+  "entries": [
+    {
+      "file": "knowledge/design-guidance/01_design_preparation.md",
+      "source_ref": "source://shuxuejia/01_design_preparation",
+      "title": "设计准备与需求诊断清单",
+      "kind": "sop",
+      "knowledge_scope_ref": "knowledge_scope://shuxuejia/design-guidance",
+      "scene_ref": "scene://shuxuejia-large-home-renovation",
+      "authority": "reference_only",
+      "verification_status": "pending_human_review"
+    },
+    {
+      "file": "knowledge/design-guidance/02_deep_design_review.md",
+      "source_ref": "source://shuxuejia/02_deep_design_review",
+      "title": "深化设计与图纸会审清单",
+      "kind": "checklist",
+      "knowledge_scope_ref": "knowledge_scope://shuxuejia/design-guidance",
+      "scene_ref": "scene://shuxuejia-large-home-renovation",
+      "authority": "reference_only",
+      "verification_status": "pending_human_review"
+    },
+    {
+      "file": "knowledge/material-contract-payment/01_material_contract_payment.md",
+      "source_ref": "source://shuxuejia/01_material_contract_payment",
+      "title": "材料合同付款风险清单",
+      "kind": "checklist",
+      "knowledge_scope_ref": "knowledge_scope://shuxuejia/material-contract-payment",
+      "scene_ref": "scene://shuxuejia-large-home-renovation",
+      "authority": "reference_only",
+      "verification_status": "pending_human_review"
+    },
+    {
+      "file": "knowledge/site-quality-acceptance/01_site_quality_acceptance.md",
+      "source_ref": "source://shuxuejia/01_site_quality_acceptance",
+      "title": "现场质量与隐蔽验收清单",
+      "kind": "checklist",
+      "knowledge_scope_ref": "knowledge_scope://shuxuejia/site-quality-acceptance",
+      "scene_ref": "scene://shuxuejia-large-home-renovation",
+      "authority": "reference_only",
+      "verification_status": "pending_human_review"
+    },
+    {
+      "file": "knowledge/after-sales-warranty/01_after_sales_warranty.md",
+      "source_ref": "source://shuxuejia/01_after_sales_warranty",
+      "title": "售后保修与回访处理清单",
+      "kind": "sop",
+      "knowledge_scope_ref": "knowledge_scope://shuxuejia/after-sales-warranty",
+      "scene_ref": "scene://shuxuejia-large-home-renovation",
+      "authority": "reference_only",
+      "verification_status": "pending_human_review"
+    }
+  ]
+}

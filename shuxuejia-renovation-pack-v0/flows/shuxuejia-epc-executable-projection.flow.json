@@ -1,0 +1,7846 @@
+{
+  "flow_id": "shuxuejia-epc-executable-projection",
+  "title": "墅学家大宅装修 EPC 全流程可执行投影",
+  "version": "1.0.0",
+  "graph_kind": "reference_flow_with_executable_projection",
+  "execution_mode": "candidate_only_governed_runtime",
+  "source_commit": "3c161aff4e2cc9b6ee896d0ef1ec4b37aaf4b062",
+  "source_topology": "docs/epc-reference-topology.md",
+  "nodes": [
+    {
+      "id": "S1_001",
+      "type": "input.user_need",
+      "title": "设 / 计 / 准 / 备 / 流 / 程",
+      "source_position": {
+        "x": 143.6,
+        "y": 724.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_002",
+      "type": "flow.stage_task_candidate",
+      "title": "设计管理",
+      "source_position": {
+        "x": 275.9,
+        "y": 453.7
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_003",
+      "type": "flow.stage_task_candidate",
+      "title": "后期",
+      "source_position": {
+        "x": 286.1,
+        "y": 1217.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_004",
+      "type": "flow.stage_task_candidate",
+      "title": "前期",
+      "source_position": {
+        "x": 287.3,
+        "y": 713.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_005",
+      "type": "flow.stage_task_candidate",
+      "title": "商务",
+      "source_position": {
+        "x": 389.9,
+        "y": 453.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_006",
+      "type": "collaboration.advice",
+      "title": "设计管理方协调跟进",
+      "source_position": {
+        "x": 390.4,
+        "y": 1256.9
+      },
+      "candidate_type": "AdviceCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_007",
+      "type": "flow.stage_task_candidate",
+      "title": "工程管理方介入",
+      "source_position": {
+        "x": 398.2,
+        "y": 1198.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_008",
+      "type": "flow.stage_task_candidate",
+      "title": "工程完工",
+      "source_position": {
+        "x": 409.9,
+        "y": 1309.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_009",
+      "type": "policy.gate_config",
+      "title": "签订第三方顾问合同",
+      "source_position": {
+        "x": 433.2,
+        "y": 928.7
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S1_010",
+      "type": "flow.stage_task_candidate",
+      "title": "拟定工作计划",
+      "source_position": {
+        "x": 444.9,
+        "y": 1034.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_011",
+      "type": "collaboration.advice",
+      "title": "组织会议",
+      "source_position": {
+        "x": 452.7,
+        "y": 788.3
+      },
+      "candidate_type": "AdviceCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_012",
+      "type": "flow.stage_task_candidate",
+      "title": "设计建议书",
+      "source_position": {
+        "x": 543.2,
+        "y": 469.9
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_013",
+      "type": "flow.stage_task_candidate",
+      "title": "设计服务书",
+      "source_position": {
+        "x": 543.2,
+        "y": 550.0
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_014",
+      "type": "flow.stage_task_candidate",
+      "title": "图纸会审",
+      "source_position": {
+        "x": 544.7,
+        "y": 1198.4
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_015",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问进度表",
+      "source_position": {
+        "x": 546.4,
+        "y": 1034.2
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_016",
+      "type": "flow.stage_task_candidate",
+      "title": "空间设计进度表",
+      "source_position": {
+        "x": 550.3,
+        "y": 995.1
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_017",
+      "type": "collaboration.advice",
+      "title": "各方联系名录",
+      "source_position": {
+        "x": 554.2,
+        "y": 1073.1
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_018",
+      "type": "flow.stage_task_candidate",
+      "title": "业务",
+      "source_position": {
+        "x": 554.9,
+        "y": 389.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_019",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问公司",
+      "source_position": {
+        "x": 562.1,
+        "y": 831.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_020",
+      "type": "flow.stage_task_candidate",
+      "title": "设计管理方",
+      "source_position": {
+        "x": 569.9,
+        "y": 788.3
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_021",
+      "type": "flow.stage_task_candidate",
+      "title": "业主代表",
+      "source_position": {
+        "x": 573.8,
+        "y": 753.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_022",
+      "type": "collaboration.advice",
+      "title": "与业主见面沟通",
+      "source_position": {
+        "x": 644.7,
+        "y": 370.5
+      },
+      "candidate_type": "AdviceCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_023",
+      "type": "flow.stage_task_candidate",
+      "title": "了解业主需求",
+      "source_position": {
+        "x": 648.6,
+        "y": 423.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_024",
+      "type": "flow.stage_task_candidate",
+      "title": "设计服务周期",
+      "source_position": {
+        "x": 648.6,
+        "y": 511.0
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_025",
+      "type": "flow.stage_task_candidate",
+      "title": "设计服务内容",
+      "source_position": {
+        "x": 648.6,
+        "y": 550.0
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_026",
+      "type": "flow.stage_task_candidate",
+      "title": "设计服务取费",
+      "source_position": {
+        "x": 648.6,
+        "y": 581.3
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_027",
+      "type": "collaboration.advice",
+      "title": "组织会议",
+      "source_position": {
+        "x": 679.4,
+        "y": 1198.4
+      },
+      "candidate_type": "AdviceCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_028",
+      "type": "collaboration.advice",
+      "title": "组织会议",
+      "source_position": {
+        "x": 681.2,
+        "y": 1034.4
+      },
+      "candidate_type": "AdviceCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_029",
+      "type": "flow.stage_task_candidate",
+      "title": "提交第三方诊断书 / （建议书）",
+      "source_position": {
+        "x": 691.0,
+        "y": 783.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_030",
+      "type": "flow.stage_task_candidate",
+      "title": "收集原始资料",
+      "source_position": {
+        "x": 758.0,
+        "y": 389.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_031",
+      "type": "flow.stage_task_candidate",
+      "title": "整合业主需求",
+      "source_position": {
+        "x": 758.0,
+        "y": 442.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_032",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问公司",
+      "source_position": {
+        "x": 777.1,
+        "y": 1294.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_033",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问公司",
+      "source_position": {
+        "x": 778.9,
+        "y": 1073.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_034",
+      "type": "policy.gate_config",
+      "title": "签订商务合同",
+      "source_position": {
+        "x": 779.8,
+        "y": 550.0
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S1_035",
+      "type": "flow.stage_task_candidate",
+      "title": "设计管理方",
+      "source_position": {
+        "x": 786.7,
+        "y": 1034.2
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_036",
+      "type": "flow.stage_task_candidate",
+      "title": "设计管理方",
+      "source_position": {
+        "x": 786.7,
+        "y": 1225.8
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_037",
+      "type": "flow.stage_task_candidate",
+      "title": "业主代表",
+      "source_position": {
+        "x": 788.8,
+        "y": 1159.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_038",
+      "type": "flow.stage_task_candidate",
+      "title": "业主代表",
+      "source_position": {
+        "x": 790.6,
+        "y": 995.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_039",
+      "type": "flow.stage_task_candidate",
+      "title": "业主筛选",
+      "source_position": {
+        "x": 811.7,
+        "y": 788.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_040",
+      "type": "flow.stage_task_candidate",
+      "title": "根据平面给出诊断书 / （建议书）",
+      "source_position": {
+        "x": 878.7,
+        "y": 412.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_041",
+      "type": "policy.gate_config",
+      "title": "业主确认",
+      "source_position": {
+        "x": 909.7,
+        "y": 1034.3
+      },
+      "candidate_type": "TaskCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S1_042",
+      "type": "policy.gate_config",
+      "title": "业主确认",
+      "source_position": {
+        "x": 916.9,
+        "y": 788.2
+      },
+      "candidate_type": "TaskCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S1_043",
+      "type": "flow.stage_task_candidate",
+      "title": "筹建项目组",
+      "source_position": {
+        "x": 925.3,
+        "y": 620.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_044",
+      "type": "flow.stage_task_candidate",
+      "title": "工程管理整合/深化图 / 纸",
+      "source_position": {
+        "x": 928.6,
+        "y": 1221.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_045",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问公司",
+      "source_position": {
+        "x": 1026.9,
+        "y": 713.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_046",
+      "type": "flow.stage_task_candidate",
+      "title": "设计团队架构",
+      "source_position": {
+        "x": 1030.8,
+        "y": 620.2
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_047",
+      "type": "flow.stage_task_candidate",
+      "title": "业主代表",
+      "source_position": {
+        "x": 1038.6,
+        "y": 581.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_048",
+      "type": "flow.stage_task_candidate",
+      "title": "其它详见工程管理方 / 流程",
+      "source_position": {
+        "x": 1065.3,
+        "y": 1221.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_049",
+      "type": "flow.stage_task_candidate",
+      "title": "详见设计合同",
+      "source_position": {
+        "x": 1132.4,
+        "y": 620.2
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S1_050",
+      "type": "flow.stage_task_candidate",
+      "title": "家庭影院顾问",
+      "source_position": {
+        "x": 1141.0,
+        "y": 805.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_051",
+      "type": "flow.stage_task_candidate",
+      "title": "智能化顾问",
+      "source_position": {
+        "x": 1144.9,
+        "y": 770.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_052",
+      "type": "flow.stage_task_candidate",
+      "title": "电梯顾问",
+      "source_position": {
+        "x": 1148.2,
+        "y": 839.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_053",
+      "type": "flow.stage_task_candidate",
+      "title": "灯光顾问",
+      "source_position": {
+        "x": 1148.8,
+        "y": 696.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_054",
+      "type": "flow.stage_task_candidate",
+      "title": "厨房顾问",
+      "source_position": {
+        "x": 1148.8,
+        "y": 735.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_055",
+      "type": "flow.stage_task_candidate",
+      "title": "BIM顾问",
+      "source_position": {
+        "x": 1150.7,
+        "y": 876.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_056",
+      "type": "flow.stage_task_candidate",
+      "title": "给/排水系统",
+      "source_position": {
+        "x": 1251.8,
+        "y": 843.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_057",
+      "type": "flow.stage_task_candidate",
+      "title": "强/弱电系统",
+      "source_position": {
+        "x": 1252.3,
+        "y": 876.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_058",
+      "type": "flow.stage_task_candidate",
+      "title": "暖通系统",
+      "source_position": {
+        "x": 1258.1,
+        "y": 911.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_059",
+      "type": "flow.stage_task_candidate",
+      "title": "消防系统",
+      "source_position": {
+        "x": 1258.1,
+        "y": 942.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_060",
+      "type": "flow.stage_task_candidate",
+      "title": "其它系统",
+      "source_position": {
+        "x": 1258.1,
+        "y": 977.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S1_061",
+      "type": "flow.stage_task_candidate",
+      "title": "中期",
+      "source_position": {
+        "x": 1352.5,
+        "y": 1120.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_001",
+      "type": "flow.stage_task_candidate",
+      "title": "中期第一阶段",
+      "source_position": {
+        "x": 1439.0,
+        "y": 387.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_002",
+      "type": "flow.stage_task_candidate",
+      "title": "中期第二阶段",
+      "source_position": {
+        "x": 1439.0,
+        "y": 858.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_003",
+      "type": "flow.stage_task_candidate",
+      "title": "中期第三阶段",
+      "source_position": {
+        "x": 1439.0,
+        "y": 1178.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_004",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方BIM模拟验证",
+      "source_position": {
+        "x": 1549.4,
+        "y": 653.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_005",
+      "type": "flow.stage_task_candidate",
+      "title": "初步平面规划方案",
+      "source_position": {
+        "x": 1551.4,
+        "y": 462.0
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_006",
+      "type": "flow.stage_task_candidate",
+      "title": "深化平面规划方案",
+      "source_position": {
+        "x": 1551.4,
+        "y": 553.4
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_007",
+      "type": "flow.stage_task_candidate",
+      "title": "空间初步方案设计",
+      "source_position": {
+        "x": 1551.4,
+        "y": 817.5
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_008",
+      "type": "flow.stage_task_candidate",
+      "title": "空间深化方案设计",
+      "source_position": {
+        "x": 1551.4,
+        "y": 1004.9
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_009",
+      "type": "flow.stage_task_candidate",
+      "title": "空间深化施工图",
+      "source_position": {
+        "x": 1555.3,
+        "y": 1137.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_010",
+      "type": "flow.stage_task_candidate",
+      "title": "收集原始资料",
+      "source_position": {
+        "x": 1559.2,
+        "y": 370.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_011",
+      "type": "flow.stage_task_candidate",
+      "title": "物料手册",
+      "source_position": {
+        "x": 1567.0,
+        "y": 1282.3
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S2_012",
+      "type": "flow.stage_task_candidate",
+      "title": "概念图片/风格意向",
+      "source_position": {
+        "x": 1658.8,
+        "y": 528.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_013",
+      "type": "flow.stage_task_candidate",
+      "title": "SU模型/立面研究",
+      "source_position": {
+        "x": 1662.7,
+        "y": 792.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_014",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问公司",
+      "source_position": {
+        "x": 1664.6,
+        "y": 405.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_015",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问公司",
+      "source_position": {
+        "x": 1664.6,
+        "y": 489.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_016",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问参与",
+      "source_position": {
+        "x": 1664.6,
+        "y": 852.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_017",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方公司验证",
+      "source_position": {
+        "x": 1664.6,
+        "y": 1071.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_018",
+      "type": "flow.stage_task_candidate",
+      "title": "软装概念设计",
+      "source_position": {
+        "x": 1668.5,
+        "y": 588.6
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_019",
+      "type": "flow.stage_task_candidate",
+      "title": "材料实物样板",
+      "source_position": {
+        "x": 1668.5,
+        "y": 969.9
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S2_020",
+      "type": "flow.stage_task_candidate",
+      "title": "灯光设计方案",
+      "source_position": {
+        "x": 1668.5,
+        "y": 1004.9
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_021",
+      "type": "flow.stage_task_candidate",
+      "title": "软装深化方案",
+      "source_position": {
+        "x": 1668.5,
+        "y": 1036.2
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_022",
+      "type": "flow.stage_task_candidate",
+      "title": "给/排水系统",
+      "source_position": {
+        "x": 1670.5,
+        "y": 628.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_023",
+      "type": "flow.stage_task_candidate",
+      "title": "强/弱电系统",
+      "source_position": {
+        "x": 1670.5,
+        "y": 661.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_024",
+      "type": "flow.stage_task_candidate",
+      "title": "设计管理方",
+      "source_position": {
+        "x": 1672.4,
+        "y": 356.5
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_025",
+      "type": "flow.stage_task_candidate",
+      "title": "设计管理方",
+      "source_position": {
+        "x": 1672.4,
+        "y": 438.6
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_026",
+      "type": "flow.stage_task_candidate",
+      "title": "平面系统图",
+      "source_position": {
+        "x": 1672.4,
+        "y": 1106.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_027",
+      "type": "flow.stage_task_candidate",
+      "title": "立面切割图",
+      "source_position": {
+        "x": 1672.4,
+        "y": 1211.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_028",
+      "type": "flow.stage_task_candidate",
+      "title": "大样节点图",
+      "source_position": {
+        "x": 1672.4,
+        "y": 1251.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_029",
+      "type": "flow.stage_task_candidate",
+      "title": "暖通系统",
+      "source_position": {
+        "x": 1676.4,
+        "y": 692.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_030",
+      "type": "flow.stage_task_candidate",
+      "title": "其它系统",
+      "source_position": {
+        "x": 1676.4,
+        "y": 732.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_031",
+      "type": "flow.stage_task_candidate",
+      "title": "3D效果图",
+      "source_position": {
+        "x": 1676.4,
+        "y": 934.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_032",
+      "type": "flow.stage_task_candidate",
+      "title": "若干/详见施工图纸",
+      "source_position": {
+        "x": 1758.1,
+        "y": 1212.0
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_033",
+      "type": "flow.stage_task_candidate",
+      "title": "若干/详见施工图纸",
+      "source_position": {
+        "x": 1758.1,
+        "y": 1251.0
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_034",
+      "type": "flow.stage_task_candidate",
+      "title": "提供设备需求清单",
+      "source_position": {
+        "x": 1762.3,
+        "y": 489.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_035",
+      "type": "flow.stage_task_candidate",
+      "title": "提交可行性综合汇报 / 文本",
+      "source_position": {
+        "x": 1785.7,
+        "y": 930.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_036",
+      "type": "flow.stage_task_candidate",
+      "title": "提交概念设计方案",
+      "source_position": {
+        "x": 1789.6,
+        "y": 555.8
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_037",
+      "type": "flow.stage_task_candidate",
+      "title": "现场勘查",
+      "source_position": {
+        "x": 1805.6,
+        "y": 372.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_038",
+      "type": "flow.stage_task_candidate",
+      "title": "强弱电点位图",
+      "source_position": {
+        "x": 1819.3,
+        "y": 1106.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_039",
+      "type": "flow.stage_task_candidate",
+      "title": "墙体拆除图",
+      "source_position": {
+        "x": 1822.8,
+        "y": 1008.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_040",
+      "type": "flow.stage_task_candidate",
+      "title": "墙身尺寸图",
+      "source_position": {
+        "x": 1822.8,
+        "y": 1075.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_041",
+      "type": "flow.stage_task_candidate",
+      "title": "平面布局图",
+      "source_position": {
+        "x": 1823.2,
+        "y": 1044.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_042",
+      "type": "flow.stage_task_candidate",
+      "title": "天花布置图",
+      "source_position": {
+        "x": 1823.2,
+        "y": 1137.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_043",
+      "type": "flow.stage_task_candidate",
+      "title": "地面铺装图",
+      "source_position": {
+        "x": 1823.2,
+        "y": 1173.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_044",
+      "type": "flow.stage_task_candidate",
+      "title": "提交综合可行性报告",
+      "source_position": {
+        "x": 1836.5,
+        "y": 688.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_045",
+      "type": "flow.stage_task_candidate",
+      "title": "整理可行性数据",
+      "source_position": {
+        "x": 1844.3,
+        "y": 821.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_046",
+      "type": "flow.stage_task_candidate",
+      "title": "获取现场实际测量数 / 据",
+      "source_position": {
+        "x": 1887.6,
+        "y": 367.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_047",
+      "type": "flow.stage_task_candidate",
+      "title": "窗帘、地毯饰品手册",
+      "source_position": {
+        "x": 1934.2,
+        "y": 1351.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_048",
+      "type": "flow.stage_task_candidate",
+      "title": "材料手册",
+      "source_position": {
+        "x": 1953.7,
+        "y": 1204.3
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S2_049",
+      "type": "flow.stage_task_candidate",
+      "title": "家具手册",
+      "source_position": {
+        "x": 1953.7,
+        "y": 1235.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_050",
+      "type": "flow.stage_task_candidate",
+      "title": "灯具手册",
+      "source_position": {
+        "x": 1953.7,
+        "y": 1266.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_051",
+      "type": "flow.stage_task_candidate",
+      "title": "洁具手册",
+      "source_position": {
+        "x": 1953.7,
+        "y": 1294.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_052",
+      "type": "flow.stage_task_candidate",
+      "title": "五金手册",
+      "source_position": {
+        "x": 1953.7,
+        "y": 1321.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_053",
+      "type": "collaboration.advice",
+      "title": "组织会议",
+      "source_position": {
+        "x": 2008.7,
+        "y": 688.6
+      },
+      "candidate_type": "AdviceCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_054",
+      "type": "collaboration.advice",
+      "title": "组织会议",
+      "source_position": {
+        "x": 2008.7,
+        "y": 821.4
+      },
+      "candidate_type": "AdviceCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_055",
+      "type": "flow.stage_task_candidate",
+      "title": "提交扩初图纸给业主",
+      "source_position": {
+        "x": 2067.6,
+        "y": 1086.9
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_056",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问公司",
+      "source_position": {
+        "x": 2106.4,
+        "y": 739.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_057",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问公司",
+      "source_position": {
+        "x": 2106.4,
+        "y": 872.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_058",
+      "type": "flow.stage_task_candidate",
+      "title": "设计管理方",
+      "source_position": {
+        "x": 2113.9,
+        "y": 837.1
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_059",
+      "type": "flow.stage_task_candidate",
+      "title": "设计管理方",
+      "source_position": {
+        "x": 2114.2,
+        "y": 702.3
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_060",
+      "type": "flow.stage_task_candidate",
+      "title": "业主代表",
+      "source_position": {
+        "x": 2118.1,
+        "y": 665.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_061",
+      "type": "flow.stage_task_candidate",
+      "title": "业主代表",
+      "source_position": {
+        "x": 2118.1,
+        "y": 798.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_062",
+      "type": "flow.stage_task_candidate",
+      "title": "材料实物样板",
+      "source_position": {
+        "x": 2161.1,
+        "y": 1263.2
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S2_063",
+      "type": "policy.gate_config",
+      "title": "业主确认",
+      "source_position": {
+        "x": 2186.4,
+        "y": 1086.8
+      },
+      "candidate_type": "TaskCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S2_064",
+      "type": "flow.stage_task_candidate",
+      "title": "修改/调整",
+      "source_position": {
+        "x": 2234.3,
+        "y": 700.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_065",
+      "type": "flow.stage_task_candidate",
+      "title": "修改/调整",
+      "source_position": {
+        "x": 2234.3,
+        "y": 837.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_066",
+      "type": "flow.stage_task_candidate",
+      "title": "完成全部施工图纸",
+      "source_position": {
+        "x": 2300.0,
+        "y": 1028.4
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_067",
+      "type": "policy.gate_config",
+      "title": "业主确认",
+      "source_position": {
+        "x": 2327.1,
+        "y": 700.3
+      },
+      "candidate_type": "TaskCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S2_068",
+      "type": "policy.gate_config",
+      "title": "业主确认",
+      "source_position": {
+        "x": 2327.1,
+        "y": 837.0
+      },
+      "candidate_type": "TaskCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S2_069",
+      "type": "flow.stage_task_candidate",
+      "title": "提交图纸给第三方公 / 司",
+      "source_position": {
+        "x": 2395.4,
+        "y": 1023.9
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_070",
+      "type": "flow.stage_task_candidate",
+      "title": "完成平面功能规划",
+      "source_position": {
+        "x": 2402.3,
+        "y": 700.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S2_071",
+      "type": "flow.stage_task_candidate",
+      "title": "完成空间设计方案",
+      "source_position": {
+        "x": 2402.3,
+        "y": 837.0
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_072",
+      "type": "flow.stage_task_candidate",
+      "title": "第三方顾问完成图纸",
+      "source_position": {
+        "x": 2494.7,
+        "y": 1028.2
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_073",
+      "type": "flow.stage_task_candidate",
+      "title": "家庭影院图纸",
+      "source_position": {
+        "x": 2635.7,
+        "y": 1028.4
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_074",
+      "type": "flow.stage_task_candidate",
+      "title": "智能化图纸",
+      "source_position": {
+        "x": 2639.6,
+        "y": 999.2
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_075",
+      "type": "flow.stage_task_candidate",
+      "title": "灯光图纸",
+      "source_position": {
+        "x": 2643.5,
+        "y": 936.5
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_076",
+      "type": "flow.stage_task_candidate",
+      "title": "厨房图纸",
+      "source_position": {
+        "x": 2643.5,
+        "y": 967.9
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_077",
+      "type": "flow.stage_task_candidate",
+      "title": "电梯图纸",
+      "source_position": {
+        "x": 2643.5,
+        "y": 1062.5
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S2_078",
+      "type": "flow.stage_task_candidate",
+      "title": "BIM图纸",
+      "source_position": {
+        "x": 2645.4,
+        "y": 1091.7
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_001",
+      "type": "flow.stage_task_candidate",
+      "title": "成果提交给工程管理 / 公司综合深化图纸",
+      "source_position": {
+        "x": 2821.5,
+        "y": 1025.9
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_002",
+      "type": "flow.stage_task_candidate",
+      "title": "工程准备",
+      "source_position": {
+        "x": 2837.8,
+        "y": 818.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_003",
+      "type": "flow.stage_task_candidate",
+      "title": "施 / 工 / 准 / 备 / 流 / 程",
+      "source_position": {
+        "x": 3012.4,
+        "y": 718.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_004",
+      "type": "flow.stage_task_candidate",
+      "title": "材料配合流程",
+      "source_position": {
+        "x": 3146.5,
+        "y": 1065.9
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S3_005",
+      "type": "flow.stage_task_candidate",
+      "title": "开工报告",
+      "source_position": {
+        "x": 3158.1,
+        "y": 561.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_006",
+      "type": "flow.stage_task_candidate",
+      "title": "技术交底",
+      "source_position": {
+        "x": 3158.1,
+        "y": 689.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_007",
+      "type": "flow.stage_task_candidate",
+      "title": "施工人员安排 / （施工人员安排表） / （特种人员报审表） / （项目管理组织架构图）",
+      "source_position": {
+        "x": 3262.6,
+        "y": 479.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_008",
+      "type": "flow.stage_task_candidate",
+      "title": "施工机具安排 / （施工机具设备安 / 排）",
+      "source_position": {
+        "x": 3264.6,
+        "y": 535.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_009",
+      "type": "flow.stage_task_candidate",
+      "title": "施工进度计划",
+      "source_position": {
+        "x": 3270.8,
+        "y": 636.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_010",
+      "type": "flow.stage_task_candidate",
+      "title": "施工方案",
+      "source_position": {
+        "x": 3277.0,
+        "y": 584.1
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_011",
+      "type": "flow.stage_task_candidate",
+      "title": "主材供应计划 / （主材供应计划表）",
+      "source_position": {
+        "x": 3291.6,
+        "y": 1064.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_012",
+      "type": "flow.stage_task_candidate",
+      "title": "三级安全教育",
+      "source_position": {
+        "x": 3340.6,
+        "y": 543.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_013",
+      "type": "flow.stage_task_candidate",
+      "title": "安全文明实施",
+      "source_position": {
+        "x": 3371.4,
+        "y": 489.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_014",
+      "type": "flow.stage_task_candidate",
+      "title": "作业人员考试",
+      "source_position": {
+        "x": 3404.5,
+        "y": 543.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_015",
+      "type": "flow.stage_task_candidate",
+      "title": "业主签名确认",
+      "source_position": {
+        "x": 3416.5,
+        "y": 616.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_016",
+      "type": "flow.stage_task_candidate",
+      "title": "业主签名确认",
+      "source_position": {
+        "x": 3416.5,
+        "y": 1068.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_017",
+      "type": "flow.stage_task_candidate",
+      "title": "现场平面布置",
+      "source_position": {
+        "x": 3467.6,
+        "y": 459.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_018",
+      "type": "flow.stage_task_candidate",
+      "title": "岗位责任制",
+      "source_position": {
+        "x": 3470.5,
+        "y": 485.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_019",
+      "type": "flow.stage_task_candidate",
+      "title": "文明标识牌",
+      "source_position": {
+        "x": 3470.9,
+        "y": 510.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_020",
+      "type": "flow.stage_task_candidate",
+      "title": "合格上岗",
+      "source_position": {
+        "x": 3472.7,
+        "y": 543.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_021",
+      "type": "flow.stage_task_candidate",
+      "title": "主材材料资金使用计划",
+      "source_position": {
+        "x": 3512.7,
+        "y": 1068.5
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S3_022",
+      "type": "flow.stage_task_candidate",
+      "title": "道检1（开工报告审核道检表）",
+      "source_position": {
+        "x": 3544.6,
+        "y": 557.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S3_023",
+      "type": "flow.stage_task_candidate",
+      "title": "资金使用计划",
+      "source_position": {
+        "x": 3568.0,
+        "y": 615.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_024",
+      "type": "flow.stage_task_candidate",
+      "title": "第一次材料工作",
+      "source_position": {
+        "x": 3630.8,
+        "y": 1068.5
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S3_025",
+      "type": "flow.stage_task_candidate",
+      "title": "现场临时安全设施搭 / 设",
+      "source_position": {
+        "x": 3672.5,
+        "y": 541.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_026",
+      "type": "flow.stage_task_candidate",
+      "title": "现场配合设计深化 / （持续进行）",
+      "source_position": {
+        "x": 3675.8,
+        "y": 696.2
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_027",
+      "type": "flow.stage_task_candidate",
+      "title": "原始结构检查",
+      "source_position": {
+        "x": 3681.9,
+        "y": 439.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_028",
+      "type": "flow.stage_task_candidate",
+      "title": "折旧材料处理",
+      "source_position": {
+        "x": 3681.9,
+        "y": 646.8
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S3_029",
+      "type": "flow.stage_task_candidate",
+      "title": "方案以及报价",
+      "source_position": {
+        "x": 3748.3,
+        "y": 974.1
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_030",
+      "type": "policy.gate_config",
+      "title": "合同签订 / （1）",
+      "source_position": {
+        "x": 3754.5,
+        "y": 1164.8
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S3_031",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 3767.0,
+        "y": 408.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_032",
+      "type": "flow.stage_task_candidate",
+      "title": "制度 / 1.文明标识牌 / 2.办公室管理制度 / 3.食宿管理制度 / 4.作息时间制度 / 5.卫生管理制度",
+      "source_position": {
+        "x": 3794.9,
+        "y": 471.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_033",
+      "type": "flow.stage_task_candidate",
+      "title": "临时设施搭建 / 1.办公室布置 / 2.宿舍 / 3.食堂，淋浴 / 4.室外卫生间",
+      "source_position": {
+        "x": 3797.9,
+        "y": 531.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_034",
+      "type": "flow.stage_task_candidate",
+      "title": "施工设施搭建 / 1.脚手架 / 2.物料提升 / 3.操作平台 / 4.集中气泵管理 / 5.安全防护设施",
+      "source_position": {
+        "x": 3798.6,
+        "y": 580.5
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S3_035",
+      "type": "flow.stage_task_candidate",
+      "title": "提出方案并经业 / 主确认",
+      "source_position": {
+        "x": 3814.2,
+        "y": 405.6
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_036",
+      "type": "flow.stage_task_candidate",
+      "title": "电梯 / 品牌型号确认 / (商务或家用型号，传动方 / 式，轿厢装潢里外一致） / 管弄进尺寸 / 功率校核 / 弱电交底留设位置 / 轿厢尺寸 / 图纸确认 / 报价",
+      "source_position": {
+        "x": 3844.2,
+        "y": 819.0
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_037",
+      "type": "policy.gate_config",
+      "title": "卫生洁具 / 品牌，型号确认 / 坑距，尺寸 / 确认排水方式 / 报价 / 签订合同 / 进预埋件及安装图纸",
+      "source_position": {
+        "x": 3851.5,
+        "y": 1190.8
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_038",
+      "type": "policy.gate_config",
+      "title": "集水井设备 / 设备品牌，型号确认 / 报价 / 合同签订 / 其它",
+      "source_position": {
+        "x": 3851.5,
+        "y": 1261.1
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S3_039",
+      "type": "flow.stage_task_candidate",
+      "title": "厨房厨柜 / 测量方案确认 / 电器设备型号确认 / 电器设备尺寸 / ，功率校核 / 水电点位确认 / 材质确认 / 报价",
+      "source_position": {
+        "x": 3854.6,
+        "y": 908.3
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_040",
+      "type": "flow.stage_task_candidate",
+      "title": "酒窖，真火壁炉 / 测量，方案确认 / 设备功率校核 / 给水点位确认 / 排烟方式确认 / 燃烧方式确认 / 炉芯尺寸确认 / 报价",
+      "source_position": {
+        "x": 3858.2,
+        "y": 972.8
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_041",
+      "type": "flow.stage_task_candidate",
+      "title": "主灯，开关 / 设备品牌，型号 / 地拖式样",
+      "source_position": {
+        "x": 3858.7,
+        "y": 1310.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_042",
+      "type": "flow.stage_task_candidate",
+      "title": "智能化设备",
+      "source_position": {
+        "x": 3865.3,
+        "y": 1044.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_043",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 3883.0,
+        "y": 438.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_044",
+      "type": "flow.stage_task_candidate",
+      "title": "最晚在水电工程开工前完成",
+      "source_position": {
+        "x": 3928.6,
+        "y": 852.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_045",
+      "type": "flow.stage_task_candidate",
+      "title": "专业深化",
+      "source_position": {
+        "x": 3943.7,
+        "y": 699.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_046",
+      "type": "flow.stage_task_candidate",
+      "title": "第二次材料工 / 作",
+      "source_position": {
+        "x": 4013.4,
+        "y": 1097.1
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S3_047",
+      "type": "flow.stage_task_candidate",
+      "title": "强弱电点位图 / 1.管弄井分配2.分配电箱位置3.强弱电系统图 / 4.等电位连接5.设备功率校核",
+      "source_position": {
+        "x": 4014.2,
+        "y": 717.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_048",
+      "type": "policy.gate_config",
+      "title": "现场保护 / （现场保护验收表） / 1.门窗保护 / 2.进户门 / 3.场外维护 / 4.主要通道外墙石材阳角 / 5.栏杆扶手 / 6.植被土体 / 7.其他",
+      "source_position": {
+        "x": 4023.0,
+        "y": 418.9
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S3_049",
+      "type": "flow.stage_task_candidate",
+      "title": "第二次现场放线 / （现场放样尺寸确认表） / 1.水平线 / 2.垂直线 / 3.顶面标高 / 4.地面标高 / 5.基准轴线",
+      "source_position": {
+        "x": 4023.3,
+        "y": 536.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_050",
+      "type": "flow.stage_task_candidate",
+      "title": "排水点位图 / 1.双地漏2.座便器地漏3.浴缸备用地漏 / 4.除湿机地漏",
+      "source_position": {
+        "x": 4024.6,
+        "y": 671.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_051",
+      "type": "flow.stage_task_candidate",
+      "title": "给水点位图 / 1.直饮水 / 2.软化水3.净水4.软水5.室外绿化",
+      "source_position": {
+        "x": 4031.8,
+        "y": 630.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_052",
+      "type": "flow.stage_task_candidate",
+      "title": "其他点位图 / 1.隐蔽式检修口 / 2.集中打孔",
+      "source_position": {
+        "x": 4055.5,
+        "y": 756.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_053",
+      "type": "flow.stage_task_candidate",
+      "title": "方案及报价",
+      "source_position": {
+        "x": 4118.3,
+        "y": 1165.7
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_054",
+      "type": "policy.gate_config",
+      "title": "合同签订 / （2）",
+      "source_position": {
+        "x": 4121.2,
+        "y": 988.1
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S3_055",
+      "type": "flow.stage_task_candidate",
+      "title": "道检2（现场保护及安全文明检查道检表）",
+      "source_position": {
+        "x": 4160.0,
+        "y": 630.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S3_056",
+      "type": "flow.stage_task_candidate",
+      "title": "门锁五金 / 样式，品牌确认 / 材质确认 / 样品确认 / 报价",
+      "source_position": {
+        "x": 4190.2,
+        "y": 1218.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S3_057",
+      "type": "flow.stage_task_candidate",
+      "title": "大理石，瓷砖， / 马赛克 / 现场测量 / 材料小样确认 / 大理石确认 / 拼花样式确认",
+      "source_position": {
+        "x": 4190.2,
+        "y": 1110.1
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S3_058",
+      "type": "flow.stage_task_candidate",
+      "title": "成品木器 / 小样准备 / 色板确认 / 测量 / 方案确认 / 报价",
+      "source_position": {
+        "x": 4199.3,
+        "y": 1161.6
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S3_059",
+      "type": "policy.gate_config",
+      "title": "厨房厨柜（不更换） / 电器确定 / 合同签订 / 订货采购 / 现场交底",
+      "source_position": {
+        "x": 4203.5,
+        "y": 963.7
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S3_060",
+      "type": "policy.gate_config",
+      "title": "电梯（不更换） / 合同签订 / 设备订货采购 / 现场交底",
+      "source_position": {
+        "x": 4209.7,
+        "y": 919.7
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S3_061",
+      "type": "policy.gate_config",
+      "title": "酒窖，真火壁炉 / 合同签订 / 设备订购",
+      "source_position": {
+        "x": 4209.7,
+        "y": 1009.8
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S4_001",
+      "type": "flow.stage_task_candidate",
+      "title": "铜铁艺，扶手，栏杆 / 色板确认 / 式样确认 / 规格确认 / 报价",
+      "source_position": {
+        "x": 4254.3,
+        "y": 1162.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_002",
+      "type": "flow.stage_task_candidate",
+      "title": "卫浴五金 / 品牌确认 / 款式，材质确认 / 样品确认 / 报价",
+      "source_position": {
+        "x": 4260.5,
+        "y": 1218.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_003",
+      "type": "flow.stage_task_candidate",
+      "title": "地板及其它材料 / 材质确认 / 品牌确认 / 规格型号确认 / 报价",
+      "source_position": {
+        "x": 4260.9,
+        "y": 1113.5
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S4_004",
+      "type": "flow.stage_task_candidate",
+      "title": "施工前准备",
+      "source_position": {
+        "x": 4333.2,
+        "y": 603.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_005",
+      "type": "policy.gate_config",
+      "title": "合同签订（3）",
+      "source_position": {
+        "x": 4424.4,
+        "y": 1079.5
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S4_006",
+      "type": "flow.stage_task_candidate",
+      "title": "第三次放样 / 1.标识板 / 2.家具布置 / 3.造型线 / 4.空调机位 / 5.开关灯具 / 6.六面喷涂",
+      "source_position": {
+        "x": 4429.9,
+        "y": 582.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_007",
+      "type": "flow.stage_task_candidate",
+      "title": "第一次地固",
+      "source_position": {
+        "x": 4430.2,
+        "y": 540.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_008",
+      "type": "flow.stage_task_candidate",
+      "title": "拆改建",
+      "source_position": {
+        "x": 4436.4,
+        "y": 669.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_009",
+      "type": "flow.stage_task_candidate",
+      "title": "1.弹性切割 / 2.导墙高度 / 3.墙体拉结 / 4.腰梁及梁设置 / 5.过梁搁置长度 / 6.门窗洞口粉刷",
+      "source_position": {
+        "x": 4513.1,
+        "y": 651.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_010",
+      "type": "flow.stage_task_candidate",
+      "title": "材料部组织各材料商配合，互相交底 / 参加人员有：相关材料商，施工处，分包 / 商，质安部等",
+      "source_position": {
+        "x": 4572.8,
+        "y": 966.1
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S4_011",
+      "type": "policy.gate_config",
+      "title": "铜铁艺，扶手，栏杆 / 合同签订 / 按图深化 / 现场交底 / 预埋件在地暖施工前安装完毕",
+      "source_position": {
+        "x": 4588.4,
+        "y": 1084.3
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S4_012",
+      "type": "policy.gate_config",
+      "title": "大理石，瓷砖，马赛克 / 合同签订 / 按图深化 / 现场交底 / 踢脚线，窗台板先加工",
+      "source_position": {
+        "x": 4597.5,
+        "y": 999.0
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S4_013",
+      "type": "policy.gate_config",
+      "title": "门锁五金 / 签订合同 / 采购 / 提供开孔尺寸给木器方",
+      "source_position": {
+        "x": 4597.5,
+        "y": 1124.5
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S4_014",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 4604.5,
+        "y": 669.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_015",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 4607.9,
+        "y": 723.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_016",
+      "type": "policy.gate_config",
+      "title": "卫浴五金 / 签订合同 / 采购 / 提供相关尺寸",
+      "source_position": {
+        "x": 4609.9,
+        "y": 1168.5
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S4_017",
+      "type": "policy.gate_config",
+      "title": "成品木器 / 合同签订 / 按图深化 / 现场交底",
+      "source_position": {
+        "x": 4616.1,
+        "y": 1052.8
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S4_018",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 4651.3,
+        "y": 667.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_019",
+      "type": "flow.stage_task_candidate",
+      "title": "第一批材 / 料进场",
+      "source_position": {
+        "x": 4687.7,
+        "y": 665.6
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S4_020",
+      "type": "flow.stage_task_candidate",
+      "title": "道检03（6面放样检查道检表）",
+      "source_position": {
+        "x": 4721.9,
+        "y": 680.8
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_021",
+      "type": "flow.stage_task_candidate",
+      "title": "隐蔽工程",
+      "source_position": {
+        "x": 4836.2,
+        "y": 668.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_022",
+      "type": "flow.stage_task_candidate",
+      "title": "水电隐蔽",
+      "source_position": {
+        "x": 4952.7,
+        "y": 644.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_023",
+      "type": "flow.stage_task_candidate",
+      "title": "泥木钢隐蔽",
+      "source_position": {
+        "x": 5014.1,
+        "y": 1059.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_024",
+      "type": "flow.stage_task_candidate",
+      "title": "EPC工程项目流程图",
+      "source_position": {
+        "x": 5066.9,
+        "y": 69.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_025",
+      "type": "policy.gate_config",
+      "title": "空调送排风 / （空调隐蔽验收表） / （风机，空调机组单机试运转记录表） / 1.设备验收2.安装验收3.管道试压 / 4.灌水试验5.保温验收6.防晃支架 / 7.风管验收8.单机调试9.管路分色",
+      "source_position": {
+        "x": 5071.3,
+        "y": 364.2
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_026",
+      "type": "policy.gate_config",
+      "title": "排水系统 / （排水管道隐藏验收表） / （通球试验记录表） / 1.开喇叭口2.双地漏3.静音处理 / 4.通球试验5.管道封堵6.防水砂浆",
+      "source_position": {
+        "x": 5071.5,
+        "y": 588.0
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_027",
+      "type": "policy.gate_config",
+      "title": "其它设备 / （其它设备管道预埋件安装验收表）",
+      "source_position": {
+        "x": 5074.3,
+        "y": 722.5
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_028",
+      "type": "policy.gate_config",
+      "title": "强电系统 / （强电隐蔽验收表） / （绝缘测试记录表） / 1.弹线开槽2.接地跨接3.等电位 / 4.绝缘检测5.管路分色6.重型灯具独立吊杆",
+      "source_position": {
+        "x": 5078.2,
+        "y": 474.7
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_029",
+      "type": "policy.gate_config",
+      "title": "防水系统 / （防水工程隐蔽验收表） / 1.四周倒角2.管根细部3.变形缝 / 4.防水高度5.防水厚度6.盛水试验",
+      "source_position": {
+        "x": 5079.0,
+        "y": 658.9
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_030",
+      "type": "policy.gate_config",
+      "title": "给水系统 / （给水管道隐蔽验收表） / （管道系统压力试验记录表） / 1.预埋件2.管道安装 / 3.分水器4.管道试压",
+      "source_position": {
+        "x": 5084.0,
+        "y": 420.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_031",
+      "type": "policy.gate_config",
+      "title": "弱电系统 / （弱电隐蔽验收表） / 1.弹线开槽2.间距3.分层 / 4.点对点5.管路分色",
+      "source_position": {
+        "x": 5090.0,
+        "y": 533.5
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_032",
+      "type": "flow.stage_task_candidate",
+      "title": "1.煤气移位 / 2.报警点位 / 3.联动机械臂",
+      "source_position": {
+        "x": 5107.8,
+        "y": 804.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_033",
+      "type": "flow.stage_task_candidate",
+      "title": "辅助设备",
+      "source_position": {
+        "x": 5111.5,
+        "y": 789.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_034",
+      "type": "flow.stage_task_candidate",
+      "title": "1.井道排水 / 2.轿厢电话",
+      "source_position": {
+        "x": 5113.8,
+        "y": 744.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_035",
+      "type": "policy.gate_config",
+      "title": "隔墙龙骨 / （隔墙龙骨隐藏验收 / 表）",
+      "source_position": {
+        "x": 5217.7,
+        "y": 1053.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_036",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 5217.9,
+        "y": 407.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_037",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 5217.9,
+        "y": 462.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_038",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 5217.9,
+        "y": 519.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_039",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 5217.9,
+        "y": 572.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_040",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 5217.9,
+        "y": 636.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_041",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 5217.9,
+        "y": 700.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_042",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 5217.9,
+        "y": 768.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_043",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 5217.9,
+        "y": 837.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_044",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5241.1,
+        "y": 382.2
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_045",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5241.1,
+        "y": 546.8
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_046",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5241.1,
+        "y": 605.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_047",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5241.1,
+        "y": 804.1
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_048",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5241.2,
+        "y": 434.9
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_049",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5241.2,
+        "y": 492.7
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_050",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5241.2,
+        "y": 669.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_051",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5241.2,
+        "y": 736.8
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_052",
+      "type": "policy.gate_config",
+      "title": "地下室抗冷凝 / （地下室抗冷凝隐蔽验收表） / 1.防水背涂2.断桥 / 3.骨架 / 4.防火",
+      "source_position": {
+        "x": 5244.4,
+        "y": 1174.7
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_053",
+      "type": "policy.gate_config",
+      "title": "吊顶龙骨 / （吊顶龙骨隐蔽验收表） / 1.金属龙骨 / 2.顶面保温 / 3.防火 / 4.造型基层",
+      "source_position": {
+        "x": 5252.9,
+        "y": 960.2
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_054",
+      "type": "policy.gate_config",
+      "title": "钢骨架 / （钢骨架隐蔽验收表） / 1.焊接 / 2.防锈处理3.防火处理",
+      "source_position": {
+        "x": 5253.5,
+        "y": 1116.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_055",
+      "type": "flow.stage_task_candidate",
+      "title": "1.墙体砌筑2.排水沟 / 3.设备基础4.墙面隔音",
+      "source_position": {
+        "x": 5258.6,
+        "y": 898.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_056",
+      "type": "flow.stage_task_candidate",
+      "title": "室外新建设备间",
+      "source_position": {
+        "x": 5265.5,
+        "y": 884.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_057",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 5281.8,
+        "y": 430.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_058",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 5281.8,
+        "y": 488.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_059",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 5281.8,
+        "y": 541.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_060",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 5281.8,
+        "y": 600.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_061",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 5281.8,
+        "y": 665.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_062",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 5281.8,
+        "y": 733.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_063",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 5281.8,
+        "y": 800.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_064",
+      "type": "flow.stage_task_candidate",
+      "title": "内机防尘管理",
+      "source_position": {
+        "x": 5283.9,
+        "y": 382.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_065",
+      "type": "flow.stage_task_candidate",
+      "title": "木作基层架骨 / 1.三防背涂 / 2.离地30 / 3.防火防腐处理",
+      "source_position": {
+        "x": 5331.7,
+        "y": 1027.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_066",
+      "type": "flow.stage_task_candidate",
+      "title": "隔墙龙骨 / 1.墙面连接 / 2.连接处理 / 3.防火处理",
+      "source_position": {
+        "x": 5334.7,
+        "y": 1072.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_067",
+      "type": "policy.gate_config",
+      "title": "道检04（水电隐藏验收道检表）",
+      "source_position": {
+        "x": 5359.2,
+        "y": 604.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_068",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5474.3,
+        "y": 897.2
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_069",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5474.3,
+        "y": 975.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_070",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5474.3,
+        "y": 1060.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_071",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5474.3,
+        "y": 1125.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_072",
+      "type": "flow.stage_task_candidate",
+      "title": "绘制水电 / 隐蔽图纸",
+      "source_position": {
+        "x": 5482.0,
+        "y": 551.3
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S4_073",
+      "type": "flow.stage_task_candidate",
+      "title": "拍照摄像",
+      "source_position": {
+        "x": 5482.0,
+        "y": 661.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_074",
+      "type": "flow.stage_task_candidate",
+      "title": "开关点 / 位图",
+      "source_position": {
+        "x": 5540.0,
+        "y": 464.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_075",
+      "type": "flow.stage_task_candidate",
+      "title": "插座点 / 位图",
+      "source_position": {
+        "x": 5540.0,
+        "y": 493.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_076",
+      "type": "flow.stage_task_candidate",
+      "title": "照明点 / 位图",
+      "source_position": {
+        "x": 5540.0,
+        "y": 523.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_077",
+      "type": "flow.stage_task_candidate",
+      "title": "回路平 / 面图",
+      "source_position": {
+        "x": 5540.0,
+        "y": 552.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_078",
+      "type": "flow.stage_task_candidate",
+      "title": "系统图",
+      "source_position": {
+        "x": 5540.0,
+        "y": 584.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_079",
+      "type": "flow.stage_task_candidate",
+      "title": "协助专 / 业单位 / 绘制",
+      "source_position": {
+        "x": 5540.0,
+        "y": 608.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_080",
+      "type": "flow.stage_task_candidate",
+      "title": "协助其 / 它分包 / 拍摄",
+      "source_position": {
+        "x": 5540.0,
+        "y": 640.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_081",
+      "type": "flow.stage_task_candidate",
+      "title": "按回路",
+      "source_position": {
+        "x": 5540.0,
+        "y": 684.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_082",
+      "type": "flow.stage_task_candidate",
+      "title": "按区域",
+      "source_position": {
+        "x": 5540.0,
+        "y": 721.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_083",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 5564.5,
+        "y": 1183.5
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S4_084",
+      "type": "flow.stage_task_candidate",
+      "title": "规范分类建档， / 存档",
+      "source_position": {
+        "x": 5597.0,
+        "y": 680.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_085",
+      "type": "flow.stage_task_candidate",
+      "title": "综合布置图",
+      "source_position": {
+        "x": 5603.0,
+        "y": 543.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S4_086",
+      "type": "flow.stage_task_candidate",
+      "title": "组织各参与方现场自检，并提供允 / 许封板的书面依据（可记录在施工 / 日记上）",
+      "source_position": {
+        "x": 5623.8,
+        "y": 1053.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_001",
+      "type": "policy.gate_config",
+      "title": "业主验收 / （业主方隐蔽工程验收表）",
+      "source_position": {
+        "x": 5658.8,
+        "y": 600.1
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S5_002",
+      "type": "flow.stage_task_candidate",
+      "title": "第三次材料工作",
+      "source_position": {
+        "x": 5781.2,
+        "y": 1198.6
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S5_003",
+      "type": "flow.stage_task_candidate",
+      "title": "第二批材 / 料进场",
+      "source_position": {
+        "x": 5814.0,
+        "y": 743.5
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S5_004",
+      "type": "policy.gate_config",
+      "title": "合同签订（4）",
+      "source_position": {
+        "x": 5865.8,
+        "y": 1156.0
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S5_005",
+      "type": "flow.stage_task_candidate",
+      "title": "方案及报价",
+      "source_position": {
+        "x": 5870.7,
+        "y": 1283.5
+      },
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "design_lead"
+    },
+    {
+      "id": "S5_006",
+      "type": "flow.stage_task_candidate",
+      "title": "道检05（封板前道检表）",
+      "source_position": {
+        "x": 5900.6,
+        "y": 762.2
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S5_007",
+      "type": "flow.stage_task_candidate",
+      "title": "石膏线，盘 / 1.品牌确认2.款式材质确认 / 3.样品确认4.开模5.加工 / 6.送货",
+      "source_position": {
+        "x": 5958.2,
+        "y": 1112.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_008",
+      "type": "flow.stage_task_candidate",
+      "title": "筒灯.射灯 / 1.品牌确认2.款式确认 / 3.订货4.提供开孔尺寸 / 5.送货",
+      "source_position": {
+        "x": 5964.1,
+        "y": 1152.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_009",
+      "type": "policy.gate_config",
+      "title": "地板，地毯及其他材料 / 1.合同签订 / 2.订货 / 3.一般30~60天后发货",
+      "source_position": {
+        "x": 5966.4,
+        "y": 1078.7
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S5_010",
+      "type": "flow.stage_task_candidate",
+      "title": "金银箔，手绘画 / 款式.材质确认 / 样品确认 / 报价",
+      "source_position": {
+        "x": 5973.5,
+        "y": 1318.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_011",
+      "type": "flow.stage_task_candidate",
+      "title": "淋浴房，玻璃 / 款式，材质确认 / 样品确认 / 报价",
+      "source_position": {
+        "x": 5973.5,
+        "y": 1190.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_012",
+      "type": "flow.stage_task_candidate",
+      "title": "肌理涂料 / 款式，材质确认 / 样品确认 / 报价",
+      "source_position": {
+        "x": 5973.5,
+        "y": 1238.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_013",
+      "type": "flow.stage_task_candidate",
+      "title": "皮布，墙纸 / 款式.材质确认 / 样品确认 / 报价",
+      "source_position": {
+        "x": 5974.8,
+        "y": 1276.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_014",
+      "type": "flow.stage_task_candidate",
+      "title": "第一次粉槽 / 1.电工基粉 / 2.卫生间，厨房防水砂浆 / 3.槽内凹陷",
+      "source_position": {
+        "x": 6072.4,
+        "y": 736.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_015",
+      "type": "policy.gate_config",
+      "title": "石膏板封板 / （石膏板封板验收表）",
+      "source_position": {
+        "x": 6075.7,
+        "y": 632.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S5_016",
+      "type": "policy.gate_config",
+      "title": "电梯安装 / （电梯安装验收表）",
+      "source_position": {
+        "x": 6078.9,
+        "y": 587.8
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S5_017",
+      "type": "flow.stage_task_candidate",
+      "title": "地暖准备前施工",
+      "source_position": {
+        "x": 6084.1,
+        "y": 527.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_018",
+      "type": "flow.stage_task_candidate",
+      "title": "室内挑高空间",
+      "source_position": {
+        "x": 6088.1,
+        "y": 401.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_019",
+      "type": "flow.stage_task_candidate",
+      "title": "基层尺寸",
+      "source_position": {
+        "x": 6092.6,
+        "y": 893.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_020",
+      "type": "flow.stage_task_candidate",
+      "title": "成品木器 / （护墙板，门，门窗套，衣柜，橱 / 柜等）",
+      "source_position": {
+        "x": 6191.5,
+        "y": 913.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_021",
+      "type": "policy.gate_config",
+      "title": "大理石，瓷砖，马赛克 / 配合厂方现场复核，调整 / 大理石加工 / 加工时的驻场验收：（包括） / 三验收（排版，水刀，材质） / CAD及照片排版 / 切板加工 / 尺寸复核 / 装车验收 / 押运，卸货验收",
+      "source_position": {
+        "x": 6193.6,
+        "y": 792.9
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S5_022",
+      "type": "collaboration.advice",
+      "title": "现场材料员协调各厂家材料 / 配合加工",
+      "source_position": {
+        "x": 6200.7,
+        "y": 1108.0
+      },
+      "candidate_type": "AdviceCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S5_023",
+      "type": "flow.stage_task_candidate",
+      "title": "参考泥作施工步骤",
+      "source_position": {
+        "x": 6201.1,
+        "y": 374.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_024",
+      "type": "flow.stage_task_candidate",
+      "title": "参考木作施工步骤",
+      "source_position": {
+        "x": 6202.1,
+        "y": 410.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_025",
+      "type": "flow.stage_task_candidate",
+      "title": "参考油工施工步骤",
+      "source_position": {
+        "x": 6202.1,
+        "y": 444.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_026",
+      "type": "flow.stage_task_candidate",
+      "title": "第一层石膏板",
+      "source_position": {
+        "x": 6202.1,
+        "y": 638.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_027",
+      "type": "policy.gate_config",
+      "title": "配合厂方现场复核，调整 / 木器加工 / 加工时的驻场验收",
+      "source_position": {
+        "x": 6203.9,
+        "y": 942.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S5_028",
+      "type": "policy.gate_config",
+      "title": "配合厂方现场复核，调整 / 加工 / 加工时的驻场验收",
+      "source_position": {
+        "x": 6203.9,
+        "y": 1016.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S5_029",
+      "type": "flow.stage_task_candidate",
+      "title": "铜铁艺，扶手，栏杆",
+      "source_position": {
+        "x": 6210.1,
+        "y": 987.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_030",
+      "type": "flow.stage_task_candidate",
+      "title": "泥作",
+      "source_position": {
+        "x": 6219.6,
+        "y": 360.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_031",
+      "type": "flow.stage_task_candidate",
+      "title": "木作",
+      "source_position": {
+        "x": 6220.6,
+        "y": 395.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_032",
+      "type": "flow.stage_task_candidate",
+      "title": "油工",
+      "source_position": {
+        "x": 6220.6,
+        "y": 429.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_033",
+      "type": "policy.gate_config",
+      "title": "签订合同",
+      "source_position": {
+        "x": 6221.6,
+        "y": 1234.4
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S5_034",
+      "type": "flow.stage_task_candidate",
+      "title": "分水器后背处理（或采 / 用整体式分水器专用 / 箱）",
+      "source_position": {
+        "x": 6236.6,
+        "y": 496.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_035",
+      "type": "flow.stage_task_candidate",
+      "title": "所有地面材 / 料厚度确认",
+      "source_position": {
+        "x": 6236.6,
+        "y": 537.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_036",
+      "type": "flow.stage_task_candidate",
+      "title": "拆除中厅脚手 / 架",
+      "source_position": {
+        "x": 6285.0,
+        "y": 364.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_037",
+      "type": "flow.stage_task_candidate",
+      "title": "第二层石膏板 / 1.检修口 / 2.风口 / 3.转角，洞口整板，7型 / 4.留缝 / 5.钉子 / 6.细部",
+      "source_position": {
+        "x": 6298.4,
+        "y": 619.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_038",
+      "type": "flow.stage_task_candidate",
+      "title": "地面找平",
+      "source_position": {
+        "x": 6324.1,
+        "y": 541.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_039",
+      "type": "policy.gate_config",
+      "title": "金银箔，手绘画 / 签订合同 / 订货 / 发货",
+      "source_position": {
+        "x": 6329.6,
+        "y": 1169.8
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S5_040",
+      "type": "policy.gate_config",
+      "title": "淋浴房，玻璃 / 签订合同 / 测量复尺 / 订货 / 发货",
+      "source_position": {
+        "x": 6332.4,
+        "y": 1202.7
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S5_041",
+      "type": "policy.gate_config",
+      "title": "皮布，墙纸 / 签订合同 / 订货 / 发货",
+      "source_position": {
+        "x": 6335.8,
+        "y": 1273.8
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S5_042",
+      "type": "policy.gate_config",
+      "title": "肌理涂料 / 签订合同 / 订货 / 发货",
+      "source_position": {
+        "x": 6338.5,
+        "y": 1241.4
+      },
+      "candidate_type": "SovereignDecisionCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "S5_043",
+      "type": "flow.stage_task_candidate",
+      "title": "按照相应节点发货",
+      "source_position": {
+        "x": 6354.3,
+        "y": 825.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_044",
+      "type": "flow.stage_task_candidate",
+      "title": "按照相应节点发货",
+      "source_position": {
+        "x": 6356.9,
+        "y": 973.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_045",
+      "type": "flow.stage_task_candidate",
+      "title": "道检6（石膏板封板完 / 成检查）",
+      "source_position": {
+        "x": 6419.5,
+        "y": 642.5
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S5_046",
+      "type": "flow.stage_task_candidate",
+      "title": "筒灯开孔",
+      "source_position": {
+        "x": 6498.9,
+        "y": 620.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_047",
+      "type": "flow.stage_task_candidate",
+      "title": "顶面石膏 / 线，盘安 / 装",
+      "source_position": {
+        "x": 6498.9,
+        "y": 650.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_048",
+      "type": "flow.stage_task_candidate",
+      "title": "道检7（挑高空间泥木检查及地暖作业条 / 件道检）",
+      "source_position": {
+        "x": 6504.1,
+        "y": 543.1
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S5_049",
+      "type": "flow.stage_task_candidate",
+      "title": "顶面腻子 / 批嵌 / （含修 / 补）",
+      "source_position": {
+        "x": 6551.7,
+        "y": 629.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_050",
+      "type": "flow.stage_task_candidate",
+      "title": "顶面底层 / 涂料涂刷",
+      "source_position": {
+        "x": 6609.6,
+        "y": 633.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_051",
+      "type": "policy.gate_config",
+      "title": "地暖布管 / （地暖管布管隐 / 蔽验收表）",
+      "source_position": {
+        "x": 6699.6,
+        "y": 580.7
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S5_052",
+      "type": "flow.stage_task_candidate",
+      "title": "墙面腻子 / 批嵌",
+      "source_position": {
+        "x": 6700.6,
+        "y": 889.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_053",
+      "type": "flow.stage_task_candidate",
+      "title": "满铺网格 / 布",
+      "source_position": {
+        "x": 6760.1,
+        "y": 871.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_054",
+      "type": "flow.stage_task_candidate",
+      "title": "第二次粉槽 / 1.油漆工粉 / 2.加强材料 / 3.搭接",
+      "source_position": {
+        "x": 6779.1,
+        "y": 899.5
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S5_055",
+      "type": "flow.stage_task_candidate",
+      "title": "预埋件留置 / 1.门吸2.地弹簧3.楼梯预埋件 / 4.其它5.地暖敷设规范：如离墙20 / ＣＭ",
+      "source_position": {
+        "x": 6816.1,
+        "y": 591.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_056",
+      "type": "flow.stage_task_candidate",
+      "title": "防开裂 / 1.变形缝处理2.门企口留缝 / 3.墙面四周4.集中管路套管降 / 温5.双层钢丝网",
+      "source_position": {
+        "x": 6821.0,
+        "y": 552.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_057",
+      "type": "flow.stage_task_candidate",
+      "title": "掺菊精",
+      "source_position": {
+        "x": 6822.0,
+        "y": 874.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_058",
+      "type": "flow.stage_task_candidate",
+      "title": "机械设备到位 / １.搅拌机 / ２.振捣设备",
+      "source_position": {
+        "x": 6845.4,
+        "y": 634.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_059",
+      "type": "flow.stage_task_candidate",
+      "title": "管道试验",
+      "source_position": {
+        "x": 6852.0,
+        "y": 486.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_060",
+      "type": "flow.stage_task_candidate",
+      "title": "推荐材料 / 1.蘑菇板 / 2.PB管材",
+      "source_position": {
+        "x": 6852.0,
+        "y": 518.1
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S5_061",
+      "type": "flow.stage_task_candidate",
+      "title": "拍照留底",
+      "source_position": {
+        "x": 6852.0,
+        "y": 670.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_062",
+      "type": "flow.stage_task_candidate",
+      "title": "涂饰，裱糊基 / 层",
+      "source_position": {
+        "x": 6878.4,
+        "y": 906.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_063",
+      "type": "flow.stage_task_candidate",
+      "title": "涂料面层 / 2遍",
+      "source_position": {
+        "x": 6939.2,
+        "y": 870.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_064",
+      "type": "flow.stage_task_candidate",
+      "title": "肌理漆， / 金泊，手 / 绘画基层 / 完成",
+      "source_position": {
+        "x": 6939.2,
+        "y": 895.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_065",
+      "type": "flow.stage_task_candidate",
+      "title": "墙纸基层 / 完成",
+      "source_position": {
+        "x": 6939.2,
+        "y": 938.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S5_066",
+      "type": "policy.gate_config",
+      "title": "道检10（油漆基层验收）",
+      "source_position": {
+        "x": 7015.9,
+        "y": 932.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_001",
+      "type": "flow.stage_task_candidate",
+      "title": "道检8（地暖浇筑前检 / 查）",
+      "source_position": {
+        "x": 7032.5,
+        "y": 725.1
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_002",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 7039.6,
+        "y": 953.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_003",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 7055.6,
+        "y": 645.2
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_004",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 7058.2,
+        "y": 613.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_005",
+      "type": "policy.gate_config",
+      "title": "豆石混凝土浇筑（含养护） / （地暖保护层浇筑验收表）",
+      "source_position": {
+        "x": 7110.3,
+        "y": 704.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_006",
+      "type": "flow.stage_task_candidate",
+      "title": "第二次地固 / 卫生间第二 / 次防水",
+      "source_position": {
+        "x": 7230.9,
+        "y": 701.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_007",
+      "type": "policy.gate_config",
+      "title": "第三批材料进场 / (第三批材料验收表)",
+      "source_position": {
+        "x": 7281.6,
+        "y": 784.1
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S6_008",
+      "type": "flow.stage_task_candidate",
+      "title": "泥木混合期",
+      "source_position": {
+        "x": 7293.5,
+        "y": 707.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_009",
+      "type": "flow.stage_task_candidate",
+      "title": "道检9（大理石，瓷砖，马赛克材料道检）",
+      "source_position": {
+        "x": 7349.0,
+        "y": 721.3
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S6_010",
+      "type": "flow.stage_task_candidate",
+      "title": "厂方技术人员",
+      "source_position": {
+        "x": 7383.5,
+        "y": 820.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_011",
+      "type": "flow.stage_task_candidate",
+      "title": "泥作",
+      "source_position": {
+        "x": 7539.9,
+        "y": 698.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_012",
+      "type": "flow.stage_task_candidate",
+      "title": "非成品木作",
+      "source_position": {
+        "x": 7545.2,
+        "y": 1064.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_013",
+      "type": "policy.gate_config",
+      "title": "墙面 / （墙面饰面砖，马赛克粘贴验收表） / （墙面大理石干挂，胶挂，粘贴验收表）",
+      "source_position": {
+        "x": 7576.6,
+        "y": 588.1
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_014",
+      "type": "policy.gate_config",
+      "title": "地面 / (地面砖，马赛克铺贴验收表） / （地面大理石铺贴验收表）",
+      "source_position": {
+        "x": 7590.3,
+        "y": 761.1
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_015",
+      "type": "policy.gate_config",
+      "title": "非成品木作饰面 / （木作饰面板安装验收表）",
+      "source_position": {
+        "x": 7685.8,
+        "y": 1061.0
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_016",
+      "type": "flow.stage_task_candidate",
+      "title": "房间走道地面 / 1.排版复核2.湿铺法 / 3.大理石原石材粉填缝 / 4.瓷砖勾缝剂勾缝5.大理石镜面抛光",
+      "source_position": {
+        "x": 7739.5,
+        "y": 800.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_017",
+      "type": "flow.stage_task_candidate",
+      "title": "大理石窗台 / 板，踢脚线安 / 装",
+      "source_position": {
+        "x": 7743.6,
+        "y": 485.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_018",
+      "type": "flow.stage_task_candidate",
+      "title": "阳台地面 / 1.排版复核2.地面防水3.湿铺法 / 4.大理石原石材粉填缝 / 5.瓷砖填缝剂勾缝 / 6.泼水试验 / 7.大理石镜面抛光",
+      "source_position": {
+        "x": 7743.9,
+        "y": 722.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_019",
+      "type": "flow.stage_task_candidate",
+      "title": "大理石墙面 / 1.排版复核2.干挂法3.湿贴法 / 4.胶粘法5.线条6.原石材粉填缝 / 7.细部处理8.淋浴双地漏",
+      "source_position": {
+        "x": 7745.9,
+        "y": 532.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_020",
+      "type": "flow.stage_task_candidate",
+      "title": "瓷砖墙面 / 1.排版复核2.薄贴法 / 3.线条4.细部处理 / 5.嵌缝",
+      "source_position": {
+        "x": 7761.5,
+        "y": 584.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_021",
+      "type": "flow.stage_task_candidate",
+      "title": "马赛克墙面 / 1.基层处理 / 2.排版复核 / 3.嵌缝 / 4.细部处理",
+      "source_position": {
+        "x": 7773.9,
+        "y": 637.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_022",
+      "type": "flow.stage_task_candidate",
+      "title": "接口腻子修补",
+      "source_position": {
+        "x": 7798.3,
+        "y": 492.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_023",
+      "type": "flow.stage_task_candidate",
+      "title": "墙面木作，软包，护墙板，柱体， / 踢脚线",
+      "source_position": {
+        "x": 7834.7,
+        "y": 1042.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_024",
+      "type": "flow.stage_task_candidate",
+      "title": "楼梯，扶手 / １.平台转角 / ２.楼梯井夹角",
+      "source_position": {
+        "x": 7859.8,
+        "y": 1092.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_025",
+      "type": "flow.stage_task_candidate",
+      "title": "其它木器制作",
+      "source_position": {
+        "x": 7860.9,
+        "y": 1157.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_026",
+      "type": "flow.stage_task_candidate",
+      "title": "顶面木作饰面",
+      "source_position": {
+        "x": 7862.7,
+        "y": 934.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_027",
+      "type": "flow.stage_task_candidate",
+      "title": "门窗套饰面",
+      "source_position": {
+        "x": 7865.6,
+        "y": 987.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_028",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 7890.6,
+        "y": 767.8
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_029",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 7900.0,
+        "y": 588.7
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_030",
+      "type": "flow.stage_task_candidate",
+      "title": "实施成品保 / 护",
+      "source_position": {
+        "x": 7965.9,
+        "y": 585.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_031",
+      "type": "flow.stage_task_candidate",
+      "title": "实施成品保 / 护",
+      "source_position": {
+        "x": 7965.9,
+        "y": 764.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_032",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 8017.6,
+        "y": 1064.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_033",
+      "type": "flow.stage_task_candidate",
+      "title": "管线保护标 / 识",
+      "source_position": {
+        "x": 8041.0,
+        "y": 585.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_034",
+      "type": "policy.gate_config",
+      "title": "道检11（泥作验收道 / 检）",
+      "source_position": {
+        "x": 8042.1,
+        "y": 772.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_035",
+      "type": "flow.stage_task_candidate",
+      "title": "实施成品保 / 护",
+      "source_position": {
+        "x": 8077.7,
+        "y": 1061.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S6_036",
+      "type": "policy.gate_config",
+      "title": "道检12（非成品木作 / 验收道检）",
+      "source_position": {
+        "x": 8165.5,
+        "y": 1074.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_037",
+      "type": "policy.gate_config",
+      "title": "业主验收 / （业主方泥木工 / 程验收表）",
+      "source_position": {
+        "x": 8205.3,
+        "y": 867.5
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S6_038",
+      "type": "policy.gate_config",
+      "title": "第四批材料进场 / 第四批材料验收表",
+      "source_position": {
+        "x": 8304.8,
+        "y": 867.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S6_039",
+      "type": "policy.gate_config",
+      "title": "道检13（油漆进场前验收 / 道检）",
+      "source_position": {
+        "x": 8400.6,
+        "y": 891.0
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S7_001",
+      "type": "flow.stage_task_candidate",
+      "title": "第一次保 / 洁",
+      "source_position": {
+        "x": 8491.8,
+        "y": 826.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_002",
+      "type": "flow.stage_task_candidate",
+      "title": "油漆",
+      "source_position": {
+        "x": 8498.0,
+        "y": 875.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_003",
+      "type": "policy.gate_config",
+      "title": "面层涂料 / （涂料涂饰验收表）",
+      "source_position": {
+        "x": 8559.7,
+        "y": 873.8
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_004",
+      "type": "policy.gate_config",
+      "title": "油漆喷涂 / （油漆喷涂验收表）",
+      "source_position": {
+        "x": 8559.7,
+        "y": 909.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_005",
+      "type": "policy.gate_config",
+      "title": "美术涂饰工程 / （美术涂饰验收表）",
+      "source_position": {
+        "x": 8559.7,
+        "y": 837.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_006",
+      "type": "flow.stage_task_candidate",
+      "title": "肌理漆 / （艺术涂 / 料）",
+      "source_position": {
+        "x": 8650.4,
+        "y": 817.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_007",
+      "type": "flow.stage_task_candidate",
+      "title": "手续画， / 金箔",
+      "source_position": {
+        "x": 8650.4,
+        "y": 850.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_008",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 8727.8,
+        "y": 878.8
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_009",
+      "type": "policy.gate_config",
+      "title": "道检14（油作验收道 / 检）",
+      "source_position": {
+        "x": 8787.5,
+        "y": 893.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_010",
+      "type": "flow.stage_task_candidate",
+      "title": "第二次保洁",
+      "source_position": {
+        "x": 8894.7,
+        "y": 881.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_011",
+      "type": "flow.stage_task_candidate",
+      "title": "厂方技术人员",
+      "source_position": {
+        "x": 9091.7,
+        "y": 1135.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_012",
+      "type": "flow.stage_task_candidate",
+      "title": "成品类安装",
+      "source_position": {
+        "x": 9094.8,
+        "y": 1032.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_013",
+      "type": "flow.stage_task_candidate",
+      "title": "安装工作",
+      "source_position": {
+        "x": 9096.3,
+        "y": 646.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_014",
+      "type": "flow.stage_task_candidate",
+      "title": "设备安装",
+      "source_position": {
+        "x": 9099.5,
+        "y": 414.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_015",
+      "type": "policy.gate_config",
+      "title": "道检15（成品木器验收道 / 检）",
+      "source_position": {
+        "x": 9172.8,
+        "y": 1043.6
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_016",
+      "type": "policy.gate_config",
+      "title": "卫生洁具及五金安装 / （卫生洁具及卫浴五金安装验收表） / 1.浴霸2.换气扇3.电扇 / 4.座便器5.小便斗6.浴缸 / 7.台盆8.淋浴房9.毛巾架，纸巾架 / 10.一体式浴品架",
+      "source_position": {
+        "x": 9181.9,
+        "y": 601.1
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_017",
+      "type": "policy.gate_config",
+      "title": "灯具安装 / （普通灯具安装验收表） / 撕标签",
+      "source_position": {
+        "x": 9197.4,
+        "y": 667.3
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_018",
+      "type": "flow.stage_task_candidate",
+      "title": "地板安装（含踢 / 脚线）",
+      "source_position": {
+        "x": 9314.7,
+        "y": 1139.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_019",
+      "type": "flow.stage_task_candidate",
+      "title": "护墙板，窗套",
+      "source_position": {
+        "x": 9318.4,
+        "y": 1027.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_020",
+      "type": "flow.stage_task_candidate",
+      "title": "成品门（含五 / 金）",
+      "source_position": {
+        "x": 9319.3,
+        "y": 971.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_021",
+      "type": "flow.stage_task_candidate",
+      "title": "厨房厨柜",
+      "source_position": {
+        "x": 9324.6,
+        "y": 916.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_022",
+      "type": "flow.stage_task_candidate",
+      "title": "成品木器",
+      "source_position": {
+        "x": 9324.6,
+        "y": 1085.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_023",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 9341.7,
+        "y": 619.0
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_024",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 9341.7,
+        "y": 674.5
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_025",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 9343.6,
+        "y": 584.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_026",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 9343.6,
+        "y": 705.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_027",
+      "type": "policy.gate_config",
+      "title": "设备调试 / （设备安装及调试验收记录表） / （设备试运转记录表） / 1.空调设备 / 2.安防系统 / 3.净化水系统",
+      "source_position": {
+        "x": 9375.9,
+        "y": 396.8
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_028",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 9379.2,
+        "y": 674.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_029",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 9379.6,
+        "y": 618.4
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_030",
+      "type": "flow.stage_task_candidate",
+      "title": "第一次成品保 / 护",
+      "source_position": {
+        "x": 9389.7,
+        "y": 1139.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_031",
+      "type": "flow.stage_task_candidate",
+      "title": "油漆修补",
+      "source_position": {
+        "x": 9395.9,
+        "y": 916.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_032",
+      "type": "flow.stage_task_candidate",
+      "title": "油漆修补",
+      "source_position": {
+        "x": 9395.9,
+        "y": 975.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_033",
+      "type": "flow.stage_task_candidate",
+      "title": "油漆修补",
+      "source_position": {
+        "x": 9395.9,
+        "y": 1027.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_034",
+      "type": "flow.stage_task_candidate",
+      "title": "油漆修补",
+      "source_position": {
+        "x": 9395.9,
+        "y": 1085.1
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_035",
+      "type": "flow.stage_task_candidate",
+      "title": "裱糊软包",
+      "source_position": {
+        "x": 9395.9,
+        "y": 1200.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_036",
+      "type": "flow.stage_task_candidate",
+      "title": "实施成品保 / 护",
+      "source_position": {
+        "x": 9410.8,
+        "y": 615.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_037",
+      "type": "flow.stage_task_candidate",
+      "title": "实施成品保 / 护",
+      "source_position": {
+        "x": 9410.8,
+        "y": 670.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_038",
+      "type": "flow.stage_task_candidate",
+      "title": "软硬包安装",
+      "source_position": {
+        "x": 9463.6,
+        "y": 1214.2
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_039",
+      "type": "flow.stage_task_candidate",
+      "title": "裱糊铺贴",
+      "source_position": {
+        "x": 9466.6,
+        "y": 1179.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_040",
+      "type": "flow.stage_task_candidate",
+      "title": "第一次成品保 / 护",
+      "source_position": {
+        "x": 9475.9,
+        "y": 912.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_041",
+      "type": "flow.stage_task_candidate",
+      "title": "第一次成品保 / 护",
+      "source_position": {
+        "x": 9475.9,
+        "y": 971.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_042",
+      "type": "flow.stage_task_candidate",
+      "title": "第一次成品保 / 护",
+      "source_position": {
+        "x": 9475.9,
+        "y": 1023.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_043",
+      "type": "flow.stage_task_candidate",
+      "title": "第一次成品保 / 护",
+      "source_position": {
+        "x": 9475.9,
+        "y": 1081.5
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_044",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 9537.8,
+        "y": 1199.8
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_045",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 9539.9,
+        "y": 1162.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_046",
+      "type": "policy.gate_config",
+      "title": "其它电器安装 / （开关，插座面板， / 风口装验收表） / 1.开关面板 / 2.空调风口",
+      "source_position": {
+        "x": 9602.4,
+        "y": 1185.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_047",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 9651.0,
+        "y": 1032.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_048",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 9653.1,
+        "y": 996.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_049",
+      "type": "flow.stage_task_candidate",
+      "title": "其它安装和修 / 补",
+      "source_position": {
+        "x": 9697.9,
+        "y": 1196.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_050",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 9706.8,
+        "y": 1054.8
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S7_051",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 9779.0,
+        "y": 1199.9
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S7_052",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 9781.0,
+        "y": 1162.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S8_001",
+      "type": "flow.stage_task_candidate",
+      "title": "所有设备 / 24小时试运转 / （通电运行记录表）",
+      "source_position": {
+        "x": 9944.5,
+        "y": 841.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S8_002",
+      "type": "flow.stage_task_candidate",
+      "title": "（项目决算流程）",
+      "source_position": {
+        "x": 10113.0,
+        "y": 954.7
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S8_003",
+      "type": "policy.gate_config",
+      "title": "竣工验收前准备 / 1.制作使用说明书 / 2.分配电箱贴标签 / 3.组织业主培训",
+      "source_position": {
+        "x": 10113.5,
+        "y": 711.4
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S8_004",
+      "type": "flow.stage_task_candidate",
+      "title": "材料决算流程",
+      "source_position": {
+        "x": 10119.2,
+        "y": 1231.9
+      },
+      "candidate_type": "MaterialCoordinationCandidate",
+      "slot_ref": "material_coordinator"
+    },
+    {
+      "id": "S8_005",
+      "type": "flow.stage_task_candidate",
+      "title": "终保洁",
+      "source_position": {
+        "x": 10128.6,
+        "y": 848.6
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S8_006",
+      "type": "policy.gate_config",
+      "title": "提请业主验收",
+      "source_position": {
+        "x": 10242.3,
+        "y": 848.3
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S8_007",
+      "type": "policy.gate_config",
+      "title": "验收",
+      "source_position": {
+        "x": 10377.7,
+        "y": 848.5
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S8_008",
+      "type": "flow.stage_task_candidate",
+      "title": "NO",
+      "source_position": {
+        "x": 10379.6,
+        "y": 809.3
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S8_009",
+      "type": "flow.stage_task_candidate",
+      "title": "YES",
+      "source_position": {
+        "x": 10437.9,
+        "y": 847.9
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S8_010",
+      "type": "policy.gate_config",
+      "title": "竣工验收道检",
+      "source_position": {
+        "x": 10488.3,
+        "y": 848.5
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S8_011",
+      "type": "policy.gate_config",
+      "title": "业主竣工验收 / 竣工验收表",
+      "source_position": {
+        "x": 10621.9,
+        "y": 845.1
+      },
+      "candidate_type": "AcceptanceEvidenceCandidate",
+      "gate_policy": {
+        "required_gate": "shuxuejia_owner_base_gate",
+        "pending_owner_confirmation": true
+      },
+      "slot_ref": "site_supervisor"
+    },
+    {
+      "id": "S8_012",
+      "type": "flow.stage_task_candidate",
+      "title": "1.钥匙 / 2.保修书 / 3.使用说明书 / 4.其它 / 注:附清单",
+      "source_position": {
+        "x": 10767.2,
+        "y": 841.1
+      },
+      "candidate_type": "AfterSalesTicketCandidate",
+      "slot_ref": "after_sales_service"
+    },
+    {
+      "id": "S8_013",
+      "type": "flow.stage_task_candidate",
+      "title": "办理移交",
+      "source_position": {
+        "x": 10773.4,
+        "y": 827.0
+      },
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "S8_014",
+      "type": "flow.end",
+      "title": "开始保修服务期",
+      "source_position": {
+        "x": 10962.0,
+        "y": 848.2
+      },
+      "candidate_type": "AfterSalesTicketCandidate",
+      "slot_ref": "after_sales_service"
+    }
+  ],
+  "edges": [
+    {
+      "id": "shuxuejia-edge-001",
+      "source": "S1_001",
+      "target": "S1_002"
+    },
+    {
+      "id": "shuxuejia-edge-002",
+      "source": "S1_001",
+      "target": "S1_003"
+    },
+    {
+      "id": "shuxuejia-edge-003",
+      "source": "S1_002",
+      "target": "S1_005"
+    },
+    {
+      "id": "shuxuejia-edge-004",
+      "source": "S1_003",
+      "target": "S1_006"
+    },
+    {
+      "id": "shuxuejia-edge-005",
+      "source": "S1_003",
+      "target": "S1_007"
+    },
+    {
+      "id": "shuxuejia-edge-006",
+      "source": "S1_003",
+      "target": "S1_008"
+    },
+    {
+      "id": "shuxuejia-edge-007",
+      "source": "S1_004",
+      "target": "S1_009"
+    },
+    {
+      "id": "shuxuejia-edge-008",
+      "source": "S1_004",
+      "target": "S1_010"
+    },
+    {
+      "id": "shuxuejia-edge-009",
+      "source": "S1_004",
+      "target": "S1_043"
+    },
+    {
+      "id": "shuxuejia-edge-010",
+      "source": "S1_005",
+      "target": "S1_012"
+    },
+    {
+      "id": "shuxuejia-edge-011",
+      "source": "S1_005",
+      "target": "S1_013"
+    },
+    {
+      "id": "shuxuejia-edge-012",
+      "source": "S1_007",
+      "target": "S1_014"
+    },
+    {
+      "id": "shuxuejia-edge-013",
+      "source": "S1_010",
+      "target": "S1_016"
+    },
+    {
+      "id": "shuxuejia-edge-014",
+      "source": "S1_010",
+      "target": "S1_017"
+    },
+    {
+      "id": "shuxuejia-edge-015",
+      "source": "S1_011",
+      "target": "S1_019"
+    },
+    {
+      "id": "shuxuejia-edge-016",
+      "source": "S1_011",
+      "target": "S1_021"
+    },
+    {
+      "id": "shuxuejia-edge-017",
+      "source": "S1_013",
+      "target": "S1_026"
+    },
+    {
+      "id": "shuxuejia-edge-018",
+      "source": "S1_014",
+      "target": "S1_027"
+    },
+    {
+      "id": "shuxuejia-edge-019",
+      "source": "S1_015",
+      "target": "S1_028"
+    },
+    {
+      "id": "shuxuejia-edge-020",
+      "source": "S1_017",
+      "target": "S1_016"
+    },
+    {
+      "id": "shuxuejia-edge-021",
+      "source": "S1_018",
+      "target": "S1_022"
+    },
+    {
+      "id": "shuxuejia-edge-022",
+      "source": "S1_018",
+      "target": "S1_023"
+    },
+    {
+      "id": "shuxuejia-edge-023",
+      "source": "S1_019",
+      "target": "S1_021"
+    },
+    {
+      "id": "shuxuejia-edge-024",
+      "source": "S1_020",
+      "target": "S1_029"
+    },
+    {
+      "id": "shuxuejia-edge-025",
+      "source": "S1_023",
+      "target": "S1_030"
+    },
+    {
+      "id": "shuxuejia-edge-026",
+      "source": "S1_023",
+      "target": "S1_031"
+    },
+    {
+      "id": "shuxuejia-edge-027",
+      "source": "S1_025",
+      "target": "S1_034"
+    },
+    {
+      "id": "shuxuejia-edge-028",
+      "source": "S1_026",
+      "target": "S1_024"
+    },
+    {
+      "id": "shuxuejia-edge-029",
+      "source": "S1_027",
+      "target": "S1_032"
+    },
+    {
+      "id": "shuxuejia-edge-030",
+      "source": "S1_027",
+      "target": "S1_036"
+    },
+    {
+      "id": "shuxuejia-edge-031",
+      "source": "S1_027",
+      "target": "S1_037"
+    },
+    {
+      "id": "shuxuejia-edge-032",
+      "source": "S1_028",
+      "target": "S1_033"
+    },
+    {
+      "id": "shuxuejia-edge-033",
+      "source": "S1_028",
+      "target": "S1_038"
+    },
+    {
+      "id": "shuxuejia-edge-034",
+      "source": "S1_029",
+      "target": "S1_039"
+    },
+    {
+      "id": "shuxuejia-edge-035",
+      "source": "S1_031",
+      "target": "S1_030"
+    },
+    {
+      "id": "shuxuejia-edge-036",
+      "source": "S1_031",
+      "target": "S1_040"
+    },
+    {
+      "id": "shuxuejia-edge-037",
+      "source": "S1_032",
+      "target": "S1_037"
+    },
+    {
+      "id": "shuxuejia-edge-038",
+      "source": "S1_033",
+      "target": "S1_038"
+    },
+    {
+      "id": "shuxuejia-edge-039",
+      "source": "S1_035",
+      "target": "S1_041"
+    },
+    {
+      "id": "shuxuejia-edge-040",
+      "source": "S1_039",
+      "target": "S1_042"
+    },
+    {
+      "id": "shuxuejia-edge-041",
+      "source": "S1_043",
+      "target": "S1_045"
+    },
+    {
+      "id": "shuxuejia-edge-042",
+      "source": "S1_043",
+      "target": "S1_047"
+    },
+    {
+      "id": "shuxuejia-edge-043",
+      "source": "S1_044",
+      "target": "S1_048"
+    },
+    {
+      "id": "shuxuejia-edge-044",
+      "source": "S1_045",
+      "target": "S1_053"
+    },
+    {
+      "id": "shuxuejia-edge-045",
+      "source": "S1_045",
+      "target": "S1_054"
+    },
+    {
+      "id": "shuxuejia-edge-046",
+      "source": "S1_045",
+      "target": "S1_051"
+    },
+    {
+      "id": "shuxuejia-edge-047",
+      "source": "S1_045",
+      "target": "S1_050"
+    },
+    {
+      "id": "shuxuejia-edge-048",
+      "source": "S1_045",
+      "target": "S1_052"
+    },
+    {
+      "id": "shuxuejia-edge-049",
+      "source": "S1_045",
+      "target": "S1_055"
+    },
+    {
+      "id": "shuxuejia-edge-050",
+      "source": "S1_046",
+      "target": "S1_049"
+    },
+    {
+      "id": "shuxuejia-edge-051",
+      "source": "S1_055",
+      "target": "S1_056"
+    },
+    {
+      "id": "shuxuejia-edge-052",
+      "source": "S1_055",
+      "target": "S1_057"
+    },
+    {
+      "id": "shuxuejia-edge-053",
+      "source": "S1_055",
+      "target": "S1_058"
+    },
+    {
+      "id": "shuxuejia-edge-054",
+      "source": "S1_055",
+      "target": "S1_059"
+    },
+    {
+      "id": "shuxuejia-edge-055",
+      "source": "S1_055",
+      "target": "S1_060"
+    },
+    {
+      "id": "shuxuejia-edge-056",
+      "source": "S1_061",
+      "target": "S2_001"
+    },
+    {
+      "id": "shuxuejia-edge-057",
+      "source": "S1_061",
+      "target": "S2_003"
+    },
+    {
+      "id": "shuxuejia-edge-058",
+      "source": "S2_001",
+      "target": "S2_004"
+    },
+    {
+      "id": "shuxuejia-edge-059",
+      "source": "S2_001",
+      "target": "S2_010"
+    },
+    {
+      "id": "shuxuejia-edge-060",
+      "source": "S2_002",
+      "target": "S2_007"
+    },
+    {
+      "id": "shuxuejia-edge-061",
+      "source": "S2_002",
+      "target": "S2_008"
+    },
+    {
+      "id": "shuxuejia-edge-062",
+      "source": "S2_003",
+      "target": "S2_009"
+    },
+    {
+      "id": "shuxuejia-edge-063",
+      "source": "S2_003",
+      "target": "S2_011"
+    },
+    {
+      "id": "shuxuejia-edge-064",
+      "source": "S2_004",
+      "target": "S2_022"
+    },
+    {
+      "id": "shuxuejia-edge-065",
+      "source": "S2_004",
+      "target": "S2_023"
+    },
+    {
+      "id": "shuxuejia-edge-066",
+      "source": "S2_004",
+      "target": "S2_029"
+    },
+    {
+      "id": "shuxuejia-edge-067",
+      "source": "S2_004",
+      "target": "S2_030"
+    },
+    {
+      "id": "shuxuejia-edge-068",
+      "source": "S2_005",
+      "target": "S2_015"
+    },
+    {
+      "id": "shuxuejia-edge-069",
+      "source": "S2_005",
+      "target": "S2_025"
+    },
+    {
+      "id": "shuxuejia-edge-070",
+      "source": "S2_006",
+      "target": "S2_012"
+    },
+    {
+      "id": "shuxuejia-edge-071",
+      "source": "S2_006",
+      "target": "S2_018"
+    },
+    {
+      "id": "shuxuejia-edge-072",
+      "source": "S2_007",
+      "target": "S2_013"
+    },
+    {
+      "id": "shuxuejia-edge-073",
+      "source": "S2_007",
+      "target": "S2_016"
+    },
+    {
+      "id": "shuxuejia-edge-074",
+      "source": "S2_007",
+      "target": "S2_030"
+    },
+    {
+      "id": "shuxuejia-edge-075",
+      "source": "S2_008",
+      "target": "S2_017"
+    },
+    {
+      "id": "shuxuejia-edge-076",
+      "source": "S2_008",
+      "target": "S2_020"
+    },
+    {
+      "id": "shuxuejia-edge-077",
+      "source": "S2_008",
+      "target": "S2_021"
+    },
+    {
+      "id": "shuxuejia-edge-078",
+      "source": "S2_008",
+      "target": "S2_019"
+    },
+    {
+      "id": "shuxuejia-edge-079",
+      "source": "S2_008",
+      "target": "S2_031"
+    },
+    {
+      "id": "shuxuejia-edge-080",
+      "source": "S2_009",
+      "target": "S2_026"
+    },
+    {
+      "id": "shuxuejia-edge-081",
+      "source": "S2_009",
+      "target": "S2_028"
+    },
+    {
+      "id": "shuxuejia-edge-082",
+      "source": "S2_010",
+      "target": "S2_014"
+    },
+    {
+      "id": "shuxuejia-edge-083",
+      "source": "S2_010",
+      "target": "S2_024"
+    },
+    {
+      "id": "shuxuejia-edge-084",
+      "source": "S2_014",
+      "target": "S2_024"
+    },
+    {
+      "id": "shuxuejia-edge-085",
+      "source": "S2_015",
+      "target": "S2_034"
+    },
+    {
+      "id": "shuxuejia-edge-086",
+      "source": "S2_016",
+      "target": "S2_013"
+    },
+    {
+      "id": "shuxuejia-edge-087",
+      "source": "S2_017",
+      "target": "S2_031"
+    },
+    {
+      "id": "shuxuejia-edge-088",
+      "source": "S2_017",
+      "target": "S2_035"
+    },
+    {
+      "id": "shuxuejia-edge-089",
+      "source": "S2_018",
+      "target": "S2_012"
+    },
+    {
+      "id": "shuxuejia-edge-090",
+      "source": "S2_026",
+      "target": "S2_039"
+    },
+    {
+      "id": "shuxuejia-edge-091",
+      "source": "S2_026",
+      "target": "S2_038"
+    },
+    {
+      "id": "shuxuejia-edge-092",
+      "source": "S2_026",
+      "target": "S2_040"
+    },
+    {
+      "id": "shuxuejia-edge-093",
+      "source": "S2_026",
+      "target": "S2_042"
+    },
+    {
+      "id": "shuxuejia-edge-094",
+      "source": "S2_026",
+      "target": "S2_041"
+    },
+    {
+      "id": "shuxuejia-edge-095",
+      "source": "S2_026",
+      "target": "S2_043"
+    },
+    {
+      "id": "shuxuejia-edge-096",
+      "source": "S2_027",
+      "target": "S2_032"
+    },
+    {
+      "id": "shuxuejia-edge-097",
+      "source": "S2_028",
+      "target": "S2_033"
+    },
+    {
+      "id": "shuxuejia-edge-098",
+      "source": "S2_030",
+      "target": "S2_022"
+    },
+    {
+      "id": "shuxuejia-edge-099",
+      "source": "S2_011",
+      "target": "S2_049"
+    },
+    {
+      "id": "shuxuejia-edge-100",
+      "source": "S2_011",
+      "target": "S2_050"
+    },
+    {
+      "id": "shuxuejia-edge-101",
+      "source": "S2_011",
+      "target": "S2_051"
+    },
+    {
+      "id": "shuxuejia-edge-102",
+      "source": "S2_011",
+      "target": "S2_052"
+    },
+    {
+      "id": "shuxuejia-edge-103",
+      "source": "S2_033",
+      "target": "S2_032"
+    },
+    {
+      "id": "shuxuejia-edge-104",
+      "source": "S2_034",
+      "target": "S2_025"
+    },
+    {
+      "id": "shuxuejia-edge-105",
+      "source": "S2_036",
+      "target": "S2_044"
+    },
+    {
+      "id": "shuxuejia-edge-106",
+      "source": "S2_037",
+      "target": "S2_046"
+    },
+    {
+      "id": "shuxuejia-edge-107",
+      "source": "S2_043",
+      "target": "S2_039"
+    },
+    {
+      "id": "shuxuejia-edge-108",
+      "source": "S2_047",
+      "target": "S2_062"
+    },
+    {
+      "id": "shuxuejia-edge-109",
+      "source": "S2_044",
+      "target": "S2_053"
+    },
+    {
+      "id": "shuxuejia-edge-110",
+      "source": "S2_053",
+      "target": "S2_059"
+    },
+    {
+      "id": "shuxuejia-edge-111",
+      "source": "S2_054",
+      "target": "S2_058"
+    },
+    {
+      "id": "shuxuejia-edge-112",
+      "source": "S2_058",
+      "target": "S2_065"
+    },
+    {
+      "id": "shuxuejia-edge-113",
+      "source": "S2_072",
+      "target": "S2_073"
+    },
+    {
+      "id": "shuxuejia-edge-114",
+      "source": "S2_072",
+      "target": "S2_074"
+    },
+    {
+      "id": "shuxuejia-edge-115",
+      "source": "S2_072",
+      "target": "S2_076"
+    },
+    {
+      "id": "shuxuejia-edge-116",
+      "source": "S2_072",
+      "target": "S2_077"
+    },
+    {
+      "id": "shuxuejia-edge-117",
+      "source": "S2_045",
+      "target": "S2_054"
+    },
+    {
+      "id": "shuxuejia-edge-118",
+      "source": "S2_047",
+      "target": "S2_048"
+    },
+    {
+      "id": "shuxuejia-edge-119",
+      "source": "S2_053",
+      "target": "S2_056"
+    },
+    {
+      "id": "shuxuejia-edge-120",
+      "source": "S2_053",
+      "target": "S2_060"
+    },
+    {
+      "id": "shuxuejia-edge-121",
+      "source": "S2_054",
+      "target": "S2_057"
+    },
+    {
+      "id": "shuxuejia-edge-122",
+      "source": "S2_054",
+      "target": "S2_061"
+    },
+    {
+      "id": "shuxuejia-edge-123",
+      "source": "S2_055",
+      "target": "S2_063"
+    },
+    {
+      "id": "shuxuejia-edge-124",
+      "source": "S2_056",
+      "target": "S2_060"
+    },
+    {
+      "id": "shuxuejia-edge-125",
+      "source": "S2_057",
+      "target": "S2_061"
+    },
+    {
+      "id": "shuxuejia-edge-126",
+      "source": "S2_063",
+      "target": "S2_066"
+    },
+    {
+      "id": "shuxuejia-edge-127",
+      "source": "S2_064",
+      "target": "S2_067"
+    },
+    {
+      "id": "shuxuejia-edge-128",
+      "source": "S2_065",
+      "target": "S2_068"
+    },
+    {
+      "id": "shuxuejia-edge-129",
+      "source": "S2_066",
+      "target": "S2_069"
+    },
+    {
+      "id": "shuxuejia-edge-130",
+      "source": "S2_067",
+      "target": "S2_070"
+    },
+    {
+      "id": "shuxuejia-edge-131",
+      "source": "S2_068",
+      "target": "S2_071"
+    },
+    {
+      "id": "shuxuejia-edge-132",
+      "source": "S2_069",
+      "target": "S2_072"
+    },
+    {
+      "id": "shuxuejia-edge-133",
+      "source": "S2_072",
+      "target": "S2_075"
+    },
+    {
+      "id": "shuxuejia-edge-134",
+      "source": "S2_072",
+      "target": "S2_078"
+    },
+    {
+      "id": "shuxuejia-edge-135",
+      "source": "S2_078",
+      "target": "S2_075"
+    },
+    {
+      "id": "shuxuejia-edge-136",
+      "source": "S3_002",
+      "target": "S3_001"
+    },
+    {
+      "id": "shuxuejia-edge-137",
+      "source": "S3_003",
+      "target": "S3_004"
+    },
+    {
+      "id": "shuxuejia-edge-138",
+      "source": "S3_003",
+      "target": "S3_006"
+    },
+    {
+      "id": "shuxuejia-edge-139",
+      "source": "S3_004",
+      "target": "S3_011"
+    },
+    {
+      "id": "shuxuejia-edge-140",
+      "source": "S3_005",
+      "target": "S3_007"
+    },
+    {
+      "id": "shuxuejia-edge-141",
+      "source": "S3_005",
+      "target": "S3_008"
+    },
+    {
+      "id": "shuxuejia-edge-142",
+      "source": "S3_005",
+      "target": "S3_009"
+    },
+    {
+      "id": "shuxuejia-edge-143",
+      "source": "S3_005",
+      "target": "S3_010"
+    },
+    {
+      "id": "shuxuejia-edge-144",
+      "source": "S3_006",
+      "target": "S3_009"
+    },
+    {
+      "id": "shuxuejia-edge-145",
+      "source": "S3_007",
+      "target": "S3_013"
+    },
+    {
+      "id": "shuxuejia-edge-146",
+      "source": "S3_008",
+      "target": "S3_012"
+    },
+    {
+      "id": "shuxuejia-edge-147",
+      "source": "S3_009",
+      "target": "S3_015"
+    },
+    {
+      "id": "shuxuejia-edge-148",
+      "source": "S3_010",
+      "target": "S3_015"
+    },
+    {
+      "id": "shuxuejia-edge-149",
+      "source": "S3_011",
+      "target": "S3_016"
+    },
+    {
+      "id": "shuxuejia-edge-150",
+      "source": "S3_012",
+      "target": "S3_014"
+    },
+    {
+      "id": "shuxuejia-edge-151",
+      "source": "S3_013",
+      "target": "S3_017"
+    },
+    {
+      "id": "shuxuejia-edge-152",
+      "source": "S3_013",
+      "target": "S3_018"
+    },
+    {
+      "id": "shuxuejia-edge-153",
+      "source": "S3_013",
+      "target": "S3_019"
+    },
+    {
+      "id": "shuxuejia-edge-154",
+      "source": "S3_014",
+      "target": "S3_020"
+    },
+    {
+      "id": "shuxuejia-edge-155",
+      "source": "S3_014",
+      "target": "S3_022"
+    },
+    {
+      "id": "shuxuejia-edge-156",
+      "source": "S3_015",
+      "target": "S3_016"
+    },
+    {
+      "id": "shuxuejia-edge-157",
+      "source": "S3_016",
+      "target": "S3_021"
+    },
+    {
+      "id": "shuxuejia-edge-158",
+      "source": "S3_021",
+      "target": "S3_024"
+    },
+    {
+      "id": "shuxuejia-edge-159",
+      "source": "S3_023",
+      "target": "S3_015"
+    },
+    {
+      "id": "shuxuejia-edge-160",
+      "source": "S3_025",
+      "target": "S3_028"
+    },
+    {
+      "id": "shuxuejia-edge-161",
+      "source": "S3_025",
+      "target": "S3_032"
+    },
+    {
+      "id": "shuxuejia-edge-162",
+      "source": "S3_025",
+      "target": "S3_033"
+    },
+    {
+      "id": "shuxuejia-edge-163",
+      "source": "S3_025",
+      "target": "S3_034"
+    },
+    {
+      "id": "shuxuejia-edge-164",
+      "source": "S3_027",
+      "target": "S3_026"
+    },
+    {
+      "id": "shuxuejia-edge-165",
+      "source": "S3_027",
+      "target": "S3_028"
+    },
+    {
+      "id": "shuxuejia-edge-166",
+      "source": "S3_027",
+      "target": "S3_031"
+    },
+    {
+      "id": "shuxuejia-edge-167",
+      "source": "S3_029",
+      "target": "S3_036"
+    },
+    {
+      "id": "shuxuejia-edge-168",
+      "source": "S3_029",
+      "target": "S3_039"
+    },
+    {
+      "id": "shuxuejia-edge-169",
+      "source": "S3_029",
+      "target": "S3_040"
+    },
+    {
+      "id": "shuxuejia-edge-170",
+      "source": "S3_029",
+      "target": "S3_042"
+    },
+    {
+      "id": "shuxuejia-edge-171",
+      "source": "S3_030",
+      "target": "S3_037"
+    },
+    {
+      "id": "shuxuejia-edge-172",
+      "source": "S3_030",
+      "target": "S3_038"
+    },
+    {
+      "id": "shuxuejia-edge-173",
+      "source": "S3_030",
+      "target": "S3_041"
+    },
+    {
+      "id": "shuxuejia-edge-174",
+      "source": "S3_031",
+      "target": "S3_035"
+    },
+    {
+      "id": "shuxuejia-edge-175",
+      "source": "S3_035",
+      "target": "S3_043"
+    },
+    {
+      "id": "shuxuejia-edge-176",
+      "source": "S3_043",
+      "target": "S3_044"
+    },
+    {
+      "id": "shuxuejia-edge-177",
+      "source": "S3_036",
+      "target": "S3_042"
+    },
+    {
+      "id": "shuxuejia-edge-178",
+      "source": "S3_037",
+      "target": "S3_041"
+    },
+    {
+      "id": "shuxuejia-edge-179",
+      "source": "S3_037",
+      "target": "S3_046"
+    },
+    {
+      "id": "shuxuejia-edge-180",
+      "source": "S3_037",
+      "target": "S4_019"
+    },
+    {
+      "id": "shuxuejia-edge-181",
+      "source": "S3_039",
+      "target": "S3_045"
+    },
+    {
+      "id": "shuxuejia-edge-182",
+      "source": "S3_039",
+      "target": "S3_046"
+    },
+    {
+      "id": "shuxuejia-edge-183",
+      "source": "S3_045",
+      "target": "S3_047"
+    },
+    {
+      "id": "shuxuejia-edge-184",
+      "source": "S3_045",
+      "target": "S3_050"
+    },
+    {
+      "id": "shuxuejia-edge-185",
+      "source": "S3_045",
+      "target": "S3_051"
+    },
+    {
+      "id": "shuxuejia-edge-186",
+      "source": "S3_045",
+      "target": "S3_052"
+    },
+    {
+      "id": "shuxuejia-edge-187",
+      "source": "S3_046",
+      "target": "S3_053"
+    },
+    {
+      "id": "shuxuejia-edge-188",
+      "source": "S3_046",
+      "target": "S3_054"
+    },
+    {
+      "id": "shuxuejia-edge-189",
+      "source": "S3_048",
+      "target": "S3_049"
+    },
+    {
+      "id": "shuxuejia-edge-190",
+      "source": "S3_052",
+      "target": "S3_055"
+    },
+    {
+      "id": "shuxuejia-edge-191",
+      "source": "S3_053",
+      "target": "S3_057"
+    },
+    {
+      "id": "shuxuejia-edge-192",
+      "source": "S3_053",
+      "target": "S3_056"
+    },
+    {
+      "id": "shuxuejia-edge-193",
+      "source": "S3_053",
+      "target": "S3_058"
+    },
+    {
+      "id": "shuxuejia-edge-194",
+      "source": "S3_054",
+      "target": "S3_059"
+    },
+    {
+      "id": "shuxuejia-edge-195",
+      "source": "S3_054",
+      "target": "S3_060"
+    },
+    {
+      "id": "shuxuejia-edge-196",
+      "source": "S3_054",
+      "target": "S3_061"
+    },
+    {
+      "id": "shuxuejia-edge-197",
+      "source": "S3_057",
+      "target": "S4_003"
+    },
+    {
+      "id": "shuxuejia-edge-198",
+      "source": "S3_056",
+      "target": "S4_002"
+    },
+    {
+      "id": "shuxuejia-edge-199",
+      "source": "S3_058",
+      "target": "S4_001"
+    },
+    {
+      "id": "shuxuejia-edge-200",
+      "source": "S3_060",
+      "target": "S3_061"
+    },
+    {
+      "id": "shuxuejia-edge-201",
+      "source": "S3_060",
+      "target": "S4_022"
+    },
+    {
+      "id": "shuxuejia-edge-202",
+      "source": "S3_061",
+      "target": "S4_005"
+    },
+    {
+      "id": "shuxuejia-edge-203",
+      "source": "S4_001",
+      "target": "S4_005"
+    },
+    {
+      "id": "shuxuejia-edge-204",
+      "source": "S4_003",
+      "target": "S4_002"
+    },
+    {
+      "id": "shuxuejia-edge-205",
+      "source": "S4_004",
+      "target": "S4_006"
+    },
+    {
+      "id": "shuxuejia-edge-206",
+      "source": "S4_004",
+      "target": "S4_007"
+    },
+    {
+      "id": "shuxuejia-edge-207",
+      "source": "S4_004",
+      "target": "S4_008"
+    },
+    {
+      "id": "shuxuejia-edge-208",
+      "source": "S4_005",
+      "target": "S4_010"
+    },
+    {
+      "id": "shuxuejia-edge-209",
+      "source": "S4_005",
+      "target": "S4_011"
+    },
+    {
+      "id": "shuxuejia-edge-210",
+      "source": "S4_005",
+      "target": "S4_012"
+    },
+    {
+      "id": "shuxuejia-edge-211",
+      "source": "S4_005",
+      "target": "S4_013"
+    },
+    {
+      "id": "shuxuejia-edge-212",
+      "source": "S4_005",
+      "target": "S4_017"
+    },
+    {
+      "id": "shuxuejia-edge-213",
+      "source": "S4_005",
+      "target": "S4_016"
+    },
+    {
+      "id": "shuxuejia-edge-214",
+      "source": "S4_007",
+      "target": "S4_014"
+    },
+    {
+      "id": "shuxuejia-edge-215",
+      "source": "S4_008",
+      "target": "S4_009"
+    },
+    {
+      "id": "shuxuejia-edge-216",
+      "source": "S4_009",
+      "target": "S4_014"
+    },
+    {
+      "id": "shuxuejia-edge-217",
+      "source": "S4_010",
+      "target": "S4_016"
+    },
+    {
+      "id": "shuxuejia-edge-218",
+      "source": "S4_010",
+      "target": "S4_011"
+    },
+    {
+      "id": "shuxuejia-edge-219",
+      "source": "S4_010",
+      "target": "S4_012"
+    },
+    {
+      "id": "shuxuejia-edge-220",
+      "source": "S4_010",
+      "target": "S4_013"
+    },
+    {
+      "id": "shuxuejia-edge-221",
+      "source": "S4_010",
+      "target": "S4_017"
+    },
+    {
+      "id": "shuxuejia-edge-222",
+      "source": "S4_011",
+      "target": "S5_029"
+    },
+    {
+      "id": "shuxuejia-edge-223",
+      "source": "S4_012",
+      "target": "S5_003"
+    },
+    {
+      "id": "shuxuejia-edge-224",
+      "source": "S4_013",
+      "target": "S7_020"
+    },
+    {
+      "id": "shuxuejia-edge-225",
+      "source": "S4_014",
+      "target": "S4_015"
+    },
+    {
+      "id": "shuxuejia-edge-226",
+      "source": "S4_014",
+      "target": "S4_018"
+    },
+    {
+      "id": "shuxuejia-edge-227",
+      "source": "S4_015",
+      "target": "S4_019"
+    },
+    {
+      "id": "shuxuejia-edge-228",
+      "source": "S4_018",
+      "target": "S4_019"
+    },
+    {
+      "id": "shuxuejia-edge-229",
+      "source": "S4_019",
+      "target": "S4_020"
+    },
+    {
+      "id": "shuxuejia-edge-230",
+      "source": "S4_016",
+      "target": "S5_002"
+    },
+    {
+      "id": "shuxuejia-edge-231",
+      "source": "S4_017",
+      "target": "S5_020"
+    },
+    {
+      "id": "shuxuejia-edge-232",
+      "source": "S4_020",
+      "target": "S4_021"
+    },
+    {
+      "id": "shuxuejia-edge-233",
+      "source": "S4_021",
+      "target": "S4_022"
+    },
+    {
+      "id": "shuxuejia-edge-234",
+      "source": "S4_021",
+      "target": "S4_023"
+    },
+    {
+      "id": "shuxuejia-edge-235",
+      "source": "S4_022",
+      "target": "S4_025"
+    },
+    {
+      "id": "shuxuejia-edge-236",
+      "source": "S4_022",
+      "target": "S4_030"
+    },
+    {
+      "id": "shuxuejia-edge-237",
+      "source": "S4_022",
+      "target": "S4_028"
+    },
+    {
+      "id": "shuxuejia-edge-238",
+      "source": "S4_022",
+      "target": "S4_031"
+    },
+    {
+      "id": "shuxuejia-edge-239",
+      "source": "S4_022",
+      "target": "S4_026"
+    },
+    {
+      "id": "shuxuejia-edge-240",
+      "source": "S4_022",
+      "target": "S4_029"
+    },
+    {
+      "id": "shuxuejia-edge-241",
+      "source": "S4_022",
+      "target": "S4_027"
+    },
+    {
+      "id": "shuxuejia-edge-242",
+      "source": "S4_022",
+      "target": "S4_032"
+    },
+    {
+      "id": "shuxuejia-edge-243",
+      "source": "S4_022",
+      "target": "S4_033"
+    },
+    {
+      "id": "shuxuejia-edge-244",
+      "source": "S4_024",
+      "target": "S4_035"
+    },
+    {
+      "id": "shuxuejia-edge-245",
+      "source": "S4_023",
+      "target": "S4_052"
+    },
+    {
+      "id": "shuxuejia-edge-246",
+      "source": "S4_023",
+      "target": "S4_053"
+    },
+    {
+      "id": "shuxuejia-edge-247",
+      "source": "S4_023",
+      "target": "S4_054"
+    },
+    {
+      "id": "shuxuejia-edge-248",
+      "source": "S4_023",
+      "target": "S4_055"
+    },
+    {
+      "id": "shuxuejia-edge-249",
+      "source": "S4_023",
+      "target": "S4_056"
+    },
+    {
+      "id": "shuxuejia-edge-250",
+      "source": "S4_026",
+      "target": "S4_046"
+    },
+    {
+      "id": "shuxuejia-edge-251",
+      "source": "S4_027",
+      "target": "S4_051"
+    },
+    {
+      "id": "shuxuejia-edge-252",
+      "source": "S4_028",
+      "target": "S4_049"
+    },
+    {
+      "id": "shuxuejia-edge-253",
+      "source": "S4_029",
+      "target": "S4_050"
+    },
+    {
+      "id": "shuxuejia-edge-254",
+      "source": "S4_030",
+      "target": "S4_048"
+    },
+    {
+      "id": "shuxuejia-edge-255",
+      "source": "S4_032",
+      "target": "S4_047"
+    },
+    {
+      "id": "shuxuejia-edge-256",
+      "source": "S4_033",
+      "target": "S4_034"
+    },
+    {
+      "id": "shuxuejia-edge-257",
+      "source": "S4_033",
+      "target": "S4_047"
+    },
+    {
+      "id": "shuxuejia-edge-258",
+      "source": "S4_034",
+      "target": "S4_047"
+    },
+    {
+      "id": "shuxuejia-edge-259",
+      "source": "S4_035",
+      "target": "S4_065"
+    },
+    {
+      "id": "shuxuejia-edge-260",
+      "source": "S4_035",
+      "target": "S4_066"
+    },
+    {
+      "id": "shuxuejia-edge-261",
+      "source": "S4_036",
+      "target": "S4_025"
+    },
+    {
+      "id": "shuxuejia-edge-262",
+      "source": "S4_037",
+      "target": "S4_030"
+    },
+    {
+      "id": "shuxuejia-edge-263",
+      "source": "S4_038",
+      "target": "S4_028"
+    },
+    {
+      "id": "shuxuejia-edge-264",
+      "source": "S4_039",
+      "target": "S4_031"
+    },
+    {
+      "id": "shuxuejia-edge-265",
+      "source": "S4_040",
+      "target": "S4_026"
+    },
+    {
+      "id": "shuxuejia-edge-266",
+      "source": "S4_041",
+      "target": "S4_029"
+    },
+    {
+      "id": "shuxuejia-edge-267",
+      "source": "S4_042",
+      "target": "S4_027"
+    },
+    {
+      "id": "shuxuejia-edge-268",
+      "source": "S4_043",
+      "target": "S4_033"
+    },
+    {
+      "id": "shuxuejia-edge-269",
+      "source": "S4_044",
+      "target": "S4_064"
+    },
+    {
+      "id": "shuxuejia-edge-270",
+      "source": "S4_045",
+      "target": "S4_064"
+    },
+    {
+      "id": "shuxuejia-edge-271",
+      "source": "S4_045",
+      "target": "S4_059"
+    },
+    {
+      "id": "shuxuejia-edge-272",
+      "source": "S4_046",
+      "target": "S4_086"
+    },
+    {
+      "id": "shuxuejia-edge-273",
+      "source": "S4_046",
+      "target": "S4_067"
+    },
+    {
+      "id": "shuxuejia-edge-274",
+      "source": "S4_046",
+      "target": "S4_060"
+    },
+    {
+      "id": "shuxuejia-edge-275",
+      "source": "S4_047",
+      "target": "S4_067"
+    },
+    {
+      "id": "shuxuejia-edge-276",
+      "source": "S4_047",
+      "target": "S4_063"
+    },
+    {
+      "id": "shuxuejia-edge-277",
+      "source": "S4_048",
+      "target": "S4_064"
+    },
+    {
+      "id": "shuxuejia-edge-278",
+      "source": "S4_048",
+      "target": "S4_057"
+    },
+    {
+      "id": "shuxuejia-edge-279",
+      "source": "S4_049",
+      "target": "S4_064"
+    },
+    {
+      "id": "shuxuejia-edge-280",
+      "source": "S4_049",
+      "target": "S4_058"
+    },
+    {
+      "id": "shuxuejia-edge-281",
+      "source": "S4_050",
+      "target": "S4_064"
+    },
+    {
+      "id": "shuxuejia-edge-282",
+      "source": "S4_050",
+      "target": "S4_061"
+    },
+    {
+      "id": "shuxuejia-edge-283",
+      "source": "S4_051",
+      "target": "S4_064"
+    },
+    {
+      "id": "shuxuejia-edge-284",
+      "source": "S4_051",
+      "target": "S4_062"
+    },
+    {
+      "id": "shuxuejia-edge-285",
+      "source": "S4_052",
+      "target": "S4_083"
+    },
+    {
+      "id": "shuxuejia-edge-286",
+      "source": "S4_053",
+      "target": "S4_069"
+    },
+    {
+      "id": "shuxuejia-edge-287",
+      "source": "S4_054",
+      "target": "S4_071"
+    },
+    {
+      "id": "shuxuejia-edge-288",
+      "source": "S4_055",
+      "target": "S4_068"
+    },
+    {
+      "id": "shuxuejia-edge-289",
+      "source": "S4_056",
+      "target": "S4_068"
+    },
+    {
+      "id": "shuxuejia-edge-290",
+      "source": "S4_057",
+      "target": "S4_064"
+    },
+    {
+      "id": "shuxuejia-edge-291",
+      "source": "S4_058",
+      "target": "S4_064"
+    },
+    {
+      "id": "shuxuejia-edge-292",
+      "source": "S4_059",
+      "target": "S4_064"
+    },
+    {
+      "id": "shuxuejia-edge-293",
+      "source": "S4_060",
+      "target": "S4_067"
+    },
+    {
+      "id": "shuxuejia-edge-294",
+      "source": "S4_061",
+      "target": "S4_067"
+    },
+    {
+      "id": "shuxuejia-edge-295",
+      "source": "S4_062",
+      "target": "S4_067"
+    },
+    {
+      "id": "shuxuejia-edge-296",
+      "source": "S4_063",
+      "target": "S4_067"
+    },
+    {
+      "id": "shuxuejia-edge-297",
+      "source": "S4_064",
+      "target": "S4_047"
+    },
+    {
+      "id": "shuxuejia-edge-298",
+      "source": "S4_065",
+      "target": "S4_070"
+    },
+    {
+      "id": "shuxuejia-edge-299",
+      "source": "S4_066",
+      "target": "S4_070"
+    },
+    {
+      "id": "shuxuejia-edge-300",
+      "source": "S4_068",
+      "target": "S4_086"
+    },
+    {
+      "id": "shuxuejia-edge-301",
+      "source": "S4_069",
+      "target": "S4_086"
+    },
+    {
+      "id": "shuxuejia-edge-302",
+      "source": "S4_070",
+      "target": "S4_086"
+    },
+    {
+      "id": "shuxuejia-edge-303",
+      "source": "S4_071",
+      "target": "S4_086"
+    },
+    {
+      "id": "shuxuejia-edge-304",
+      "source": "S4_072",
+      "target": "S4_073"
+    },
+    {
+      "id": "shuxuejia-edge-305",
+      "source": "S4_072",
+      "target": "S4_074"
+    },
+    {
+      "id": "shuxuejia-edge-306",
+      "source": "S4_072",
+      "target": "S4_075"
+    },
+    {
+      "id": "shuxuejia-edge-307",
+      "source": "S4_072",
+      "target": "S4_076"
+    },
+    {
+      "id": "shuxuejia-edge-308",
+      "source": "S4_072",
+      "target": "S4_077"
+    },
+    {
+      "id": "shuxuejia-edge-309",
+      "source": "S4_072",
+      "target": "S4_078"
+    },
+    {
+      "id": "shuxuejia-edge-310",
+      "source": "S4_072",
+      "target": "S4_079"
+    },
+    {
+      "id": "shuxuejia-edge-311",
+      "source": "S4_073",
+      "target": "S4_080"
+    },
+    {
+      "id": "shuxuejia-edge-312",
+      "source": "S4_073",
+      "target": "S4_081"
+    },
+    {
+      "id": "shuxuejia-edge-313",
+      "source": "S4_073",
+      "target": "S4_082"
+    },
+    {
+      "id": "shuxuejia-edge-314",
+      "source": "S4_074",
+      "target": "S4_085"
+    },
+    {
+      "id": "shuxuejia-edge-315",
+      "source": "S4_075",
+      "target": "S4_085"
+    },
+    {
+      "id": "shuxuejia-edge-316",
+      "source": "S4_076",
+      "target": "S4_085"
+    },
+    {
+      "id": "shuxuejia-edge-317",
+      "source": "S4_077",
+      "target": "S4_085"
+    },
+    {
+      "id": "shuxuejia-edge-318",
+      "source": "S4_078",
+      "target": "S4_085"
+    },
+    {
+      "id": "shuxuejia-edge-319",
+      "source": "S4_079",
+      "target": "S4_085"
+    },
+    {
+      "id": "shuxuejia-edge-320",
+      "source": "S4_080",
+      "target": "S4_084"
+    },
+    {
+      "id": "shuxuejia-edge-321",
+      "source": "S4_081",
+      "target": "S4_084"
+    },
+    {
+      "id": "shuxuejia-edge-322",
+      "source": "S4_082",
+      "target": "S4_084"
+    },
+    {
+      "id": "shuxuejia-edge-323",
+      "source": "S4_083",
+      "target": "S4_086"
+    },
+    {
+      "id": "shuxuejia-edge-324",
+      "source": "S4_084",
+      "target": "S5_001"
+    },
+    {
+      "id": "shuxuejia-edge-325",
+      "source": "S4_085",
+      "target": "S5_001"
+    },
+    {
+      "id": "shuxuejia-edge-326",
+      "source": "S5_002",
+      "target": "S5_004"
+    },
+    {
+      "id": "shuxuejia-edge-327",
+      "source": "S5_002",
+      "target": "S5_005"
+    },
+    {
+      "id": "shuxuejia-edge-328",
+      "source": "S5_003",
+      "target": "S5_006"
+    },
+    {
+      "id": "shuxuejia-edge-329",
+      "source": "S5_004",
+      "target": "S5_007"
+    },
+    {
+      "id": "shuxuejia-edge-330",
+      "source": "S5_004",
+      "target": "S5_008"
+    },
+    {
+      "id": "shuxuejia-edge-331",
+      "source": "S5_004",
+      "target": "S5_009"
+    },
+    {
+      "id": "shuxuejia-edge-332",
+      "source": "S5_004",
+      "target": "S5_011"
+    },
+    {
+      "id": "shuxuejia-edge-333",
+      "source": "S5_005",
+      "target": "S5_012"
+    },
+    {
+      "id": "shuxuejia-edge-334",
+      "source": "S5_005",
+      "target": "S5_010"
+    },
+    {
+      "id": "shuxuejia-edge-335",
+      "source": "S5_005",
+      "target": "S5_013"
+    },
+    {
+      "id": "shuxuejia-edge-336",
+      "source": "S5_007",
+      "target": "S5_008"
+    },
+    {
+      "id": "shuxuejia-edge-337",
+      "source": "S5_007",
+      "target": "S5_045"
+    },
+    {
+      "id": "shuxuejia-edge-338",
+      "source": "S5_008",
+      "target": "S5_033"
+    },
+    {
+      "id": "shuxuejia-edge-339",
+      "source": "S5_009",
+      "target": "S5_011"
+    },
+    {
+      "id": "shuxuejia-edge-340",
+      "source": "S5_012",
+      "target": "S5_010"
+    },
+    {
+      "id": "shuxuejia-edge-341",
+      "source": "S5_013",
+      "target": "S5_033"
+    },
+    {
+      "id": "shuxuejia-edge-342",
+      "source": "S5_006",
+      "target": "S5_014"
+    },
+    {
+      "id": "shuxuejia-edge-343",
+      "source": "S5_006",
+      "target": "S5_015"
+    },
+    {
+      "id": "shuxuejia-edge-344",
+      "source": "S5_006",
+      "target": "S5_016"
+    },
+    {
+      "id": "shuxuejia-edge-345",
+      "source": "S5_006",
+      "target": "S5_017"
+    },
+    {
+      "id": "shuxuejia-edge-346",
+      "source": "S5_015",
+      "target": "S5_026"
+    },
+    {
+      "id": "shuxuejia-edge-347",
+      "source": "S5_016",
+      "target": "S5_014"
+    },
+    {
+      "id": "shuxuejia-edge-348",
+      "source": "S5_017",
+      "target": "S5_018"
+    },
+    {
+      "id": "shuxuejia-edge-349",
+      "source": "S5_017",
+      "target": "S5_034"
+    },
+    {
+      "id": "shuxuejia-edge-350",
+      "source": "S5_017",
+      "target": "S5_035"
+    },
+    {
+      "id": "shuxuejia-edge-351",
+      "source": "S5_018",
+      "target": "S5_016"
+    },
+    {
+      "id": "shuxuejia-edge-352",
+      "source": "S5_018",
+      "target": "S5_023"
+    },
+    {
+      "id": "shuxuejia-edge-353",
+      "source": "S5_018",
+      "target": "S5_024"
+    },
+    {
+      "id": "shuxuejia-edge-354",
+      "source": "S5_019",
+      "target": "S5_015"
+    },
+    {
+      "id": "shuxuejia-edge-355",
+      "source": "S5_020",
+      "target": "S5_044"
+    },
+    {
+      "id": "shuxuejia-edge-356",
+      "source": "S5_020",
+      "target": "S5_027"
+    },
+    {
+      "id": "shuxuejia-edge-357",
+      "source": "S5_021",
+      "target": "S5_020"
+    },
+    {
+      "id": "shuxuejia-edge-358",
+      "source": "S5_021",
+      "target": "S5_043"
+    },
+    {
+      "id": "shuxuejia-edge-359",
+      "source": "S5_022",
+      "target": "S5_044"
+    },
+    {
+      "id": "shuxuejia-edge-360",
+      "source": "S5_023",
+      "target": "S5_025"
+    },
+    {
+      "id": "shuxuejia-edge-361",
+      "source": "S5_023",
+      "target": "S5_030"
+    },
+    {
+      "id": "shuxuejia-edge-362",
+      "source": "S5_023",
+      "target": "S5_036"
+    },
+    {
+      "id": "shuxuejia-edge-363",
+      "source": "S5_024",
+      "target": "S5_025"
+    },
+    {
+      "id": "shuxuejia-edge-364",
+      "source": "S5_024",
+      "target": "S5_031"
+    },
+    {
+      "id": "shuxuejia-edge-365",
+      "source": "S5_026",
+      "target": "S5_037"
+    },
+    {
+      "id": "shuxuejia-edge-366",
+      "source": "S5_027",
+      "target": "S5_022"
+    },
+    {
+      "id": "shuxuejia-edge-367",
+      "source": "S5_028",
+      "target": "S5_021"
+    },
+    {
+      "id": "shuxuejia-edge-368",
+      "source": "S5_028",
+      "target": "S5_044"
+    },
+    {
+      "id": "shuxuejia-edge-369",
+      "source": "S5_029",
+      "target": "S5_022"
+    },
+    {
+      "id": "shuxuejia-edge-370",
+      "source": "S5_030",
+      "target": "S5_036"
+    },
+    {
+      "id": "shuxuejia-edge-371",
+      "source": "S5_031",
+      "target": "S5_036"
+    },
+    {
+      "id": "shuxuejia-edge-372",
+      "source": "S5_032",
+      "target": "S5_036"
+    },
+    {
+      "id": "shuxuejia-edge-373",
+      "source": "S5_033",
+      "target": "S5_039"
+    },
+    {
+      "id": "shuxuejia-edge-374",
+      "source": "S5_033",
+      "target": "S5_040"
+    },
+    {
+      "id": "shuxuejia-edge-375",
+      "source": "S5_033",
+      "target": "S5_041"
+    },
+    {
+      "id": "shuxuejia-edge-376",
+      "source": "S5_033",
+      "target": "S5_042"
+    },
+    {
+      "id": "shuxuejia-edge-377",
+      "source": "S5_035",
+      "target": "S5_038"
+    },
+    {
+      "id": "shuxuejia-edge-378",
+      "source": "S5_036",
+      "target": "S5_038"
+    },
+    {
+      "id": "shuxuejia-edge-379",
+      "source": "S5_037",
+      "target": "S5_045"
+    },
+    {
+      "id": "shuxuejia-edge-380",
+      "source": "S5_038",
+      "target": "S5_048"
+    },
+    {
+      "id": "shuxuejia-edge-381",
+      "source": "S5_039",
+      "target": "S5_041"
+    },
+    {
+      "id": "shuxuejia-edge-382",
+      "source": "S5_040",
+      "target": "S8_004"
+    },
+    {
+      "id": "shuxuejia-edge-383",
+      "source": "S5_043",
+      "target": "S6_010"
+    },
+    {
+      "id": "shuxuejia-edge-384",
+      "source": "S5_045",
+      "target": "S5_046"
+    },
+    {
+      "id": "shuxuejia-edge-385",
+      "source": "S5_046",
+      "target": "S5_047"
+    },
+    {
+      "id": "shuxuejia-edge-386",
+      "source": "S5_046",
+      "target": "S5_049"
+    },
+    {
+      "id": "shuxuejia-edge-387",
+      "source": "S5_047",
+      "target": "S5_049"
+    },
+    {
+      "id": "shuxuejia-edge-388",
+      "source": "S5_049",
+      "target": "S5_050"
+    },
+    {
+      "id": "shuxuejia-edge-389",
+      "source": "S5_049",
+      "target": "S5_052"
+    },
+    {
+      "id": "shuxuejia-edge-390",
+      "source": "S5_050",
+      "target": "S5_051"
+    },
+    {
+      "id": "shuxuejia-edge-391",
+      "source": "S5_048",
+      "target": "S5_051"
+    },
+    {
+      "id": "shuxuejia-edge-392",
+      "source": "S5_048",
+      "target": "S5_056"
+    },
+    {
+      "id": "shuxuejia-edge-393",
+      "source": "S5_048",
+      "target": "S5_059"
+    },
+    {
+      "id": "shuxuejia-edge-394",
+      "source": "S5_048",
+      "target": "S5_060"
+    },
+    {
+      "id": "shuxuejia-edge-395",
+      "source": "S5_051",
+      "target": "S5_055"
+    },
+    {
+      "id": "shuxuejia-edge-396",
+      "source": "S5_051",
+      "target": "S5_056"
+    },
+    {
+      "id": "shuxuejia-edge-397",
+      "source": "S5_052",
+      "target": "S5_053"
+    },
+    {
+      "id": "shuxuejia-edge-398",
+      "source": "S5_052",
+      "target": "S5_054"
+    },
+    {
+      "id": "shuxuejia-edge-399",
+      "source": "S5_053",
+      "target": "S5_057"
+    },
+    {
+      "id": "shuxuejia-edge-400",
+      "source": "S5_054",
+      "target": "S5_062"
+    },
+    {
+      "id": "shuxuejia-edge-401",
+      "source": "S5_056",
+      "target": "S5_055"
+    },
+    {
+      "id": "shuxuejia-edge-402",
+      "source": "S5_059",
+      "target": "S5_061"
+    },
+    {
+      "id": "shuxuejia-edge-403",
+      "source": "S5_060",
+      "target": "S5_058"
+    },
+    {
+      "id": "shuxuejia-edge-404",
+      "source": "S5_061",
+      "target": "S6_003"
+    },
+    {
+      "id": "shuxuejia-edge-405",
+      "source": "S5_062",
+      "target": "S5_063"
+    },
+    {
+      "id": "shuxuejia-edge-406",
+      "source": "S5_062",
+      "target": "S5_064"
+    },
+    {
+      "id": "shuxuejia-edge-407",
+      "source": "S5_062",
+      "target": "S5_065"
+    },
+    {
+      "id": "shuxuejia-edge-408",
+      "source": "S5_063",
+      "target": "S5_065"
+    },
+    {
+      "id": "shuxuejia-edge-409",
+      "source": "S5_064",
+      "target": "S5_066"
+    },
+    {
+      "id": "shuxuejia-edge-410",
+      "source": "S5_065",
+      "target": "S5_066"
+    },
+    {
+      "id": "shuxuejia-edge-411",
+      "source": "S5_066",
+      "target": "S6_002"
+    },
+    {
+      "id": "shuxuejia-edge-412",
+      "source": "S5_066",
+      "target": "S6_037"
+    },
+    {
+      "id": "shuxuejia-edge-413",
+      "source": "S5_061",
+      "target": "S6_001"
+    },
+    {
+      "id": "shuxuejia-edge-414",
+      "source": "S6_001",
+      "target": "S6_003"
+    },
+    {
+      "id": "shuxuejia-edge-415",
+      "source": "S6_003",
+      "target": "S6_004"
+    },
+    {
+      "id": "shuxuejia-edge-416",
+      "source": "S6_003",
+      "target": "S6_005"
+    },
+    {
+      "id": "shuxuejia-edge-417",
+      "source": "S6_004",
+      "target": "S5_051"
+    },
+    {
+      "id": "shuxuejia-edge-418",
+      "source": "S6_005",
+      "target": "S6_006"
+    },
+    {
+      "id": "shuxuejia-edge-419",
+      "source": "S6_006",
+      "target": "S6_008"
+    },
+    {
+      "id": "shuxuejia-edge-420",
+      "source": "S6_006",
+      "target": "S6_007"
+    },
+    {
+      "id": "shuxuejia-edge-421",
+      "source": "S6_007",
+      "target": "S6_008"
+    },
+    {
+      "id": "shuxuejia-edge-422",
+      "source": "S6_007",
+      "target": "S6_009"
+    },
+    {
+      "id": "shuxuejia-edge-423",
+      "source": "S6_008",
+      "target": "S6_009"
+    },
+    {
+      "id": "shuxuejia-edge-424",
+      "source": "S6_008",
+      "target": "S6_011"
+    },
+    {
+      "id": "shuxuejia-edge-425",
+      "source": "S6_008",
+      "target": "S6_012"
+    },
+    {
+      "id": "shuxuejia-edge-426",
+      "source": "S6_009",
+      "target": "S6_010"
+    },
+    {
+      "id": "shuxuejia-edge-427",
+      "source": "S6_009",
+      "target": "S6_011"
+    },
+    {
+      "id": "shuxuejia-edge-428",
+      "source": "S6_011",
+      "target": "S6_013"
+    },
+    {
+      "id": "shuxuejia-edge-429",
+      "source": "S6_011",
+      "target": "S6_014"
+    },
+    {
+      "id": "shuxuejia-edge-430",
+      "source": "S6_012",
+      "target": "S6_011"
+    },
+    {
+      "id": "shuxuejia-edge-431",
+      "source": "S6_012",
+      "target": "S6_015"
+    },
+    {
+      "id": "shuxuejia-edge-432",
+      "source": "S6_013",
+      "target": "S6_017"
+    },
+    {
+      "id": "shuxuejia-edge-433",
+      "source": "S6_013",
+      "target": "S6_019"
+    },
+    {
+      "id": "shuxuejia-edge-434",
+      "source": "S6_013",
+      "target": "S6_020"
+    },
+    {
+      "id": "shuxuejia-edge-435",
+      "source": "S6_013",
+      "target": "S6_021"
+    },
+    {
+      "id": "shuxuejia-edge-436",
+      "source": "S6_014",
+      "target": "S6_016"
+    },
+    {
+      "id": "shuxuejia-edge-437",
+      "source": "S6_014",
+      "target": "S6_018"
+    },
+    {
+      "id": "shuxuejia-edge-438",
+      "source": "S6_015",
+      "target": "S6_023"
+    },
+    {
+      "id": "shuxuejia-edge-439",
+      "source": "S6_015",
+      "target": "S6_024"
+    },
+    {
+      "id": "shuxuejia-edge-440",
+      "source": "S6_015",
+      "target": "S6_026"
+    },
+    {
+      "id": "shuxuejia-edge-441",
+      "source": "S6_015",
+      "target": "S6_027"
+    },
+    {
+      "id": "shuxuejia-edge-442",
+      "source": "S6_017",
+      "target": "S6_022"
+    },
+    {
+      "id": "shuxuejia-edge-443",
+      "source": "S6_018",
+      "target": "S6_016"
+    },
+    {
+      "id": "shuxuejia-edge-444",
+      "source": "S6_018",
+      "target": "S6_028"
+    },
+    {
+      "id": "shuxuejia-edge-445",
+      "source": "S6_020",
+      "target": "S6_029"
+    },
+    {
+      "id": "shuxuejia-edge-446",
+      "source": "S6_022",
+      "target": "S6_021"
+    },
+    {
+      "id": "shuxuejia-edge-447",
+      "source": "S6_023",
+      "target": "S6_025"
+    },
+    {
+      "id": "shuxuejia-edge-448",
+      "source": "S6_025",
+      "target": "S6_026"
+    },
+    {
+      "id": "shuxuejia-edge-449",
+      "source": "S6_028",
+      "target": "S6_031"
+    },
+    {
+      "id": "shuxuejia-edge-450",
+      "source": "S6_029",
+      "target": "S6_030"
+    },
+    {
+      "id": "shuxuejia-edge-451",
+      "source": "S6_030",
+      "target": "S6_033"
+    },
+    {
+      "id": "shuxuejia-edge-452",
+      "source": "S6_032",
+      "target": "S6_035"
+    },
+    {
+      "id": "shuxuejia-edge-453",
+      "source": "S6_033",
+      "target": "S6_037"
+    },
+    {
+      "id": "shuxuejia-edge-454",
+      "source": "S6_034",
+      "target": "S6_037"
+    },
+    {
+      "id": "shuxuejia-edge-455",
+      "source": "S6_035",
+      "target": "S6_036"
+    },
+    {
+      "id": "shuxuejia-edge-456",
+      "source": "S6_036",
+      "target": "S6_037"
+    },
+    {
+      "id": "shuxuejia-edge-457",
+      "source": "S6_037",
+      "target": "S6_038"
+    },
+    {
+      "id": "shuxuejia-edge-458",
+      "source": "S6_038",
+      "target": "S6_039"
+    },
+    {
+      "id": "shuxuejia-edge-459",
+      "source": "S6_039",
+      "target": "S7_002"
+    },
+    {
+      "id": "shuxuejia-edge-460",
+      "source": "S7_001",
+      "target": "S7_002"
+    },
+    {
+      "id": "shuxuejia-edge-461",
+      "source": "S7_002",
+      "target": "S7_005"
+    },
+    {
+      "id": "shuxuejia-edge-462",
+      "source": "S7_002",
+      "target": "S7_003"
+    },
+    {
+      "id": "shuxuejia-edge-463",
+      "source": "S7_002",
+      "target": "S7_004"
+    },
+    {
+      "id": "shuxuejia-edge-464",
+      "source": "S7_005",
+      "target": "S7_006"
+    },
+    {
+      "id": "shuxuejia-edge-465",
+      "source": "S7_005",
+      "target": "S7_007"
+    },
+    {
+      "id": "shuxuejia-edge-466",
+      "source": "S7_003",
+      "target": "S7_008"
+    },
+    {
+      "id": "shuxuejia-edge-467",
+      "source": "S7_004",
+      "target": "S7_008"
+    },
+    {
+      "id": "shuxuejia-edge-468",
+      "source": "S7_006",
+      "target": "S7_007"
+    },
+    {
+      "id": "shuxuejia-edge-469",
+      "source": "S7_006",
+      "target": "S7_008"
+    },
+    {
+      "id": "shuxuejia-edge-470",
+      "source": "S7_008",
+      "target": "S7_009"
+    },
+    {
+      "id": "shuxuejia-edge-471",
+      "source": "S7_009",
+      "target": "S7_010"
+    },
+    {
+      "id": "shuxuejia-edge-472",
+      "source": "S7_010",
+      "target": "S7_011"
+    },
+    {
+      "id": "shuxuejia-edge-473",
+      "source": "S7_010",
+      "target": "S7_012"
+    },
+    {
+      "id": "shuxuejia-edge-474",
+      "source": "S7_010",
+      "target": "S7_014"
+    },
+    {
+      "id": "shuxuejia-edge-475",
+      "source": "S7_011",
+      "target": "S7_012"
+    },
+    {
+      "id": "shuxuejia-edge-476",
+      "source": "S7_012",
+      "target": "S7_015"
+    },
+    {
+      "id": "shuxuejia-edge-477",
+      "source": "S7_012",
+      "target": "S7_013"
+    },
+    {
+      "id": "shuxuejia-edge-478",
+      "source": "S7_013",
+      "target": "S7_016"
+    },
+    {
+      "id": "shuxuejia-edge-479",
+      "source": "S7_013",
+      "target": "S7_017"
+    },
+    {
+      "id": "shuxuejia-edge-480",
+      "source": "S7_014",
+      "target": "S7_027"
+    },
+    {
+      "id": "shuxuejia-edge-481",
+      "source": "S7_015",
+      "target": "S7_019"
+    },
+    {
+      "id": "shuxuejia-edge-482",
+      "source": "S7_015",
+      "target": "S7_020"
+    },
+    {
+      "id": "shuxuejia-edge-483",
+      "source": "S7_015",
+      "target": "S7_021"
+    },
+    {
+      "id": "shuxuejia-edge-484",
+      "source": "S7_015",
+      "target": "S7_022"
+    },
+    {
+      "id": "shuxuejia-edge-485",
+      "source": "S7_016",
+      "target": "S7_023"
+    },
+    {
+      "id": "shuxuejia-edge-486",
+      "source": "S7_017",
+      "target": "S7_024"
+    },
+    {
+      "id": "shuxuejia-edge-487",
+      "source": "S7_018",
+      "target": "S7_030"
+    },
+    {
+      "id": "shuxuejia-edge-488",
+      "source": "S7_019",
+      "target": "S7_020"
+    },
+    {
+      "id": "shuxuejia-edge-489",
+      "source": "S7_019",
+      "target": "S7_033"
+    },
+    {
+      "id": "shuxuejia-edge-490",
+      "source": "S7_020",
+      "target": "S7_022"
+    },
+    {
+      "id": "shuxuejia-edge-491",
+      "source": "S7_020",
+      "target": "S7_032"
+    },
+    {
+      "id": "shuxuejia-edge-492",
+      "source": "S7_021",
+      "target": "S7_018"
+    },
+    {
+      "id": "shuxuejia-edge-493",
+      "source": "S7_021",
+      "target": "S7_031"
+    },
+    {
+      "id": "shuxuejia-edge-494",
+      "source": "S7_022",
+      "target": "S7_034"
+    },
+    {
+      "id": "shuxuejia-edge-495",
+      "source": "S7_023",
+      "target": "S7_025"
+    },
+    {
+      "id": "shuxuejia-edge-496",
+      "source": "S7_023",
+      "target": "S7_029"
+    },
+    {
+      "id": "shuxuejia-edge-497",
+      "source": "S7_023",
+      "target": "S7_036"
+    },
+    {
+      "id": "shuxuejia-edge-498",
+      "source": "S7_024",
+      "target": "S7_026"
+    },
+    {
+      "id": "shuxuejia-edge-499",
+      "source": "S7_024",
+      "target": "S7_028"
+    },
+    {
+      "id": "shuxuejia-edge-500",
+      "source": "S7_024",
+      "target": "S7_037"
+    },
+    {
+      "id": "shuxuejia-edge-501",
+      "source": "S7_025",
+      "target": "S7_036"
+    },
+    {
+      "id": "shuxuejia-edge-502",
+      "source": "S7_028",
+      "target": "S7_037"
+    },
+    {
+      "id": "shuxuejia-edge-503",
+      "source": "S7_029",
+      "target": "S7_036"
+    },
+    {
+      "id": "shuxuejia-edge-504",
+      "source": "S7_027",
+      "target": "S8_001"
+    },
+    {
+      "id": "shuxuejia-edge-505",
+      "source": "S7_030",
+      "target": "S7_035"
+    },
+    {
+      "id": "shuxuejia-edge-506",
+      "source": "S7_030",
+      "target": "S7_043"
+    },
+    {
+      "id": "shuxuejia-edge-507",
+      "source": "S7_031",
+      "target": "S7_040"
+    },
+    {
+      "id": "shuxuejia-edge-508",
+      "source": "S7_032",
+      "target": "S7_041"
+    },
+    {
+      "id": "shuxuejia-edge-509",
+      "source": "S7_033",
+      "target": "S7_042"
+    },
+    {
+      "id": "shuxuejia-edge-510",
+      "source": "S7_034",
+      "target": "S7_043"
+    },
+    {
+      "id": "shuxuejia-edge-511",
+      "source": "S7_035",
+      "target": "S7_038"
+    },
+    {
+      "id": "shuxuejia-edge-512",
+      "source": "S7_035",
+      "target": "S7_039"
+    },
+    {
+      "id": "shuxuejia-edge-513",
+      "source": "S7_036",
+      "target": "S7_037"
+    },
+    {
+      "id": "shuxuejia-edge-514",
+      "source": "S7_038",
+      "target": "S7_044"
+    },
+    {
+      "id": "shuxuejia-edge-515",
+      "source": "S7_039",
+      "target": "S7_044"
+    },
+    {
+      "id": "shuxuejia-edge-516",
+      "source": "S7_043",
+      "target": "S7_040"
+    },
+    {
+      "id": "shuxuejia-edge-517",
+      "source": "S7_044",
+      "target": "S7_046"
+    },
+    {
+      "id": "shuxuejia-edge-518",
+      "source": "S7_045",
+      "target": "S7_044"
+    },
+    {
+      "id": "shuxuejia-edge-519",
+      "source": "S7_046",
+      "target": "S7_049"
+    },
+    {
+      "id": "shuxuejia-edge-520",
+      "source": "S7_048",
+      "target": "S7_047"
+    },
+    {
+      "id": "shuxuejia-edge-521",
+      "source": "S7_047",
+      "target": "S7_050"
+    },
+    {
+      "id": "shuxuejia-edge-522",
+      "source": "S7_050",
+      "target": "S8_001"
+    },
+    {
+      "id": "shuxuejia-edge-523",
+      "source": "S7_049",
+      "target": "S7_051"
+    },
+    {
+      "id": "shuxuejia-edge-524",
+      "source": "S7_051",
+      "target": "S8_001"
+    },
+    {
+      "id": "shuxuejia-edge-525",
+      "source": "S7_052",
+      "target": "S7_051"
+    },
+    {
+      "id": "shuxuejia-edge-526",
+      "source": "S8_001",
+      "target": "S8_002"
+    },
+    {
+      "id": "shuxuejia-edge-527",
+      "source": "S8_001",
+      "target": "S8_003"
+    },
+    {
+      "id": "shuxuejia-edge-528",
+      "source": "S8_001",
+      "target": "S8_005"
+    },
+    {
+      "id": "shuxuejia-edge-529",
+      "source": "S8_002",
+      "target": "S8_004"
+    },
+    {
+      "id": "shuxuejia-edge-530",
+      "source": "S8_002",
+      "target": "S8_006"
+    },
+    {
+      "id": "shuxuejia-edge-531",
+      "source": "S8_003",
+      "target": "S8_006"
+    },
+    {
+      "id": "shuxuejia-edge-532",
+      "source": "S8_005",
+      "target": "S8_006"
+    },
+    {
+      "id": "shuxuejia-edge-533",
+      "source": "S8_006",
+      "target": "S8_007"
+    },
+    {
+      "id": "shuxuejia-edge-534",
+      "source": "S8_007",
+      "target": "S8_008"
+    },
+    {
+      "id": "shuxuejia-edge-535",
+      "source": "S8_007",
+      "target": "S8_009"
+    },
+    {
+      "id": "shuxuejia-edge-536",
+      "source": "S8_007",
+      "target": "S8_010"
+    },
+    {
+      "id": "shuxuejia-edge-537",
+      "source": "S8_008",
+      "target": "S8_010"
+    },
+    {
+      "id": "shuxuejia-edge-538",
+      "source": "S8_009",
+      "target": "S8_010"
+    },
+    {
+      "id": "shuxuejia-edge-539",
+      "source": "S8_010",
+      "target": "S8_011"
+    },
+    {
+      "id": "shuxuejia-edge-540",
+      "source": "S8_011",
+      "target": "S8_012"
+    },
+    {
+      "id": "shuxuejia-edge-541",
+      "source": "S8_012",
+      "target": "S8_013"
+    },
+    {
+      "id": "shuxuejia-edge-542",
+      "source": "S8_012",
+      "target": "S8_014"
+    },
+    {
+      "id": "shuxuejia-edge-543",
+      "source": "S8_013",
+      "target": "S8_014"
+    }
+  ]
+}

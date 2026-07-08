@@ -1,0 +1,268 @@
+{
+  "pack_id": "pack_shuxuejia_large_home_renovation_v0",
+  "pack_ref": "scene_pack://shuxuejia-large-home-renovation",
+  "version": "1.0.0",
+  "name": "墅学家大宅装修设计指导 Pack",
+  "template_family": "长周期项目交付型",
+  "description": "面向大宅/别墅装修设计师与项目负责人：基于 EPC 原版 457 节点流程，组织设计准备、深化设计、材料合同付款、现场质量验收和售后保修的候选建议、证据要求、Owner/Base Gate 和 Receipt 回放。",
+  "author": "Truzhen Pack Studio",
+  "pack_type": "domain_work_pack",
+  "manifest_version": "v3",
+  "target_industry": "大宅装修 / 别墅装修 / 长周期项目交付",
+  "target_audience": "大宅装修设计师、项目经理、材料协调、现场监理、售后负责人",
+  "flow_spec_ref": "scene_flow_spec:shuxuejia-epc-executable-projection@1.0.0",
+  "flow_file": "flows/shuxuejia-epc-executable-projection.flow.json",
+  "role_slots_file": "role-slots/role-slots.json",
+  "capabilities_file": "capabilities/capabilities.json",
+  "knowledge_scopes_manifest": "knowledge/knowledge-scopes.json",
+  "knowledge_index": "knowledge/knowledge-index.json",
+  "knowledge_scopes": [
+    "knowledge_scope://shuxuejia/design-guidance",
+    "knowledge_scope://shuxuejia/material-contract-payment",
+    "knowledge_scope://shuxuejia/site-quality-acceptance",
+    "knowledge_scope://shuxuejia/after-sales-warranty"
+  ],
+  "security_profile": {
+    "candidate_only": true,
+    "non_formal": true,
+    "requires_base_gate": true,
+    "requires_receipt_candidate": true,
+    "default_provider_mode": "disabled",
+    "no_real_send": true,
+    "no_real_execute": true,
+    "no_real_model_call": false,
+    "isolated_namespace": "shuxuejia_large_home_renovation_ns"
+  },
+  "role_slots": [
+    {
+      "slot_id": "home_owner",
+      "responsibility": "确认需求、方案、合同、验收、付款候选和售后关闭。（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://home-owner-decision"
+    },
+    {
+      "slot_id": "design_lead",
+      "responsibility": "产出方案、施工图、材料手册和顾问协调候选。（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://design-lead-large-home"
+    },
+    {
+      "slot_id": "project_manager",
+      "responsibility": "推进开工、施工、材料、进度、整改候选。（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://project-manager-delivery"
+    },
+    {
+      "slot_id": "site_supervisor",
+      "responsibility": "质询质量、隐蔽验收、道检和返工风险。（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://site-supervisor-quality"
+    },
+    {
+      "slot_id": "material_coordinator",
+      "responsibility": "跟踪采购、进场、延期和替代材料候选。（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://material-coordinator-supply"
+    },
+    {
+      "slot_id": "third_party_consultant",
+      "responsibility": "输出灯光、厨房、智能化、暖通、电梯等专项意见。（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://third-party-consultant-specialty"
+    },
+    {
+      "slot_id": "after_sales_service",
+      "responsibility": "处理保修、维修、投诉和回访。（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://after-sales-service-warranty"
+    }
+  ],
+  "capabilities_required": [
+    "controlled_document_draft_generation",
+    "project_history_knowledge_slice",
+    "controlled_owner_vendor_notification_draft",
+    "controlled_file_artifact_export",
+    "long_project_material_contract_payment_readmodel",
+    "evidence_and_receipt_replay"
+  ],
+  "required_capabilities": [],
+  "gates": {
+    "project_gate": "shuxuejia_owner_base_gate",
+    "state_transition_gate": "base_gate",
+    "payment_gate": "owner_payment_gate",
+    "acceptance_gate": "owner_acceptance_gate"
+  },
+  "gate_flags": [
+    "design_confirm",
+    "contract_change_confirm",
+    "payment_confirm",
+    "acceptance_confirm",
+    "customer_or_vendor_send_confirm",
+    "after_sales_close_confirm"
+  ],
+  "receipt_policy": {
+    "ledger_group": "shuxuejia_large_home_renovation",
+    "append_only": true,
+    "requires_witness": true
+  },
+  "person_strategy": {
+    "summary": "判人策略：7 个角色均为 Proposer；设计、材料、现场、售后角色只出建议、质询、草稿和证据要求。设计确认、合同变更、付款、验收、对外发送、售后关闭全部回 Owner + Base Gate 裁定。",
+    "proposer_roles": [
+      "home_owner",
+      "design_lead",
+      "project_manager",
+      "site_supervisor",
+      "material_coordinator",
+      "third_party_consultant",
+      "after_sales_service"
+    ],
+    "high_risk_actions_return_to_owner": [
+      "design_confirm",
+      "contract_change_confirm",
+      "payment_confirm",
+      "acceptance_confirm",
+      "customer_or_vendor_send_confirm",
+      "after_sales_close_confirm"
+    ],
+    "delegation_allowed": false
+  },
+  "formalization_requirement": {
+    "summary": "判事策略：需求诊断、设计建议、图纸会审、材料替代、变更签证、沟通草稿、验收证据和售后工单均先为候选态；正式任务、正式发送、合同/付款/验收/售后关闭必须经 Owner 主权确认 + Base Gate 裁定后才正式化。",
+    "formalizes": [
+      "FormalTask",
+      "CommunicationSend",
+      "ContractChange",
+      "PaymentApproval",
+      "AcceptanceRecord",
+      "AfterSalesClosure",
+      "FormalReceipt"
+    ],
+    "decided_by": "owner_plus_base_gate"
+  },
+  "provider_requirements": [
+    {
+      "requirement_id": "req_model_document_draft",
+      "capability": "controlled_document_draft_generation",
+      "gateway_class": "model",
+      "risk_class": "medium",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "provider_family": "model-gateway"
+    },
+    {
+      "requirement_id": "req_memory_project_history",
+      "capability": "project_history_knowledge_slice",
+      "gateway_class": "memory",
+      "risk_class": "medium",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "provider_family": "memory-gateway"
+    },
+    {
+      "requirement_id": "req_communication_draft",
+      "capability": "controlled_owner_vendor_notification_draft",
+      "gateway_class": "communication",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked",
+      "provider_family": "communication-gateway"
+    },
+    {
+      "requirement_id": "req_execution_artifact",
+      "capability": "controlled_file_artifact_export",
+      "gateway_class": "execution",
+      "risk_class": "medium",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked",
+      "provider_family": "execution-gateway"
+    },
+    {
+      "requirement_id": "req_project_readmodel",
+      "capability": "long_project_material_contract_payment_readmodel",
+      "gateway_class": "memory",
+      "risk_class": "medium",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "provider_family": "readmodel"
+    },
+    {
+      "requirement_id": "req_evidence_receipt",
+      "capability": "evidence_and_receipt_replay",
+      "gateway_class": "execution",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked",
+      "provider_family": "receipt-ledger"
+    }
+  ],
+  "software_requirements": [],
+  "notification_command_report_routes": {
+    "notification": [
+      "owner_review_inbox",
+      "designer_coordination",
+      "material_delay_notice",
+      "site_rectification_notice",
+      "after_sales_followup"
+    ],
+    "command_candidate": [
+      "generate_stage_task_candidate",
+      "create_acceptance_evidence_candidate",
+      "propose_material_substitution",
+      "draft_change_order",
+      "export_project_artifact",
+      "create_after_sales_ticket"
+    ],
+    "report": [
+      "transaction_capsule",
+      "project_timeline",
+      "receipt_replay",
+      "provider_readiness",
+      "flow_parity",
+      "material_contract_payment_after_sales_readmodel"
+    ]
+  },
+  "multi_role_comparison": {
+    "summary": "显式多角色对照：设计负责人提出方案候选，项目经理拆任务，材料协调员复核供应风险，现场监理质询质量证据，专项顾问补充专业意见，售后负责人评估交付后风险，最终回 Owner/Base Gate。禁止 runtime 内隐藏 agent 回路。",
+    "explicit_nodes": [
+      "design_lead/advice",
+      "project_manager/advice",
+      "material_coordinator/challenge",
+      "site_supervisor/challenge",
+      "third_party_consultant/advice",
+      "after_sales_service/review",
+      "home_owner/owner_gate"
+    ],
+    "hidden_agent_loops_forbidden": true
+  },
+  "moat_justification": {
+    "question": "用户能否一句话让最强模型直接做出同样结果？",
+    "passes_moat": true,
+    "valid_reasons": [
+      "real_system_integration",
+      "domain_approval_compliance",
+      "auditable_evidence_receipt",
+      "multi_role_compare_sovereign",
+      "transaction_lifecycle_replay"
+    ],
+    "rationale": "该 Pack 需要 EPC 原版 457 节点拓扑、设计/施工/材料/售后多角色候选协作、Owner/Base Gate、Provider readiness 和 Receipt 回放；一句话模型只能给建议，不能形成可审计、可挂事务对象、可回放的装修项目治理链。"
+  },
+  "ui_surface_slots": [
+    "pod",
+    "object",
+    "capsule",
+    "candidate",
+    "execution",
+    "receipt",
+    "setting"
+  ],
+  "forbidden_artifacts": [
+    "node_modules",
+    "dist",
+    "build",
+    ".vite",
+    "*.db",
+    "*.sqlite",
+    "*.log",
+    "*.jsonl"
+  ]
+}

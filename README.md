@@ -72,6 +72,7 @@
 | `environmental-enforcement-pack-v0/` | 高风险合规行业怎么组织知识、双角色互相把关、留全证据 |
 | `smart-home-owner-pack-v0/` | 项目交付生意怎么管客户、项目和里程碑 |
 | `housekeeping-ops-pack-v0/` | 客服全流程怎么做：咨询、方案、质检、排期、通知 |
+| `shuxuejia-renovation-pack-v0/` | 大宅装修设计师如何用 457 节点 EPC 流程组织设计、材料、施工、验收和售后候选 |
 | `templates/scene-pack-software-template/` | 新作者起步的最小骨架 |
 
 以上均为样板，用来学习结构和口径；完整清单见 [MODULES.md](MODULES.md)。

@@ -1,0 +1,58 @@
+{
+  "provider_requirements": [
+    {
+      "requirement_id": "req_model_document_draft",
+      "capability": "controlled_document_draft_generation",
+      "gateway_class": "model",
+      "risk_class": "medium",
+      "fallback_policy": "provider_missing",
+      "provider_family": "model-gateway",
+      "description": "生成设计建议书、阶段报告、图纸会审纪要等文档草稿候选。"
+    },
+    {
+      "requirement_id": "req_memory_project_history",
+      "capability": "project_history_knowledge_slice",
+      "gateway_class": "memory",
+      "risk_class": "medium",
+      "fallback_policy": "provider_missing",
+      "provider_family": "memory-gateway",
+      "description": "读取项目历史、知识域和证据切片；不得直接写正式记忆。"
+    },
+    {
+      "requirement_id": "req_communication_draft",
+      "capability": "controlled_owner_vendor_notification_draft",
+      "gateway_class": "communication",
+      "risk_class": "high",
+      "fallback_policy": "blocked",
+      "provider_family": "communication-gateway",
+      "description": "生成业主、设计方、施工方和供应商沟通草稿；不得自动发送。"
+    },
+    {
+      "requirement_id": "req_execution_artifact",
+      "capability": "controlled_file_artifact_export",
+      "gateway_class": "execution",
+      "risk_class": "medium",
+      "fallback_policy": "blocked",
+      "provider_family": "execution-gateway",
+      "description": "导出受控项目 artifact 候选；不得绕过执行网关写文件。"
+    },
+    {
+      "requirement_id": "req_project_readmodel",
+      "capability": "long_project_material_contract_payment_readmodel",
+      "gateway_class": "memory",
+      "risk_class": "medium",
+      "fallback_policy": "provider_missing",
+      "provider_family": "readmodel",
+      "description": "读取长周期项目材料、合同、付款、售后 ReadModel。"
+    },
+    {
+      "requirement_id": "req_evidence_receipt",
+      "capability": "evidence_and_receipt_replay",
+      "gateway_class": "execution",
+      "risk_class": "high",
+      "fallback_policy": "blocked",
+      "provider_family": "receipt-ledger",
+      "description": "回放证据与回执，正式验收/付款/关闭必须可反查。"
+    }
+  ]
+}

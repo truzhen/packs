@@ -1,0 +1,54 @@
+{
+  "scene_ref": "scene://shuxuejia-large-home-renovation",
+  "default_mount_policy": "mount_on_pack_enable",
+  "scopes": [
+    {
+      "scope_ref": "knowledge_scope://shuxuejia/design-guidance",
+      "display_name": "大宅装修设计指导知识域",
+      "scene_ref": "scene://shuxuejia-large-home-renovation",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop",
+        "checklist"
+      ],
+      "source_dir": "knowledge/design-guidance"
+    },
+    {
+      "scope_ref": "knowledge_scope://shuxuejia/material-contract-payment",
+      "display_name": "材料合同付款风险知识域",
+      "scene_ref": "scene://shuxuejia-large-home-renovation",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop",
+        "checklist"
+      ],
+      "source_dir": "knowledge/material-contract-payment"
+    },
+    {
+      "scope_ref": "knowledge_scope://shuxuejia/site-quality-acceptance",
+      "display_name": "现场质量与验收知识域",
+      "scene_ref": "scene://shuxuejia-large-home-renovation",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop",
+        "checklist"
+      ],
+      "source_dir": "knowledge/site-quality-acceptance"
+    },
+    {
+      "scope_ref": "knowledge_scope://shuxuejia/after-sales-warranty",
+      "display_name": "售后保修与回访知识域",
+      "scene_ref": "scene://shuxuejia-large-home-renovation",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop",
+        "checklist"
+      ],
+      "source_dir": "knowledge/after-sales-warranty"
+    }
+  ]
+}

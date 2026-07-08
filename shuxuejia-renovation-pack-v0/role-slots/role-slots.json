@@ -1,0 +1,104 @@
+{
+  "role_slots": [
+    {
+      "slot_id": "home_owner",
+      "responsibility": "确认需求、方案、合同、验收、付款候选和售后关闭。（Proposer）",
+      "required_role": "业主确认参与者",
+      "default_role_pack_ref": "role_pack://home-owner-decision",
+      "slice_scope_policy": "transaction_scoped_large_home_renovation",
+      "node_type": "advice"
+    },
+    {
+      "slot_id": "design_lead",
+      "responsibility": "产出方案、施工图、材料手册和顾问协调候选。（Proposer）",
+      "required_role": "大宅装修设计负责人",
+      "default_role_pack_ref": "role_pack://design-lead-large-home",
+      "slice_scope_policy": "transaction_scoped_large_home_renovation",
+      "node_type": "advice"
+    },
+    {
+      "slot_id": "project_manager",
+      "responsibility": "推进开工、施工、材料、进度、整改候选。（Proposer）",
+      "required_role": "大宅项目交付经理",
+      "default_role_pack_ref": "role_pack://project-manager-delivery",
+      "slice_scope_policy": "transaction_scoped_large_home_renovation",
+      "node_type": "advice"
+    },
+    {
+      "slot_id": "site_supervisor",
+      "responsibility": "质询质量、隐蔽验收、道检和返工风险。（Proposer）",
+      "required_role": "现场质量监理",
+      "default_role_pack_ref": "role_pack://site-supervisor-quality",
+      "slice_scope_policy": "transaction_scoped_large_home_renovation",
+      "node_type": "advice"
+    },
+    {
+      "slot_id": "material_coordinator",
+      "responsibility": "跟踪采购、进场、延期和替代材料候选。（Proposer）",
+      "required_role": "材料供应协调员",
+      "default_role_pack_ref": "role_pack://material-coordinator-supply",
+      "slice_scope_policy": "transaction_scoped_large_home_renovation",
+      "node_type": "advice"
+    },
+    {
+      "slot_id": "third_party_consultant",
+      "responsibility": "输出灯光、厨房、智能化、暖通、电梯等专项意见。（Proposer）",
+      "required_role": "第三方专项顾问",
+      "default_role_pack_ref": "role_pack://third-party-consultant-specialty",
+      "slice_scope_policy": "transaction_scoped_large_home_renovation",
+      "node_type": "advice"
+    },
+    {
+      "slot_id": "after_sales_service",
+      "responsibility": "处理保修、维修、投诉和回访。（Proposer）",
+      "required_role": "售后保修服务负责人",
+      "default_role_pack_ref": "role_pack://after-sales-service-warranty",
+      "slice_scope_policy": "transaction_scoped_large_home_renovation",
+      "node_type": "advice"
+    }
+  ],
+  "bindings": [
+    {
+      "slot_id": "home_owner",
+      "agent_ref": "role_pack://home-owner-decision",
+      "role_pack_id": "role_pack://home-owner-decision",
+      "required_role": "业主确认参与者"
+    },
+    {
+      "slot_id": "design_lead",
+      "agent_ref": "role_pack://design-lead-large-home",
+      "role_pack_id": "role_pack://design-lead-large-home",
+      "required_role": "大宅装修设计负责人"
+    },
+    {
+      "slot_id": "project_manager",
+      "agent_ref": "role_pack://project-manager-delivery",
+      "role_pack_id": "role_pack://project-manager-delivery",
+      "required_role": "大宅项目交付经理"
+    },
+    {
+      "slot_id": "site_supervisor",
+      "agent_ref": "role_pack://site-supervisor-quality",
+      "role_pack_id": "role_pack://site-supervisor-quality",
+      "required_role": "现场质量监理"
+    },
+    {
+      "slot_id": "material_coordinator",
+      "agent_ref": "role_pack://material-coordinator-supply",
+      "role_pack_id": "role_pack://material-coordinator-supply",
+      "required_role": "材料供应协调员"
+    },
+    {
+      "slot_id": "third_party_consultant",
+      "agent_ref": "role_pack://third-party-consultant-specialty",
+      "role_pack_id": "role_pack://third-party-consultant-specialty",
+      "required_role": "第三方专项顾问"
+    },
+    {
+      "slot_id": "after_sales_service",
+      "agent_ref": "role_pack://after-sales-service-warranty",
+      "role_pack_id": "role_pack://after-sales-service-warranty",
+      "required_role": "售后保修服务负责人"
+    }
+  ]
+}
