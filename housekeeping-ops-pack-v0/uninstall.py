@@ -21,7 +21,8 @@ PACK_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_DIR = os.path.dirname(PACK_DIR)
 if REPO_DIR not in sys.path:
     sys.path.insert(0, REPO_DIR)
-from pack_diagnostics import emit_pack_error
+from pack_diagnostics import (
+    emit_pack_error, UNINSTALL_GENERIC, UNINSTALL_CONNECTIVITY, UNINSTALL_LIFECYCLE_HTTP)
 
 BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080")
 OWNER = os.environ.get("TRUZHEN_PACK_OWNER", "owner://local/default")
@@ -46,8 +47,8 @@ def call(method, path, body=None):
         return 0, {"_transport_error": str(e)}
 
 
-def die(msg):
-    emit_pack_error(pack_dir=PACK_DIR, base=BASE, action="uninstall", error_code="TZ-PACK-UNINSTALL-001", message=msg)
+def die(msg, error_code=UNINSTALL_GENERIC):
+    emit_pack_error(pack_dir=PACK_DIR, base=BASE, action="uninstall", error_code=error_code, message=msg)
     print("卸载失败：" + msg, file=sys.stderr)
     sys.exit(1)
 
@@ -63,7 +64,7 @@ def main():
     query = urllib.parse.urlencode({"pack_ref": pack_ref})
     code, body = call("GET", "/v3/pack-studio/lifecycle/packs?" + query)
     if code == 0:
-        die("连不上 devserver（%s）" % BASE)
+        die("连不上 devserver（%s）" % BASE, UNINSTALL_CONNECTIVITY)
 
     enabled = False
     for entry in body.get("packs", []) or []:
@@ -84,18 +85,18 @@ def main():
         "transaction_ref": "transaction://pack-disable:" + pack_ref + "@" + version,
     })
     if code != 200:
-        die("gated prepare HTTP %d: %s" % (code, body))
+        die("gated prepare HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
     issue_ref = (body.get("issue") or {}).get("issue_ref")
     if not issue_ref:
-        die("gated prepare 无 issue_ref: %s" % body)
+        die("gated prepare 无 issue_ref: %s" % body, UNINSTALL_LIFECYCLE_HTTP)
 
     code, body = call("POST", "/v3/base/gated-actions/confirm", {"issue_ref": issue_ref})
     if code != 200:
-        die("gated confirm HTTP %d: %s" % (code, body))
+        die("gated confirm HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
     issue = body.get("issue") or {}
     decision_ref = issue.get("decision_ref")
     if not decision_ref:
-        die("gated confirm 无 decision_ref: %s" % body)
+        die("gated confirm 无 decision_ref: %s" % body, UNINSTALL_LIFECYCLE_HTTP)
 
     code, body = call("POST", "/v3/pack-studio/lifecycle/disable", {
         "pack_ref": pack_ref,
@@ -107,7 +108,7 @@ def main():
         "owner_action_evidence_ref": "owner_action_evidence://pack-disable/" + pack_ref,
     })
     if code != 200:
-        die("disable HTTP %d: %s" % (code, body))
+        die("disable HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
 
     print("\n卸载成功：%s 已停用。" % pack_ref)
     print("已产生的事务对象、候选和 03 回执仍可反查；卸载不删除历史。")

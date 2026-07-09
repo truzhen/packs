@@ -67,8 +67,10 @@
 
 ```sh
 git status --short --branch
+GOWORK=off go test ./...            # 含 forbidden-artifact 扫描 + Y4 错误码细分 guard（pack_error_code_taxonomy_test）
 python3 -c "import json,glob;[json.load(open(f)) for f in glob.glob('**/*.json',recursive=True)];print('JSON 合法')"
 find . -name install.py -o -name uninstall.py | xargs -r python3 -m py_compile && echo "脚本语法 OK"
+python3 -m unittest test_pack_diagnostics    # Y4 错误码行为级验证（连通性→002、readiness→004）
 git ls-files | rg '(^|/)(__pycache__|node_modules|dist|build|\.vite)(/|$)|\.(db|sqlite|log|jsonl|pyc)$' || true
 ```
 

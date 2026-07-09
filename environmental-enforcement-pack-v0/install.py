@@ -28,7 +28,10 @@ PACK_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_DIR = os.path.dirname(PACK_DIR)
 if REPO_DIR not in sys.path:
     sys.path.insert(0, REPO_DIR)
-from pack_diagnostics import emit_pack_error
+from pack_diagnostics import (
+    emit_pack_error, INSTALL_GENERIC, INSTALL_CONNECTIVITY, INSTALL_LIFECYCLE_HTTP,
+    INSTALL_READINESS, INSTALL_STATE_CONFLICT, INSTALL_ROLE_BINDING, INSTALL_KNOWLEDGE,
+    INSTALL_BASE_GATE)
 
 BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080")
 # 用本地规范 Owner（前端记忆中心默认查询 owner_id='owner://local/default'，后端运行时
@@ -91,8 +94,8 @@ def call(method, path, body=None):
         return code, {"_raw": raw}
 
 
-def die(msg):
-    emit_pack_error(pack_dir=PACK_DIR, base=BASE, action="install", error_code="TZ-PACK-INSTALL-001", message=msg)
+def die(msg, error_code=INSTALL_GENERIC):
+    emit_pack_error(pack_dir=PACK_DIR, base=BASE, action="install", error_code=error_code, message=msg)
     print("装入失败：" + msg, file=sys.stderr)
     sys.exit(1)
 
@@ -120,7 +123,7 @@ def main():
     # 健康检查
     code, _ = call("GET", "/v3/pack-studio/lifecycle/packs?pack_ref=" + pack_ref)
     if code == 0:
-        die("连不上 devserver（%s）。请先 go run ./backend/cmd/devserver" % BASE)
+        die("连不上 devserver（%s）。请先 go run ./backend/cmd/devserver" % BASE, INSTALL_CONNECTIVITY)
 
     # 解析装入版本：
     #   - 该 pack 已有 enabled 版本 → 幂等跳过场景包步骤（已装）。
@@ -149,9 +152,9 @@ def main():
                 "occ_version": int(body["current_occ_version"]),
                 "save_source": "pack_install", "flow_spec_draft": flow})
         if code != 200:
-            die("canvas HTTP %d: %s" % (code, body))
+            die("canvas HTTP %d: %s" % (code, body), INSTALL_LIFECYCLE_HTTP)
         if not ((body.get("engine_sync") or {}).get("synced")):
-            die("canvas 未同步进 06：%s" % body.get("engine_sync"))
+            die("canvas 未同步进 06：%s" % body.get("engine_sync"), INSTALL_LIFECYCLE_HTTP)
 
         # 2. lifecycle draft（六件事 + 知识域）
         print("[2/6] lifecycle draft（六件事 + %d 知识域）..." % len(scopes_doc.get("scopes", [])))
@@ -188,7 +191,7 @@ def main():
         if code != 200:
             if is_state_conflict(body):
                 raise PackVersionConflict(body)
-            die("draft HTTP %d: %s" % (code, body))
+            die("draft HTTP %d: %s" % (code, body), INSTALL_LIFECYCLE_HTTP)
 
         # 3. readiness
         print("[3/6] readiness ...")
@@ -197,17 +200,17 @@ def main():
         if code != 200:
             if is_state_conflict(body):
                 raise PackVersionConflict(body)
-            die("readiness HTTP %d: %s" % (code, body))
+            die("readiness HTTP %d: %s" % (code, body), INSTALL_LIFECYCLE_HTTP)
         rr = (body.get("record") or {}).get("readiness_report") or {}
         if not rr.get("ready"):
-            die("readiness 未通过：%s" % body)
+            die("readiness 未通过：%s" % body, INSTALL_READINESS)
 
         # 4. promote
         print("[4/6] promote ...")
         code, body = call("POST", "/v3/pack-studio/lifecycle/promote",
                           {"pack_ref": pack_ref, "version": install_version, "actor_ref": OWNER})
         if code != 200:
-            die("promote HTTP %d: %s" % (code, body))
+            die("promote HTTP %d: %s" % (code, body), INSTALL_LIFECYCLE_HTTP)
 
         # 5. confirm → enabled
         print("[5/6] confirm（真 01 Base Gate + 03 receipt）...")
@@ -216,7 +219,7 @@ def main():
             "idempotency_key": "pack-install-confirm:" + pvr,
             "owner_ref": OWNER, "approve": True, "comment": manifest["name"] + " 启用"})
         if code != 200 or body.get("status") != "enabled":
-            die("confirm 未达 enabled HTTP %d: %s" % (code, body))
+            die("confirm 未达 enabled HTTP %d: %s" % (code, body), INSTALL_LIFECYCLE_HTTP)
 
     reactivated = False
     if enabled_version:
@@ -245,7 +248,7 @@ def main():
                     print("    版本 %s 遗留态占用，改用 %s 重试" % (install_version, nv))
                     install_version = nv
             else:
-                die("连续 20 个版本都被占用，无法装入")
+                die("连续 20 个版本都被占用，无法装入", INSTALL_STATE_CONFLICT)
     pack_version_ref = pack_ref + "@" + install_version
 
     # 6a. 角色包
@@ -309,28 +312,28 @@ def install_role_pack(rp):
         "evidence_refs": ["evidence://pack-install/role-pack/" + sani + "/draft"],
         "idempotency_key": idem + "-draft"})
     if code != 200:
-        die("role draft HTTP %d: %s" % (code, body))
+        die("role draft HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
     draft_id = body.get("draft_id") or (body.get("draft") or {}).get("draft_id") or draft_id
     code, body = call("POST", "/v3/agent-orchestration/role-packs/drafts/" + draft_id + "/readiness-check", {})
     if code != 200:
-        die("role readiness HTTP %d: %s" % (code, body))
+        die("role readiness HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
     code, body = call("POST", "/v3/agent-orchestration/role-packs/drafts/" + draft_id + "/promote-candidate", {
         "owner_ref": OWNER, "target_agent_ref": rp["role_pack_id"], "idempotency_key": idem + "-promote",
         "evidence_refs": ["evidence://pack-install/role-pack/promote"]})
     if code != 200 or not body.get("ok"):
-        die("role promote HTTP %d: %s" % (code, body))
+        die("role promote HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
     code, body = call("POST", "/v3/agent-orchestration/role-packs/enable-candidate", {
         "role_pack_id": rp["role_pack_id"], "version": rp["version"], "target_agent_ref": rp["role_pack_id"],
         "owner_ref": OWNER, "idempotency_key": idem + "-enable",
         "evidence_refs": ["evidence://pack-install/role-pack/enable"]})
     if code != 200 or not body.get("ok"):
-        die("role enable-candidate HTTP %d: %s" % (code, body))
+        die("role enable-candidate HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
     code, body = call("POST", "/v3/agent-orchestration/role-packs/enable-confirm", {
         "role_pack_id": rp["role_pack_id"], "version": rp["version"], "target_agent_ref": rp["role_pack_id"],
         "owner_ref": OWNER, "idempotency_key": idem + "-confirm", "approve": True,
         "comment": rp["display_name"] + " 启用", "evidence_refs": ["evidence://pack-install/role-pack/enable-confirm"]})
     if code != 200 or body.get("status") != "enabled":
-        die("role enable-confirm 未达 enabled HTTP %d: %s" % (code, body))
+        die("role enable-confirm 未达 enabled HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
 
 
 def bind_slot(b, scope_ref):
@@ -346,13 +349,13 @@ def bind_slot(b, scope_ref):
         "requested_role_pack_id": b["role_pack_id"], "ttl": "8760h",
         "evidence_refs": ["evidence://pack-install/agent-slot/" + b["slot_id"] + "/bind"]})
     if code != 200 or not body.get("ok"):
-        die("bind-candidate HTTP %d: %s" % (code, body))
+        die("bind-candidate HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
     binding_ref = body.get("binding_ref")
     code, body = call("POST", "/v3/agent-orchestration/agent-slots/confirm", {
         "binding_ref": binding_ref, "idempotency_key": "pack-install-slot-confirm-" + b["slot_id"],
         "approve": True, "evidence_refs": ["evidence://pack-install/agent-slot/" + b["slot_id"] + "/confirm"]})
     if code != 200 or body.get("status") != "enabled":
-        die("slot confirm 未达 enabled HTTP %d: %s" % (code, body))
+        die("slot confirm 未达 enabled HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
 
 
 def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
@@ -388,7 +391,7 @@ def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
         "knowledge_scope_ref": scope_ref}
     code, body = call("POST", "/v3/memory/knowledge/batches", batch)
     if code not in (200, 201):
-        die("knowledge batches HTTP %d (scope=%s): %s" % (code, scope_ref, body))
+        die("knowledge batches HTTP %d (scope=%s): %s" % (code, scope_ref, body), INSTALL_KNOWLEDGE)
     candidates = body.get("candidates", []) or []
     approved = 0
     for c in candidates:
@@ -405,7 +408,7 @@ def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
             "verify_authority": True,
             "reason": "随场景包装入并经 Owner 信任确认（owner_verified）"})
         if code != 200:
-            die("knowledge approve HTTP %d for %s: %s" % (code, cref, abody))
+            die("knowledge approve HTTP %d for %s: %s" % (code, cref, abody), INSTALL_KNOWLEDGE)
         approved += 1
     return approved
 
@@ -417,16 +420,16 @@ def mint_decision(scope_ref, candidate_ref):
         "impact_summary": "把 pack 声明的领域知识候选确认为 FormalKnowledge（pending_human_review）",
         "transaction_ref": "transaction://pack-knowledge:" + scope_ref})
     if code != 200:
-        die("gated prepare HTTP %d: %s" % (code, body))
+        die("gated prepare HTTP %d: %s" % (code, body), INSTALL_BASE_GATE)
     issue_ref = (body.get("issue") or {}).get("issue_ref")
     if not issue_ref:
-        die("gated prepare 无 issue_ref: %s" % body)
+        die("gated prepare 无 issue_ref: %s" % body, INSTALL_BASE_GATE)
     code, body = call("POST", "/v3/base/gated-actions/confirm", {"issue_ref": issue_ref})
     if code != 200:
-        die("gated confirm HTTP %d: %s" % (code, body))
+        die("gated confirm HTTP %d: %s" % (code, body), INSTALL_BASE_GATE)
     iss = body.get("issue") or {}
     if not iss.get("decision_ref"):
-        die("gated confirm 无 decision_ref: %s" % body)
+        die("gated confirm 无 decision_ref: %s" % body, INSTALL_BASE_GATE)
     return iss["decision_ref"], iss.get("run_id", ""), iss.get("nonce", "")
 
 
