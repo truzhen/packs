@@ -2,6 +2,7 @@
   "pack_id": "pack_smart_home_owner_v0",
   "pack_ref": "scene_pack://smart-home-owner-project-ops",
   "version": "1.0.0",
+  "lifecycle_status": "已验收",
   "name": "智能家居老板项目经营 Pack",
   "template_family": "长周期项目交付型",
   "description": "面向智能家居/智能装修公司老板的客户项目经营全周期场景荚：从项目机会录入 → Frappe 项目/客户快照 → 项目经理经营建议 → 里程碑/采购/施工任务候选 → 客户沟通草稿 → Frappe 写回候选 → Owner/Base 经营确认门 → 项目回执归档。Frappe 仅作 provider 需求声明，真实读写经 04/11 网关候选 + Base/Receipt。",

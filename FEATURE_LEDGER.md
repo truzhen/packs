@@ -126,6 +126,7 @@
 
 | 功能 / 资产 | 职责 | 状态 | 位置 / 证据 | 当前口径 |
 |---|---|---|---|---|
+| manifest 八档 `lifecycle_status` 声明 | 五个 manifest（4 真实 pack + 1 模板）声明八档中文生命周期档位，作者侧声明、验收/发布裁定归 Owner | 🟡 已实现（分支待 land） | 各 `*/manifest.json`（版本行下）；contracts 侧 schema+Go 常量+同步守卫在 `truzhen-contracts` `claude/kweaver-two-items-exec-20260710`@a0cabdc（v0.9.0 additive）；packs 侧分支 `claude/pack-manifest-lifecycle-20260710` | 跟随 packs 既有中文档位约定（team-office candidate-set 先例）；档位事实：env/家政/智能家居=已验收（各自 GUI 实测报告）、shuxuejia=设计中、模板=想法 |
 | Pack 仓治理边界 | 明确本仓是包层，不是基座、运行时、Provider、前端产品仓 | ✅ | `AGENTS.md`、`CLAUDE.md`、`README.md`、`MODULES.md` | Pack 只声明和编排 |
 | 底层软件需求声明样例 | 智能家居 / 家政 Pack 声明 Baserow A/B 版本差异与共享 OCR，不封装软件本体 | 🟡 契约已定 | `smart-home-owner-pack-v0/manifest.json`、`housekeeping-ops-pack-v0/manifest.json`、`software_requirements_test.go` | 复用 / 冲突 / 隔离由 `truzhenos` resolver 裁定 |
 | 三类 Pack 封顶 | 固定 `Domain Work Pack`、`Capability Pack`、`Role Pack` 三类 | ✅ | `AGENTS.md`、`README.md` | 不发明第四种 Pack |

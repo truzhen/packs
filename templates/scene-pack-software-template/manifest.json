@@ -1,6 +1,7 @@
 {
   "pack_id": "example.scene-pack",
   "version": "1.0.0",
+  "lifecycle_status": "想法",
   "pack_type": "domain_work_pack",
   "manifest_version": "v3",
   "security_profile": {

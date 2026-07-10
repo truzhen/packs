@@ -2,6 +2,7 @@
   "pack_id": "pack_housekeeping_ops_v0",
   "pack_ref": "scene_pack://housekeeping-ops",
   "version": "0.1.0",
+  "lifecycle_status": "已验收",
   "name": "家政公司日常运营 Pack（客户服务全生命周期）",
   "template_family": "客户服务全生命周期型",
   "description": "家政/保洁公司的客户服务全生命周期场景荚：从受理咨询 → 顾问出方案 → 质检质询 → 排期报价 → 派工任务主权确认 → 上门执行 → 服务回执 → 归档进历史项目。所有正式动作经 Owner + Base Gate 裁定并产 Receipt。",

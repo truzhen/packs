@@ -2,6 +2,7 @@
   "pack_id": "pack_shuxuejia_large_home_renovation_v0",
   "pack_ref": "scene_pack://shuxuejia-large-home-renovation",
   "version": "1.0.0",
+  "lifecycle_status": "设计中",
   "name": "墅学家大宅装修设计指导 Pack",
   "template_family": "长周期项目交付型",
   "description": "面向大宅/别墅装修设计师与项目负责人：基于 EPC 原版 457 节点流程，组织设计准备、深化设计、材料合同付款、现场质量验收和售后保修的候选建议、证据要求、Owner/Base Gate 和 Receipt 回放。",

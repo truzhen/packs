@@ -2,6 +2,7 @@
   "pack_id": "pack_environmental_enforcement_v0",
   "pack_ref": "scene_pack://environmental-enforcement-flow",
   "version": "1.0.0",
+  "lifecycle_status": "已验收",
   "name": "环保执法证据链 Pack（全领域）",
   "template_family": "合规审查执法证据链型",
   "description": "面向生态环境执法人员的全领域执法证据链场景荚：覆盖水/大气/固废/危废/噪声/土壤/生态/核辐射污染领域 + 行政处罚程序、证据规则、行刑衔接与执法风险防范。知识库基于权威资料（生态环境法典 + 执法指南 + 案例精析）真实导入。从线索受理 → 立案 → 现场检查取证 → 证据三性审查 → 执法精英与挑剔律师多角色对照 → 处置推演 → 责令改正/处罚/移送 → 文书草稿 → Owner 主权确认 + Base Gate 裁定 → Receipt 归档。所有正式动作经 Owner + Base Gate 裁定并产 Receipt。",
