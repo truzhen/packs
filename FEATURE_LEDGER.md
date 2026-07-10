@@ -17,17 +17,6 @@
 | 验收方式 | `git diff --check`；关键条款检索；Owner 用一条脱敏真实跟进案例完成 20 分钟桌面走查。 |
 | 状态 | `设计中`。本轮只有设计与影响矩阵，不代表契约、实现、接线、验收或发布。 |
 
-## 0.0 在途派活卡（领域语义与隐性业务知识治理条文，六仓治理轮 packs 半）
-
-| 维度 | 结论 |
-|---|---|
-| 我要做的事 | 按 Owner 2026-07-10 六项裁定，落地方案 B：在 `AGENTS.md`（§3.2 第 3 项 + 新增 §5.1）、`CLAUDE.md`（铁律附则）、`README.md`（四件事→五件事 + 作者叙事）、`MODULES.md`（映射表补行 + `knowledge/` 定义澄清 + 验收映射补行）、`docs/author-guide.md`（五件事→六件事 + 场景包最小形态补充）显性化“领域语义与隐性业务知识”治理口径。 |
-| 真实客户 / 场景证据 | **缺证据**（Owner 自认，裁定为战略必须的治理文档轮）。因此只改治理表述；逐 Pack 补 glossary 内容属阶段 2，必须证据驱动另行开工。 |
-| 真相源 | 行业语义内容归本仓 Pack 声明；形状归 `truzhen-contracts`（knowledge_kinds 已含 glossary/checklist/index）；正式知识与挂载 / 裁剪归 truzhenos os-09；正式业务对象归 os-05。 |
-| 契约影响 | 零：不改 schema、不加字段、不新增第四种 Pack、不建中央语义层或 Pack 内运行时。 |
-| 验收方式 | `git diff --check`；红线条款零漂移 grep（三类 Pack 封顶 / Candidate≠Formal / 真相源归属）；相对链接存在性检查。 |
-| 状态 | `已实现`（分支 `claude/semantic-governance-20260710`，待 Owner 确认合并）。总纲：`/Users/li/Documents/truzhenv3/docs/plans/truzhen-six-repo-semantic-governance-update-opinion-20260710.md`。 |
-
 ## 0.1 既有派活卡（团队办公室角色制作台与商品化链路执行）
 
 | 维度 | 结论 |
@@ -140,6 +129,7 @@
 | Pack 仓治理边界 | 明确本仓是包层，不是基座、运行时、Provider、前端产品仓 | ✅ | `AGENTS.md`、`CLAUDE.md`、`README.md`、`MODULES.md` | Pack 只声明和编排 |
 | 底层软件需求声明样例 | 智能家居 / 家政 Pack 声明 Baserow A/B 版本差异与共享 OCR，不封装软件本体 | 🟡 契约已定 | `smart-home-owner-pack-v0/manifest.json`、`housekeeping-ops-pack-v0/manifest.json`、`software_requirements_test.go` | 复用 / 冲突 / 隔离由 `truzhenos` resolver 裁定 |
 | 三类 Pack 封顶 | 固定 `Domain Work Pack`、`Capability Pack`、`Role Pack` 三类 | ✅ | `AGENTS.md`、`README.md` | 不发明第四种 Pack |
+| 领域语义与隐性业务知识治理条文 | 把行业概念 / 口径 / 关系 / 判断约束显性化为三类 Pack 横向内容维度（方案 B 五文件），作者须提交行业术语与口径、缺证据标待核验 | ✅ 已实现（治理文档） | `AGENTS.md` §5.1、`CLAUDE.md` 附则、`README.md`、`MODULES.md`、`docs/author-guide.md`；land `411a915`（2026-07-10） | 不新增第四种 Pack / 中央语义层 / schema 字段；glossary 内容录入属阶段 2 证据驱动，收尾报告见 truzhenv3 `docs/status/truzhen-six-repo-semantic-governance-closeout-20260710.md` |
 | 环保执法 Pack | 高风险合规 / 执法证据链样板，带知识库、双角色对照和 install / uninstall | 🟡 | `environmental-enforcement-pack-v0/` | 法律 / 监管知识默认 `pending_human_review`。**2026-07-02/03 用户视角全链路实测收口**：批 7 已 land `283849c`（9 阶段节点补一线执法 stage_guide、manifest 门槛与 capabilities 对齐、15 知识域零漂移、solid-waste 索引漂移已在 950e16d 收口）；隔离 devserver E2E registry 0→1→0 铁证回执 `718b0baa`；前端 UI 完整停用→启用回环 PASS（真回执 `608291f0`）；执法 run 至 `lawyer_challenge`，送达 `provider_missing` 受控拒绝无假成功。实测结论与报告：`docs/reports/env-pack-user-simulation-e2e-report-20260703.md` |
 | 智能家居老板 Pack | 长周期项目交付样板，声明 Frappe 读写候选与项目经理角色 | ✅ | `smart-home-owner-pack-v0/` | Frappe 只是 ProviderRequirement，不是真相源。**2026-07-03 用户视角全链路实测收口（第二轮）**：registry 实测本 pack 一开始即 `enabled@1.0.0`（occ=0，P2 语义翻转），前端 UI 完整**停用→启用回环还原**（真回执 `5f10877e` replayed=false，018 唯一幂等键回归✓，刷新终态还原 enabled@1.0.0）；王先生灯组离线售后工单五阶段真模型 Qwen3.6-35B live 流式对话闭环，Frappe provider 三态诚实（frappe_snapshot 无假读、送达 provider_missing 受控拒绝无假发送）、020 P4-09 越 owner_gate 未复现；候选回填终验 PASS（完整回执 `4662a9d3` 03 反查 recorded）。实测结论与报告：`docs/reports/smarthome-pack-user-simulation-e2e-report-20260703.md`。**install.py 环保残留（docstring 首行 + knowledge tags）待清=backlog（§6，第二轮计划 §7 列的完善候选，本轮 SH-P3 受阻未做）** |
 | 家政运营 Pack | 客服全生命周期样板，可装入 / 卸载、可声明角色 / 能力 / flow | 🟡 | `housekeeping-ops-pack-v0/` | 不能标完整知识包；卸载脚本只停用 Pack，不删除历史对象、候选或回执 |
