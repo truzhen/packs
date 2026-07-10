@@ -3,7 +3,21 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
-## 0. 本轮派活卡（团队办公室角色制作台与商品化链路执行）
+## 0. 本轮派活卡（销售 / CRM / 私域第一现金流 Pack 最小闭环设计）
+
+| 维度 | 结论 |
+|---|---|
+| 我要做的事 | 把第一现金流场景收敛为“一个真实客户 → 一次跟进 → 一个 Owner 确认草稿 → 一条受控回执”，并给出真相源、跨仓影响、Top5 最小切片和客户验证门。 |
+| 真实客户 / 场景证据 | **缺证据**。只有 Owner 战略与历史文档，尚无客户原话或真实跟进记录；代码施工前必须完成一条脱敏真实案例的桌面走查。 |
+| 真相源 | 外部 CRM 持客户 / 联系人 / 商机事实；`truzhenos` 05/10/03 分别持受控事务快照、发送过程和回执；本仓只持 Pack 声明与设计。 |
+| 仓库 / 层归属 | 本轮只新增 `docs/plans/sales-crm-private-domain-first-cashflow-minimum-loop-20260710.md`。不改 os、client、cloud、contracts 或 provider。 |
+| 风险颜色 | 绿：本轮文档；黄：未来 Pack / UI；橙：CRM provider 与 Gateway；红：真实发送、批量触达、凭据和正式化。 |
+| 是否改契约 | 否。未来优先复用 TransactionObject、SendCandidate、OwnerActionEvidence、Receipt，确认无法表达后才出兼容影响清单。 |
+| 不允许碰的边界 | 不做通用 CRM，不持客户真相，不群发 / 自动回复 / 抓联系人，不自铸 authority refs，不让五个长期能力长成独立平台。 |
+| 验收方式 | `git diff --check`；关键条款检索；Owner 用一条脱敏真实跟进案例完成 20 分钟桌面走查。 |
+| 状态 | `设计中`。本轮只有设计与影响矩阵，不代表契约、实现、接线、验收或发布。 |
+
+## 0.1 既有派活卡（团队办公室角色制作台与商品化链路执行）
 
 | 维度 | 结论 |
 |---|---|
@@ -17,7 +31,7 @@
 | 验收方式 | 本仓当前验证：`go test ./... -run TestTeamOffice -count=1`；JSON 合法性；禁入产物扫描；秘书长表现层新增 `secretary_appearance_gui_controls_verified` 证据门；后续跨仓需 client GUI smoke、`truzhenos` Gate / Receipt、`truzhen-cloud` sandbox 支付下载安装回执。 |
 | 状态 | `设计中 -> 契约已定`；本仓候选资产和结构测试已建立，秘书长音色 / VRM 已有团队设置页选择、清空、恢复默认和 provider readiness 候选声明，不代表角色制作台 GUI、云端商品、支付购买、下载或安装已接线。 |
 
-## 0.1 派活卡（短视频运营能力 Pack 制作台压测与产出计划）
+## 0.2 既有派活卡（短视频运营能力 Pack 制作台压测与产出计划）
 
 | 维度 | 结论 |
 |---|---|
@@ -45,7 +59,7 @@
 
 本轮补充：短视频运营新增 `/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/capability-pack-candidates/short-video-ops-v0/docs/commercial-independent-acceptance-signoff-matrix.json`，把 P12-P18、GUI/API/Receipt、issue 关闭证据、禁入动作、证据写回、Owner/Base Gate 和最终机器证据包纳入独立 reviewer 签收矩阵；readiness、go/no-go、最终机器证据包和目标完成图均消费 `independent_acceptance_signoff_matrix_passed`。当前仍缺独立验收人和权威证据，不能请求商用签收。
 
-## 0.2 上轮派活卡（智能家居服务商 pack 用户视角全链路实测收口，第二轮）
+## 0.3 既有派活卡（智能家居服务商 pack 用户视角全链路实测收口，第二轮）
 
 | 维度 | 结论 |
 |---|---|
