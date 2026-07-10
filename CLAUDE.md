@@ -29,6 +29,8 @@
 2. **AI 永远是 Proposer**：Role Pack、Agent、模型只产候选、草稿、质询和风险提示；不得声称已批准、已执行、已发送或已写正式记忆。
 3. **真实动作必须穿 Gateway + Receipt**：真实模型、真实记忆、真实沟通、真实执行、真实市场动作归基座受控链路；未接通只能 `blocked / provider_missing / not_ready`，不得假成功。
 
+附则——**概念先于数据和动作**：行业术语、口径、关系、判断约束必须来自真实客户 / 行业作者，并显式落入既有对象、知识（`glossary / sop / checklist / index`）、流程、角色或能力声明；Agent 不得临场猜口径。领域语义不是第四种 Pack，也不新增 Pack 内运行时。细则见 `AGENTS.md` §5.1。
+
 ## 3. 三类 Pack 封顶
 
 - `Domain Work Pack / Scene Pack`：垂直职业工作台定义，组织对象、流程、角色、能力、Surface 和治理策略。

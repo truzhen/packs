@@ -105,7 +105,7 @@ Pack、Role Pack、Capability Pack 都只能生成候选、声明约束或提供
 
 1. 工作模式集：职业有哪些工作区 / 模式。
 2. 事务流程：一笔业务如何从候选、确认、闸门、执行到回执。
-3. 业务对象：对象 schema、生命周期、状态覆盖和外部映射意图；实例真相归基座 05。
+3. 业务对象与领域语义：对象 schema、生命周期、状态覆盖和外部映射意图；并把行业概念、别名、口径边界、从属关系、判断 / 计算约束与例外映射到既有对象 schema、`knowledge/`、flow / gates、角色和能力引用。Pack 只定义模板和行业声明，运行实例与正式对象真相归基座 05。该内容仍属于“业务对象”部分，不新增第七部分。
 4. 能力引用：能力域、能力操作、ProviderRequirement 和 readiness；不实现能力。
 5. 角色引用：Role Slots、Role Packs、作用范围和模型策略；全员 Proposer。
 6. 工作台 UI 声明：tab、工作区、标准视觉单元和 Surface 意图；不实现前端组件。
@@ -162,6 +162,18 @@ Pack 只能声明或生成：
 - `knowledge_scopes[]` 是所有场景包通用平台能力，不得写成某个行业专用分支。
 - Pack 启用 / 停用只改变 KnowledgeMount 可见性和运行访问权；不物理删除 FormalKnowledge，不破坏历史 Receipt。
 - `manifest.json`、`knowledge/knowledge-scopes.json`、`knowledge/knowledge-index.json` 和实际 Markdown 文件必须保持一致。
+
+### 5.1 领域语义与隐性业务知识纪律
+
+- “领域语义资产”（行业概念、口径、关系、判断约束等隐性业务知识，俗称“暗知识”）是三类 Pack 的横向内容维度，不是第四种 Pack、独立真相源、中央语义层或 Pack 私有数据库。Domain Work Pack 是行业语义主载体；Role Pack 只携带专业观察与判断边界；Capability Pack 在本仓只体现能力含义、风险、Gate、Receipt 与 ProviderRequirement 引用，不实现能力。
+- 设计顺序必须从真实业务概念和场景证据开始，再映射到对象字段、外部数据、能力、流程和 UI；不得从现有数据表、Provider 字段或某个软件界面反推并固化行业世界。
+- 对会影响候选质量或正式动作的行业术语，至少说明：标准名称与别名、定义、适用范围 / 边界、对象关系或上下级关系、判断 / 计算约束、例外、来源与核验状态。无真实客户 / 作者证据时标记“缺证据 / 待人工核验”，不得由模型临场猜测后写成 Pack 规则。
+- 对象、字段和关系进入对象 schema；术语、口径、SOP、清单和索引进入 `knowledge/`（优先使用已有 `glossary / sop / checklist / index` kind）；流程条件和门控进入声明式 flow / gates；专业观察角度进入 Role Pack；动作含义、风险、Gateway 和回执要求进入 capability requirement。不得新增可执行脚本、条件分支实现或平行 schema 冒充语义资产。
+- `knowledge_scopes[]` / `KnowledgeMount` 是所有 Scene Pack 共用的挂载机制；scope 的内容可以且应按行业专用。禁止的是在 truzhenos 中新增某行业专用的加载、权限或运行分支，不是禁止行业知识域。
+- Agent / Model 只能消费 truzhenos os-09 ContextCompiler 裁剪出的 ContextSlice。存在歧义、冲突、过期或缺来源的概念时，应请求 Owner 澄清，或输出带不确定性与引用的 Candidate；不得静默选择一种口径，更不得把推测升级为 Formal。
+- 语义声明本身不授予查看、修改、调用或执行权限。有效范围仍取 Owner 授权、Role Pack 白名单、Pack 声明、KnowledgeMount / ContextSlice 与 Provider 能力的交集；正式动作仍经 Owner + Base Gate + Gateway + Receipt。
+- 新增概念要有来源和复核；废弃概念保留迁移 / 别名说明；冲突口径按 owner / team / scene / pack version / effective time 隔离，不得用新 Pack 静默覆盖 FormalKnowledge 或历史 Receipt。
+- 最小 Pack 可暂不补齐全部领域语义，但必须在 README / MODULES 诚实列出覆盖范围和缺口。存在行业歧义术语、统计 / 判断口径或高风险规则，却没有 glossary / 知识条目、来源和核验状态的 Pack，不得宣称“语义完整”或据此升级成熟度。
 
 ## 6. Provider / 能力纪律
 

@@ -17,6 +17,17 @@
 | 验收方式 | `git diff --check`；关键条款检索；Owner 用一条脱敏真实跟进案例完成 20 分钟桌面走查。 |
 | 状态 | `设计中`。本轮只有设计与影响矩阵，不代表契约、实现、接线、验收或发布。 |
 
+## 0.0 在途派活卡（领域语义与隐性业务知识治理条文，六仓治理轮 packs 半）
+
+| 维度 | 结论 |
+|---|---|
+| 我要做的事 | 按 Owner 2026-07-10 六项裁定，落地方案 B：在 `AGENTS.md`（§3.2 第 3 项 + 新增 §5.1）、`CLAUDE.md`（铁律附则）、`README.md`（四件事→五件事 + 作者叙事）、`MODULES.md`（映射表补行 + `knowledge/` 定义澄清 + 验收映射补行）、`docs/author-guide.md`（五件事→六件事 + 场景包最小形态补充）显性化“领域语义与隐性业务知识”治理口径。 |
+| 真实客户 / 场景证据 | **缺证据**（Owner 自认，裁定为战略必须的治理文档轮）。因此只改治理表述；逐 Pack 补 glossary 内容属阶段 2，必须证据驱动另行开工。 |
+| 真相源 | 行业语义内容归本仓 Pack 声明；形状归 `truzhen-contracts`（knowledge_kinds 已含 glossary/checklist/index）；正式知识与挂载 / 裁剪归 truzhenos os-09；正式业务对象归 os-05。 |
+| 契约影响 | 零：不改 schema、不加字段、不新增第四种 Pack、不建中央语义层或 Pack 内运行时。 |
+| 验收方式 | `git diff --check`；红线条款零漂移 grep（三类 Pack 封顶 / Candidate≠Formal / 真相源归属）；相对链接存在性检查。 |
+| 状态 | `已实现`（分支 `claude/semantic-governance-20260710`，待 Owner 确认合并）。总纲：`/Users/li/Documents/truzhenv3/docs/plans/truzhen-six-repo-semantic-governance-update-opinion-20260710.md`。 |
+
 ## 0.1 既有派活卡（团队办公室角色制作台与商品化链路执行）
 
 | 维度 | 结论 |
