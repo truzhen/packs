@@ -55,3 +55,15 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  forbidden-scan:
+    # T5.1：禁品/PII/DB/正式 ref 静态门接入自动 CI（此前仅 CLAUDE.md 手动命令）。
+    # scoped -run：编译全包但只跑禁品门，避开依赖本机 superpowers worktree 的能力包测试。
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: forbidden-artifact-scan（禁品/PII/DB/正式ref 静态门）
+        run: go test -run 'TestPackAssetsDoNotCarry|TestForbiddenPatternsCatchBusinessPII|TestForbiddenDatabaseArtifact' .
