@@ -37,7 +37,7 @@
 - `Capability Pack`：能力契约和风险声明；本仓只声明需求，不实现 provider。
 - `Role Pack`：行业角色人格、口吻、决策习惯、模型策略和权限边界。
 
-不得发明第四种 Pack。新需求先判断是现有 Pack 的 mode、template、slot、provider requirement，还是应归基座 / contracts / provider 仓。
+不得发明第四种 Pack。新需求先判断是现有 Pack 的 mode、template、slot、provider requirement，还是应归基座 / contracts / provider 仓。**优化优先于新增**（2026-07-11 Owner 裁定，v4 六仓统一，细则见 `AGENTS.md` §8.5）：能不新写代码 / pack 就不新写，优先在原有资产上优化、复用、扩展；六仓集合统称「Truzhen v4 版本」（权威定义 = truzhenos `NAMING_STANDARD.md`）。
 
 ## 4. 开工必读
 
