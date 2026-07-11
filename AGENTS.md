@@ -265,7 +265,7 @@ find . -name install.py -o -name uninstall.py | xargs -r python3 -m py_compile &
 git ls-files | rg '(^|/)(__pycache__|node_modules|dist|build|\.vite)(/|$)|\.(db|sqlite|log|jsonl|pyc)$' || true
 ```
 
-推荐结构审计：
+推荐结构审计（**边界说明**：`glob('*/manifest.json')` 只匹配仓根一级目录的正式 pack，深层目录不在审计范围；`templates/` 的 manifest 是另一套作者端脚手架 schema，被显式 `continue` 跳过——由于 glob 只扫一级，该分支实际只在 templates 根含 manifest 时触发，改成 `rglob` 前必须先给模板 schema 单独分支，否则会误报爆红）：
 
 ```sh
 python3 - <<'PY'
@@ -315,7 +315,7 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 <pack>/install.py
 |---|---|---|
 | `environmental-enforcement-pack-v0/` | 完整文件夹包，含 install / uninstall、flow、2 角色包、capabilities、knowledge | 高风险法律知识默认 `pending_human_review`；知识域声明必须与实际 scopes 保持一致 |
 | `smart-home-owner-pack-v0/` | 完整文件夹包，含 install / uninstall、单角色、Frappe ProviderRequirement，无知识库 | Frappe 只能是 provider requirement / write candidate，不是真相源 |
-| `housekeeping-ops-pack-v0/` | 可装入文件夹包，含 manifest、flow、capabilities、2 角色包、install；`knowledge/`、`uninstall.py` 待补 | 不得标成完整知识包；补卸载脚本前不得声称完整可卸载闭环 |
+| `housekeeping-ops-pack-v0/` | 可装入 / 可卸载文件夹包，含 manifest、flow、capabilities、2 角色包、install / uninstall（`uninstall.py` 实存，2026-07-11 口径修正）；`knowledge/` 待补 | 不得标成完整知识包 |
 | `templates/` | 脚手架 | 不参与分发，不作为 enabled pack |
 
 ## 11. 哪些变更必须回 Owner

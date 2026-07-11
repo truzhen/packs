@@ -3494,6 +3494,12 @@ func TestShortVideoAuthorizationCardsMirrorMachineScopeReferencesAndPhraseGates(
 			scope := readJSON(t, filepath.Join(base, scopePath))
 
 			cardPath := requireString(t, slice, "cross_repo_authorization_card")
+			if strings.HasPrefix(cardPath, "process_worktree_ref://") {
+				// 同 requireExistingPath 的方案 b：授权卡产自外部过程 worktree，
+				// 内容级镜像断言在其缺席机器上无法执行，降级为引用登记存在性。
+				requireExistingPath(t, cardPath, "")
+				return
+			}
 			cardBytes, err := os.ReadFile(resolveReferencePath(cardPath))
 			if err != nil {
 				t.Fatalf("read authorization card %s: %v", cardPath, err)
@@ -3986,6 +3992,11 @@ func TestShortVideoCommercialReadinessAuditRequiresEvidenceWritebackGate(t *test
 
 	auditPath := requireString(t, p14, "audit_file")
 	requireExistingPath(t, auditPath, "")
+	if strings.HasPrefix(auditPath, "process_worktree_ref://") {
+		// 同 requireExistingPath 的方案 b：外部过程 worktree 文档不随本仓分发，
+		// 内容级断言在其缺席机器上无法执行，降级为引用登记存在性（上一行已校验）。
+		return
+	}
 	raw, err := os.ReadFile(resolveReferencePath(auditPath))
 	if err != nil {
 		t.Fatalf("read %s: %v", auditPath, err)
@@ -6596,8 +6607,25 @@ func stringSliceOrEmpty(t *testing.T, doc map[string]any, key string) []string {
 	return asStringSlice(t, raw)
 }
 
+// processWorktreeRefRegistry 登记已知外部过程 worktree 引用前缀 → 历史本机路径（仅作出处记录）。
+// 防什么：P12-P18 执行规格/授权卡产自外部 superpowers 过程 worktree，该目录不随本仓分发、
+// 也不保证在任意机器存在（2026-07-10 分账登记的预存断链，干净 main 同样 FAIL）。
+// 为什么在这里防：Owner 2026-07-11 交付债务集中处理轮裁方案 b——对 process_worktree_ref://
+// 引用只断言「引用登记存在性」（前缀在本登记表内），不 os.Stat 外部路径；仓内路径仍必须真实存在。
+var processWorktreeRefRegistry = map[string]string{
+	"process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
+}
+
 func requireExistingPath(t *testing.T, path string, base string) {
 	t.Helper()
+	if strings.HasPrefix(path, "process_worktree_ref://") {
+		for prefix := range processWorktreeRefRegistry {
+			if strings.HasPrefix(path, prefix) {
+				return
+			}
+		}
+		t.Fatalf("process worktree reference %s is not registered in processWorktreeRefRegistry", path)
+	}
 	if base != "" && !filepath.IsAbs(path) {
 		path = filepath.Join(base, path)
 	}
@@ -6607,10 +6635,7 @@ func requireExistingPath(t *testing.T, path string, base string) {
 }
 
 func resolveReferencePath(path string) string {
-	replacements := map[string]string{
-		"process_worktree_ref://truzhen-packs/gui-capability-pack-test-plan": "/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan",
-	}
-	for prefix, actual := range replacements {
+	for prefix, actual := range processWorktreeRefRegistry {
 		if strings.HasPrefix(path, prefix) {
 			return actual + strings.TrimPrefix(path, prefix)
 		}
