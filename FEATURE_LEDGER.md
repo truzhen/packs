@@ -85,7 +85,7 @@
 | 是否改契约 | 否。复用既有 manifest v3 字段与 software_requirements 形状（`restic-family >=0.19.0,<1.0.0`，fallback not_ready）。 |
 | 不允许碰的边界 | Pack 不持主权/凭据；仓库密码归 SecureStore；恢复只进一次性影子目标；不假成功。 |
 | 验收方式 | JSON 合法 ✓ / 结构审计 7 治理字段 ✓ / forbidden artifacts 扫描 ✓ / py_compile ✓ / `go test -skip TestShortVideo ./...` ok（5 个 ShortVideo FAIL 为干净 main 同样失败的预存环境路径 flake，非本轮引入，已如实登记）。E2E install 需隔离 devserver，本轮未跑不声称。 |
-| 状态 | `已实现`（声明层）。配套 truzhenos devserver 接线与 client 页面在同一 W4 轮由 os/client 分支交付。 |
+| 状态 | `已验收`（2026-07-11 真机 GUI 走查 PASS：安全核心「数据备份」tab 全链点通——备份五要素卡→真 restic 快照→03 反查回执→影子恢复校验一致；os/client 配套均已 land 并同轮验收，报告 truzhenos `docs/status/restic-backup-w4-gui-acceptance-20260711.md`。GUI 走查经 devserver 表面验收声明荚背后的同一 os-19 能力链；Pack install E2E 仍留隔离 devserver 轮，不声称）。 |
 
 ## 1. 当前基线
 
