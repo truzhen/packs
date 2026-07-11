@@ -6,9 +6,17 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: packs-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   pack-validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -46,9 +54,12 @@ jobs:
         run: |
           scripts=$(find . -name install.py -o -name uninstall.py)
           if [ -n "$scripts" ]; then echo "$scripts" | xargs python3 -m py_compile && echo "脚本语法 OK"; else echo "无装入脚本"; fi
+      - name: python-unit-tests（环境无关单测）
+        run: python3 -m unittest test_pack_diagnostics test_knowledge_checksums test_pack_bundle test_pack_install_journal test_install_journal_wiring
 
   secret-scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -62,6 +73,7 @@ jobs:
     # T5.1：禁品/PII/DB/正式 ref 静态门接入自动 CI（此前仅 CLAUDE.md 手动命令）。
     # scoped -run：编译全包但只跑禁品门，避开依赖本机 superpowers worktree 的能力包测试。
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
@@ -69,3 +81,5 @@ jobs:
           go-version-file: go.mod
       - name: forbidden-artifact-scan（禁品/PII/DB/正式ref 静态门）
         run: go test -run 'TestPackAssetsDoNotCarry|TestForbiddenPatternsCatchBusinessPII|TestForbiddenDatabaseArtifact' .
+      - name: pack-go-tests（含错误码与禁品防回潮）
+        run: GOWORK=off go test ./...
