@@ -126,6 +126,7 @@
 
 | 功能 / 资产 | 职责 | 状态 | 位置 / 证据 | 当前口径 |
 |---|---|---|---|---|
+| 禁品/PII/DB 静态门 + 接入 CI（T5.1）| 禁品扫描增手机号 `1[3-9]\d{9}` / 身份证 `\d{17}[\dXx]` PII 值模式 + `forbiddenDatabaseArtifact`(.db/.sqlite/.sqlite3 扩展名+SQLite 魔数防改名)；`.github/workflows/ci.yml` 新增 forbidden-scan job（setup-go+scoped go test）把此前手动禁品门接入自动 CI | ✅ 已验收（land origin/main）| `pack_forbidden_artifacts_test.go`（TDD 增 2 测）/ `.github/workflows/ci.yml`；scoped -run 避开依赖本机 superpowers worktree 的能力包 env 测试；真实资产零误报 | 商用就绪 C4/T5.1 |
 | 智能家居 pack 交付 bundle 打包器 + install.py 交付形态 | `build_pack_bundle.py` 把 pack 目录 + 父层 `pack_diagnostics.py` 打成自包含 bundle.zip（解决 install.py 父目录导入）+ 拒残缺 pack + 每文件 sha256；install.py docstring 改为面向已运行生产基座（`TRUZHEN_DEVSERVER_BASE`）+ bundle 两种装入 | ✅ 已验收（land origin/main `96faf96`） | `build_pack_bundle.py` / `test_pack_bundle.py`(TDD 2 用例绿) / `smart-home-owner-pack-v0/install.py`；E2E：解压 bundle（无 packs 源码树）→全新生产基座 install 达 enabled + 03 回执 `fae0cc8b`（Base Gate decision_ref）；证据 truzhenos `docs/status/smart-home-pack-base-deliverable-e2e-20260709.md` | 首个用户=Owner 智能家居服务商；启用穿真主权链非下载冒充 |
 | manifest 八档 `lifecycle_status` 声明 | 五个 manifest（4 真实 pack + 1 模板）声明八档中文生命周期档位，作者侧声明、验收/发布裁定归 Owner | ✅ 已验收（独立验收 PASS，2026-07-10 land） | 各 `*/manifest.json`（版本行下）；contracts 侧已 land main `3a455ee` 并 tag `v0.9.0`（schema+Go 常量+embed 同步守卫+双向突变闭环）；packs 侧已 land main `e3f8fce` | 跟随 packs 既有中文档位约定（team-office candidate-set 先例）；档位事实：env/家政/智能家居=已验收（各自 GUI 实测报告）、shuxuejia=设计中、模板=想法 |
 | Pack 仓治理边界 | 明确本仓是包层，不是基座、运行时、Provider、前端产品仓 | ✅ | `AGENTS.md`、`CLAUDE.md`、`README.md`、`MODULES.md` | Pack 只声明和编排 |
