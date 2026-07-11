@@ -73,6 +73,20 @@
 | 验收方式 | Markdown diff、JSON 合法性、报告事实与 main-task-register 一致 |
 | 状态 | ✅ 完成 — 本轮三方结构一日跑完 SH-P0~P7（P2 语义翻转：本 pack 一开始即 enabled@1.0.0，回环还原）。停用→启用回环 UI PASS（新回执 `5f10877e` replayed=false，018 回归✓）+ 王先生工单五阶段真模型 Qwen3.6-35B 流式对话闭环 + 候选回填终验 PASS（完整 ref `4662a9d3` 03 反查 recorded）+ 送达 provider_missing 受控拒绝无假发送 + 020 P4-09 越门未复现 + 行为审计 99 脚本零直连。修复 land：client `8dd8de3→538c55a→82bbc71→3f2b91c`（批 1-3 共 17 commits，779 测绿）、truzhenos `2ea6f59→764bc97`（按 tx 拉候选只读 GET，EGR verify ok）。橙色两轮合并去重（第一轮 10 项 + 第二轮 6 类）只出方案待 Owner 裁。**pack 内容 install.py 残留清理本轮未做，记 backlog（§6）**。报告：`/Users/li/Documents/truzhen-packs/docs/reports/smarthome-pack-user-simulation-e2e-report-20260703.md` |
 
+## 0.4 本轮派活卡（备份管理员工作台 Pack 声明荚，W4）
+
+| 维度 | 结论 |
+|---|---|
+| 我要做的事 | 新增 `backup-administrator-workbench-v0/` 数据安全与备份治理场景荚：声明备份策略六治理要素 + restic 引擎 software_requirement，把 truzhenos os-19 已 land 的受控备份/影子恢复能力投射为可交付领域工作台。 |
+| 真实客户 / 场景证据 | Owner 2026-07-11 裁定「备份功能作为商业产品的基本要求」正式立项（产品交付基线，非单客户请求）。 |
+| 真相源 | truzhenos os-19 `backupservice`（Base 签发 decision + 03 回执）持备份/恢复事实；本仓只持 Pack 声明。 |
+| 仓库 / 层归属 | 本仓新增一个 Domain Work Pack 目录（manifest/flow/role-slots/role-packs×2/capabilities/install/uninstall/README）；不改其它 pack、不改 os/client/contracts。 |
+| 风险颜色 | 黄（新 pack 声明层，无 runtime/binary/secret）。 |
+| 是否改契约 | 否。复用既有 manifest v3 字段与 software_requirements 形状（`restic-family >=0.19.0,<1.0.0`，fallback not_ready）。 |
+| 不允许碰的边界 | Pack 不持主权/凭据；仓库密码归 SecureStore；恢复只进一次性影子目标；不假成功。 |
+| 验收方式 | JSON 合法 ✓ / 结构审计 7 治理字段 ✓ / forbidden artifacts 扫描 ✓ / py_compile ✓ / `go test -skip TestShortVideo ./...` ok（5 个 ShortVideo FAIL 为干净 main 同样失败的预存环境路径 flake，非本轮引入，已如实登记）。E2E install 需隔离 devserver，本轮未跑不声称。 |
+| 状态 | `已实现`（声明层）。配套 truzhenos devserver 接线与 client 页面在同一 W4 轮由 os/client 分支交付。 |
+
 ## 1. 当前基线
 
 | 项 | 值 |

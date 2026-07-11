@@ -1,0 +1,32 @@
+{
+  "capabilities_required": [
+    {
+      "capability_ref": "truzhen.capability.backup_policy",
+      "purpose": "按数据资产盘点出备份范围/频率/保留策略候选（RPO/RTO 权衡）",
+      "gateway": "capability",
+      "required_gate": "base_gate"
+    },
+    {
+      "capability_ref": "truzhen.execution.intent",
+      "purpose": "真实备份执行与影子恢复演练意图（受控，不直接执行）",
+      "gateway": "execution",
+      "required_gate": "base_execution_gate"
+    },
+    {
+      "capability_ref": "truzhen.receipt.generation",
+      "purpose": "备份/演练回执生成（recovery.backup.created / recovery.restore.verified，03 可反查）",
+      "gateway": "receipt",
+      "required_gate": "base_gate"
+    }
+  ],
+  "provider_requirements": [
+    {
+      "requirement_id": "provider-backup-restic-engine",
+      "capability": "truzhen.execution.intent",
+      "gateway_class": "execution",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "not_ready"
+    }
+  ]
+}

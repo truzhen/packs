@@ -1,0 +1,60 @@
+{
+  "flow_id": "backup-lifecycle",
+  "title": "数据安全与备份治理全生命周期",
+  "version": "1.0.0",
+  "nodes": [
+    { "id": "start", "type": "start", "title": "开始：发起数据资产备份治理" },
+    { "id": "intake_assets", "type": "business_object", "title": "盘点数据资产（建备份治理对象）", "gateway": "business_object" },
+    { "id": "admin_advice", "type": "advice", "title": "备份管理员出备份策略方案（RPO/RTO/范围/保留）", "gateway": "model", "slot_ref": "backup_administrator" },
+    { "id": "auditor_challenge", "type": "challenge", "title": "恢复审计员质询范围遗漏与恢复可行性", "gateway": "model", "slot_ref": "recovery_auditor" },
+    {
+      "id": "compare_gate",
+      "type": "compare_gate",
+      "title": "策略方案 vs 审计质询对照确认门（Owner 裁定）",
+      "gate_policy": { "required_gate": "sovereign_gate", "pending_owner_confirmation": true }
+    },
+    {
+      "id": "backup_plan_task",
+      "type": "task",
+      "title": "整理备份计划（目标/仓库/保留策略，需主权确认）",
+      "gateway": "task",
+      "gate_policy": { "required_gate": "sovereign_gate", "pending_owner_confirmation": true }
+    },
+    {
+      "id": "owner_approval",
+      "type": "human_approval",
+      "title": "Owner 五要素确认备份执行（目标/内容/影响/run_id/nonce）",
+      "gate_policy": { "required_gate": "sovereign_gate", "pending_owner_confirmation": true }
+    },
+    { "id": "controlled_backup", "type": "execution", "title": "受控执行加密备份（restic 经 Base Gate + 执行网关）", "gateway": "execution" },
+    { "id": "backup_receipt", "type": "receipt", "title": "生成备份回执（recovery.backup.created，含快照 id 与源内容摘要）", "gateway": "receipt" },
+    {
+      "id": "drill_approval",
+      "type": "human_approval",
+      "title": "Owner 确认影子恢复演练（一次性隔离目标，绝不覆盖在线数据）",
+      "gate_policy": { "required_gate": "sovereign_gate", "pending_owner_confirmation": true }
+    },
+    { "id": "shadow_restore_drill", "type": "execution", "title": "影子恢复演练 + 内容摘要校验", "gateway": "execution" },
+    { "id": "drill_receipt", "type": "receipt", "title": "生成演练回执（recovery.restore.verified，含校验结果）", "gateway": "receipt" },
+    { "id": "review", "type": "review", "title": "复盘：RPO/RTO 达成与缺口登记", "gateway": "business_object" },
+    { "id": "end", "type": "end", "title": "结束：备份治理归档进历史项目" },
+    { "id": "close_rejected", "type": "end", "title": "退回归档：Owner 打回备份计划，事务以退回终态归档" }
+  ],
+  "edges": [
+    { "id": "e1", "source": "start", "target": "intake_assets" },
+    { "id": "e2", "source": "intake_assets", "target": "admin_advice" },
+    { "id": "e3", "source": "admin_advice", "target": "auditor_challenge" },
+    { "id": "e4", "source": "auditor_challenge", "target": "compare_gate" },
+    { "id": "e5", "source": "compare_gate", "target": "backup_plan_task", "condition": "approved" },
+    { "id": "e6", "source": "backup_plan_task", "target": "owner_approval" },
+    { "id": "e7", "source": "owner_approval", "target": "controlled_backup", "condition": "approved" },
+    { "id": "e7r", "source": "owner_approval", "target": "close_rejected", "condition": "rejected" },
+    { "id": "e8", "source": "controlled_backup", "target": "backup_receipt" },
+    { "id": "e9", "source": "backup_receipt", "target": "drill_approval" },
+    { "id": "e10", "source": "drill_approval", "target": "shadow_restore_drill", "condition": "approved" },
+    { "id": "e10r", "source": "drill_approval", "target": "review", "condition": "rejected" },
+    { "id": "e11", "source": "shadow_restore_drill", "target": "drill_receipt" },
+    { "id": "e12", "source": "drill_receipt", "target": "review" },
+    { "id": "e13", "source": "review", "target": "end" }
+  ]
+}

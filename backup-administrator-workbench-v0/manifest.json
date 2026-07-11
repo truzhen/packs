@@ -1,0 +1,185 @@
+{
+  "pack_id": "pack_backup_administrator_workbench_v0",
+  "pack_ref": "scene_pack://backup-administrator-workbench",
+  "version": "0.1.0",
+  "lifecycle_status": "已实现",
+  "name": "备份管理员工作台 Pack（数据安全与备份治理）",
+  "template_family": "数据资产保护与恢复演练型",
+  "description": "数据安全与备份场景荚：从盘点数据资产 → 备份管理员出备份策略方案（RPO/RTO/范围/保留）→ 恢复审计员对抗质询 → Owner 对照确认 → 备份计划主权确认 → 受控执行加密备份（restic 经 Base Gate）→ 备份回执 → 影子恢复演练（一次性隔离目标 + 内容校验，绝不覆盖在线数据）→ 演练回执 → 复盘归档。所有正式动作经 Owner + Base Gate 裁定并产 03 Receipt。",
+  "author": "Truzhen Pack Studio (用户视角制作)",
+  "pack_type": "domain_work_pack",
+  "manifest_version": "v3",
+  "target_industry": "中小团队数据资产保护 / 备份合规",
+  "target_audience": "团队负责人、IT 管理员、数据合规负责人",
+  "flow_spec_ref": "scene_flow_spec:backup-lifecycle@1.0.0",
+  "flow_file": "flows/backup-lifecycle.flow.json",
+  "role_slots_file": "role-slots/role-slots.json",
+  "capabilities_file": "capabilities/capabilities.json",
+  "security_profile": {
+    "candidate_only": true,
+    "non_formal": true,
+    "requires_base_gate": true,
+    "requires_receipt_candidate": true,
+    "default_provider_mode": "disabled",
+    "no_real_send": true,
+    "no_real_execute": true,
+    "no_real_model_call": true,
+    "isolated_namespace": "backup_administrator_ns"
+  },
+  "role_slots": [
+    {
+      "slot_id": "backup_administrator",
+      "responsibility": "备份管理员：依据数据资产盘点出备份策略方案与 RPO/RTO 建议（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack:backup_administrator@1.0.0"
+    },
+    {
+      "slot_id": "recovery_auditor",
+      "responsibility": "恢复审计视角：质询备份范围遗漏、恢复可行性与演练缺失（Proposer）",
+      "node_type": "challenge",
+      "default_role_pack_ref": "role_pack:recovery_auditor@1.0.0"
+    }
+  ],
+  "capabilities_required": [
+    "truzhen.capability.backup_policy",
+    "truzhen.execution.intent",
+    "truzhen.receipt.generation"
+  ],
+  "required_capabilities": [
+    "truzhen.capability.backup_policy",
+    "truzhen.execution.intent"
+  ],
+  "gates": {
+    "state_transition_gate": "base_gate",
+    "backup_execute_gate": "base_execution_gate",
+    "restore_drill_gate": "base_execution_gate"
+  },
+  "gate_flags": [
+    "backup_execute_confirm",
+    "restore_drill_confirm",
+    "retention_policy_change_confirm",
+    "formal_memory_confirm"
+  ],
+  "receipt_policy": {
+    "ledger_group": "backup_administrator_workbench",
+    "append_only": true,
+    "requires_witness": true
+  },
+  "person_strategy": {
+    "summary": "判人策略：备份管理员/恢复审计员为 Proposer（只出策略方案与质询，无正式裁定权）；真实备份执行、影子恢复演练、保留策略变更、归档进正式历史属高风险正式动作，一律回 Owner + Base Gate 裁定，不得由角色 agent 自决。",
+    "proposer_roles": [
+      "backup_administrator",
+      "recovery_auditor"
+    ],
+    "high_risk_actions_return_to_owner": [
+      "backup_execute_confirm",
+      "restore_drill_confirm",
+      "retention_policy_change_confirm",
+      "formal_memory_confirm"
+    ],
+    "delegation_allowed": false
+  },
+  "formalization_requirement": {
+    "summary": "判事策略：数据资产盘点、策略方案、质询均为候选态（candidate_only/non_formal）；唯有真实备份执行、影子恢复演练、保留策略变更需经 Owner 主权确认 + Base Gate 裁定后才正式化并产可反查 Receipt（recovery.backup.created / recovery.restore.verified）。裁定权在 Base，不在场景包。",
+    "formalizes": [
+      "BackupPlan",
+      "BackupExecution",
+      "ShadowRestoreDrill",
+      "FormalReceipt"
+    ],
+    "decided_by": "owner_plus_base_gate"
+  },
+  "provider_requirements": [
+    {
+      "requirement_id": "provider-backup-restic-engine",
+      "capability": "truzhen.execution.intent",
+      "gateway_class": "execution",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "not_ready",
+      "provider_family": "restic_backup"
+    }
+  ],
+  "notification_command_report_routes": {
+    "notification": [
+      "owner_dashboard",
+      "pack.candidate.card"
+    ],
+    "command_candidate": [
+      "pack.task.panel",
+      "backup_execute_confirm_card"
+    ],
+    "report": [
+      "candidate_review",
+      "receipt_ledger",
+      "pack.receipt.timeline"
+    ]
+  },
+  "report_routes": [
+    "candidate_review",
+    "receipt_ledger"
+  ],
+  "evidence_requirements": {
+    "summary": "证据要求：每个正式动作（备份执行/影子恢复演练/策略变更）必须绑定可在 03 反查的 Receipt；OwnerActionEvidence = Owner 五要素确认点击；备份产 recovery.backup.created 回执（含快照 id 与源内容摘要），演练产 recovery.restore.verified 回执（含内容校验结果），执行经 restic 引擎受控完成。",
+    "requires_receipt_ref": true,
+    "requires_owner_action_evidence": true,
+    "receipt_lookup_module": "03-receipt-ledger"
+  },
+  "multi_role_comparison": {
+    "summary": "多角色对照为显式流程节点（advice 备份管理员出策略 → challenge 恢复审计员质询 → owner_gate 对照确认），禁 runtime 内隐藏 agent 间回路；对照结果呈现给 Owner 裁定。",
+    "explicit_nodes": [
+      "backup_administrator(advice)",
+      "recovery_auditor(challenge)"
+    ],
+    "hidden_agent_loops_forbidden": true
+  },
+  "moat_justification": {
+    "question": "用户能否一句话让最强模型直接做出同样结果？",
+    "passes_moat": true,
+    "valid_reasons": [
+      "real_system_integration",
+      "domain_approval_compliance",
+      "auditable_evidence_receipt",
+      "multi_role_compare_sovereign",
+      "transaction_lifecycle_replay"
+    ],
+    "rationale": "数据安全与备份依赖真实备份引擎（restic）的门控集成、备份/恢复的主权审批（Base 签发 decision 单次消费）、可在 03 反查的备份与演练回执、备份管理员与恢复审计员的显式对照门控，以及影子恢复演练（一次性隔离目标 + 内容摘要校验，绝不覆盖在线数据）的生命周期回放——不是单次 prompt 可替代的文本生成；最强模型无法替用户真实执行受门控的备份并留下可审计证据。"
+  },
+  "ui_surface_slots": [
+    "pack.dashboard",
+    "pack.object.list",
+    "pack.object.detail",
+    "pack.flow.canvas",
+    "pack.task.panel",
+    "pack.candidate.card",
+    "pack.receipt.timeline",
+    "transaction.capsule"
+  ],
+  "forbidden_artifacts": [
+    "node_modules",
+    "dist",
+    "build",
+    ".vite",
+    "*.db",
+    "*.sqlite",
+    "*.log",
+    "*.jsonl"
+  ],
+  "software_requirements": [
+    {
+      "requirement_id": "backup-restic-engine",
+      "software_family": "restic-family",
+      "provider_family": "restic_backup",
+      "version_range": ">=0.19.0,<1.0.0",
+      "required_capabilities": [
+        "encrypted_snapshot_backup",
+        "shadow_restore_verification"
+      ],
+      "license_policy": "review_required",
+      "isolation_policy": "reuse_preferred",
+      "fallback_policy": "not_ready",
+      "gateway_class": "execution",
+      "risk_class": "high"
+    }
+  ]
+}

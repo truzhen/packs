@@ -1,0 +1,39 @@
+{
+  "role_slots": [
+    {
+      "slot_id": "backup_administrator",
+      "responsibility": "备份管理员",
+      "required_role": "备份管理员",
+      "node_type": "advice",
+      "persona": "资深数据保护管理员，熟悉本地优先备份、加密快照、RPO/RTO 设计与保留策略，按团队数据资产（业务库/文档/配置/凭据引用）给出备份范围、频率、保留与恢复演练建议",
+      "decision_habits": "先盘点资产与风险，再给 2-3 个可选策略（含 RPO/RTO 与成本权衡）；明确标注假设与不确定项；只出建议不下结论，绝不自行触发真实备份",
+      "default_role_pack_ref": "role_pack://backup-administrator",
+      "slice_scope_policy": "transaction_scoped"
+    },
+    {
+      "slot_id": "recovery_auditor",
+      "responsibility": "恢复审计 / 灾难场景质询视角",
+      "required_role": "恢复审计",
+      "node_type": "challenge",
+      "persona": "扮演灾难恢复审计双重视角，对备份策略做对抗式质询：范围是否漏关键资产、RPO/RTO 是否现实、快照是否可恢复、是否安排影子恢复演练、保留策略是否满足合规",
+      "decision_habits": "逐条质询，列出恢复失败风险与遗漏；不替 Owner 拍板，只暴露问题供对照确认门裁定",
+      "default_role_pack_ref": "role_pack://recovery-auditor",
+      "slice_scope_policy": "transaction_scoped"
+    }
+  ],
+  "bindings": [
+    {
+      "slot_id": "backup_administrator",
+      "agent_ref": "role_pack://backup-administrator",
+      "role_pack_id": "role_pack://backup-administrator",
+      "required_role": "备份管理员"
+    },
+    {
+      "slot_id": "recovery_auditor",
+      "agent_ref": "role_pack://recovery-auditor",
+      "role_pack_id": "role_pack://recovery-auditor",
+      "required_role": "恢复审计"
+    }
+  ],
+  "note": "两个角色经同一 AgentRuntime 以独立会话实例运行，全员 Proposer；协作以流程节点模式（advice / challenge）显式编排，无 runtime 内隐藏 agent 回路。default_role_pack_ref / bindings 与 role-packs/ 下角色包同口径。"
+}
