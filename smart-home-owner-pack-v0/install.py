@@ -39,11 +39,14 @@ from pack_diagnostics import (
     INSTALL_READINESS, INSTALL_STATE_CONFLICT, INSTALL_ROLE_BINDING, INSTALL_KNOWLEDGE,
     INSTALL_BASE_GATE, INSTALL_KNOWLEDGE_CHECKSUM)
 from knowledge_checksums import verify_entries
+from pack_install_journal import InstallJournal
 
 BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080")
 # 用本地规范 Owner（前端记忆中心默认查询 owner_id='owner://local/default'，后端运行时
 # 也用此 owner）：知识/挂载/角色/绑定都落在这个 owner 下，记忆中心与运行时 advice 才看得到。
 OWNER = os.environ.get("TRUZHEN_PACK_OWNER", "owner://local/default")
+
+JOURNAL = None  # 装入事务日志（#8）：main() 内初始化；die() 失败时落半装状态
 
 
 def load(rel):
@@ -102,6 +105,8 @@ def call(method, path, body=None):
 
 
 def die(msg, error_code=INSTALL_GENERIC):
+    if JOURNAL is not None:
+        JOURNAL.fail(error_code=error_code, message=msg)
     emit_pack_error(pack_dir=PACK_DIR, base=BASE, action="install", error_code=error_code, message=msg)
     print("装入失败：" + msg, file=sys.stderr)
     sys.exit(1)
@@ -131,6 +136,9 @@ def main():
     pack_version_ref = pack_ref + "@" + version
 
     print("== 装入 %s @ %s 到 %s ==" % (pack_ref, version, BASE))
+    global JOURNAL
+    JOURNAL = InstallJournal.open(pack_ref, BASE)
+    JOURNAL.step("scene")
 
     # 健康检查
     code, _ = call("GET", "/v3/pack-studio/lifecycle/packs?pack_ref=" + pack_ref)
@@ -262,9 +270,12 @@ def main():
             else:
                 die("连续 20 个版本都被占用，无法装入", INSTALL_STATE_CONFLICT)
     pack_version_ref = pack_ref + "@" + install_version
+    JOURNAL.set_version(install_version)
+    JOURNAL.mark("scene_enabled")
 
     # 6a. 角色包
     print("[6/6] 角色包 + 绑槽 + 知识库 ...")
+    JOURNAL.step("role_packs")
     code, rpbody = call("GET", "/v3/agent-orchestration/role-packs/readmodel")
     enabled_rp = set()
     for ev in (rpbody.get("enabled_versions") or []):
@@ -280,14 +291,18 @@ def main():
             continue
         install_role_pack(rp)
         print("    角色包 %s 已启用" % rid)
+        JOURNAL.mark_item("role_packs", rid)
 
     # 6b. 绑槽
+    JOURNAL.step("bindings")
     scope_ref = pack_version_ref
     for b in role_slots_doc.get("bindings", []):
         bind_slot(b, scope_ref)
+        JOURNAL.mark_item("bindings", b["slot_id"])
     print("    绑槽完成")
 
     # 6c. 知识库入库（按知识域分组）
+    JOURNAL.step("knowledge")
     entries = kindex.get("entries", [])
     if reactivated:
         print("    reactivate 路径：知识域已随版本重挂，跳过重灌")
@@ -303,6 +318,7 @@ def main():
             total += n
         print("    知识库入库完成：%d 条已确认为 FormalKnowledge（pending_human_review）" % total)
 
+    JOURNAL.complete()
     print("\n✅ 装入成功：%s @ %s 已 enabled。前端「场景包管理」刷新可见。" % (pack_ref, install_version))
 
 
@@ -404,12 +420,15 @@ def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
     code, body = call("POST", "/v3/memory/knowledge/batches", batch)
     if code not in (200, 201):
         die("knowledge batches HTTP %d (scope=%s): %s" % (code, scope_ref, body), INSTALL_KNOWLEDGE)
+    JOURNAL.mark_item("knowledge_batches", scope_ref)
     candidates = body.get("candidates", []) or []
     approved = 0
     for c in candidates:
         cref = c.get("candidate_ref")
         if not cref or c.get("status") != "pending":
             continue
+        if cref in JOURNAL.approved_refs(scope_ref):
+            continue  # 断点续装：上次已 approve 的候选不再重复走 Base gate
         dref, run_id, nonce = mint_decision(pack_version_ref, cref)
         code, abody = call("POST", "/v3/memory/knowledge/candidates/" + urllib.parse.quote(cref, safe="") + "/approve", {
             "actor_ref": OWNER,
@@ -421,6 +440,7 @@ def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
             "reason": "随场景包装入并经 Owner 信任确认（owner_verified）"})
         if code != 200:
             die("knowledge approve HTTP %d for %s: %s" % (code, cref, abody), INSTALL_KNOWLEDGE)
+        JOURNAL.add_approved(scope_ref, cref)
         approved += 1
     return approved
 

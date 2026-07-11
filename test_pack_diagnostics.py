@@ -12,6 +12,8 @@ import importlib.util
 import io
 import json
 import os
+import shutil
+import tempfile
 import unittest
 
 REPO = os.path.dirname(os.path.abspath(__file__))
@@ -64,6 +66,14 @@ class TestPackDiagnosticsRegistry(unittest.TestCase):
 
 
 class TestInstallStageErrorCodes(unittest.TestCase):
+    def setUp(self):
+        self._journal_tmp = tempfile.mkdtemp(prefix="journal-diag-")
+        os.environ["TRUZHEN_PACK_INSTALL_STATE_DIR"] = self._journal_tmp
+
+    def tearDown(self):
+        shutil.rmtree(self._journal_tmp, ignore_errors=True)
+        os.environ.pop("TRUZHEN_PACK_INSTALL_STATE_DIR", None)
+
     def test_connectivity_failure_maps_to_002(self):
         mod = load_install_module()
         # call() 恒返回传输层错误（code 0）→ 健康检查即判连不上。
