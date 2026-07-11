@@ -204,6 +204,8 @@ def main():
             "report_routes": routes.get("report", []),
             "moat_justification": manifest["moat_justification"],
             "knowledge_scopes": ks,
+            # 判事策略结构化骨架（#11）：声明不授权，Base RiskTypeGate 裁定；缺省为空。
+            "risk_types": manifest.get("risk_types", []),
             "idempotency_key": "pack-install-draft:" + pvr,
             "actor_ref": OWNER,
         }

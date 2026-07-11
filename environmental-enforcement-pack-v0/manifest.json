@@ -257,5 +257,17 @@
       "gateway_class": "model",
       "risk_class": "medium"
     }
+  ],
+  "risk_types": [
+    {
+      "risk_type_id": "formal_penalty_notice",
+      "definition": "对外正式处罚/整改通知类动作：一旦流程真实启动即进入对外正式生效域",
+      "trigger_action_types": [
+        "scene_flow_run_start"
+      ],
+      "evidence_requirement": "现场证据链齐全且引用法条均为 FormalKnowledge（可 03 反查）",
+      "escalation_path": "owner_gate",
+      "fallback": "退回人工复核，不自动降级执行"
+    }
   ]
 }
