@@ -59,7 +59,7 @@
 
 本轮补充：短视频运营新增 `/Users/li/.config/superpowers/worktrees/truzhen-packs/gui-capability-pack-test-plan/capability-pack-candidates/short-video-ops-v0/docs/commercial-independent-acceptance-signoff-matrix.json`，把 P12-P18、GUI/API/Receipt、issue 关闭证据、禁入动作、证据写回、Owner/Base Gate 和最终机器证据包纳入独立 reviewer 签收矩阵；readiness、go/no-go、最终机器证据包和目标完成图均消费 `independent_acceptance_signoff_matrix_passed`。当前仍缺独立验收人和权威证据，不能请求商用签收。
 
-## 0.3 既有派活卡（智能家居服务商 pack 用户视角全链路实测收口，第二轮）
+## 0.3 既有派活卡（智能家居服务商 pack 用户视角全链路实测收口，第二轮）——✅ 已完成（2026-07-03，修复已 land；保留作历史登记，2026-07-11 账本卫生轮标注）
 
 | 维度 | 结论 |
 |---|---|
