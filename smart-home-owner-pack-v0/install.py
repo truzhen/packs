@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-智能家居老板项目经营 Pack —— 装入正在运行的 Truzhen devserver（可加载）。
+智能家居老板项目经营 Pack —— 装入一台正在运行的 Truzhen 基座。
 
 走的是前端/产品种子完全相同的真实 lifecycle 端点（canvas → 06 同步 → lifecycle
 draft/readiness/promote/confirm → 角色包 lifecycle → 绑槽 → 09 知识库批量入库 +
 Base 签发 approve decision + approve），全程产 03 receipt，不手写裸塞、不绕主权链。
 
-前置：先在本 worktree 起 devserver（且已从 server.go 摘除智能家居项目经营自动 seed）：
-  go run ./backend/cmd/devserver        # 默认 127.0.0.1:18080
-然后：
-  python3 packs/smart-home-owner-pack-v0/install.py
+目标基座地址由 TRUZHEN_DEVSERVER_BASE 指定（默认 127.0.0.1:18080），既可以是
+开发态 `go run ./backend/cmd/devserver`，也可以是交付态生产基座二进制
+（truzhenos: `bash scripts/build-base-release.sh` 产出的 truzhen-server -tags prod）。
+
+两种装入方式：
+  A. 源码树：TRUZHEN_DEVSERVER_BASE=http://<基座> python3 <packs>/smart-home-owner-pack-v0/install.py
+  B. 交付 bundle（买家侧，无 packs 源码树）：先 `python3 build_pack_bundle.py smart-home-owner-pack-v0`
+     产出 dist/smart-home-owner-pack-v0.bundle.zip；解压后
+     TRUZHEN_DEVSERVER_BASE=http://<基座> python3 smart-home-owner-pack-v0/install.py
+     （bundle 已把父层 pack_diagnostics.py 一并打入，满足本脚本的父目录导入）
 
 幂等：已启用的场景包/角色包/绑定会跳过；知识批量入库按内容去重。
 """
