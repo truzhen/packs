@@ -40,6 +40,8 @@ jobs:
               sys.exit(1)
           print("manifest 主权核心字段齐全")
           PY
+      - name: knowledge-checksums（知识内容与 index 防漂移）
+        run: python3 knowledge_checksums.py --verify
       - name: install-scripts-syntax（装入/卸载脚本语法）
         run: |
           scripts=$(find . -name install.py -o -name uninstall.py)

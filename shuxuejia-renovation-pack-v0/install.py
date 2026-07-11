@@ -31,7 +31,8 @@ if REPO_DIR not in sys.path:
 from pack_diagnostics import (
     emit_pack_error, INSTALL_GENERIC, INSTALL_CONNECTIVITY, INSTALL_LIFECYCLE_HTTP,
     INSTALL_READINESS, INSTALL_STATE_CONFLICT, INSTALL_ROLE_BINDING, INSTALL_KNOWLEDGE,
-    INSTALL_BASE_GATE)
+    INSTALL_BASE_GATE, INSTALL_KNOWLEDGE_CHECKSUM)
+from knowledge_checksums import verify_entries
 
 BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080")
 # 用本地规范 Owner（前端记忆中心默认查询 owner_id='owner://local/default'，后端运行时
@@ -112,6 +113,11 @@ def main():
     caps = load(manifest["capabilities_file"])
     scopes_doc = load_opt(manifest.get("knowledge_scopes_manifest"), {"scopes": []})
     kindex = load_opt(manifest.get("knowledge_index"), {"entries": []})
+    # 装入前先证 pack 自身完整性：知识内容与 index checksum 漂移即拒绝装入（防漂移 #10）。
+    checksum_problems = verify_entries(PACK_DIR, kindex.get("entries", []))
+    if checksum_problems:
+        die("知识内容与 index checksum 漂移，拒绝装入：" + "; ".join(checksum_problems),
+            INSTALL_KNOWLEDGE_CHECKSUM)
 
     pack_ref = manifest["pack_ref"]
     version = manifest["version"]

@@ -10,7 +10,8 @@
       "knowledge_scope_ref": "knowledge_scope://shuxuejia/design-guidance",
       "scene_ref": "scene://shuxuejia-large-home-renovation",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:c521871241cd4ddf741def94fb329fa1740e398e63ee5bbd9b48af03792dab7e"
     },
     {
       "file": "knowledge/design-guidance/02_deep_design_review.md",
@@ -20,7 +21,8 @@
       "knowledge_scope_ref": "knowledge_scope://shuxuejia/design-guidance",
       "scene_ref": "scene://shuxuejia-large-home-renovation",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:3ab0f09ccc2050191a5e43c1d564490266612fea3de136c11dab3a893c77cda7"
     },
     {
       "file": "knowledge/material-contract-payment/01_material_contract_payment.md",
@@ -30,7 +32,8 @@
       "knowledge_scope_ref": "knowledge_scope://shuxuejia/material-contract-payment",
       "scene_ref": "scene://shuxuejia-large-home-renovation",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:d7536ce3aebb1466af75cbd32c73a0955751d39768b4efdbf77cf7afee8f9cb8"
     },
     {
       "file": "knowledge/site-quality-acceptance/01_site_quality_acceptance.md",
@@ -40,7 +43,8 @@
       "knowledge_scope_ref": "knowledge_scope://shuxuejia/site-quality-acceptance",
       "scene_ref": "scene://shuxuejia-large-home-renovation",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:265b64fcede280015b2daeaac132278253ccd7696f744e879a7722ef6cfa427b"
     },
     {
       "file": "knowledge/after-sales-warranty/01_after_sales_warranty.md",
@@ -50,7 +54,8 @@
       "knowledge_scope_ref": "knowledge_scope://shuxuejia/after-sales-warranty",
       "scene_ref": "scene://shuxuejia-large-home-renovation",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:4468872577e5e06c178c90ba733c0a85261742918f2a4b5b55bad1a02a34fdcc"
     }
   ]
 }

@@ -11,7 +11,8 @@
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
       "verification_status": "pending_human_review",
-      "effective_from": "2026-08-15"
+      "effective_from": "2026-08-15",
+      "checksum": "sha256:cd18d143b65450cedac92d0f64e4b5fecb1ca4d38493cee50b71e5972f3133f2"
     },
     {
       "file": "knowledge/guide-overview/01_执法概述与改革.md",
@@ -21,7 +22,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/guide-overview",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:46c384d964a9d4ce93e687032c90bff9ea117125a18da0ebdeb23f03a55a9879"
     },
     {
       "file": "knowledge/legal-basis/02_执法依据与法规体系.md",
@@ -31,7 +33,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/legal-basis",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:b8f3640b3b038ee92d866e51fa16cdef33e3043f2edca78b8b21a844ac889159"
     },
     {
       "file": "knowledge/pollution-source-overview/01_污染源执法概述.md",
@@ -41,7 +44,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/pollution-source-overview",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:10fcdc1e20c22af4101168fd28b2375ac4b434d250977f96ac21c6be8f69d038"
     },
     {
       "file": "knowledge/water/02_水污染源执法.md",
@@ -51,7 +55,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/water",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:5a679105e7105e5e1df19e0277463f1a42c5248b11180467b3f9691b6089dc4a"
     },
     {
       "file": "knowledge/air/03_大气污染源执法.md",
@@ -61,7 +66,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/air",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:15e5283f01c0b3d83028164102c3f178f14be929b9791804b75b63ab9dc91c57"
     },
     {
       "file": "knowledge/radiation/05_核安全与放射性执法.md",
@@ -71,7 +77,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/radiation",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:ca9de2f649d82fccbcb5656eeaec89aadd667a6fa249a1f74dcc13c9d32c49ee"
     },
     {
       "file": "knowledge/noise/06_噪声污染源执法.md",
@@ -81,7 +88,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/noise",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:f827ea0b0b83b92ea3140093a45a01dcf95179d5584df53425ff1c8cf31069bc"
     },
     {
       "file": "knowledge/eia-permit/04_建设项目与排污许可.md",
@@ -91,7 +99,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/eia-permit",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:92c753e34f61f1ce2f770a76346977136340a11eafa10dfdd2bca80d94d52d76"
     },
     {
       "file": "knowledge/ecology/05_自然生态保护.md",
@@ -101,7 +110,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/ecology",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:7d255dd38839bc6d385d081e632440cef4dfa6736956b2b110216e3a9e82fb64"
     },
     {
       "file": "knowledge/penalty/06_行政处罚.md",
@@ -111,7 +121,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/penalty",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:84e8fe56e70844039713e56173f87b0c7a0f7018d3da257afca965778d65fed3"
     },
     {
       "file": "knowledge/criminal/07_行刑衔接.md",
@@ -121,7 +132,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/criminal",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:c12db27ca51e04c5e6fa412447cfd00cb249bfac794fd212178079aa82c65c02"
     },
     {
       "file": "knowledge/risk/08_执法风险防范.md",
@@ -131,7 +143,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/risk",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:03e8f23c64368ac6fea715566c34f7f62a73a4be6c17e7d0362d71ee27b20e87"
     },
     {
       "file": "knowledge/cases/案例25_检察院在提起刑事诉讼时_就生态环境损害赔偿_可附带提起民事公益诉讼__安徽省芜湖市镜湖_区检察院诉李.md",
@@ -141,7 +154,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:b8943bc464105d61b5159f4df6a5505e4c474a69462be385e575a907a62a8d33"
     },
     {
       "file": "knowledge/cases/案例26_土壤污染责任人_应承担生态环境服务功能损失_费__铜仁市人民检察院诉贵州玉屏湘盛化工有_限公司_广东.md",
@@ -151,7 +165,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:f7505802705d02b1f3058d0b073d7d0eef86e6e9842bdc49784af1c38b1cf7f3"
     },
     {
       "file": "knowledge/cases/案例27_利用虚拟治理成本法计算得到的环境损害可以作_为生态环境损害赔偿的依据__中国生物多样性_保护与绿色发.md",
@@ -161,7 +176,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:459c9081b700128a160225fef8ea44d678fb368b4b84e73334acd5ee6b9982a2"
     },
     {
       "file": "knowledge/cases/案例28_政府在诉前已经组织实施环境污染风险管控与修_复时_再行主张污染企业承担土壤污染风险管控_与修复责任的.md",
@@ -171,7 +187,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:24adff0b7a96f8b94698a3ffe598eeaa62e5bde59066c24e5a5ad165d7ea042b"
     },
     {
       "file": "knowledge/cases/案例29_检察院发现行政机关存在违法行为或没有依法履_行职责的_发出的诉前检察建议是检察机关提起_行政公益诉讼.md",
@@ -181,7 +198,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:1cd01a8e1b7b6934b5dccb6bae52d07026c2d7adbd9d47bf9415adaa4a1dea68"
     },
     {
       "file": "knowledge/cases/案例30_对行政处罚与刑事处罚衔接的案件_行政监管和_刑事诉讼可平行推进_避免公共利益受损①.md",
@@ -191,7 +209,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:89e679b0460973b264874e1efd9477ff3af3556099776e4df832ac1d63f15212"
     },
     {
       "file": "knowledge/cases/案例31_生态环境损害赔偿诉讼中的诉前磋商和诉讼调解__能保障受损生态环境得到尽快有效修复_全面维_护国家利益.md",
@@ -201,7 +220,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:180be0cfed203179b049ae4f137d6e65d30b3e281ad61f305d1cb5a9b05cb6e2"
     },
     {
       "file": "knowledge/cases/案例32_省级人民政府可作为原告提起生态环境损害赔偿_诉讼①.md",
@@ -211,7 +231,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:f97d6ae4135c0898fb7dbad35868bafaac51adc49b1278b37c2eaa6493f86923"
     },
     {
       "file": "knowledge/cases/案例33_生态环境损害赔偿协议经人民法院司法确认后__具有法律约束力①.md",
@@ -221,7 +242,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:923124f3d7ab3bf9ac409305c62f33c105d09a1a23ab0771f8c52a28072168ad"
     },
     {
       "file": "knowledge/cases/案例10_未落实重污染天气应急减排措施可依据地方性法_规实施行政处罚案①.md",
@@ -231,7 +253,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:e1036f555859d5916b0e1647f9e5d7bf39c40ec8d8dbe0d265601275990f859c"
     },
     {
       "file": "knowledge/cases/案例12_污水处理厂因进水水质超标导致出水水质超标的__应当承担法律责任①.md",
@@ -241,7 +264,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:4af185aba2cd7b0b874282e227d976189b383a990fcf81ca9677b5dafb32e3cb"
     },
     {
       "file": "knowledge/cases/案例13_饮用水水源二级保护区内已经建成的与供水和保__护水资源无关的项目由县级以上人民政府责令拆_除或者关闭.md",
@@ -251,7 +275,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:e98ff68733d49fec0a4668b04f9e1e6e1a5580d3975e00bec549c416e4e29079"
     },
     {
       "file": "knowledge/cases/案例14_将生产废水用管道引入雨水口排放_当事人主观_上存在逃避监管故意的_属于私设暗管排污的行_为_没有逃避.md",
@@ -261,7 +286,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:d48fb02c06fc064b10edd36994f6227907a758cf1e9948cc19de062f3fe7b9d3"
     },
     {
       "file": "knowledge/cases/案例15_向水体非法倾倒工业污泥的行为同时违反_固体_废物污染环境防治法_和_水污染防治法_的规_定_应选择较.md",
@@ -271,7 +297,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:4b02433d5fed2289cb442da918d3e62315420c6e68415dd6dacf123bc9cbecd9"
     },
     {
       "file": "knowledge/cases/案例16_上级交办的环境违法案件_下级生态环境保护部_门应当在接到交办的环境违法线索之日起七日决_定是否立案①.md",
@@ -281,7 +308,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:a39f2233f37b86c76cf7e1c105d1bb28594982609166415ab337d1b218be7591"
     },
     {
       "file": "knowledge/cases/案例17_生态环境保护执法部门应当告知行政相对人实施_行政处罚的事实_理由和依据①.md",
@@ -291,7 +319,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:f158d2bd6e19611aa987f7cf65dd36ecc217e913b87c776867fd6194161053d3"
     },
     {
       "file": "knowledge/cases/案例18_非法处置危险废物致人死亡的_属于污染环境罪_中_后果特别严重_的情形①.md",
@@ -301,7 +330,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:fc0a1f8dfca1eb0a2948386878850be6078492122553afdd75b2d33bc23ca218"
     },
     {
       "file": "knowledge/cases/案例19_篡改伪造环境质量监测数据_构成破坏计算机信_息系统罪①.md",
@@ -311,7 +341,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:5757f7a30ad645f00bd25f029c56ead056773c38d6f344ad1c99f98b394a5492"
     },
     {
       "file": "knowledge/cases/案例1_对同一企业不同违法行为进行处罚不违反_一事不再罚_原则.md",
@@ -321,7 +352,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:8b6784a85bfce93f82a83c8eaf2f0c8d5d0afaf4b897f42c83e8d85f2358b60b"
     },
     {
       "file": "knowledge/cases/案例20_环境行政执法人员即使正确妥当地履行职责_危_害结果仍不可避免地发生_应认定玩忽职守行为_与危害结果之.md",
@@ -331,7 +363,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:6810ed7379bc309ab08f6fd191b5c72aacfbdf0685b364b65386823831bae2bb"
     },
     {
       "file": "knowledge/cases/案例21_负有环境保护监督管理职责的国家工作人员_不__认真履行环境监管职责_未依照法定程序正确处__理污染环.md",
@@ -341,7 +374,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:d485c054a28d5a231d396dfe766a3491b8ee0fd7ea580d72102bc17b6402ca85"
     },
     {
       "file": "knowledge/cases/案例22_负有环境保护管理职责的国家工作人员_不认真__履行职责_导致发生重大环境污染事故_造成一__人死亡的.md",
@@ -351,7 +385,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:59219a4157874020822dcae20ca6e83129da3320bb480b9eb7b0c9393e58c7c9"
     },
     {
       "file": "knowledge/cases/案例23_有证据证明排污者无污染物外排行为的_由于不_符合环境侵权责任的构成要件_排污者不承担环_境侵权赔偿责.md",
@@ -361,7 +396,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:c331a065168267876f5fcf4188dfb5f764db432f067bcb2ddc5fe1e6b6d86e98"
     },
     {
       "file": "knowledge/cases/案例24_排污者因超标排放被行政处罚后_不能免除其环_境侵权的民事责任①.md",
@@ -371,7 +407,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:7d2c498e234df2e3f94aab3828780d10a276f68a9f32d2fb297bda58bc7917a1"
     },
     {
       "file": "knowledge/cases/案例2_处于在建状态的建设项目_对其_未批先建_违法_行为以备案额作为建设项目总投资额实施处罚①.md",
@@ -381,7 +418,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:56663d37bf93bb3fa2b9a06f79c86880376023314913b4a5c840e161d098a5ef"
     },
     {
       "file": "knowledge/cases/案例4_不正常运行大气污染治理设施拒不改正的_可以适_用按日连续处罚措施①.md",
@@ -391,7 +429,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:bde66af3b5617b4856c0162854e3245de2ab287f6fb219f8bba16d8f13b3ed09"
     },
     {
       "file": "knowledge/cases/案例6_以逃避监管方式排污的_生态环境部门可在责令改_正违法行为后将案件移送公安机关①.md",
@@ -401,7 +440,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:7e2dceaf3ec67ae45605e6c428441c139ef09dcedbacaabd990e434d14060763"
     },
     {
       "file": "knowledge/cases/案例7__环境保护法_配套办法规定的_组合拳_可在同_一案件中适用①.md",
@@ -411,7 +451,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:7144ee8b820f6ded990c30954ecc2a0266936f8f28cee90a4d5b6a1f7a146148"
     },
     {
       "file": "knowledge/cases/案例8_汽车制造公司生产的机动车尾气超标由省级以上生_态环境保护部门行使执法权①.md",
@@ -421,7 +462,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:1405370eb1fbcf3634bda6baca0dc6b2fe4b302973cbfa94f725f09e545a6ad1"
     },
     {
       "file": "knowledge/cases/案例9_主动消除或者减轻环境违法行为危害后果的_可减_轻处罚①.md",
@@ -431,7 +473,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/cases",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:19284e486b7edd939e92103156b57715cba06492c61f944848bf615cf8499a7b"
     },
     {
       "file": "knowledge/index/法条速查索引.md",
@@ -441,7 +484,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/index",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:10f2d291c8057172c70470d857773f5093b8971754792de20ed2f7c22834d7d1"
     },
     {
       "file": "knowledge/index/违法行为分类索引.md",
@@ -451,7 +495,8 @@
       "knowledge_scope_ref": "knowledge_scope://environmental/index",
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
-      "verification_status": "pending_human_review"
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:ac9f07aa8099da2ed267c0d68efb3f4a7ae7e1eb6f88405e75970b8bee5a2bbd"
     }
   ]
 }
