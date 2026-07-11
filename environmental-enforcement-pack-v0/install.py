@@ -186,6 +186,7 @@ def main():
         draft = {
             "pack_ref": pack_ref, "version": install_version, "title": manifest["name"],
             "template_family": manifest.get("template_family", "合规审查执法证据链型"),
+            "risk_level": manifest.get("risk_level", "medium"),
             "flow_id": flow_id,
             "role_slots": [{"slot_id": s["slot_id"], "responsibility": s["responsibility"],
                             "required_role": s["required_role"], "default_role_pack_ref": s["default_role_pack_ref"],
@@ -431,9 +432,9 @@ def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
             "owner_action_evidence_ref": "owner_action_evidence://pack-knowledge/" + pack_ref + "/approve",
             "decision_ref": dref, "run_id": run_id, "nonce": nonce,
             "policy_snapshot_ref": "policy_snapshot://pack-knowledge/approve",
-            # 装入 pack = Owner 选择信任 → 知识直接 owner_verified（不堆「待确认」逐条核验）。
-            "verify_authority": True,
-            "reason": "随场景包装入并经 Owner 信任确认（owner_verified）"})
+	        # 装入 Pack 只确认来源与分发，不等于逐条完成法律效力人工核验。
+	        "verify_authority": False,
+	        "reason": "随场景包装入；法律知识保持 pending_human_review，待逐条人工核验"})
         if code != 200:
             die("knowledge approve HTTP %d for %s: %s" % (code, cref, abody), INSTALL_KNOWLEDGE)
         JOURNAL.add_approved(scope_ref, cref)

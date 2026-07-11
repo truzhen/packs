@@ -18,6 +18,7 @@ import unittest
 
 REPO = os.path.dirname(os.path.abspath(__file__))
 PACK = os.path.join(REPO, "housekeeping-ops-pack-v0")
+ENV_PACK = os.path.join(REPO, "environmental-enforcement-pack-v0")
 
 
 def load_install_module():
@@ -101,6 +102,19 @@ class TestInstallStageErrorCodes(unittest.TestCase):
         payload = run_and_capture_error(mod)
         self.assertEqual(payload["error_code"], mod.INSTALL_READINESS)
         self.assertEqual(payload["error_code"], "TZ-PACK-INSTALL-004")
+
+
+class TestEnvironmentalHighRiskLifecycle(unittest.TestCase):
+    def test_manifest_high_risk_is_forwarded_to_lifecycle_draft(self):
+        with open(os.path.join(ENV_PACK, "manifest.json"), encoding="utf-8") as f:
+            manifest = json.load(f)
+        with open(os.path.join(ENV_PACK, "install.py"), encoding="utf-8") as f:
+            install_source = f.read()
+
+        self.assertEqual(manifest.get("risk_level"), "high")
+        self.assertIn('"risk_level": manifest.get("risk_level", "medium")', install_source)
+        self.assertIn('"verify_authority": False', install_source)
+        self.assertNotIn('"verify_authority": True', install_source)
 
 
 if __name__ == "__main__":

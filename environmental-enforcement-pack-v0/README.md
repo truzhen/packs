@@ -1,4 +1,4 @@
-# 环保执法证据链 Pack（v0，全领域）
+# 环保执法证据链 Pack（v0，全领域，已验收）
 
 一个**独立文件夹、可加载、可卸载、不与基座主程序混**的环保执法场景荚（Domain Work Pack）。
 知识库基于 Owner 提供的**权威资料**真实导入（生态环境法典 + 生态环境保护综合行政执法指南 +
@@ -19,7 +19,7 @@ environmental-enforcement-pack-v0/
 ├── knowledge/
 │   ├── knowledge-scopes.json      # 15 个知识域声明（mount_on_pack_enable）
 │   ├── knowledge-index.json       # 45 条知识 → scope/kind/source_ref/title/生效日期
-│   ├── code/ legal-basis/ water/ air/ solid-waste/ radiation/ noise/
+│   ├── code/ legal-basis/ water/ air/ radiation/ noise/
 │   ├── eia-permit/ ecology/ penalty/ criminal/ risk/
 │   ├── guide-overview/ pollution-source-overview/
 │   ├── cases/                     # 31 个真实案例（行政篇 + 公益诉讼篇）
@@ -71,8 +71,8 @@ python3 tools/build-knowledge-from-source.py [权威资料知识库路径]
 # 会重写 knowledge/ 下各域文件 + knowledge-scopes.json + knowledge-index.json
 ```
 
-## 已验证（2026-06-25，隔离 devserver :18099 真跑）
+## 历史验证与当前状态
 
-- install.py：场景包 enabled @1.0.0 + 2 角色包 enabled + 绑槽 + **752 条 FormalKnowledge**（pending_human_review）。
-- 独立 API 复核：`lifecycle/packs` enabled_version=1.0.0；`memory/knowledge/formal` 真检索到知识。
-- uninstall.py：disable 后 enabled_version 清空、知识域级联卸载。
+- 2026-06-25 的隔离 devserver 历史记录曾验证 install、角色绑定、KnowledgeMount 与 disable/re-enable 生命周期。
+- 2026-07-11 R1 修复复验已证明 PDF 三入口急停、法律结构化引用、重复 Receipt replay、752 条知识分页及沟通阻断；当前生命周期为**已验收**。法律知识仍为 `pending_human_review`，Pack 尚未发布。
+- C01 法律金标见 `docs/C01-法律金标-20260711.md`。该金标只约束候选输出和人工复核，不构成正式法律意见。
