@@ -116,6 +116,19 @@ class TestEnvironmentalHighRiskLifecycle(unittest.TestCase):
         self.assertIn('"verify_authority": False', install_source)
         self.assertNotIn('"verify_authority": True', install_source)
 
+    def test_enforcement_elite_grounding_is_declared_and_forwarded(self):
+        with open(os.path.join(ENV_PACK, "role-packs", "enforcement-elite.rolepack.json"), encoding="utf-8") as f:
+            role_pack = json.load(f)
+        with open(os.path.join(ENV_PACK, "install.py"), encoding="utf-8") as f:
+            install_source = f.read()
+
+        self.assertIn("涉嫌超标排放", role_pack.get("scenario", ""))
+        self.assertIn("最终决定需您裁定", role_pack.get("opening_line_candidate", ""))
+        self.assertEqual(2, len(role_pack.get("example_dialogues", [])))
+        self.assertIn('"scenario": rp.get("scenario", "")', install_source)
+        self.assertIn('"opening_line_candidate": rp.get("opening_line_candidate", "")', install_source)
+        self.assertIn('"example_dialogues": rp.get("example_dialogues", None)', install_source)
+
 
 if __name__ == "__main__":
     unittest.main()
