@@ -8,6 +8,8 @@
   "description": "面向智能家居/智能装修公司老板的客户项目经营全周期场景荚：从项目机会录入 → Frappe 项目/客户快照 → 项目经理经营建议 → 里程碑/采购/施工任务候选 → 客户沟通草稿 → Frappe 写回候选 → Owner/Base 经营确认门 → 项目回执归档。Frappe 仅作 provider 需求声明，真实读写经 04/11 网关候选 + Base/Receipt。",
   "author": "Truzhen Pack Studio",
   "pack_type": "domain_work_pack",
+  "kind": "scene_pack",
+  "min_truzhen_version": "3.0.0",
   "manifest_version": "v3",
   "target_industry": "智能家居 / 智能装修 / 长周期项目交付",
   "target_audience": "智能家居公司老板、项目经理、客服与交付团队",

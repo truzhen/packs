@@ -60,7 +60,8 @@ def test_bundle_self_contained():
         man = os.path.join(out, "fake-pack-v0.bundle.manifest.json")
         assert os.path.exists(man), "缺 bundle manifest"
         md = json.load(open(man, encoding="utf-8"))
-        assert md.get("bundle_sha256"), "manifest 缺 bundle_sha256"
+        assert md.get("bundle_sha256"), "manifest 缺兼容字段 bundle_sha256"
+        assert md.get("artifact_sha256") == md.get("bundle_sha256"), "通用与兼容哈希字段必须一致"
         assert any(f.get("path") == "pack_diagnostics.py" and f.get("sha256") for f in md.get("files", [])), \
             "manifest 未登记 pack_diagnostics.py 的 sha256"
         print("PASS test_bundle_self_contained")
@@ -86,7 +87,28 @@ def test_rejects_pack_missing_install():
         shutil.rmtree(tmp, ignore_errors=True)
 
 
+def test_market_artifact_is_rooted_and_excludes_runtime_files():
+    from build_pack_bundle import build_market_artifact
+    tmp = tempfile.mkdtemp()
+    try:
+        pd = _make_fake_pack(tmp, "fake-market-pack-v0")
+        os.makedirs(os.path.join(pd, "__pycache__"))
+        open(os.path.join(pd, "__pycache__", "install.cpython-314.pyc"), "wb").write(b"runtime")
+        open(os.path.join(pd, "run.log"), "w").write("runtime")
+        bundle = build_market_artifact(pd, os.path.join(tmp, "dist"))
+        with zipfile.ZipFile(bundle) as z:
+            names = z.namelist()
+        assert "manifest.json" in names, "市场制品的 manifest.json 必须位于 ZIP 根"
+        assert "install.py" in names and "uninstall.py" in names, "市场制品缺 lifecycle 脚本"
+        assert not any("__pycache__" in n or n.endswith((".pyc", ".log")) for n in names), \
+            "市场制品不得含运行态禁品"
+        print("PASS test_market_artifact_is_rooted_and_excludes_runtime_files")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 if __name__ == "__main__":
     test_bundle_self_contained()
     test_rejects_pack_missing_install()
+    test_market_artifact_is_rooted_and_excludes_runtime_files()
     print("ALL PASS")

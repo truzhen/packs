@@ -1,4 +1,4 @@
-# 环保执法证据链 Pack（v0，全领域，已验收）
+# 环保执法证据链 Pack（v0，全领域；v10 修复已实现、待单 Pack 复验）
 
 一个**独立文件夹、可加载、可卸载、不与基座主程序混**的环保执法场景荚（Domain Work Pack）。
 知识库基于 Owner 提供的**权威资料**真实导入（生态环境法典 + 生态环境保护综合行政执法指南 +
@@ -18,7 +18,7 @@ environmental-enforcement-pack-v0/
 │   └── critical-lawyer.rolepack.json              # 挑剔律师 persona
 ├── knowledge/
 │   ├── knowledge-scopes.json      # 15 个知识域声明（mount_on_pack_enable）
-│   ├── knowledge-index.json       # 45 条知识 → scope/kind/source_ref/title/生效日期
+│   ├── knowledge-index.json       # 45 份源文档 → scope/kind/source_ref/title/生效日期
 │   ├── code/ legal-basis/ water/ air/ radiation/ noise/
 │   ├── eia-permit/ ecology/ penalty/ criminal/ risk/
 │   ├── guide-overview/ pollution-source-overview/
@@ -59,7 +59,7 @@ python3 packs/environmental-enforcement-pack-v0/install.py
 python3 packs/environmental-enforcement-pack-v0/uninstall.py
 ```
 
-加载会装入：场景包 EnabledVersion + 2 角色包 + 槽位绑定 + 15 知识域 + 全部 FormalKnowledge
+加载会装入：场景包 EnabledVersion + 2 角色包 + 槽位绑定 + 15 知识域 + 45/45 源文档切分出的全部 FormalKnowledge。源文档数与 09 运行态分片数是两个指标；验收必须按 `pack_ref`、`source_ref`、scope 全量分页对账，不得把前台全局知识总数（历史曾显示 752）冒充本 Pack 的源文档数或固定分片契约。
 （大文件按章节/条款切块，约数百条，均 pending_human_review）。卸载经真实 `lifecycle/disable`
 （Base 签发 disable 决议）级联卸载知识域；**已产生的案件对象与 03 回执仍可反查——卸载不删历史**。
 
@@ -74,5 +74,5 @@ python3 tools/build-knowledge-from-source.py [权威资料知识库路径]
 ## 历史验证与当前状态
 
 - 2026-06-25 的隔离 devserver 历史记录曾验证 install、角色绑定、KnowledgeMount 与 disable/re-enable 生命周期。
-- 2026-07-11 R1 修复复验已证明 PDF 三入口急停、法律结构化引用、重复 Receipt replay、752 条知识分页及沟通阻断；当前生命周期为**已验收**。法律知识仍为 `pending_human_review`，Pack 尚未发布。
+- 2026-07-11 R1 修复复验曾记录前台全局 752 条知识；该数字不再作为本 Pack 数量契约。当前 Pack 权威资产为 45 份源文档、15 个 scope，运行态必须以本 Pack 归属全量分页覆盖为准。法律知识仍为 `pending_human_review`，Pack 尚未发布。
 - C01 法律金标见 `docs/C01-法律金标-20260711.md`。该金标只约束候选输出和人工复核，不构成正式法律意见。

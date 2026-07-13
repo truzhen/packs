@@ -15,11 +15,14 @@
           ├── install.py  uninstall.py  manifest.json
           ├── flows/ role-slots/ role-packs/ capabilities/ ...
 
-产物：dist/<pack-name>.bundle.zip + dist/<pack-name>.bundle.manifest.json（每文件 sha256 + bundle sha256）。
+产物：
+  - 交付 bundle：dist/<pack-name>.bundle.zip（自包含父目录布局）；
+  - 市场制品：dist/<pack-name>.market.zip（manifest.json 位于 ZIP 根）。
+两类制品均生成每文件 sha256 + 制品 sha256 清单，并统一排除运行态禁品。
 
 用法：
-  python3 build_pack_bundle.py smart-home-owner-pack-v0            # 出 dist/
-  python3 build_pack_bundle.py smart-home-owner-pack-v0 /tmp/out   # 指定输出目录
+  python3 build_pack_bundle.py smart-home-owner-pack-v0            # 交付 bundle
+  python3 build_pack_bundle.py --market smart-home-owner-pack-v0   # 云市场制品
 """
 import hashlib
 import json
@@ -31,7 +34,8 @@ import zipfile
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 DIAGNOSTICS = os.path.join(REPO_ROOT, "pack_diagnostics.py")
 REQUIRED_FILES = ("manifest.json", "install.py", "uninstall.py")
-_EXCLUDE_DIRS = {"__pycache__", ".git"}
+_EXCLUDE_DIRS = {"__pycache__", ".git", "node_modules", "dist", "build", ".vite"}
+_EXCLUDE_SUFFIXES = (".pyc", ".db", ".sqlite", ".sqlite3", ".log", ".jsonl")
 
 
 def _sha256(path):
@@ -64,9 +68,35 @@ def _iter_pack_files(pack_dir):
     for root, dirs, files in os.walk(pack_dir):
         dirs[:] = [d for d in dirs if d not in _EXCLUDE_DIRS]
         for fn in files:
-            if fn.endswith(".pyc"):
+            if fn.lower().endswith(_EXCLUDE_SUFFIXES):
                 continue
             yield os.path.join(root, fn)
+
+
+def _write_artifact(path, members, pack_name, artifact_kind, install_hint):
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
+        for arc, disk in members:
+            z.write(disk, arc)
+
+    files_manifest = [{"path": arc, "sha256": _sha256(disk)} for arc, disk in members]
+    manifest = {
+        "artifact": os.path.basename(path),
+        "artifact_kind": artifact_kind,
+        "pack_name": pack_name,
+        "artifact_sha256": _sha256(path),
+        "file_count": len(files_manifest),
+        "files": files_manifest,
+        "install_hint": install_hint,
+    }
+    # 保留既有 bundle sidecar 字段；新增通用 artifact 字段仅为加法兼容。
+    if artifact_kind == "self_contained_delivery_bundle":
+        manifest["bundle"] = os.path.basename(path)
+        manifest["bundle_sha256"] = manifest["artifact_sha256"]
+    man_path = path.rsplit(".zip", 1)[0] + ".manifest.json"
+    with open(man_path, "w", encoding="utf-8") as handle:
+        json.dump(manifest, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
+    return path
 
 
 def build_pack_bundle(pack_dir, out_dir=None):
@@ -84,29 +114,45 @@ def build_pack_bundle(pack_dir, out_dir=None):
         arc = os.path.join(name, os.path.relpath(disk, pack_dir))
         members.append((arc, disk))
 
-    with zipfile.ZipFile(bundle_path, "w", zipfile.ZIP_DEFLATED) as z:
-        for arc, disk in members:
-            z.write(disk, arc)
+    return _write_artifact(
+        bundle_path,
+        members,
+        name,
+        "self_contained_delivery_bundle",
+        "解压后：TRUZHEN_DEVSERVER_BASE=http://<基座地址> python3 %s/install.py" % name,
+    )
 
-    files_manifest = [{"path": arc, "sha256": _sha256(disk)} for arc, disk in members]
-    manifest = {
-        "bundle": os.path.basename(bundle_path),
-        "pack_name": name,
-        "bundle_sha256": _sha256(bundle_path),
-        "file_count": len(files_manifest),
-        "files": files_manifest,
-        "install_hint": "解压后：TRUZHEN_DEVSERVER_BASE=http://<基座地址> python3 %s/install.py" % name,
-    }
-    man_path = os.path.join(out_dir, name + ".bundle.manifest.json")
-    json.dump(manifest, open(man_path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-    return bundle_path
+
+def build_market_artifact(pack_dir, out_dir=None):
+    """生成 manifest.json 位于 ZIP 根的云市场制品。"""
+    pack_dir = os.path.abspath(pack_dir.rstrip("/"))
+    manifest = _validate(pack_dir)
+    name = os.path.basename(pack_dir)
+    out_dir = os.path.abspath(out_dir or os.path.join(REPO_ROOT, "dist"))
+    os.makedirs(out_dir, exist_ok=True)
+    artifact_path = os.path.join(out_dir, name + ".market.zip")
+    members = [(os.path.relpath(disk, pack_dir), disk) for disk in sorted(_iter_pack_files(pack_dir))]
+    if not any(arc == "manifest.json" for arc, _ in members):
+        raise ValueError("市场制品根目录缺少 manifest.json")
+    return _write_artifact(
+        artifact_path,
+        members,
+        name,
+        "cloud_market_pack",
+        "经 truzhen-cloud 市场下载并由 truzhenos lifecycle 受控安装：%s@%s"
+        % (manifest.get("pack_id") or manifest.get("pack_ref"), manifest.get("version")),
+    )
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("用法: python3 build_pack_bundle.py <pack-dir> [out-dir]", file=sys.stderr)
+    args = sys.argv[1:]
+    market = bool(args and args[0] == "--market")
+    if market:
+        args = args[1:]
+    if not args:
+        print("用法: python3 build_pack_bundle.py [--market] <pack-dir> [out-dir]", file=sys.stderr)
         sys.exit(2)
-    out = sys.argv[2] if len(sys.argv) > 2 else None
-    path = build_pack_bundle(sys.argv[1], out)
-    print("bundle 已产出:", path)
-    print("manifest:", path.replace(".bundle.zip", ".bundle.manifest.json"))
+    out = args[1] if len(args) > 1 else None
+    path = build_market_artifact(args[0], out) if market else build_pack_bundle(args[0], out)
+    print("制品已产出:", path)
+    print("manifest:", path.rsplit(".zip", 1)[0] + ".manifest.json")
