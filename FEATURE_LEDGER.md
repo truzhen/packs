@@ -7,10 +7,10 @@
 
 | 维度 | 结论 |
 | --- | --- |
-| 我要做的事 | 用环保 C01 与智能家居 SH-C01 各一个项目，跳过提交审核、模拟支付、Entitlement、下载，直接验证安装、启停、运行、历史查询、卸载和同版本重装；补齐全 flow、Provider 诚实态、作者工作台和可见按钮。 |
+| 我要做的事 | 用环保 C01 与智能家居 SH-C01 各一个项目，跳过提交审核、模拟支付、Entitlement、下载，直接验证安装、启停、运行、历史查询、卸载和同版本重装；增加共通 manifest/schema、Candidate/Formal、最小权限、Gate/Gateway/Receipt、幂等/断网/卸载隔离与基座防腐硬门；环保补法源/辖区/证据/脱敏/签发隔离，智能家居补设备故障矩阵和 10 次 L2 受控执行闭环。 |
 | 真实客户 / 场景证据 | 环保 v14 发现 PDF 后模型编造未提供事实、PDF 前 GUI 丢失具体阻断；智能家居 v14 已关闭流式残留 P2，但仍缺 flow/Provider/作者台/按钮全覆盖。证据分别在 `/Users/li/Documents/过程文档/env-prepack-v14-20260714/` 与 `/Users/li/Documents/过程文档/smart-home-service-provider-v14-20260714/`。 |
 | 真相源 / 归属 | Pack 资产归本仓；lifecycle/项目/Run/模型/知识/回执归 truzhenos 14/05/06/08/09/03；client 只展示。本仓只更新计划和成熟度登记。 |
-| 风险 / 契约 | 计划文档为绿；直接 lifecycle/候选为黄；Provider 为橙；正式法律裁定/发送/执行为红。本轮不改 contracts、Gate、Receipt、Candidate 或 ProviderRequirement。 |
+| 风险 / 契约 | 计划文档为绿；直接 lifecycle/候选为黄；Provider 为橙；正式法律裁定、环保处罚/送达/删除/对外提交及生产设备动作均为红。本轮不改 contracts、Gate、Receipt、Candidate 或 ProviderRequirement；智能家居仅允许在 L2 隔离测试 Provider/测试设备上经 Owner + Base Gate + Gateway 完成 10 次闭环。Pack 不得向基座塞行业专用分支、schema 副本、Provider、Gate/Gateway/Receipt 或 seed。 |
 | 验收与状态 | 新计划：`docs/plans/environmental-enforcement-prepackage-real-use-test-campaign-v15-20260714.md`、`docs/plans/smart-home-service-provider-test-campaign-v15-20260714.md`。生命周期：`设计中`；依赖修复为`已实现 -> 已接线`，待全新 GUI 和独立复核后方可`已验收（打包前）`。 |
 
 ## 0. 本轮派活卡（销售 / CRM / 私域第一现金流 Pack 最小闭环设计）
