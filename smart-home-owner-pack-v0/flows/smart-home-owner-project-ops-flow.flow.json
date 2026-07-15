@@ -1,12 +1,24 @@
 {
   "flow_id": "smart-home-owner-project-ops-flow",
-  "title": "智能家居老板项目经营完整周期",
-  "version": "1.0.0",
+  "title": "智能家居单项目完整经营周期",
+  "version": "1.1.0",
   "nodes": [
     {
-      "id": "intake",
+      "id": "opportunity_intake",
       "type": "input.user_need",
-      "title": "项目机会/客户需求录入"
+      "title": "商机与客户需求录入"
+    },
+    {
+      "id": "opportunity_candidate",
+      "type": "object.business_candidate",
+      "title": "商机候选",
+      "candidate_type": "BusinessObjectCandidate"
+    },
+    {
+      "id": "project_initiation_candidate",
+      "type": "object.business_candidate",
+      "title": "立项候选",
+      "candidate_type": "BusinessObjectCandidate"
     },
     {
       "id": "project_object",
@@ -27,20 +39,34 @@
       "candidate_type": "AdviceCandidate"
     },
     {
-      "id": "milestone_plan",
+      "id": "progress_candidate",
       "type": "flow.stage_task_candidate",
-      "title": "里程碑/采购/施工任务候选"
+      "title": "进度与里程碑候选",
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "material_candidate",
+      "type": "flow.stage_task_candidate",
+      "title": "物料与采购候选",
+      "candidate_type": "BusinessObjectCandidate"
+    },
+    {
+      "id": "delivery_candidate",
+      "type": "flow.stage_task_candidate",
+      "title": "交付与缺陷候选",
+      "candidate_type": "TaskCandidate"
     },
     {
       "id": "customer_draft",
       "type": "gateway.communication_draft",
-      "title": "客户沟通草稿候选"
+      "title": "客户沟通草稿候选",
+      "candidate_type": "CommunicationDraftCandidate"
     },
     {
       "id": "frappe_write_candidate",
       "type": "capability.invoke",
-      "title": "Frappe 项目写回候选",
-      "candidate_type": "ProviderWriteCandidate"
+      "title": "Frappe 五阶段写回候选",
+      "candidate_type": "ExecutionIntentCandidate"
     },
     {
       "id": "owner_gate",
@@ -52,62 +78,160 @@
       }
     },
     {
-      "id": "receipt_archive",
+      "id": "gateway_execution",
+      "type": "gateway.execution_candidate",
+      "title": "受控 Frappe 写回",
+      "candidate_type": "CapabilityInvocationCandidate"
+    },
+    {
+      "id": "project_receipt",
       "type": "receipt.link",
-      "title": "项目回执归档"
+      "title": "项目阶段回执归档"
+    },
+    {
+      "id": "history_query",
+      "type": "object.history_read",
+      "title": "历史项目查询与版本固定"
+    },
+    {
+      "id": "optional_device_control_candidate",
+      "type": "capability.invoke",
+      "title": "可选 Home Assistant 设备动作候选",
+      "candidate_type": "ExecutionIntentCandidate",
+      "optional": true
+    },
+    {
+      "id": "optional_device_gate",
+      "type": "policy.gate_config",
+      "title": "可选设备动作 Owner/Base Gate",
+      "optional": true,
+      "gate_policy": {
+        "required_gate": "base_execution_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "optional_device_gateway",
+      "type": "gateway.execution_candidate",
+      "title": "可选 Home Assistant L2 Provider 执行",
+      "optional": true,
+      "candidate_type": "CapabilityInvocationCandidate"
+    },
+    {
+      "id": "optional_device_receipt",
+      "type": "receipt.link",
+      "title": "可选设备动作回执",
+      "optional": true
     },
     {
       "id": "done",
       "type": "flow.end",
-      "title": "项目阶段收口"
+      "title": "单项目周期收口"
     }
   ],
   "edges": [
     {
       "id": "e1",
-      "source": "intake",
-      "target": "project_object"
+      "source": "opportunity_intake",
+      "target": "opportunity_candidate"
     },
     {
       "id": "e2",
+      "source": "opportunity_candidate",
+      "target": "project_initiation_candidate"
+    },
+    {
+      "id": "e3",
+      "source": "project_initiation_candidate",
+      "target": "project_object"
+    },
+    {
+      "id": "e4",
       "source": "project_object",
       "target": "frappe_snapshot"
     },
     {
-      "id": "e3",
+      "id": "e5",
       "source": "frappe_snapshot",
       "target": "manager_advice"
     },
     {
-      "id": "e4",
+      "id": "e6",
       "source": "manager_advice",
-      "target": "milestone_plan"
+      "target": "progress_candidate"
     },
     {
-      "id": "e5",
-      "source": "milestone_plan",
+      "id": "e7",
+      "source": "progress_candidate",
+      "target": "material_candidate"
+    },
+    {
+      "id": "e8",
+      "source": "material_candidate",
+      "target": "delivery_candidate"
+    },
+    {
+      "id": "e9",
+      "source": "delivery_candidate",
       "target": "customer_draft"
     },
     {
-      "id": "e6",
+      "id": "e10",
       "source": "customer_draft",
       "target": "frappe_write_candidate"
     },
     {
-      "id": "e7",
+      "id": "e11",
       "source": "frappe_write_candidate",
       "target": "owner_gate"
     },
     {
-      "id": "e8",
+      "id": "e12",
       "source": "owner_gate",
-      "target": "receipt_archive",
+      "target": "gateway_execution",
       "condition": "approved"
     },
     {
-      "id": "e9",
-      "source": "receipt_archive",
+      "id": "e13",
+      "source": "gateway_execution",
+      "target": "project_receipt"
+    },
+    {
+      "id": "e14",
+      "source": "project_receipt",
+      "target": "history_query"
+    },
+    {
+      "id": "e15",
+      "source": "history_query",
       "target": "done"
+    },
+    {
+      "id": "e16",
+      "source": "manager_advice",
+      "target": "optional_device_control_candidate",
+      "condition": "owner_requested_and_provider_ready"
+    },
+    {
+      "id": "e17",
+      "source": "optional_device_control_candidate",
+      "target": "optional_device_gate"
+    },
+    {
+      "id": "e18",
+      "source": "optional_device_gate",
+      "target": "optional_device_gateway",
+      "condition": "approved"
+    },
+    {
+      "id": "e19",
+      "source": "optional_device_gateway",
+      "target": "optional_device_receipt"
+    },
+    {
+      "id": "e20",
+      "source": "optional_device_receipt",
+      "target": "history_query"
     }
   ]
 }

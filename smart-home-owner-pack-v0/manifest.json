@@ -1,11 +1,11 @@
 {
   "pack_id": "pack_smart_home_owner_v0",
   "pack_ref": "scene_pack://smart-home-owner-project-ops",
-  "version": "1.0.0",
-  "lifecycle_status": "已验收",
+  "version": "1.1.0",
+  "lifecycle_status": "已实现 -> 已接线",
   "name": "智能家居老板项目经营 Pack",
   "template_family": "长周期项目交付型",
-  "description": "面向智能家居/智能装修公司老板的客户项目经营全周期场景荚：从项目机会录入 → Frappe 项目/客户快照 → 项目经理经营建议 → 里程碑/采购/施工任务候选 → 客户沟通草稿 → Frappe 写回候选 → Owner/Base 经营确认门 → 项目回执归档。Frappe 仅作 provider 需求声明，真实读写经 04/11 网关候选 + Base/Receipt。",
+  "description": "面向智能家居/智能装修公司老板的单项目完整经营周期场景荚：商机 → 立项 → 进度 → 物料 → 交付 → 历史查询。Frappe 仅作受控项目 Provider；设备控制不自造程序，仅可选引用 Home Assistant Provider。所有写入与设备动作均先形成候选，经 Owner + Base Gate、Gateway 和 Receipt；Provider 缺失时诚实返回 provider_missing/not_ready/blocked。",
   "author": "Truzhen Pack Studio",
   "pack_type": "domain_work_pack",
   "kind": "scene_pack",
@@ -13,7 +13,7 @@
   "manifest_version": "v3",
   "target_industry": "智能家居 / 智能装修 / 长周期项目交付",
   "target_audience": "智能家居公司老板、项目经理、客服与交付团队",
-  "flow_spec_ref": "scene_flow_spec:smart-home-owner-project-ops-flow@1.0.0",
+  "flow_spec_ref": "scene_flow_spec:smart-home-owner-project-ops-flow@1.1.0",
   "flow_file": "flows/smart-home-owner-project-ops-flow.flow.json",
   "role_slots_file": "role-slots/role-slots.json",
   "capabilities_file": "capabilities/capabilities.json",
@@ -31,7 +31,7 @@
   "role_slots": [
     {
       "slot_id": "smart_home_project_manager",
-      "responsibility": "智能家居项目经理：需求澄清/里程碑/风险/下一步候选（Proposer）",
+      "responsibility": "智能家居项目经理：商机/立项/进度/物料/交付事实澄清、风险与下一步候选（Proposer）",
       "node_type": "advice",
       "default_role_pack_ref": "role_pack://smart-home-project-manager"
     }
@@ -39,17 +39,27 @@
   "capabilities_required": [
     "project_external_snapshot",
     "customer_relationship_snapshot",
-    "project_milestone_write_candidate"
+    "project_opportunity_write_candidate",
+    "project_initiation_write_candidate",
+    "project_progress_write_candidate",
+    "project_material_write_candidate",
+    "project_delivery_write_candidate"
   ],
   "required_capabilities": [],
   "gates": {
     "project_gate": "smart_home_project_gate",
-    "state_transition_gate": "base_gate"
+    "state_transition_gate": "base_gate",
+    "optional_device_action_gate": "base_execution_gate"
   },
   "gate_flags": [
-    "project_milestone_confirm",
+    "project_opportunity_confirm",
+    "project_initiation_confirm",
+    "project_progress_confirm",
+    "project_material_confirm",
+    "project_delivery_confirm",
     "frappe_write_confirm",
-    "customer_send_confirm"
+    "customer_send_confirm",
+    "optional_device_action_confirm"
   ],
   "receipt_policy": {
     "ledger_group": "smart_home_owner_project",
@@ -57,24 +67,30 @@
     "requires_witness": true
   },
   "person_strategy": {
-    "summary": "判人策略：项目经理为 Proposer（只出经营建议、任务候选、沟通草稿、写回候选，无正式裁定权）；报价、合同、采购、施工排期、对外承诺、Frappe 写回属高风险正式动作，一律回 Owner + Base Gate 裁定。",
+    "summary": "判人策略：项目经理为 Proposer，只能提出商机、立项、进度、物料、交付、沟通和可选设备动作候选；价格、合同、采购、施工、对外承诺、Frappe 写回与设备动作均回 Owner + Base Gate 裁定。",
     "proposer_roles": [
       "smart_home_project_manager"
     ],
     "high_risk_actions_return_to_owner": [
-      "project_milestone_confirm",
+      "project_opportunity_confirm",
+      "project_initiation_confirm",
+      "project_progress_confirm",
+      "project_material_confirm",
+      "project_delivery_confirm",
       "frappe_write_confirm",
-      "customer_send_confirm"
+      "customer_send_confirm",
+      "optional_device_action_confirm"
     ],
     "delegation_allowed": false
   },
   "formalization_requirement": {
-    "summary": "判事策略：项目建模、快照读取、经营建议、任务/沟通草稿、写回候选均为候选态；唯有里程碑/采购/施工正式任务、对外发送、Frappe 写回、回执归档需经 Owner 主权确认 + Base Gate 裁定后才正式化。裁定权在 Base，不在场景包。",
+    "summary": "判事策略：单项目五阶段数据、角色建议、沟通草稿、Frappe 写回和设备动作均先为 Candidate；正式任务、外部写入、发送或设备执行必须经 Owner 主权确认、Base Gate、受控 Gateway 与可反查 Receipt。裁定权在 Base，不在 Pack、角色、Frappe 或 Home Assistant。",
     "formalizes": [
       "FormalTask",
-      "ProjectMilestone",
+      "ProjectLifecycleRecord",
       "CommunicationSend",
       "FrappeWrite",
+      "DeviceAction",
       "FormalReceipt"
     ],
     "decided_by": "owner_plus_base_gate"
@@ -99,13 +115,24 @@
       "provider_family": "frappe"
     },
     {
-      "requirement_id": "frappe_project_write_candidate",
-      "capability": "project_milestone_write_candidate",
+      "requirement_id": "frappe_project_lifecycle_write_candidate",
+      "capability": "project_lifecycle_write_candidate",
       "gateway_class": "execution",
       "risk_class": "medium",
       "binding": "registry_to_gateway_to_base",
       "fallback_policy": "blocked",
       "provider_family": "frappe"
+    },
+    {
+      "requirement_id": "home_assistant_device_control_candidate",
+      "capability": "smart_home_device_control_candidate",
+      "gateway_class": "execution",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "not_ready",
+      "provider_family": "home_assistant",
+      "optional": true,
+      "scope": "测试实体与 Owner 明确授权的受控设备；必须展示 entity/action/impact，禁止 Pack 直连"
     }
   ],
   "notification_command_report_routes": {
@@ -114,19 +141,25 @@
       "project_transaction_timeline"
     ],
     "command_candidate": [
-      "create_project_task_candidate",
+      "create_project_opportunity_candidate",
+      "create_project_initiation_candidate",
+      "create_project_progress_candidate",
+      "create_project_material_candidate",
+      "create_project_delivery_candidate",
       "draft_customer_followup",
       "prepare_frappe_project_write_candidate",
+      "prepare_optional_home_assistant_action_candidate",
       "request_owner_project_gate"
     ],
     "report": [
       "project_transaction_timeline",
       "receipt_ledger",
-      "frappe_snapshot_review"
+      "frappe_snapshot_review",
+      "project_history_query"
     ]
   },
   "multi_role_comparison": {
-    "summary": "本 pack 单角色（项目经理）经 advice 节点出候选，正式动作回 owner_gate；无多角色对照，无 runtime 内隐藏 agent 回路。",
+    "summary": "本 Pack 单角色（项目经理）经 advice 节点提出候选，五阶段写回与可选设备动作分别回 Owner/Base Gate；无 runtime 内隐藏 agent 回路。",
     "explicit_nodes": [
       "manager_advice(smart_home_project_manager/advice)"
     ],
@@ -140,7 +173,7 @@
       "auditable_evidence_receipt",
       "transaction_lifecycle_replay"
     ],
-    "rationale": "智能家居项目经营需要项目事务生命周期、Frappe 外部项目快照、写回候选、Owner/Base Gate 和 Receipt 回放；一句话模型只能给建议，不能形成可审计、可回滚、可挂事务对象的经营 Pack。"
+    "rationale": "智能家居项目经营需要单项目五阶段事务生命周期、Frappe 外部快照与受控写回、可选 Home Assistant 设备能力、Owner/Base Gate 和 Receipt 回放；一句话模型不能形成可审计、可重试、可查询历史且不腐化基座的闭环。"
   },
   "ui_surface_slots": [
     "pod",
@@ -159,7 +192,9 @@
     "*.db",
     "*.sqlite",
     "*.log",
-    "*.jsonl"
+    "*.jsonl",
+    "__pycache__",
+    "*.pyc"
   ],
   "software_requirements": [
     {
@@ -170,13 +205,29 @@
       "required_capabilities": [
         "project_external_snapshot",
         "customer_relationship_snapshot",
-        "project_milestone_write_candidate"
+        "project_lifecycle_write_candidate"
       ],
       "license_policy": "review_required",
       "isolation_policy": "reuse_preferred",
       "fallback_policy": "provider_missing",
       "gateway_class": "execution",
       "risk_class": "medium"
+    },
+    {
+      "requirement_id": "home-assistant-runtime",
+      "software_family": "home-assistant-core",
+      "provider_family": "home_assistant",
+      "version_range": ">=2025.0.0,<2027.0.0",
+      "required_capabilities": [
+        "smart_home_device_state_snapshot",
+        "smart_home_device_control_candidate"
+      ],
+      "license_policy": "review_required",
+      "isolation_policy": "reuse_preferred_l2_provider",
+      "fallback_policy": "not_ready",
+      "gateway_class": "execution",
+      "risk_class": "high",
+      "optional": true
     },
     {
       "requirement_id": "baserow-runtime-a",
