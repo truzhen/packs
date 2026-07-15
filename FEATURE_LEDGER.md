@@ -13,6 +13,14 @@
 | 风险 / 契约 | 计划文档为绿；直接 lifecycle/候选为黄；ProviderRequirement 为橙；正式法律裁定、环保处罚/送达/删除/对外提交及生产设备动作均为红。不改 contracts 或跨仓 schema；Pack 不得向基座塞行业专用分支、Provider、Gate/Gateway/Receipt 或 seed。Home Assistant 只作为可选 ProviderRequirement，缺失须 `not_ready/provider_missing`。 |
 | 验收与状态 | 新计划：`docs/plans/environmental-enforcement-prepackage-real-use-test-campaign-v16-20260715.md`、`docs/plans/smart-home-service-provider-test-campaign-v16-20260715.md`。Pack v1.1.0 声明为`已实现 -> 已接线`；JSON/Python/结构/禁品/Go 测试及跨仓 EGR 全绿，待全新 GUI 和独立复核后方可`已验收（打包前）`，当前未发布。 |
 
+## 0.0.1 墅学家生命周期治理校正
+
+| 维度 | 结论 |
+| --- | --- |
+| 事实证据 | `shuxuejia-renovation-pack-v0/docs/测试报告.md` 已记录 2026-07-08 隔离 install / uninstall / reinstall、457 / 457 SceneFlowRun、665 个候选预览、112 个回执引用和前端用户视角检查。 |
+| 校正范围 | 只把 manifest、MODULES 和本账本从“设计中 / 待真实运行”校正为`已接线`；不改流程、角色、能力、知识、安装脚本或运行事实。 |
+| 保守边界 | 任务、知识、沟通与 ProviderRequirement 仍有前端投影缺口；没有新的独立验收和发布证据，不升级为`已验收 / 已发布`。 |
+
 ## 0. 本轮派活卡（销售 / CRM / 私域第一现金流 Pack 最小闭环设计）
 
 | 维度 | 结论 |
@@ -154,7 +162,7 @@
 | 智能家居 pack 交付 bundle 打包器 + install.py 交付形态 | `build_pack_bundle.py` 把 pack 目录 + 父层 `pack_diagnostics.py` 打成自包含 bundle.zip（解决 install.py 父目录导入）+ 拒残缺 pack + 每文件 sha256；install.py docstring 改为面向已运行生产基座（`TRUZHEN_DEVSERVER_BASE`）+ bundle 两种装入 | ✅ 已验收（land origin/main `96faf96`） | `build_pack_bundle.py` / `test_pack_bundle.py`(TDD 2 用例绿) / `smart-home-owner-pack-v0/install.py`；E2E：解压 bundle（无 packs 源码树）→全新生产基座 install 达 enabled + 03 回执 `fae0cc8b`（Base Gate decision_ref）；证据 truzhenos `docs/status/smart-home-pack-base-deliverable-e2e-20260709.md` | 首个用户=Owner 智能家居服务商；启用穿真主权链非下载冒充 |
 | knowledge 内容 checksum 防漂移 + install 事务日志断点续装 | ①knowledge-index 每条目 sha256 checksum（真相源仍是文件本体）+ 三向漂移校验（内容/断链/未登记 md）+ CI 步 + 四 install.py 装入前 fail-fast（新错误码 TZ-PACK-INSTALL-009）；②pack_install_journal 本机恢复账目（非真相源）：步骤/角色包/绑槽/知识逐条 approve 入账，失败半装显式化+断点续装跳过已批候选，不自动反做正式域 | ✅ 已验收（2026-07-11 land origin/main `cd62460`，Owner 裁定「裁定部分按建议」授权）| main（#10 `8cd660d` / #8 `103d94a`）；knowledge_checksums.py / pack_install_journal.py 及三个 test_*.py；环保 45+shuxuejia 5 条 checksum 已生成 | 统一决策表 #10/#8，Owner 2026-07-11 裁定 backlog 提前触发；撤销正式对象仍走 uninstall/Owner 禁用状态机 |
 | pack risk_types 判事策略声明（首个真实样例）| 环保执法 pack manifest 声明 `risk_types`（formal_penalty_notice：trigger=scene_flow_run_start / evidence 要求 / escalation=owner_gate）+ 四 install.py 把 manifest.risk_types 透传进 scene draft payload；pack 只声明、裁定权在 Base/Owner | ✅ 已验收（2026-07-11 land origin/main `cd62460`）| main `cd62460`（environmental-enforcement-pack-v0/manifest.json + 四 install.py）；contracts 侧形状 v0.12.0（PackRiskType/DeclaredRiskType）| 统一决策表 #11 packs 侧；os 侧 RiskTypeGate floor 同轮 land |
-| manifest 八档 `lifecycle_status` 声明 | 五个 manifest（4 真实 pack + 1 模板）声明八档中文生命周期档位，作者侧声明、验收/发布裁定归 Owner | ✅ 已验收（独立验收 PASS，2026-07-10 land） | 各 `*/manifest.json`（版本行下）；contracts 侧已 land main `3a455ee` 并 tag `v0.9.0`（schema+Go 常量+embed 同步守卫+双向突变闭环）；packs 侧已 land main `e3f8fce` | 跟随 packs 既有中文档位约定（team-office candidate-set 先例）；档位事实：env/家政/智能家居=已验收（各自 GUI 实测报告）、shuxuejia=设计中、模板=想法 |
+| manifest 八档 `lifecycle_status` 声明 | 五个 manifest（4 真实 pack + 1 模板）声明八档中文生命周期档位，作者侧声明、验收/发布裁定归 Owner | ✅ 已验收（独立验收 PASS，2026-07-10 land） | 各 `*/manifest.json`（版本行下）；contracts 侧已 land main `3a455ee` 并 tag `v0.9.0`（schema+Go 常量+embed 同步守卫+双向突变闭环）；packs 侧已 land main `e3f8fce` | 跟随 packs 既有中文档位约定（team-office candidate-set 先例）；档位事实：env/家政/智能家居=已验收（各自 GUI 实测报告）、shuxuejia=已接线（2026-07-08 报告已证明真实运行，保留前端投影缺口）、模板=想法 |
 | Pack 仓治理边界 | 明确本仓是包层，不是基座、运行时、Provider、前端产品仓 | ✅ | `AGENTS.md`、`CLAUDE.md`、`README.md`、`MODULES.md` | Pack 只声明和编排 |
 | 底层软件需求声明样例 | 智能家居 / 家政 Pack 声明 Baserow A/B 版本差异与共享 OCR，不封装软件本体 | 🟡 契约已定 | `smart-home-owner-pack-v0/manifest.json`、`housekeeping-ops-pack-v0/manifest.json`、`software_requirements_test.go` | 复用 / 冲突 / 隔离由 `truzhenos` resolver 裁定 |
 | 三类 Pack 封顶 | 固定 `Domain Work Pack`、`Capability Pack`、`Role Pack` 三类 | ✅ | `AGENTS.md`、`README.md` | 不发明第四种 Pack |
