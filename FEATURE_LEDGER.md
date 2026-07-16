@@ -3,6 +3,12 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
+## 0.-2 F01–F10 集成登记
+
+| 分支 / worktree | 做什么 | 开工 | 状态 |
+| --- | --- | --- | --- |
+| `codex/prepack-f01-f10-integration-20260716` / `/Users/li/Documents/truzhenv3worktree/prepack-f01-f10-integration-20260716-packs` | 从 F00 SHA 集成 issued binding glue 与 canonical Pack artifact；本仓只声明/打包，不持有 Base/Receipt 真相。 | 2026-07-16 | 🟡 `已实现 -> 已接线`；待集成态全量门禁与独立验收 |
+
 ## 0.0.0 F10 RC-B P0-3 Pack glue issued binding 修复
 
 | 维度 | 结论 |
