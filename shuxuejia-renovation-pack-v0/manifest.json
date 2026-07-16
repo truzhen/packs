@@ -2,6 +2,8 @@
   "pack_id": "pack_shuxuejia_large_home_renovation_v0",
   "pack_ref": "scene_pack://shuxuejia-large-home-renovation",
   "version": "1.0.0",
+  "kind": "scene_pack",
+  "min_truzhen_version": "3.0.0",
   "lifecycle_status": "已接线",
   "name": "墅学家大宅装修设计指导 Pack",
   "template_family": "长周期项目交付型",

@@ -33,7 +33,7 @@ func TestSmartHomeDeclaresFullProjectLifecycleAndOptionalHomeAssistantBoundary(t
 			t.Fatalf("smart-home full lifecycle capability missing: %s", capability)
 		}
 	}
-	requireSoftwareRequirement(t, manifest, "home-assistant-runtime", "home-assistant-core", ">=2025.0.0,<2027.0.0", "reuse_preferred_l2_provider")
+	requireSoftwareRequirement(t, manifest, "home-assistant-runtime", "home-assistant-core", ">=2025.0.0,<2027.0.0", "reuse_preferred")
 
 	providerRequirements, ok := manifest["provider_requirements"].([]any)
 	if !ok {

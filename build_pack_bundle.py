@@ -27,6 +27,7 @@
 import hashlib
 import json
 import os
+import re
 import sys
 import tempfile
 import zipfile
@@ -34,6 +35,19 @@ import zipfile
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 DIAGNOSTICS = os.path.join(REPO_ROOT, "pack_diagnostics.py")
 REQUIRED_FILES = ("manifest.json", "install.py", "uninstall.py")
+REQUIRED_MANIFEST_FIELDS = (
+    "pack_id", "name", "version", "kind", "min_truzhen_version", "lifecycle_status",
+)
+PACK_KINDS = {"scene_pack", "capability_pack", "role_pack", "skill_bundle"}
+LIFECYCLE_STATUSES = {
+    "想法", "设计中", "契约已定", "已实现", "已接线", "已验收", "已发布", "已弃用",
+}
+SEMVER_PATTERN = re.compile(r"^\d+\.\d+\.\d+$")
+VERSION_RANGE_PATTERN = re.compile(r"^(>=|<=|>|<|=)?\d+\.\d+\.\d+(,(>=|<=|>|<|=)?\d+\.\d+\.\d+)*$")
+ISOLATION_POLICIES = {"reuse_preferred", "isolated_install", "coexist_multi_version", "blocked"}
+FALLBACK_POLICIES = {"blocked", "provider_missing", "manual_handoff", "not_ready"}
+GATEWAY_CLASSES = {"execution", "communication", "model", "memory"}
+RISK_CLASSES = {"low", "medium", "high", "critical"}
 _EXCLUDE_DIRS = {"__pycache__", ".git", "node_modules", "dist", "build", ".vite"}
 _EXCLUDE_SUFFIXES = (".pyc", ".db", ".sqlite", ".sqlite3", ".log", ".jsonl")
 
@@ -55,13 +69,70 @@ def _validate(pack_dir):
     if not os.path.isfile(DIAGNOSTICS):
         raise ValueError("缺共享 pack_diagnostics.py（%s）；install.py 父目录导入会失败" % DIAGNOSTICS)
     # manifest 声明的文件必须真实存在（交付前置门）
-    manifest = json.load(open(os.path.join(pack_dir, "manifest.json"), encoding="utf-8"))
+    with open(os.path.join(pack_dir, "manifest.json"), encoding="utf-8") as handle:
+        manifest = json.load(handle)
+    missing = [field for field in REQUIRED_MANIFEST_FIELDS if not manifest.get(field)]
+    if missing:
+        raise ValueError("manifest 不符合 canonical PackManifest：缺 %s" % ", ".join(missing))
+    if not SEMVER_PATTERN.fullmatch(str(manifest["version"])):
+        raise ValueError("manifest version 必须是 Cloud 接受的 SemVer（x.y.z）")
+    if manifest["kind"] not in PACK_KINDS:
+        raise ValueError("manifest kind 非 canonical 值：%s" % manifest["kind"])
+    if manifest["lifecycle_status"] not in LIFECYCLE_STATUSES:
+        raise ValueError("manifest lifecycle_status 必须是八档单值：%s" % manifest["lifecycle_status"])
+    if manifest["kind"] == "scene_pack":
+        for script in ("install.py", "uninstall.py"):
+            if not os.path.isfile(os.path.join(pack_dir, script)):
+                raise ValueError("场景荚市场制品缺 %s" % script)
+    _validate_software_requirements(manifest.get("software_requirements", []))
+    _validate_provider_requirements(manifest.get("provider_requirements", []))
     for key in ("flow_file", "role_slots_file", "capabilities_file", "knowledge_index",
                 "knowledge_scopes_manifest"):
         rel = manifest.get(key)
         if rel and not os.path.isfile(os.path.join(pack_dir, rel)):
             raise ValueError("manifest 声明的 %s=%s 在 pack 内不存在" % (key, rel))
     return manifest
+
+
+def _validate_software_requirements(items):
+    seen = set()
+    required = (
+        "requirement_id", "software_family", "version_range", "isolation_policy",
+        "fallback_policy", "gateway_class", "risk_class",
+    )
+    for item in items:
+        missing = [field for field in required if not item.get(field)]
+        if missing:
+            raise ValueError("software_requirement 缺 %s" % ", ".join(missing))
+        rid = item["requirement_id"]
+        if rid in seen:
+            raise ValueError("software_requirement requirement_id 重复：%s" % rid)
+        seen.add(rid)
+        if not VERSION_RANGE_PATTERN.fullmatch(str(item["version_range"])):
+            raise ValueError("software_requirement version_range 非 canonical：%s" % item["version_range"])
+        if item["isolation_policy"] not in ISOLATION_POLICIES:
+            raise ValueError("software_requirement isolation_policy 非 canonical：%s" % item["isolation_policy"])
+        if item["fallback_policy"] not in FALLBACK_POLICIES:
+            raise ValueError("software_requirement fallback_policy 非 canonical：%s" % item["fallback_policy"])
+        if item["gateway_class"] not in GATEWAY_CLASSES or item["risk_class"] not in RISK_CLASSES:
+            raise ValueError("software_requirement gateway_class/risk_class 非 canonical")
+
+
+def _validate_provider_requirements(items):
+    seen = set()
+    required = ("requirement_id", "provider_family", "fallback_policy", "gateway_class", "risk_class")
+    for item in items:
+        missing = [field for field in required if not item.get(field)]
+        if missing:
+            raise ValueError("provider_requirement 缺 %s" % ", ".join(missing))
+        rid = item["requirement_id"]
+        if rid in seen:
+            raise ValueError("provider_requirement requirement_id 重复：%s" % rid)
+        seen.add(rid)
+        if item["fallback_policy"] not in FALLBACK_POLICIES:
+            raise ValueError("provider_requirement fallback_policy 非 canonical：%s" % item["fallback_policy"])
+        if item["gateway_class"] not in GATEWAY_CLASSES or item["risk_class"] not in RISK_CLASSES:
+            raise ValueError("provider_requirement gateway_class/risk_class 非 canonical")
 
 
 def _iter_pack_files(pack_dir):

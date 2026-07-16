@@ -2,6 +2,8 @@
   "pack_id": "pack_backup_administrator_workbench_v0",
   "pack_ref": "scene_pack://backup-administrator-workbench",
   "version": "0.1.0",
+  "kind": "scene_pack",
+  "min_truzhen_version": "3.0.0",
   "lifecycle_status": "已实现",
   "name": "备份管理员工作台 Pack（数据安全与备份治理）",
   "template_family": "数据资产保护与恢复演练型",

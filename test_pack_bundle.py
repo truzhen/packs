@@ -27,7 +27,9 @@ def _make_fake_pack(root, name, with_install=True):
     for sub in ("flows", "role-slots", "capabilities"):
         os.makedirs(os.path.join(pd, sub))
     json.dump(
-        {"manifest_version": "v3", "pack_ref": "scene_pack://fake", "version": "1.0.0",
+        {"manifest_version": "v3", "pack_id": "pack_fake_v0", "name": "测试场景荚",
+         "pack_ref": "scene_pack://fake", "version": "1.0.0", "kind": "scene_pack",
+         "min_truzhen_version": "3.0.0", "lifecycle_status": "已验收",
          "flow_file": "flows/f.flow.json", "role_slots_file": "role-slots/role-slots.json",
          "capabilities_file": "capabilities/capabilities.json"},
         open(os.path.join(pd, "manifest.json"), "w", encoding="utf-8"))
@@ -107,8 +109,85 @@ def test_market_artifact_is_rooted_and_excludes_runtime_files():
         shutil.rmtree(tmp, ignore_errors=True)
 
 
+def test_rejects_noncanonical_market_manifest_before_artifact_write():
+    from build_pack_bundle import build_market_artifact
+    tmp = tempfile.mkdtemp()
+    try:
+        pd = _make_fake_pack(tmp, "bad-manifest-pack-v0")
+        manifest_path = os.path.join(pd, "manifest.json")
+        manifest = json.load(open(manifest_path, encoding="utf-8"))
+        manifest.pop("min_truzhen_version")
+        manifest["lifecycle_status"] = "已实现 -> 已接线"
+        with open(manifest_path, "w", encoding="utf-8") as handle:
+            json.dump(manifest, handle, ensure_ascii=False)
+        out = os.path.join(tmp, "dist")
+        try:
+            build_market_artifact(pd, out)
+        except ValueError as error:
+            assert "min_truzhen_version" in str(error)
+        else:
+            raise AssertionError("缺 canonical 字段的 manifest 必须在写 artifact 前失败")
+        assert not os.path.exists(os.path.join(out, "bad-manifest-pack-v0.market.zip"))
+        print("PASS test_rejects_noncanonical_market_manifest_before_artifact_write")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_rejects_compound_lifecycle_value():
+    from build_pack_bundle import build_market_artifact
+    tmp = tempfile.mkdtemp()
+    try:
+        pd = _make_fake_pack(tmp, "bad-lifecycle-pack-v0")
+        manifest_path = os.path.join(pd, "manifest.json")
+        manifest = json.load(open(manifest_path, encoding="utf-8"))
+        manifest["lifecycle_status"] = "已实现 -> 已接线"
+        with open(manifest_path, "w", encoding="utf-8") as handle:
+            json.dump(manifest, handle, ensure_ascii=False)
+        try:
+            build_market_artifact(pd, os.path.join(tmp, "dist"))
+        except ValueError as error:
+            assert "八档单值" in str(error)
+        else:
+            raise AssertionError("复合 lifecycle_status 必须被拒")
+        print("PASS test_rejects_compound_lifecycle_value")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_rejects_noncanonical_nested_requirement():
+    from build_pack_bundle import build_market_artifact
+    tmp = tempfile.mkdtemp()
+    try:
+        pd = _make_fake_pack(tmp, "bad-requirement-pack-v0")
+        manifest_path = os.path.join(pd, "manifest.json")
+        manifest = json.load(open(manifest_path, encoding="utf-8"))
+        manifest["software_requirements"] = [{
+            "requirement_id": "runtime-x",
+            "software_family": "runtime-x",
+            "version_range": ">=1.0.0,<2.0.0",
+            "isolation_policy": "reuse_preferred_l2_provider",
+            "fallback_policy": "provider_missing",
+            "gateway_class": "execution",
+            "risk_class": "medium",
+        }]
+        with open(manifest_path, "w", encoding="utf-8") as handle:
+            json.dump(manifest, handle, ensure_ascii=False)
+        try:
+            build_market_artifact(pd, os.path.join(tmp, "dist"))
+        except ValueError as error:
+            assert "isolation_policy" in str(error)
+        else:
+            raise AssertionError("非 canonical nested requirement 必须被拒")
+        print("PASS test_rejects_noncanonical_nested_requirement")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 if __name__ == "__main__":
     test_bundle_self_contained()
     test_rejects_pack_missing_install()
     test_market_artifact_is_rooted_and_excludes_runtime_files()
+    test_rejects_noncanonical_market_manifest_before_artifact_write()
+    test_rejects_compound_lifecycle_value()
+    test_rejects_noncanonical_nested_requirement()
     print("ALL PASS")

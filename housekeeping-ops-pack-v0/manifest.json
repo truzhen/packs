@@ -2,6 +2,8 @@
   "pack_id": "pack_housekeeping_ops_v0",
   "pack_ref": "scene_pack://housekeeping-ops",
   "version": "0.1.0",
+  "kind": "scene_pack",
+  "min_truzhen_version": "3.0.0",
   "lifecycle_status": "已验收",
   "name": "家政公司日常运营 Pack（客户服务全生命周期）",
   "template_family": "客户服务全生命周期型",

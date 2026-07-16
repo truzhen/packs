@@ -13,6 +13,12 @@
 | 风险 / 契约 | 红；不改 contracts，不改 Cloud/Client/Software，不执行真实安装或市场动作。 |
 | 验收与状态 | `已验收`：Go 静态 guard 禁 glue 出现任何字面量 `owner_action_evidence://`；JSON、`py_compile`、knowledge checksum、25 个 Python tests、`GOWORK=off go test ./...`、禁入产物与 `git diff --check` 全绿；跨仓知识挂载 E2E 实际 RUN/PASS，独立复核 GO；本机无 gitleaks，未虚报其结果。 |
 
+## 0.-1 F10 canonical Pack artifact 在途登记
+
+| 分支 / worktree | 做什么 | 开工 | 状态 |
+| --- | --- | --- | --- |
+| `codex/prepack-rc-b-canonical-pack-artifact-20260716` / `/Users/li/Documents/truzhenv3worktree/prepack-rc-b-canonical-pack-artifact-20260716-packs` | F10 P0-5/P1-1：打包器 fail-closed 校验 contracts canonical manifest 及嵌套软件 / Provider 声明；五个 Pack 产出可被 Cloud 原样接纳的 ZIP。 | 2026-07-16 | 🟡 已接线；单测与五个真实 ZIP 跨仓内容门已绿，待全仓门禁与独立验收。 |
+
 ## 0.0 双 Pack v16 单项目完整 lifecycle 派活卡
 
 | 维度 | 结论 |
@@ -21,7 +27,7 @@
 | 真实客户 / 场景证据 | 环保 v15 发现急停启用缺 central 03 Receipt；智能家居 v15.1 已跑通 Frappe 项目任务、更新和交付缺陷，但仍缺商机、立项、物料的单项目全周期以及安全核心直达入口。Owner 2026-07-15 明确硬件控制复用 Home Assistant，不单独造程序。 |
 | 真相源 / 归属 | Pack 资产归本仓；lifecycle/项目/Run/模型/知识/回执归 truzhenos 14/05/06/08/09/03；client 只展示。本仓只更新计划和成熟度登记。 |
 | 风险 / 契约 | 计划文档为绿；直接 lifecycle/候选为黄；ProviderRequirement 为橙；正式法律裁定、环保处罚/送达/删除/对外提交及生产设备动作均为红。不改 contracts 或跨仓 schema；Pack 不得向基座塞行业专用分支、Provider、Gate/Gateway/Receipt 或 seed。Home Assistant 只作为可选 ProviderRequirement，缺失须 `not_ready/provider_missing`。 |
-| 验收与状态 | 新计划：`docs/plans/environmental-enforcement-prepackage-real-use-test-campaign-v16-20260715.md`、`docs/plans/smart-home-service-provider-test-campaign-v16-20260715.md`。Pack v1.1.0 声明为`已实现 -> 已接线`；JSON/Python/结构/禁品/Go 测试及跨仓 EGR 全绿，待全新 GUI 和独立复核后方可`已验收（打包前）`，当前未发布。 |
+| 验收与状态 | 新计划：`docs/plans/environmental-enforcement-prepackage-real-use-test-campaign-v16-20260715.md`、`docs/plans/smart-home-service-provider-test-campaign-v16-20260715.md`。Pack v1.1.0 当前声明为`已接线`；JSON/Python/结构/禁品/Go 测试及跨仓 EGR 全绿，待全新 GUI 和独立复核后方可`已验收（打包前）`，当前未发布。 |
 
 ## 0.0.1 墅学家生命周期治理校正
 
@@ -226,14 +232,14 @@
 | 优先级 | 归属 | 待完善项 | 当前缺口 | 验收口径 |
 |---|---|---|---|---|
 | P0/P1 | `environmental-enforcement-pack-v0/`、`smart-home-owner-pack-v0/` | 2026-07-11 两 Pack 产品修复 | 环保 R1 的 PDF 急停、Receipt 幂等、法律引用、知识分页与沟通阻断；智能家居的项目/任务/安全/能力投影 | ✅ 已验收（未发布）；四隔离分支完成 GUI/API/Receipt/ReadModel、双 full-stack、双 Tab 三视口与相关门禁复验，问题台账核心 P0/P1 归零。 |
-| ✅ | `housekeeping-ops-pack-v0/` | 补 `uninstall.py` | 2026-07-02 已补齐；脚本调 lifecycle disable 可逆停用（只改可见性/运行访问权，自动留痕，不走 Base Gate——Owner 2026-07-03「门禁 vs 留痕」裁定：可逆停用不产生对外不良影响） | 卸载只停用 Pack，不删除历史对象、候选或 Receipt；脚本语法通过 |
+| ✅ | `housekeeping-ops-pack-v0/` | 补 `uninstall.py` | 2026-07-02 已补齐；当前脚本先走 Base gated-action prepare→confirm，消费服务端签发的 decision/run/nonce 后调用 lifecycle disable，不再沿用“不走 Base Gate”的旧口径 | 卸载只停用 Pack，不删除历史对象、候选或 Receipt；脚本语法通过 |
 | P0 | `housekeeping-ops-pack-v0/` | 补 `knowledge/` 或明确无知识库版本 | 当前无 `knowledge-scopes.json` / `knowledge-index.json` | README / manifest / MODULES 口径一致；若补知识，scope / index / Markdown 一致 |
 | ✅ | `environmental-enforcement-pack-v0/` | 收口 `solid-waste` 知识域漂移 | 已在 `950e16d` 从 manifest 删除无事实支撑的 `solid-waste` 知识域声明，对齐 15 域现状；2026-07-02/03 实测复核知识域零漂移 | 结构审计已转绿；15 知识域一致 |
 | P1 | `templates/scene-pack-software-template/` | 模板 manifest 贴近当前 Domain Work Pack schema | 当前模板 manifest 与真实 pack manifest 不是同一成熟结构 | 模板包含六件事、ProviderRequirement、moat、role slots、flow、knowledge 占位说明 |
 | P1 | 全仓 | 建立自动结构审计脚本 | 当前验证命令写在治理文档中，未形成仓内统一脚本 | 一条命令覆盖 JSON、脚本语法、forbidden artifacts、manifest 结构审计 |
 | P1 | 全仓 | 补 Pack 体量 / 成熟度变更登记纪律 | 本文件刚建立，后续新增 / 删除 / 重命名 pack 时需同步维护 | README、MODULES、FEATURE_LEDGER 与目标 pack README / manifest 同步更新 |
 | P2 | `environmental-enforcement-pack-v0/` | 知识来源与人工核验持续维护 | 高风险法律知识体量最大，需防止 scope / index 漂移 | knowledge scopes、index、文件路径一致；高风险知识保持 `pending_human_review` |
-| P1 | `smart-home-owner-pack-v0/` | install.py 环保残留清理 | 2026-07-03 第二轮实测 SH-P3 受阻于制作台缺陷（SH-ISSUE-04/05/06），未清 install.py：docstring 首行仍写「环保执法 Pack」（复制未改）、knowledge batch `tags` 硬编码「环保执法」（本 pack 无知识库不走该行，属残留）；第二轮计划 §7 第 1 项列为完善候选 | docstring 首行改「智能家居老板项目经营 Pack」、tags 改通用或按 pack 声明取值；隔离 devserver install/uninstall E2E registry 0→1→0 |
+| ✅ | `smart-home-owner-pack-v0/` | install.py 环保残留清理 | 已清理：docstring 为「智能家居老板项目经营 Pack」，knowledge batch 不再硬编码「环保执法」；2026-07-16 账本复核关闭旧 backlog 描述 | 保持隔离 devserver install/uninstall E2E 作为运行验收门，不再把已不存在的残留列为待办 |
 | 🟡 | 全仓 | devserver E2E 验收记录 | 环保执法 pack 本轮已有隔离 devserver E2E 铁证（registry 0→1→0，回执 `718b0baa`）；其余 pack 仍待记录 | 记录 registry 0→1、enabled version、Role Pack enabled、SlotBinding、KnowledgeMount、Receipt |
 
 ## 7. 维护规程

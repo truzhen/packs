@@ -2,7 +2,7 @@
   "pack_id": "pack_smart_home_owner_v0",
   "pack_ref": "scene_pack://smart-home-owner-project-ops",
   "version": "1.1.0",
-  "lifecycle_status": "已实现 -> 已接线",
+  "lifecycle_status": "已接线",
   "name": "智能家居老板项目经营 Pack",
   "template_family": "长周期项目交付型",
   "description": "面向智能家居/智能装修公司老板的单项目完整经营周期场景荚：商机 → 立项 → 进度 → 物料 → 交付 → 历史查询。Frappe 仅作受控项目 Provider；设备控制不自造程序，仅可选引用 Home Assistant Provider。所有写入与设备动作均先形成候选，经 Owner + Base Gate、Gateway 和 Receipt；Provider 缺失时诚实返回 provider_missing/not_ready/blocked。",
@@ -223,7 +223,7 @@
         "smart_home_device_control_candidate"
       ],
       "license_policy": "review_required",
-      "isolation_policy": "reuse_preferred_l2_provider",
+      "isolation_policy": "reuse_preferred",
       "fallback_policy": "not_ready",
       "gateway_class": "execution",
       "risk_class": "high",
