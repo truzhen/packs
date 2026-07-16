@@ -136,3 +136,31 @@ func TestPackAssetsDoNotCarryBusinessDataFormalRefsOrRawSecrets(t *testing.T) {
 		})
 	}
 }
+
+func TestPackGlueDoesNotMintOwnerActionEvidence(t *testing.T) {
+	installers, err := filepath.Glob("*-v0/install.py")
+	if err != nil {
+		t.Fatal(err)
+	}
+	uninstallers, err := filepath.Glob("*-v0/uninstall.py")
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths := append(installers, uninstallers...)
+	if len(paths) == 0 {
+		t.Fatal("未发现 Pack glue，静态主权门不能空跑")
+	}
+	for _, path := range paths {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatalf("read %s: %v", path, err)
+		}
+		source := string(data)
+		if strings.Contains(source, "owner_action_evidence://") {
+			t.Fatalf("%s: Pack glue 禁止自铸 owner_action_evidence_ref", path)
+		}
+		if strings.HasSuffix(path, "uninstall.py") && !strings.Contains(source, `"action_type": "14.pack-studio.lifecycle.disable"`) {
+			t.Fatalf("%s: 卸载缺少 os-14 canonical action_type", path)
+		}
+	}
+}

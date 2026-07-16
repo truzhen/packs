@@ -74,7 +74,7 @@ def main():
 
     # 1. Base 签发 disable decision
     code, body = call("POST", "/v3/base/gated-actions/prepare", {
-        "action_type": "pack_disable", "target_ref": pack_ref,
+        "action_type": "14.pack-studio.lifecycle.disable", "target_ref": pack_ref,
         "content_summary": "停用环保执法 pack：" + pack_ref,
         "impact_summary": "停用场景包并级联卸载其知识域；历史回执保留可反查",
         "transaction_ref": "transaction://pack-disable:" + pack_ref + "@" + version})
@@ -87,14 +87,14 @@ def main():
     if code != 200:
         die("gated confirm HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
     iss = body.get("issue") or {}
-    if not iss.get("decision_ref"):
-        die("gated confirm 无 decision_ref: %s" % body, UNINSTALL_LIFECYCLE_HTTP)
+    if not all(iss.get(key) for key in ("decision_ref", "run_id", "nonce", "owner_action_evidence_ref")):
+        die("gated confirm 返回的 issued binding 不完整: %s" % body, UNINSTALL_LIFECYCLE_HTTP)
 
     # 2. disable
     code, body = call("POST", "/v3/pack-studio/lifecycle/disable", {
         "pack_ref": pack_ref, "owner_ref": OWNER, "reason": "Owner 卸载环保执法 pack",
         "decision_ref": iss["decision_ref"], "run_id": iss.get("run_id", ""), "nonce": iss.get("nonce", ""),
-        "owner_action_evidence_ref": "owner_action_evidence://pack-disable/" + pack_ref})
+        "owner_action_evidence_ref": iss["owner_action_evidence_ref"]})
     if code != 200:
         die("disable HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
     print("\n✅ 卸载成功：%s 已停用，知识域已级联卸载。前端「场景包管理」刷新即消失。" % pack_ref)

@@ -74,7 +74,10 @@ def make_fake_call(approve_log, fail_at_approve_n=None):
         if path.endswith("/gated-actions/prepare"):
             return 200, {"issue": {"issue_ref": "i1"}}
         if path.endswith("/gated-actions/confirm"):
-            return 200, {"issue": {"decision_ref": "dr", "run_id": "r", "nonce": "n"}}
+            return 200, {"issue": {
+                "decision_ref": "dr", "run_id": "r", "nonce": "n",
+                "owner_action_evidence_ref": "owner_action_evidence://base/test-confirm",
+            }}
         if "/memory/knowledge/candidates/" in path and path.endswith("/approve"):
             cref = urllib.parse.unquote(
                 path.split("/memory/knowledge/candidates/")[1].rsplit("/approve", 1)[0])

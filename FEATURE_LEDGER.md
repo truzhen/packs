@@ -3,6 +3,16 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
+## 0.0.0 F10 RC-B P0-3 Pack glue issued binding 修复
+
+| 维度 | 结论 |
+| --- | --- |
+| 我要做的事 | 五个正式 Pack 的卸载脚本与五个安装脚本（含 smart-home 不可达旧知识函数）停止自铸 `owner_action_evidence_ref`，只消费 os-01 confirm 原样 proof；知识批次预览保持 Candidate/trace-only，正式 approve 才过 Gate。 |
+| 真实客户 / 场景证据 | Owner 已批准战役 v3；安装、卸载与知识正式化必须能从 03 反查到同一次 Owner confirm evidence。 |
+| 真相源 / 归属 | os-01 issued binding 与 os-03 Receipt 是权威；本仓脚本仅消费。配对 OS 分支先修核验，本仓随后迁移。 |
+| 风险 / 契约 | 红；不改 contracts，不改 Cloud/Client/Software，不执行真实安装或市场动作。 |
+| 验收与状态 | `已验收`：Go 静态 guard 禁 glue 出现任何字面量 `owner_action_evidence://`；JSON、`py_compile`、knowledge checksum、25 个 Python tests、`GOWORK=off go test ./...`、禁入产物与 `git diff --check` 全绿；跨仓知识挂载 E2E 实际 RUN/PASS，独立复核 GO；本机无 gitleaks，未虚报其结果。 |
+
 ## 0.0 双 Pack v16 单项目完整 lifecycle 派活卡
 
 | 维度 | 结论 |

@@ -55,7 +55,7 @@ jobs:
           scripts=$(find . -name install.py -o -name uninstall.py)
           if [ -n "$scripts" ]; then echo "$scripts" | xargs python3 -m py_compile && echo "脚本语法 OK"; else echo "无装入脚本"; fi
       - name: python-unit-tests（环境无关单测）
-        run: python3 -m unittest test_pack_diagnostics test_knowledge_checksums test_pack_bundle test_pack_install_journal test_install_journal_wiring
+        run: python3 -m unittest test_pack_diagnostics test_pack_issued_binding test_knowledge_checksums test_pack_bundle test_pack_install_journal test_install_journal_wiring
 
   secret-scan:
     runs-on: ubuntu-latest

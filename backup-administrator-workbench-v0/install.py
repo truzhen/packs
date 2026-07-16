@@ -386,7 +386,6 @@ def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
         "owner_id": OWNER, "scope": "Formal",
         "transaction_ref": "transaction://pack-knowledge:" + pack_version_ref,
         "scene_ref": scene_ref, "tags": ["pack 知识库", "备份治理"],
-        "owner_action_evidence_ref": "owner_action_evidence://pack-knowledge/" + pack_ref + "/import",
         "policy_snapshot_ref": "policy_snapshot://pack-knowledge/import",
         "source_files": source_files, "pack_ref": pack_ref, "pack_version_ref": pack_version_ref,
         "knowledge_scope_ref": scope_ref}
@@ -399,10 +398,10 @@ def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
         cref = c.get("candidate_ref")
         if not cref or c.get("status") != "pending":
             continue
-        dref, run_id, nonce = mint_decision(pack_version_ref, cref)
+        dref, run_id, nonce, owner_evidence_ref = mint_decision(pack_version_ref, cref)
         code, abody = call("POST", "/v3/memory/knowledge/candidates/" + urllib.parse.quote(cref, safe="") + "/approve", {
             "actor_ref": OWNER,
-            "owner_action_evidence_ref": "owner_action_evidence://pack-knowledge/" + pack_ref + "/approve",
+            "owner_action_evidence_ref": owner_evidence_ref,
             "decision_ref": dref, "run_id": run_id, "nonce": nonce,
             "policy_snapshot_ref": "policy_snapshot://pack-knowledge/approve",
             # 装入 pack = Owner 选择信任 → 知识直接 owner_verified（不堆「待确认」逐条核验）。
@@ -429,9 +428,9 @@ def mint_decision(scope_ref, candidate_ref):
     if code != 200:
         die("gated confirm HTTP %d: %s" % (code, body), INSTALL_BASE_GATE)
     iss = body.get("issue") or {}
-    if not iss.get("decision_ref"):
-        die("gated confirm 无 decision_ref: %s" % body, INSTALL_BASE_GATE)
-    return iss["decision_ref"], iss.get("run_id", ""), iss.get("nonce", "")
+    if not all(iss.get(key) for key in ("decision_ref", "run_id", "nonce", "owner_action_evidence_ref")):
+        die("gated confirm 返回的 issued binding 不完整: %s" % body, INSTALL_BASE_GATE)
+    return iss["decision_ref"], iss["run_id"], iss["nonce"], iss["owner_action_evidence_ref"]
 
 
 if __name__ == "__main__":

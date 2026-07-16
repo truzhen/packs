@@ -78,7 +78,7 @@ def main():
         return
 
     code, body = call("POST", "/v3/base/gated-actions/prepare", {
-        "action_type": "pack_disable",
+        "action_type": "14.pack-studio.lifecycle.disable",
         "target_ref": pack_ref,
         "content_summary": "停用家政运营 Pack：" + pack_ref,
         "impact_summary": "停用客户服务全生命周期场景包；历史事务对象、候选和回执保留可反查",
@@ -94,18 +94,17 @@ def main():
     if code != 200:
         die("gated confirm HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
     issue = body.get("issue") or {}
-    decision_ref = issue.get("decision_ref")
-    if not decision_ref:
-        die("gated confirm 无 decision_ref: %s" % body, UNINSTALL_LIFECYCLE_HTTP)
+    if not all(issue.get(key) for key in ("decision_ref", "run_id", "nonce", "owner_action_evidence_ref")):
+        die("gated confirm 返回的 issued binding 不完整: %s" % body, UNINSTALL_LIFECYCLE_HTTP)
 
     code, body = call("POST", "/v3/pack-studio/lifecycle/disable", {
         "pack_ref": pack_ref,
         "owner_ref": OWNER,
         "reason": "Owner 卸载" + pack_name,
-        "decision_ref": decision_ref,
+        "decision_ref": issue["decision_ref"],
         "run_id": issue.get("run_id", ""),
         "nonce": issue.get("nonce", ""),
-        "owner_action_evidence_ref": "owner_action_evidence://pack-disable/" + pack_ref,
+        "owner_action_evidence_ref": issue["owner_action_evidence_ref"],
     })
     if code != 200:
         die("disable HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
