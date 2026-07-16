@@ -1,0 +1,75 @@
+{
+  "schema_version": "content-operations-objects/v1",
+  "truth_source": "truzhen_candidate_and_receipt_chain",
+  "objects": [
+    {
+      "object_type": "ContentDirectionCandidate",
+      "candidate_only": true,
+      "required_fields": [
+        "candidate_ref",
+        "transaction_ref",
+        "source_event_id",
+        "pack_version_ref",
+        "audience",
+        "problem",
+        "core_claim",
+        "evidence_refs",
+        "risk_notes",
+        "cta"
+      ],
+      "allowed_statuses": [
+        "candidate_ready",
+        "selected_by_owner",
+        "rejected_by_owner",
+        "blocked"
+      ],
+      "formal_object": false
+    },
+    {
+      "object_type": "ContentPublicationPackageCandidate",
+      "candidate_only": true,
+      "required_fields": [
+        "candidate_ref",
+        "transaction_ref",
+        "source_event_id",
+        "pack_version_ref",
+        "internal_artifact_refs",
+        "public_artifact_refs",
+        "sanitizer_report_refs",
+        "preflight_status",
+        "publication_authorized",
+        "publication_status"
+      ],
+      "state_constraints": {
+        "package_ready_for_owner_review": "preflight_status=pending",
+        "preflight_passed": "preflight_status=passed",
+        "publication_authorized": "preflight_status=passed and owner judgement recorded",
+        "publication_status": "not_published"
+      },
+      "formal_object": false
+    },
+    {
+      "object_type": "ContentReviewCandidate",
+      "candidate_only": true,
+      "required_fields": [
+        "candidate_ref",
+        "transaction_ref",
+        "pack_version_ref",
+        "metric_evidence_refs",
+        "keep",
+        "change",
+        "stop",
+        "next_experiments"
+      ],
+      "missing_metrics_behavior": "blocked_with_minimum_data_request",
+      "formal_object": false
+    }
+  ],
+  "forbidden_formalizations": [
+    "SocialPlatformPublication",
+    "PlatformLoginSession",
+    "ExternalMessage",
+    "OwnerDecision",
+    "Receipt"
+  ]
+}

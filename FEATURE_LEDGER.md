@@ -3,6 +3,18 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
+## 0.0 内容运营 Pack 嵌入 Truzhen 第二阶段（在途）
+
+| 维度 | 结论 |
+| --- | --- |
+| 分支 / worktree | `codex/content-ops-pack-v011-20260716` / `/Users/li/Documents/truzhenv3worktree/content-ops-truzhen-embed-20260716/truzhen-packs` |
+| 我要做的事 | 把第一阶段 `truzhen-content-ops 0.1.1` 迁为独立内容运营 Domain Work Pack，声明选题雷达、内容生产、周复盘、Owner 判断门和 candidate-only 产物；Codex CLI Provider 继续归 software 仓。 |
+| 真实场景证据 | Owner 有 13 万粉别墅装修/灯光抖音账号，每天投入 2 小时，只做方向、事实和发布判断；第一阶段两个真实 run 和后台自然调度已验收。 |
+| 真相源 / 归属 | Pack 声明归本仓；Provider 归 `truzhen-software`；lifecycle/Task/Gate/Receipt/readiness 归 `truzhenos`；不改 contracts。 |
+| 风险 / 边界 | 黄：Pack 声明/lifecycle；橙：ProviderRequirement；红：真实 Hands/发布。本仓不实现 Codex、不存账号、不登录上传发布、不改 Base/Gateway/Receipt。 |
+| 最小交付 | 一个可安装/启停/重载的内容运营工作台 Pack，三个候选模式，一个事实审校角色，一个 Codex Hands 能力需求，结构和 lifecycle 验收。自动社媒发布砍入 backlog。 |
+| 计划 / 状态 | `docs/plans/content-ops-pack-truzhen-embedding-phase2-20260716.md`；第二阶段最小闭环`已验收（任务分支，未发布）`。Pack/角色/槽位/两个 07 FormalSchedule 已完成隔离 install、幂等、pause、disable、reactivate 与 03 反查；`model-output.schema.json` 已收归 Pack 并纳入三文件 bundle hash。方案 A 由实时 os-08 binding 使 Host Codex 免 OAuth，通用 `pack.candidate.generate` + fresh T06 + 动态 `gated_bridge` + `Qwen3.6-35B-A3B-4bit` + os-03 final/wrapper Receipt 已真实跑通；配对 truzhenos 全量 EGR `verify ok`。software 静态 registry 仍诚实保持 Host=`installed_not_authenticated`、Docker=`sandbox_not_ready`，不以此自铸产品 ready；无平台登录、上传或发布。证据：`docs/plans/content-ops-pack-phase2-embedding-evidence-20260716.md`。 |
+
 ## 0.0 双 Pack v16 单项目完整 lifecycle 派活卡
 
 | 维度 | 结论 |

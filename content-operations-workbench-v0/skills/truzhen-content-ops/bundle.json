@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "bundle_ref": "skill_bundle://content-operations/truzhen-content-ops@0.1.1-pack2",
+  "pack_ref": "scene_pack://content-operations-workbench",
+  "pack_version": "0.1.0",
+  "entrypoint": "SKILL.md",
+  "output_contract": "output-contract.json",
+  "model_output_schema": "model-output.schema.json",
+  "source_skill": {
+    "name": "truzhen-content-ops",
+    "version": "0.1.1",
+    "schema_version": "1.1",
+    "sha256": "3a06fdaecbc072447a4ce7520e56c4ba403200948f213912c4edfced7f927300"
+  },
+  "content_integrity": {
+    "algorithm": "sha256-framed-files-v1",
+    "framing": "filename + NUL + decimal_byte_length + NUL + file_bytes",
+    "files": [
+      "SKILL.md",
+      "output-contract.json",
+      "model-output.schema.json"
+    ],
+    "sha256": "10473fa4912cb75f152b9f0c2a8271e45cd8daaaa89121ce1c9e80442c8d2fff"
+  },
+  "allowed_skill_ids": [
+    "content_ops.direction_radar",
+    "content_ops.content_production",
+    "content_ops.weekly_review"
+  ],
+  "provider_family": "codex-cli-family",
+  "execution_gateway": "11-execution-gateway",
+  "mount_policy": {
+    "mode": "read_only",
+    "candidate_workspace": "isolated_per_run",
+    "shared_codex_home": false,
+    "raw_secret_mount": false,
+    "network": "provider_policy_controlled"
+  },
+  "side_effect_policy": {
+    "local_candidate_write": true,
+    "platform_login": false,
+    "upload": false,
+    "publish": false,
+    "direct_message": false,
+    "contact_scraping": false
+  },
+  "lifecycle": "pack_owned_asset_provider_mounted",
+  "runtime_implementation_in_pack": false
+}

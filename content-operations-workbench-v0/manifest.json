@@ -1,0 +1,224 @@
+{
+  "pack_id": "pack_content_operations_workbench_v0",
+  "pack_ref": "scene_pack://content-operations-workbench",
+  "version": "0.1.0",
+  "lifecycle_status": "已验收",
+  "name": "内容运营工作台 Pack",
+  "template_family": "Founder 自营内容候选与复盘型",
+  "description": "把真实证据转成选题方向、渠道候选、人工发布包和周复盘候选；Owner 只做方向、事实、发布前判断与复盘判断。",
+  "author": "Truzhen Pack Studio",
+  "pack_type": "domain_work_pack",
+  "manifest_version": "v3",
+  "target_industry": "Founder-led B2B 内容运营 / Build in Public",
+  "target_audience": "产品 Founder、项目 Owner、中小团队负责人",
+  "flow_spec_ref": "scene_flow_spec:content-operations-loop@1.0.0",
+  "flow_file": "flows/content-operations.flow.json",
+  "role_slots_file": "role-slots/role-slots.json",
+  "capabilities_file": "capabilities/capabilities.json",
+  "objects_file": "objects/content-candidates.json",
+  "skill_bundle_file": "skills/truzhen-content-ops/bundle.json",
+  "schedules_file": "schedules/content-operations.schedules.json",
+  "work_modes": [
+    {
+      "mode_id": "direction_radar",
+      "display_name": "选题雷达",
+      "output_object": "ContentDirectionCandidate",
+      "owner_judgement": "select_or_reject_direction"
+    },
+    {
+      "mode_id": "content_production",
+      "display_name": "内容生产",
+      "output_object": "ContentPublicationPackageCandidate",
+      "owner_judgement": "fact_preflight_and_publication_authorization"
+    },
+    {
+      "mode_id": "weekly_review",
+      "display_name": "周复盘",
+      "output_object": "ContentReviewCandidate",
+      "owner_judgement": "keep_change_stop"
+    }
+  ],
+  "security_profile": {
+    "candidate_only": true,
+    "non_formal": true,
+    "requires_base_gate_for_hands": true,
+    "requires_receipt": true,
+    "default_provider_mode": "disabled",
+    "no_real_send": true,
+    "no_real_publish": true,
+    "no_platform_login": true,
+    "isolated_namespace": "content_operations_workbench_ns"
+  },
+  "role_slots": [
+    {
+      "slot_id": "content_strategist",
+      "responsibility": "基于真实证据提出内容方向、母内容和渠道候选",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://content-strategist"
+    },
+    {
+      "slot_id": "fact_boundary_reviewer",
+      "responsibility": "核对证据、能力状态、公开边界和夸大风险",
+      "node_type": "challenge",
+      "default_role_pack_ref": "role_pack://fact-boundary-reviewer"
+    }
+  ],
+  "capabilities_required": [
+    "truzhen.content.evidence_read",
+    "truzhen.content.candidate_generation",
+    "truzhen.content.public_draft_sanitization",
+    "truzhen.content.metrics_review"
+  ],
+  "required_capabilities": [
+    "truzhen.content.candidate_generation",
+    "truzhen.content.public_draft_sanitization"
+  ],
+  "gates": {
+    "hands_run_gate": "base_execution_gate",
+    "direction_selection_gate": "owner_gate",
+    "fact_preflight_gate": "owner_gate",
+    "publication_authorization_gate": "owner_manual_only",
+    "external_publish_gate": "not_implemented"
+  },
+  "gate_flags": [
+    "content_hands_run_confirm",
+    "direction_selection_confirm",
+    "fact_preflight_confirm",
+    "publication_authorization_manual_confirm"
+  ],
+  "receipt_policy": {
+    "ledger_group": "content_operations_workbench",
+    "append_only": true,
+    "requires_witness": true,
+    "hands_run_receipt_required": true,
+    "publication_receipt_not_available": true
+  },
+  "person_strategy": {
+    "summary": "内容策略师与事实边界审校员均为 Proposer；Owner 决定方向、事实是否通过、是否发布和复盘动作。",
+    "proposer_roles": [
+      "content_strategist",
+      "fact_boundary_reviewer"
+    ],
+    "high_risk_actions_return_to_owner": [
+      "content_hands_run_confirm",
+      "direction_selection_confirm",
+      "fact_preflight_confirm",
+      "publication_authorization_manual_confirm"
+    ],
+    "delegation_allowed": false
+  },
+  "formalization_requirement": {
+    "summary": "方向、内部稿、公开稿、人工发布包和复盘均保持 candidate-only；Pack 不产生正式发布事实。Hands 命令执行必须经 OwnerActionEvidence、Base Gate、run_id、nonce 和 03 Receipt。",
+    "formalizes": [
+      "ScheduledTask",
+      "FormalTask",
+      "HandsExecutionReceipt"
+    ],
+    "never_formalizes": [
+      "SocialPlatformPublication",
+      "PlatformLoginSession",
+      "ExternalMessage"
+    ],
+    "decided_by": "owner_plus_base_gate"
+  },
+  "provider_requirements": [
+    {
+      "requirement_id": "provider-content-ops-codex-hands",
+      "capability": "truzhen.content.candidate_generation",
+      "gateway_class": "execution",
+      "risk_class": "high",
+      "binding": "registry_to_execution_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "provider_family": "codex-cli-family"
+    }
+  ],
+  "software_requirements": [
+    {
+      "requirement_id": "content-ops-codex-cli",
+      "software_family": "codex-cli-family",
+      "provider_family": "codex-cli-family",
+      "version_range": ">=0.144.1,<1.0.0",
+      "required_capabilities": [
+        "pack_skill_bundle_candidate_execution",
+        "candidate_artifact_collection",
+        "receipt_bound_run"
+      ],
+      "license_policy": "review_required",
+      "isolation_policy": "reuse_existing_provider",
+      "fallback_policy": "provider_missing",
+      "gateway_class": "execution",
+      "risk_class": "high"
+    }
+  ],
+  "notification_command_report_routes": {
+    "notification": [
+      "owner_dashboard",
+      "pack.candidate.card"
+    ],
+    "command_candidate": [
+      "pack.task.panel",
+      "content_direction_decision_card",
+      "content_fact_preflight_card"
+    ],
+    "report": [
+      "candidate_review",
+      "receipt_ledger",
+      "pack.receipt.timeline"
+    ]
+  },
+  "evidence_requirements": {
+    "summary": "每个核心主张必须绑定可反查 evidence ref；每次 Codex Hands run 必须有 03 Receipt。公开稿不得暴露本机路径、内部账本或本地候选引用。",
+    "requires_receipt_ref": true,
+    "requires_owner_action_evidence_for_hands": true,
+    "receipt_lookup_module": "03-receipt-ledger"
+  },
+  "multi_role_comparison": {
+    "summary": "内容策略建议与事实边界质询是显式流程节点；Owner 在事实预检门判断，不允许 runtime 内隐藏 agent 回路。",
+    "explicit_nodes": [
+      "content_strategist(advice)",
+      "fact_boundary_reviewer(challenge)"
+    ],
+    "hidden_agent_loops_forbidden": true
+  },
+  "moat_justification": {
+    "question": "用户能否一句话让最强模型直接做出同样结果？",
+    "passes_moat": true,
+    "valid_reasons": [
+      "real_system_integration",
+      "domain_approval_compliance",
+      "auditable_evidence_receipt",
+      "multi_role_compare_sovereign",
+      "transaction_lifecycle_replay"
+    ],
+    "rationale": "价值来自长期真实证据、Owner 判断、跨渠道一致性、可追溯 run 与复盘闭环；不是一次 prompt，也不是自动发布。"
+  },
+  "ui_surface_slots": [
+    "pack.dashboard",
+    "pack.flow.canvas",
+    "pack.task.panel",
+    "pack.candidate.card",
+    "pack.receipt.timeline",
+    "transaction.capsule"
+  ],
+  "forbidden_actions": [
+    "social_platform_login",
+    "real_social_upload",
+    "real_social_publish",
+    "direct_message",
+    "bulk_message",
+    "contact_scraping",
+    "client_minted_decision_or_receipt"
+  ],
+  "forbidden_artifacts": [
+    "node_modules",
+    "dist",
+    "build",
+    ".vite",
+    "*.db",
+    "*.sqlite",
+    "*.log",
+    "*.jsonl",
+    "auth.json",
+    "cookies.json"
+  ]
+}

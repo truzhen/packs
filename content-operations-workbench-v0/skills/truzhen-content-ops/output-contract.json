@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.1",
+  "candidate_only": true,
+  "required_run_input": [
+    "transaction_ref",
+    "pack_ref",
+    "pack_version_ref",
+    "skill_id",
+    "owner_ref",
+    "evidence_refs",
+    "candidate_workspace_ref",
+    "allowed_write_paths"
+  ],
+  "optional_run_input": [
+    "selected_direction_ref",
+    "channel_targets",
+    "metrics_refs",
+    "owner_constraints"
+  ],
+  "allowed_skill_ids": [
+    "content_ops.direction_radar",
+    "content_ops.content_production",
+    "content_ops.weekly_review"
+  ],
+  "output_kinds": [
+    "ContentDirectionCandidate",
+    "ContentPublicationPackageCandidate",
+    "ContentReviewCandidate"
+  ],
+  "required_run_output": [
+    "status",
+    "skill_id",
+    "candidate_refs",
+    "artifact_hashes",
+    "evidence_map",
+    "leak_scan",
+    "owner_judgement_items",
+    "receipt_candidate_ref",
+    "candidate_payload",
+    "publish_ready"
+  ],
+  "status_values": [
+    "candidate_ready",
+    "blocked",
+    "provider_missing",
+    "not_ready"
+  ],
+  "leak_scan_forbidden": [
+    "absolute_local_path",
+    "internal_ref",
+    "raw_secret",
+    "platform_cookie",
+    "unverified_customer_data",
+    "unsupported_product_claim"
+  ],
+  "formal_outputs": [],
+  "external_side_effects": [],
+  "gateway_envelope": {
+    "kind": "PackSkillCandidate",
+    "candidate_payload": "model output validated against model-output.schema.json",
+    "candidate_ref_authority": "11-execution-gateway",
+    "receipt_candidate_authority": "11-execution-gateway"
+  },
+  "publication": {
+    "supported": false,
+    "authorization": "owner_manual_only",
+    "platform_login": false,
+    "upload": false,
+    "publish": false
+  }
+}

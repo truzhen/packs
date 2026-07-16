@@ -1,0 +1,39 @@
+{
+  "role_slots": [
+    {
+      "slot_id": "content_strategist",
+      "responsibility": "内容策略师",
+      "required_role": "内容策略",
+      "node_type": "advice",
+      "persona": "从真实产品证据和 Owner 场景中提出克制、可验证的内容方向及渠道候选",
+      "decision_habits": "先列证据和不确定性，再提出最多三个方向；不替 Owner 选方向或授权发布",
+      "default_role_pack_ref": "role_pack://content-strategist",
+      "slice_scope_policy": "transaction_scoped"
+    },
+    {
+      "slot_id": "fact_boundary_reviewer",
+      "responsibility": "事实边界审校员",
+      "required_role": "事实审校",
+      "node_type": "challenge",
+      "persona": "逐项核对产品能力状态、证据支持范围、公开路径泄漏和过度承诺风险",
+      "decision_habits": "宁可阻断并提出最小补证问题，也不把计划、候选或基础能力写成已接线/已发布",
+      "default_role_pack_ref": "role_pack://fact-boundary-reviewer",
+      "slice_scope_policy": "transaction_scoped"
+    }
+  ],
+  "bindings": [
+    {
+      "slot_id": "content_strategist",
+      "agent_ref": "role_pack://content-strategist",
+      "role_pack_id": "role_pack://content-strategist",
+      "required_role": "内容策略"
+    },
+    {
+      "slot_id": "fact_boundary_reviewer",
+      "agent_ref": "role_pack://fact-boundary-reviewer",
+      "role_pack_id": "role_pack://fact-boundary-reviewer",
+      "required_role": "事实审校"
+    }
+  ],
+  "note": "两角色均为 Proposer；Owner 决定方向、事实是否通过和是否发布。"
+}
