@@ -3,18 +3,6 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
-## 0.0 内容运营 Pack 嵌入 Truzhen 第二阶段（在途）
-
-| 维度 | 结论 |
-| --- | --- |
-| 分支 / worktree | `codex/content-ops-pack-v011-20260716` / `/Users/li/Documents/truzhenv3worktree/content-ops-truzhen-embed-20260716/truzhen-packs` |
-| 我要做的事 | 把第一阶段 `truzhen-content-ops 0.1.1` 迁为独立内容运营 Domain Work Pack，声明选题雷达、内容生产、周复盘、Owner 判断门和 candidate-only 产物；Codex CLI Provider 继续归 software 仓。 |
-| 真实场景证据 | Owner 有 13 万粉别墅装修/灯光抖音账号，每天投入 2 小时，只做方向、事实和发布判断；第一阶段两个真实 run 和后台自然调度已验收。 |
-| 真相源 / 归属 | Pack 声明归本仓；Provider 归 `truzhen-software`；lifecycle/Task/Gate/Receipt/readiness 归 `truzhenos`；不改 contracts。 |
-| 风险 / 边界 | 黄：Pack 声明/lifecycle；橙：ProviderRequirement；红：真实 Hands/发布。本仓不实现 Codex、不存账号、不登录上传发布、不改 Base/Gateway/Receipt。 |
-| 最小交付 | 一个可安装/启停/重载的内容运营工作台 Pack，三个候选模式，一个事实审校角色，一个 Codex Hands 能力需求，结构和 lifecycle 验收。自动社媒发布砍入 backlog。 |
-| 计划 / 状态 | `docs/plans/content-ops-pack-truzhen-embedding-phase2-20260716.md`；第二阶段最小闭环`已验收（任务分支，未发布）`。Pack/角色/槽位/两个 07 FormalSchedule 已完成隔离 install、幂等、pause、disable、reactivate 与 03 反查；`model-output.schema.json` 已收归 Pack 并纳入三文件 bundle hash。方案 A 由实时 os-08 binding 使 Host Codex 免 OAuth，通用 `pack.candidate.generate` + fresh T06 + 动态 `gated_bridge` + `Qwen3.6-35B-A3B-4bit` + os-03 final/wrapper Receipt 已真实跑通；配对 truzhenos 全量 EGR `verify ok`。software 静态 registry 仍诚实保持 Host=`installed_not_authenticated`、Docker=`sandbox_not_ready`，不以此自铸产品 ready；无平台登录、上传或发布。证据：`docs/plans/content-ops-pack-phase2-embedding-evidence-20260716.md`。 |
-
 ## 0.0 双 Pack v16 单项目完整 lifecycle 派活卡
 
 | 维度 | 结论 |
@@ -170,6 +158,7 @@
 
 | 功能 / 资产 | 职责 | 状态 | 位置 / 证据 | 当前口径 |
 |---|---|---|---|---|
+| 内容运营工作台 Pack 0.1.1 | 将选题雷达、内容生产、周复盘、事实审校、Owner 判断门和 candidate-only 输出契约封装为独立 Domain Work Pack；声明 Codex Hands 需求与两个 07 日程，不持 Provider 或运行事实 | ✅ 已验收（2026-07-16，待产品主线安装启用） | `content-operations-workbench-v0/`；`content_operations_workbench_test.go`；`docs/plans/content-ops-pack-phase2-embedding-evidence-20260716.md`；配对 truzhenos 根 EGR `verify ok` | 自动社媒登录、上传和发布不在 Pack 内；每次真实候选运行仍需 fresh T06、动态网络 Gate 与 03 Receipt，公开稿保持人工发布 |
 | 禁品/PII/DB 静态门 + 接入 CI（T5.1）| 禁品扫描增手机号 `1[3-9]\d{9}` / 身份证 `\d{17}[\dXx]` PII 值模式 + `forbiddenDatabaseArtifact`(.db/.sqlite/.sqlite3 扩展名+SQLite 魔数防改名)；`.github/workflows/ci.yml` 新增 forbidden-scan job（setup-go+scoped go test）把此前手动禁品门接入自动 CI | ✅ 已验收（land origin/main）| `pack_forbidden_artifacts_test.go`（TDD 增 2 测）/ `.github/workflows/ci.yml`；scoped -run 避开依赖本机 superpowers worktree 的能力包 env 测试；真实资产零误报 | 商用就绪 C4/T5.1 |
 | 智能家居 pack 交付 bundle 打包器 + install.py 交付形态 | `build_pack_bundle.py` 把 pack 目录 + 父层 `pack_diagnostics.py` 打成自包含 bundle.zip（解决 install.py 父目录导入）+ 拒残缺 pack + 每文件 sha256；install.py docstring 改为面向已运行生产基座（`TRUZHEN_DEVSERVER_BASE`）+ bundle 两种装入 | ✅ 已验收（land origin/main `96faf96`） | `build_pack_bundle.py` / `test_pack_bundle.py`(TDD 2 用例绿) / `smart-home-owner-pack-v0/install.py`；E2E：解压 bundle（无 packs 源码树）→全新生产基座 install 达 enabled + 03 回执 `fae0cc8b`（Base Gate decision_ref）；证据 truzhenos `docs/status/smart-home-pack-base-deliverable-e2e-20260709.md` | 首个用户=Owner 智能家居服务商；启用穿真主权链非下载冒充 |
 | knowledge 内容 checksum 防漂移 + install 事务日志断点续装 | ①knowledge-index 每条目 sha256 checksum（真相源仍是文件本体）+ 三向漂移校验（内容/断链/未登记 md）+ CI 步 + 四 install.py 装入前 fail-fast（新错误码 TZ-PACK-INSTALL-009）；②pack_install_journal 本机恢复账目（非真相源）：步骤/角色包/绑槽/知识逐条 approve 入账，失败半装显式化+断点续装跳过已批候选，不自动反做正式域 | ✅ 已验收（2026-07-11 land origin/main `cd62460`，Owner 裁定「裁定部分按建议」授权）| main（#10 `8cd660d` / #8 `103d94a`）；knowledge_checksums.py / pack_install_journal.py 及三个 test_*.py；环保 45+shuxuejia 5 条 checksum 已生成 | 统一决策表 #10/#8，Owner 2026-07-11 裁定 backlog 提前触发；撤销正式对象仍走 uninstall/Owner 禁用状态机 |
