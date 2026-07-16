@@ -10,13 +10,13 @@
     },
     {
       "id": "opportunity_candidate",
-      "type": "object.business_candidate",
+      "type": "object.business_schema",
       "title": "商机候选",
       "candidate_type": "BusinessObjectCandidate"
     },
     {
       "id": "project_initiation_candidate",
-      "type": "object.business_candidate",
+      "type": "object.business_schema",
       "title": "立项候选",
       "candidate_type": "BusinessObjectCandidate"
     },
@@ -79,7 +79,7 @@
     },
     {
       "id": "gateway_execution",
-      "type": "gateway.execution_candidate",
+      "type": "gateway.execution_intent",
       "title": "受控 Frappe 写回",
       "candidate_type": "CapabilityInvocationCandidate"
     },
@@ -90,7 +90,7 @@
     },
     {
       "id": "history_query",
-      "type": "object.history_read",
+      "type": "capability.invoke",
       "title": "历史项目查询与版本固定"
     },
     {
@@ -112,7 +112,7 @@
     },
     {
       "id": "optional_device_gateway",
-      "type": "gateway.execution_candidate",
+      "type": "gateway.execution_intent",
       "title": "可选 Home Assistant L2 Provider 执行",
       "optional": true,
       "candidate_type": "CapabilityInvocationCandidate"
