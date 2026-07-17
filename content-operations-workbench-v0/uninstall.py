@@ -108,7 +108,7 @@ def main():
         "POST",
         "/v3/base/gated-actions/prepare",
         {
-            "action_type": "pack_disable",
+            "action_type": "14.pack-studio.lifecycle.disable",
             "target_ref": pack_ref,
             "content_summary": "停用内容运营工作台 Pack",
             "impact_summary": "停止新候选 run；历史候选、Evidence 与 Receipt 保留",
