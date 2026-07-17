@@ -38,6 +38,7 @@ environmental-enforcement-pack-v0/
 - **provider 未接通诚实降级**：返回 `blocked / provider_missing / not_ready`，不假成功。
 - **namespace 隔离**：`environmental_enforcement_ns`，与其它 pack 不串。
 - **知识 pending_human_review**：knowledge 内容来自权威资料导入，每条标 `verification_status=pending_human_review`；正式适用前须经法务/业务核验，以现行有效官方法规标准原文为准。
+- **Flow 完成不等于案件完成**：流程 end 只表示执法协助候选链收束；05 Transaction Object 只有在正式执行、正式送达、整改复查三类权威 Receipt 齐备后才能进入案件完成态。
 
 ## 加载 / 卸载（不与基座混；产品默认不自带本 pack）
 
@@ -76,6 +77,8 @@ python3 tools/build-knowledge-from-source.py [权威资料知识库路径]
 ```
 
 ## 历史验证与当前状态
+
+- 生命周期档位为 `已实现 -> 已接线`。v17 已跑到最终 Gate，但法律检索相关性和正式案件完成证明仍需 v18 独立复验，因此不声明 `已验收 / 已发布`。
 
 - 2026-06-25 的隔离 devserver 历史记录曾验证 install、角色绑定、KnowledgeMount 与 disable/re-enable 生命周期。
 - 2026-07-11 R1 修复复验曾记录前台全局 752 条知识；该数字不再作为本 Pack 数量契约。当前 Pack 权威资产为 45 份源文档、15 个 scope，运行态必须以本 Pack 归属全量分页覆盖为准。法律知识仍为 `pending_human_review`，Pack 尚未发布。

@@ -2,7 +2,7 @@
   "pack_id": "pack_environmental_enforcement_v0",
   "pack_ref": "scene_pack://environmental-enforcement-flow",
   "version": "1.0.0",
-  "lifecycle_status": "已验收",
+  "lifecycle_status": "已实现 -> 已接线",
   "risk_level": "high",
   "name": "环保执法证据链 Pack（全领域）",
   "template_family": "合规审查执法证据链型",
@@ -72,7 +72,13 @@
   "receipt_policy": {
     "ledger_group": "environmental_enforcement",
     "append_only": true,
-    "requires_witness": true
+    "requires_witness": true,
+    "scene_flow_completion_is_transaction_completion": false,
+    "transaction_completion_proofs": [
+      "formal_execution_receipt",
+      "formal_delivery_receipt",
+      "remediation_reinspection_receipt"
+    ]
   },
   "person_strategy": {
     "summary": "判人策略：执法精英与挑剔律师均为 Proposer（只出候选与质询，无正式裁定权）；行政处罚决定、责令改正、查封扣押、文书外发、移送公安等高风险正式动作，一律回 Owner + Base Gate 裁定，不得由角色 agent 自决，委托不替代 Owner/Base。",
@@ -90,7 +96,7 @@
     "delegation_allowed": false
   },
   "formalization_requirement": {
-    "summary": "判事策略：线索受理、现场检查候选、证据归集、违法事实/法律依据候选、律师质询均为候选态（candidate_only/non_formal）；唯有行政处罚决定、责令改正、查封扣押、文书送达、移送公安、Receipt 归档需经 Owner 主权确认 + Base Gate 裁定后才正式化。裁定权在 Base，不在场景包。适用法条按案发时点（as_of）择法（如生态环境法典 2026-08-15 起施行）。",
+    "summary": "判事策略：线索受理、现场检查候选、证据归集、违法事实/法律依据候选、律师质询均为候选态（candidate_only/non_formal）；唯有行政处罚决定、责令改正、查封扣押、文书送达、移送公安、Receipt 归档需经 Owner 主权确认 + Base Gate 裁定后才正式化。SceneFlow 走到 end 只表示执法协助候选链已收束，不表示案件 Transaction 已完成；Transaction 完成必须分别具备正式执行、正式送达、整改复查的权威 Receipt。裁定权在 Base，不在场景包。适用法条按案发时点（as_of）择法（如生态环境法典 2026-08-15 起施行）。",
     "formalizes": [
       "FormalEnforcementDecision",
       "CorrectionOrder",

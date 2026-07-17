@@ -20,8 +20,8 @@
     {"id": "correction_task", "type": "flow.stage_task_candidate", "title": "责令改正/处罚执行任务候选", "stage_guide": "执行任务候选：按裁定的处置路径生成整改与处罚执行任务——责令期限、拆除或停产要求、复查安排、罚款执行与缴纳跟踪。任务为候选态，真实执行动作须经 Owner 确认 + Base Gate，缺 provider 时受控阻断不假成功。"},
     {"id": "doc_draft", "type": "gateway.communication_draft", "title": "执法文书草稿（责令改正/处罚决定书等）", "stage_guide": "执法文书草稿：经模型网关生成责令改正通知书、行政处罚决定书等草稿，要素含当事人、违法事实（时段/污染物/超标倍数/取证编号）、法律依据、处置决定、履行期限与救济告知。草稿先交 Owner 审核，未裁定前一律草稿态，不对外送达。"},
     {"id": "owner_gate", "type": "policy.gate_config", "title": "Owner 主权确认 + Base Gate 裁定", "stage_guide": "主权确认门：文书对外送达、处罚决定、查封扣押、移送公安等正式动作，一律经 Owner 主权确认 + Base Gate 裁定后才正式化并留 Receipt。展示目标、内容、影响与凭证（run_id/nonce），Owner 确认后方可流转；provider 未接入的受控拒绝，不假成功。", "gate_policy": {"required_gate": "enforcement_doc_gate", "pending_owner_confirmation": true}},
-    {"id": "archive", "type": "receipt.link", "title": "Receipt 归档（全过程可回放）", "stage_guide": "回执归档：把线索受理、取证、审查、对照、裁定、执行、文书送达各环节的回执与证据链绑定归档，形成可回放的案件事务时间线。归档为追加只读，历史回执可反查，卸载不删历史。"},
-    {"id": "done", "type": "flow.end", "title": "案件收口", "stage_guide": "案件收口：核对处置已执行、文书已送达、复查已安排、回执已归档，确认事务对象生命周期完整可回溯后收口。留档以备复议诉讼与案卷评查。"}
+    {"id": "archive", "type": "receipt.link", "title": "候选链 Receipt 归档（可回放）", "stage_guide": "回执归档：只归档本次执法协助中已经真实产生的线索、取证、审查、对照、裁定候选及 Gate 回执；不得把尚未发生的执行、送达或整改复查写成已完成。归档为追加只读，历史回执可反查，停用、卸载或重装不删历史。"},
+    {"id": "done", "type": "flow.end", "title": "执法协助候选链收束（案件未自动完成）", "stage_guide": "SceneFlow 到达本节点只表示执法协助候选链已收束，不等于案件 Transaction 完成。正式案件完成必须由 05 Transaction Object 汇总 11 执行、10 送达、整改复查及 03 Receipt 的权威证明；任一证明缺失时保持进行中或 blocked/not_ready，不得由 Pack 静默补齐。"}
   ],
   "edges": [
     {"id": "e1", "source": "intake", "target": "screening"},
