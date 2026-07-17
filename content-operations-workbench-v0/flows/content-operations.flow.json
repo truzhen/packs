@@ -1,0 +1,199 @@
+{
+  "flow_id": "content-operations-loop",
+  "title": "Truzhen 内容运营候选生产与复盘闭环",
+  "version": "1.0.0",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "title": "开始：选择工作模式"
+    },
+    {
+      "id": "evidence_intake",
+      "type": "business_object",
+      "title": "只读装载本次允许使用的真实证据与指标引用",
+      "gateway": "business_object",
+      "candidate_only": true
+    },
+    {
+      "id": "direction_radar",
+      "type": "advice",
+      "title": "内容策略师提出最多三个方向候选",
+      "gateway": "execution",
+      "slot_ref": "content_strategist",
+      "skill_id": "content_ops.direction_radar",
+      "candidate_only": true
+    },
+    {
+      "id": "direction_owner_gate",
+      "type": "human_approval",
+      "title": "Owner 选择、打回或停止方向",
+      "gate_policy": {
+        "required_gate": "sovereign_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "content_production",
+      "type": "task",
+      "title": "Codex Hands 生成内部稿、公开候选与人工发布包",
+      "gateway": "execution",
+      "skill_id": "content_ops.content_production",
+      "provider_requirement_ref": "provider-content-ops-codex-hands",
+      "candidate_only": true,
+      "gate_policy": {
+        "required_gate": "base_execution_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "fact_boundary_review",
+      "type": "challenge",
+      "title": "事实边界审校员核对证据、能力状态与公开泄漏",
+      "gateway": "model",
+      "slot_ref": "fact_boundary_reviewer",
+      "candidate_only": true
+    },
+    {
+      "id": "fact_preflight_gate",
+      "type": "compare_gate",
+      "title": "内容建议与事实质询对照门（Owner 裁定）",
+      "gate_policy": {
+        "required_gate": "sovereign_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "publication_package_receipt",
+      "type": "receipt",
+      "title": "登记候选产物、哈希与 Hands run 回执",
+      "gateway": "receipt",
+      "candidate_only": true
+    },
+    {
+      "id": "weekly_review",
+      "type": "task",
+      "title": "基于真实指标生成 keep/change/stop 周复盘候选",
+      "gateway": "execution",
+      "skill_id": "content_ops.weekly_review",
+      "provider_requirement_ref": "provider-content-ops-codex-hands",
+      "candidate_only": true,
+      "gate_policy": {
+        "required_gate": "base_execution_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "owner_review_gate",
+      "type": "human_approval",
+      "title": "Owner 裁定下周保留、修改或停止项",
+      "gate_policy": {
+        "required_gate": "sovereign_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "candidate_ready",
+      "type": "end",
+      "title": "结束：候选包可供人工发布或下周执行"
+    },
+    {
+      "id": "candidate_rejected",
+      "type": "end",
+      "title": "结束：候选被打回或停止，保留审计记录"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "start",
+      "target": "evidence_intake"
+    },
+    {
+      "id": "e2",
+      "source": "evidence_intake",
+      "target": "direction_radar",
+      "condition": "work_mode == direction_radar"
+    },
+    {
+      "id": "e3",
+      "source": "direction_radar",
+      "target": "direction_owner_gate"
+    },
+    {
+      "id": "e4",
+      "source": "direction_owner_gate",
+      "target": "content_production",
+      "condition": "approved"
+    },
+    {
+      "id": "e5",
+      "source": "direction_owner_gate",
+      "target": "candidate_rejected",
+      "condition": "rejected"
+    },
+    {
+      "id": "e6",
+      "source": "evidence_intake",
+      "target": "content_production",
+      "condition": "work_mode == content_production"
+    },
+    {
+      "id": "e7",
+      "source": "content_production",
+      "target": "fact_boundary_review"
+    },
+    {
+      "id": "e8",
+      "source": "fact_boundary_review",
+      "target": "fact_preflight_gate"
+    },
+    {
+      "id": "e9",
+      "source": "fact_preflight_gate",
+      "target": "publication_package_receipt",
+      "condition": "approved"
+    },
+    {
+      "id": "e10",
+      "source": "fact_preflight_gate",
+      "target": "candidate_rejected",
+      "condition": "rejected"
+    },
+    {
+      "id": "e11",
+      "source": "publication_package_receipt",
+      "target": "candidate_ready"
+    },
+    {
+      "id": "e12",
+      "source": "evidence_intake",
+      "target": "weekly_review",
+      "condition": "work_mode == weekly_review"
+    },
+    {
+      "id": "e13",
+      "source": "weekly_review",
+      "target": "owner_review_gate"
+    },
+    {
+      "id": "e14",
+      "source": "owner_review_gate",
+      "target": "candidate_ready",
+      "condition": "approved"
+    },
+    {
+      "id": "e15",
+      "source": "owner_review_gate",
+      "target": "candidate_rejected",
+      "condition": "rejected"
+    }
+  ],
+  "forbidden_nodes": [
+    "social_platform_login",
+    "social_platform_upload",
+    "social_platform_publish",
+    "direct_message",
+    "contact_scraping"
+  ]
+}

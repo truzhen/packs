@@ -87,6 +87,7 @@ func TestForbiddenDatabaseArtifact(t *testing.T) {
 
 func TestPackAssetsDoNotCarryBusinessDataFormalRefsOrRawSecrets(t *testing.T) {
 	assetRoots := []string{
+		"content-operations-workbench-v0",
 		"environmental-enforcement-pack-v0",
 		"housekeeping-ops-pack-v0",
 		"smart-home-owner-pack-v0",

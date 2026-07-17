@@ -1,0 +1,70 @@
+{
+  "capabilities_required": [
+    {
+      "capability_ref": "truzhen.content.evidence_read",
+      "purpose": "只读获取允许公开或已验收的产品事实、Owner 场景证据和人工指标引用",
+      "gateway": "capability",
+      "side_effect_class": "read_only",
+      "required_gate": "trace_only"
+    },
+    {
+      "capability_ref": "truzhen.content.candidate_generation",
+      "purpose": "通过 Codex Hands 生成方向、母内容和渠道候选；只写隔离候选工作区",
+      "gateway": "execution",
+      "side_effect_class": "command_execution",
+      "required_gate": "base_execution_gate"
+    },
+    {
+      "capability_ref": "truzhen.content.public_draft_sanitization",
+      "purpose": "把内部审计稿确定性清洗为公开候选并输出哈希与泄漏扫描报告",
+      "gateway": "execution",
+      "side_effect_class": "local_draft",
+      "required_gate": "same_hands_run"
+    },
+    {
+      "capability_ref": "truzhen.content.metrics_review",
+      "purpose": "只基于人工录入或可核验导出的真实指标生成 keep/change/stop 候选",
+      "gateway": "execution",
+      "side_effect_class": "local_draft",
+      "required_gate": "base_execution_gate"
+    }
+  ],
+  "provider_requirements": [
+    {
+      "requirement_id": "provider-content-ops-codex-hands",
+      "capability": "truzhen.content.candidate_generation",
+      "gateway_class": "execution",
+      "risk_class": "high",
+      "binding": "registry_to_execution_gateway_to_base",
+      "provider_family": "codex-cli-family",
+      "fallback_policy": "provider_missing",
+      "required_skill_bundle_ref": "skill_bundle://content-operations/truzhen-content-ops@0.1.1-pack2"
+    }
+  ],
+  "skill_bindings": [
+    {
+      "skill_id": "content_ops.direction_radar",
+      "mode": "direction_radar",
+      "output_kind": "ContentDirectionCandidate",
+      "candidate_only": true
+    },
+    {
+      "skill_id": "content_ops.content_production",
+      "mode": "content_production",
+      "output_kind": "ContentPublicationPackageCandidate",
+      "candidate_only": true
+    },
+    {
+      "skill_id": "content_ops.weekly_review",
+      "mode": "weekly_review",
+      "output_kind": "ContentReviewCandidate",
+      "candidate_only": true
+    }
+  ],
+  "external_publish_capability": {
+    "supported": false,
+    "status": "not_implemented",
+    "blocked_reason": "manual_publication_only_in_phase2"
+  },
+  "note": "Pack 只声明能力需求。Provider 缺失或每次 T06/Base/Receipt 证明不完整时必须 provider_missing/not_ready/blocked，不得 fallback 为本地假成功。"
+}

@@ -7,14 +7,15 @@
 draft/readiness/promote/confirm → 角色包 lifecycle → 绑槽 → 09 知识库批量入库 +
 Base 签发 approve decision + approve），全程产 03 receipt，不手写裸塞、不绕主权链。
 
-前置：先在本 worktree 起 devserver（且已从 server.go 摘除环保自动 seed）：
-  go run ./backend/cmd/devserver        # 默认 127.0.0.1:18080
-然后：
-  python3 packs/environmental-enforcement-pack-v0/install.py
+前置：先在隔离 worktree 起 devserver（且已从 server.go 摘除环保自动 seed），并显式指定
+受控地址；脚本不会猜测或写入默认端口：
+  TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 \
+    python3 packs/environmental-enforcement-pack-v0/install.py
 
-幂等：已启用的场景包/角色包/绑定会跳过；知识批量入库按内容去重。
+幂等：每次调用都先将当前 flow 写穿 06；已启用的场景包/角色包/绑定随后跳过，知识批量入库按内容去重。
 """
 import hashlib
+import argparse
 import json
 import os
 import re
@@ -35,7 +36,9 @@ from pack_diagnostics import (
 from knowledge_checksums import verify_entries
 from pack_install_journal import InstallJournal
 
-BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080")
+# 由 main() 在参数解析后赋值。lifecycle 是写操作，绝不以隐式 localhost 默认值
+# 猜测目标实例，避免测试或运维命令越出已登记的隔离端口。
+BASE = ""
 # 用本地规范 Owner（前端记忆中心默认查询 owner_id='owner://local/default'，后端运行时
 # 也用此 owner）：知识/挂载/角色/绑定都落在这个 owner 下，记忆中心与运行时 advice 才看得到。
 OWNER = os.environ.get("TRUZHEN_PACK_OWNER", "owner://local/default")
@@ -112,6 +115,19 @@ def strip_frontmatter(text):
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="将环保执法 Pack 装入显式指定的受控 Truzhen devserver。"
+    )
+    parser.add_argument(
+        "--devserver-base",
+        default=os.environ.get("TRUZHEN_DEVSERVER_BASE", "").strip(),
+        help="受控 devserver 根地址；也可通过 TRUZHEN_DEVSERVER_BASE 指定（必填）。",
+    )
+    args = parser.parse_args()
+    global BASE
+    BASE = args.devserver_base.rstrip("/")
+    if not BASE:
+        die("必须显式指定 TRUZHEN_DEVSERVER_BASE 或 --devserver-base；拒绝猜测默认端口", INSTALL_CONNECTIVITY)
     manifest = load("manifest.json")
     flow = load(manifest["flow_file"])
     role_slots_doc = load(manifest["role_slots_file"])
@@ -153,9 +169,10 @@ def main():
                 if cur:
                     enabled_version = cur
 
-    def do_seed_scene(install_version):
-        pvr = pack_ref + "@" + install_version
-        # 1. canvas → 06（flow_id 与版本无关，幂等 upsert）
+    def sync_canvas():
+        # flow_id 与版本无关，但它是运行时 06 的唯一规格入口。即使同版本已
+        # enabled，也必须先同步；否则 pack 文件演进后会出现“声明已更新、run
+        # 仍执行旧图”的规格漂移。同步失败必须阻止后续幂等短路，不能伪装成功。
         print("[1/6] 画布写穿 06 ...")
         code, body = call("POST", "/v3/pack-studio/canvas", {
             "flow_id": flow_id, "title": flow.get("title", ""),
@@ -170,6 +187,12 @@ def main():
         if not ((body.get("engine_sync") or {}).get("synced")):
             die("canvas 未同步进 06：%s" % body.get("engine_sync"), INSTALL_LIFECYCLE_HTTP)
 
+    # 先同步再判断 enabled/reactivate/new install；这是运行规格与 Pack 文件保持
+    # 一致的最低条件，且通过 OCC 重放保持幂等。
+    sync_canvas()
+
+    def do_seed_scene(install_version):
+        pvr = pack_ref + "@" + install_version
         # 2. lifecycle draft（六件事 + 知识域）
         print("[2/6] lifecycle draft（六件事 + %d 知识域）..." % len(scopes_doc.get("scopes", [])))
         provider_reqs = []

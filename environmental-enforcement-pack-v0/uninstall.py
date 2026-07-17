@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-环保执法 Pack —— 从正在运行的 Truzhen devserver 卸载（可卸载）。
+环保执法 Pack —— 从正在运行的 Truzhen devserver 受控卸载（可逆停用）。
 
 走真实 lifecycle/disable 端点：先经 Base gated-action prepare→confirm 取得真签发的
 decision_ref/run_id/nonce（停用与启用同纪律，禁自铸），再 disable。pack 停用会经
-driveDisableMounts 级联卸载知识域。已产生的案件对象与回执在 03 仍可反查（卸载≠删历史）。
+driveDisableMounts 级联卸载知识域。该 lifecycle 语义是“卸载运行访问权”：
+保留本地已安装版本元数据，以便后续 install.py 幂等重新启用；已产生的案件对象与
+回执在 03 仍可反查（卸载≠物理删除历史）。
 
 用法：
-  python3 packs/environmental-enforcement-pack-v0/uninstall.py
+  TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 \
+    python3 packs/environmental-enforcement-pack-v0/uninstall.py
 """
+import argparse
 import json
 import os
 import sys
@@ -23,7 +27,9 @@ if REPO_DIR not in sys.path:
 from pack_diagnostics import (
     emit_pack_error, UNINSTALL_GENERIC, UNINSTALL_CONNECTIVITY, UNINSTALL_LIFECYCLE_HTTP)
 
-BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080")
+# 由 main() 在参数解析后赋值。lifecycle 是写操作，绝不以隐式 localhost 默认值
+# 猜测目标实例，避免测试或运维命令越出已登记的隔离端口。
+BASE = ""
 OWNER = os.environ.get("TRUZHEN_PACK_OWNER", "owner://local/default")
 
 
@@ -52,6 +58,19 @@ def die(msg, error_code=UNINSTALL_GENERIC):
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="通过受控 devserver 停用环保执法 Pack；不会删除历史项目或 Receipt。"
+    )
+    parser.add_argument(
+        "--devserver-base",
+        default=os.environ.get("TRUZHEN_DEVSERVER_BASE", "").strip(),
+        help="受控 devserver 根地址；也可通过 TRUZHEN_DEVSERVER_BASE 指定（必填）。",
+    )
+    args = parser.parse_args()
+    global BASE
+    BASE = args.devserver_base.rstrip("/")
+    if not BASE:
+        die("必须显式指定 TRUZHEN_DEVSERVER_BASE 或 --devserver-base；拒绝猜测默认端口", UNINSTALL_CONNECTIVITY)
     with open(os.path.join(PACK_DIR, "manifest.json"), encoding="utf-8") as f:
         manifest = json.load(f)
     pack_ref = manifest["pack_ref"]
@@ -97,8 +116,9 @@ def main():
         "owner_action_evidence_ref": iss["owner_action_evidence_ref"]})
     if code != 200:
         die("disable HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
-    print("\n✅ 卸载成功：%s 已停用，知识域已级联卸载。前端「场景包管理」刷新即消失。" % pack_ref)
-    print("   （已产生的案件对象与 03 回执仍可反查——卸载不删历史。）")
+    print("\n✅ 受控卸载成功：%s 已停用，知识域已级联卸载。" % pack_ref)
+    print("   场景包管理会保留“本地已安装 / 未启用”的版本元数据，供 install.py 幂等重装；")
+    print("   已产生的案件对象与 03 回执仍可反查——卸载不物理删除历史。")
 
 
 if __name__ == "__main__":
