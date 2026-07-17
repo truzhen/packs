@@ -25,15 +25,6 @@
 | --- | --- | --- | --- |
 | `codex/prepack-rc-b-canonical-pack-artifact-20260716` / `/Users/li/Documents/truzhenv3worktree/prepack-rc-b-canonical-pack-artifact-20260716-packs` | F10 P0-5/P1-1：打包器 fail-closed 校验 contracts canonical manifest 及嵌套软件 / Provider 声明；五个 Pack 产出可被 Cloud 原样接纳的 ZIP。 | 2026-07-16 | 🟡 已接线；单测与五个真实 ZIP 跨仓内容门已绿，待全仓门禁与独立验收。 |
 
-## 0.0.0 内容运营 GUI 真实生成修复派活卡
-
-| 维度 | 结论 |
-| --- | --- |
-| 我要做的事 | 在 `codex/content-ops-gui-repair-packs-20260717`、`/Users/li/Documents/truzhenv3worktree/content-ops-gui-repair-20260717/packs` 把内容运营单一模型 Schema 拆为按业务 Skill 选择的方向、内容生产、周复盘 Schema，使真实 GUI 能产出标题、30–60 秒口播、镜头、字幕、封面和置顶评论。 |
-| 证据 / 真相源 | 2026-07-17 GUI 只得到法律建议与任务确认，没有内容交付物；业务字段与 Schema 仍只归本仓，基座只校验 hash 后作为 data 消费。 |
-| 风险 / 契约 | Pack 声明为黄；不改 contracts、Gate、Receipt，不加入 provider/runtime，不登录或发布。旧单 Schema bundle 由基座保持兼容。 |
-| 验收 / 状态 | bundle framed hash、三 Schema、禁品与 Pack 测试通过；配对 os/client 已用真实 GUI 生成完整 45 秒抖音候选，并反查 Owner Gate、08 usage、11 success 与 03 Receipt。当前为`已验收（打包前）`；代码发布不等于产品已安装、启用或上架。 |
-
 ## 0.0 双 Pack v16 单项目完整 lifecycle 派活卡
 
 | 维度 | 结论 |
