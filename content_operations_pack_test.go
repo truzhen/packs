@@ -163,6 +163,19 @@ func TestContentOperationsSkillBundleIntegrityAndCandidateContract(t *testing.T)
 	if !contentOpsContainsString(files, "model-output.schema.json") || bundle["model_output_schema"] != "model-output.schema.json" {
 		t.Fatalf("Pack must own and integrity-cover its model output schema: files=%v schema=%v", files, bundle["model_output_schema"])
 	}
+	mappedSchemas, ok := bundle["model_output_schemas"].(map[string]any)
+	if !ok {
+		t.Fatalf("model_output_schemas = %#v", bundle["model_output_schemas"])
+	}
+	for skillID, name := range map[string]string{
+		"content_ops.direction_radar":    "direction-radar.schema.json",
+		"content_ops.content_production": "content-production.schema.json",
+		"content_ops.weekly_review":      "weekly-review.schema.json",
+	} {
+		if mappedSchemas[skillID] != name || !contentOpsContainsString(files, name) {
+			t.Fatalf("business skill schema must be integrity-covered: skill=%s schema=%v files=%v", skillID, mappedSchemas[skillID], files)
+		}
+	}
 	for _, name := range files {
 		data, err := os.ReadFile(filepath.Join(contentOperationsPackRoot, "skills/truzhen-content-ops", name))
 		if err != nil {
@@ -209,6 +222,13 @@ func TestContentOperationsSkillBundleIntegrityAndCandidateContract(t *testing.T)
 	modelSchema := readContentOpsJSON(t, "skills/truzhen-content-ops/model-output.schema.json")
 	if modelSchema["type"] != "object" {
 		t.Fatalf("model output schema must have an object root: %#v", modelSchema)
+	}
+	productionSchema := readContentOpsJSON(t, "skills/truzhen-content-ops/content-production.schema.json")
+	required := stringSlice(t, productionSchema["required"], "content-production.required")
+	for _, field := range []string{"title", "spoken_script", "shot_list", "subtitle_highlights", "cover_text", "pinned_comment", "evidence_refs", "owner_judgement_items"} {
+		if !contentOpsContainsString(required, field) {
+			t.Fatalf("content production schema missing required deliverable %s: %v", field, required)
+		}
 	}
 	publication, _ := contract["publication"].(map[string]any)
 	if publication["supported"] != false || publication["platform_login"] == true || publication["publish"] == true {

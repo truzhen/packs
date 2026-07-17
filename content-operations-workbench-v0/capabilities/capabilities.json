@@ -38,7 +38,7 @@
       "binding": "registry_to_execution_gateway_to_base",
       "provider_family": "codex-cli-family",
       "fallback_policy": "provider_missing",
-      "required_skill_bundle_ref": "skill_bundle://content-operations/truzhen-content-ops@0.1.1-pack2"
+      "required_skill_bundle_ref": "skill_bundle://content-operations/truzhen-content-ops@0.1.2-pack3"
     }
   ],
   "skill_bindings": [

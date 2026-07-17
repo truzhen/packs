@@ -1,16 +1,21 @@
 {
   "schema_version": "1.0",
-  "bundle_ref": "skill_bundle://content-operations/truzhen-content-ops@0.1.1-pack2",
+  "bundle_ref": "skill_bundle://content-operations/truzhen-content-ops@0.1.2-pack3",
   "pack_ref": "scene_pack://content-operations-workbench",
-  "pack_version": "0.1.0",
+  "pack_version": "0.1.1",
   "entrypoint": "SKILL.md",
   "output_contract": "output-contract.json",
   "model_output_schema": "model-output.schema.json",
+  "model_output_schemas": {
+    "content_ops.direction_radar": "direction-radar.schema.json",
+    "content_ops.content_production": "content-production.schema.json",
+    "content_ops.weekly_review": "weekly-review.schema.json"
+  },
   "source_skill": {
     "name": "truzhen-content-ops",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "schema_version": "1.1",
-    "sha256": "3a06fdaecbc072447a4ce7520e56c4ba403200948f213912c4edfced7f927300"
+    "sha256": "ace3b06c630d8e47370cf485dc35fc4fcde8bf8d63a2523340532b1a423def49"
   },
   "content_integrity": {
     "algorithm": "sha256-framed-files-v1",
@@ -18,9 +23,12 @@
     "files": [
       "SKILL.md",
       "output-contract.json",
-      "model-output.schema.json"
+      "model-output.schema.json",
+      "direction-radar.schema.json",
+      "content-production.schema.json",
+      "weekly-review.schema.json"
     ],
-    "sha256": "10473fa4912cb75f152b9f0c2a8271e45cd8daaaa89121ce1c9e80442c8d2fff"
+    "sha256": "fa5957d4a2c476360a6253548b5965b85980ced553bba421accb61c900ba651e"
   },
   "allowed_skill_ids": [
     "content_ops.direction_radar",

@@ -1,13 +1,15 @@
 {
   "pack_id": "pack_content_operations_workbench_v0",
   "pack_ref": "scene_pack://content-operations-workbench",
-  "version": "0.1.0",
-  "lifecycle_status": "已验收",
+  "version": "0.1.1",
+  "lifecycle_status": "已实现",
   "name": "内容运营工作台 Pack",
   "template_family": "Founder 自营内容候选与复盘型",
   "description": "把真实证据转成选题方向、渠道候选、人工发布包和周复盘候选；Owner 只做方向、事实、发布前判断与复盘判断。",
   "author": "Truzhen Pack Studio",
   "pack_type": "domain_work_pack",
+  "kind": "scene_pack",
+  "min_truzhen_version": "3.0.0",
   "manifest_version": "v3",
   "target_industry": "Founder-led B2B 内容运营 / Build in Public",
   "target_audience": "产品 Founder、项目 Owner、中小团队负责人",
@@ -144,7 +146,7 @@
         "receipt_bound_run"
       ],
       "license_policy": "review_required",
-      "isolation_policy": "reuse_existing_provider",
+      "isolation_policy": "reuse_preferred",
       "fallback_policy": "provider_missing",
       "gateway_class": "execution",
       "risk_class": "high"

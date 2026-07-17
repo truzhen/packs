@@ -81,17 +81,17 @@ def lifecycle_snapshot(pack_ref):
             current = (item.get("enabled_pointer") or {}).get("current_version", "")
             records = item.get("records", []) or []
             if not records:
-                return current, "", 0
+                return current, "", "", 0
             latest = max(records, key=lambda record: int(record.get("occ_version", 0)))
-            return current, latest.get("state", ""), int(latest.get("occ_version", 0))
-    return "", "", 0
+            return current, latest.get("version", ""), latest.get("state", ""), int(latest.get("occ_version", 0))
+    return "", "", "", 0
 
 
 def install_scene(manifest, flow, role_slots, capabilities):
     pack_ref = manifest["pack_ref"]
     version = manifest["version"]
     pack_version_ref = pack_ref + "@" + version
-    current, lifecycle_state, lifecycle_occ = lifecycle_snapshot(pack_ref)
+    current, lifecycle_version, lifecycle_state, lifecycle_occ = lifecycle_snapshot(pack_ref)
     if current:
         if current != version:
             die(
@@ -101,7 +101,7 @@ def install_scene(manifest, flow, role_slots, capabilities):
         print("[1-5/7] 场景包已启用 @%s，幂等跳过。" % current)
         return pack_version_ref
 
-    if lifecycle_state == "disabled":
+    if lifecycle_state == "disabled" and lifecycle_version == version:
         code, body = call(
             "POST",
             "/v3/pack-studio/lifecycle/reactivate",
@@ -117,7 +117,7 @@ def install_scene(manifest, flow, role_slots, capabilities):
             print("[1-5/7] 同版本 reactivate 成功。")
             return pack_version_ref
         die("disabled 版本 reactivate 失败 HTTP %d: %s" % (code, body), INSTALL_STATE_CONFLICT)
-    if lifecycle_state:
+    if lifecycle_state and lifecycle_version == version:
         die("已有非 enabled/disabled lifecycle 记录，拒绝覆盖：%s" % lifecycle_state, INSTALL_STATE_CONFLICT)
 
     print("[1/7] 画布写穿 06 ...")

@@ -22,6 +22,11 @@
     "content_ops.content_production",
     "content_ops.weekly_review"
   ],
+  "model_output_schema_selection": {
+    "content_ops.direction_radar": "direction-radar.schema.json",
+    "content_ops.content_production": "content-production.schema.json",
+    "content_ops.weekly_review": "weekly-review.schema.json"
+  },
   "output_kinds": [
     "ContentDirectionCandidate",
     "ContentPublicationPackageCandidate",

@@ -25,6 +25,15 @@
 | --- | --- | --- | --- |
 | `codex/prepack-rc-b-canonical-pack-artifact-20260716` / `/Users/li/Documents/truzhenv3worktree/prepack-rc-b-canonical-pack-artifact-20260716-packs` | F10 P0-5/P1-1：打包器 fail-closed 校验 contracts canonical manifest 及嵌套软件 / Provider 声明；五个 Pack 产出可被 Cloud 原样接纳的 ZIP。 | 2026-07-16 | 🟡 已接线；单测与五个真实 ZIP 跨仓内容门已绿，待全仓门禁与独立验收。 |
 
+## 0.0.0 内容运营 GUI 真实生成修复派活卡
+
+| 维度 | 结论 |
+| --- | --- |
+| 我要做的事 | 在 `codex/content-ops-gui-repair-packs-20260717`、`/Users/li/Documents/truzhenv3worktree/content-ops-gui-repair-20260717/packs` 把内容运营单一模型 Schema 拆为按业务 Skill 选择的方向、内容生产、周复盘 Schema，使真实 GUI 能产出标题、30–60 秒口播、镜头、字幕、封面和置顶评论。 |
+| 证据 / 真相源 | 2026-07-17 GUI 只得到法律建议与任务确认，没有内容交付物；业务字段与 Schema 仍只归本仓，基座只校验 hash 后作为 data 消费。 |
+| 风险 / 契约 | Pack 声明为黄；不改 contracts、Gate、Receipt，不加入 provider/runtime，不登录或发布。旧单 Schema bundle 由基座保持兼容。 |
+| 验收 / 状态 | bundle framed hash、三 Schema、禁品与 Pack 测试通过；配对 os/client 已用真实 GUI 生成完整 45 秒抖音候选，并反查 Owner Gate、08 usage、11 success 与 03 Receipt。当前为`已验收（打包前）`；代码发布不等于产品已安装、启用或上架。 |
+
 ## 0.0 双 Pack v16 单项目完整 lifecycle 派活卡
 
 | 维度 | 结论 |
@@ -180,7 +189,7 @@
 
 | 功能 / 资产 | 职责 | 状态 | 位置 / 证据 | 当前口径 |
 |---|---|---|---|---|
-| 内容运营工作台 Pack 0.1.1 | 将选题雷达、内容生产、周复盘、事实审校、Owner 判断门和 candidate-only 输出契约封装为独立 Domain Work Pack；声明 Codex Hands 需求与两个 07 日程，不持 Provider 或运行事实 | ✅ 已验收（2026-07-16，待产品主线安装启用） | `content-operations-workbench-v0/`；`content_operations_workbench_test.go`；`docs/plans/content-ops-pack-phase2-embedding-evidence-20260716.md`；配对 truzhenos 根 EGR `verify ok` | 自动社媒登录、上传和发布不在 Pack 内；每次真实候选运行仍需 fresh T06、动态网络 Gate 与 03 Receipt，公开稿保持人工发布 |
+| 内容运营工作台 Pack 0.1.1 | 将选题雷达、内容生产、周复盘、事实审校、Owner 判断门和 candidate-only 输出契约封装为独立 Domain Work Pack；按 Skill 选择三套模型 Schema，声明 Codex Hands 需求与两个 07 日程，不持 Provider 或运行事实 | ✅ 已验收（打包前，2026-07-17） | `content-operations-workbench-v0/`；`content_operations_pack_test.go`；`content-operations-workbench-v0/docs/release-notes-0.1.1.md`；配对 truzhenos 根 EGR `verify ok` 与真实 GUI 45 秒抖音候选 | 自动社媒登录、上传和发布不在 Pack 内；代码发布不等于产品安装、启用或上架；每次真实候选运行仍需 fresh T06、动态网络 Gate 与 03 Receipt |
 | 禁品/PII/DB 静态门 + 接入 CI（T5.1）| 禁品扫描增手机号 `1[3-9]\d{9}` / 身份证 `\d{17}[\dXx]` PII 值模式 + `forbiddenDatabaseArtifact`(.db/.sqlite/.sqlite3 扩展名+SQLite 魔数防改名)；`.github/workflows/ci.yml` 新增 forbidden-scan job（setup-go+scoped go test）把此前手动禁品门接入自动 CI | ✅ 已验收（land origin/main）| `pack_forbidden_artifacts_test.go`（TDD 增 2 测）/ `.github/workflows/ci.yml`；scoped -run 避开依赖本机 superpowers worktree 的能力包 env 测试；真实资产零误报 | 商用就绪 C4/T5.1 |
 | 智能家居 pack 交付 bundle 打包器 + install.py 交付形态 | `build_pack_bundle.py` 把 pack 目录 + 父层 `pack_diagnostics.py` 打成自包含 bundle.zip（解决 install.py 父目录导入）+ 拒残缺 pack + 每文件 sha256；install.py docstring 改为面向已运行生产基座（`TRUZHEN_DEVSERVER_BASE`）+ bundle 两种装入 | ✅ 已验收（land origin/main `96faf96`） | `build_pack_bundle.py` / `test_pack_bundle.py`(TDD 2 用例绿) / `smart-home-owner-pack-v0/install.py`；E2E：解压 bundle（无 packs 源码树）→全新生产基座 install 达 enabled + 03 回执 `fae0cc8b`（Base Gate decision_ref）；证据 truzhenos `docs/status/smart-home-pack-base-deliverable-e2e-20260709.md` | 首个用户=Owner 智能家居服务商；启用穿真主权链非下载冒充 |
 | knowledge 内容 checksum 防漂移 + install 事务日志断点续装 | ①knowledge-index 每条目 sha256 checksum（真相源仍是文件本体）+ 三向漂移校验（内容/断链/未登记 md）+ CI 步 + 四 install.py 装入前 fail-fast（新错误码 TZ-PACK-INSTALL-009）；②pack_install_journal 本机恢复账目（非真相源）：步骤/角色包/绑槽/知识逐条 approve 入账，失败半装显式化+断点续装跳过已批候选，不自动反做正式域 | ✅ 已验收（2026-07-11 land origin/main `cd62460`，Owner 裁定「裁定部分按建议」授权）| main（#10 `8cd660d` / #8 `103d94a`）；knowledge_checksums.py / pack_install_journal.py 及三个 test_*.py；环保 45+shuxuejia 5 条 checksum 已生成 | 统一决策表 #10/#8，Owner 2026-07-11 裁定 backlog 提前触发；撤销正式对象仍走 uninstall/Owner 禁用状态机 |

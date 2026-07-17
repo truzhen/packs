@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_only",
+    "business_skill_id",
+    "title",
+    "hook",
+    "spoken_script",
+    "duration_seconds",
+    "shot_list",
+    "subtitle_highlights",
+    "cover_text",
+    "pinned_comment",
+    "channels",
+    "evidence_refs",
+    "fact_boundary",
+    "uncertainties",
+    "owner_judgement_items",
+    "cta",
+    "publish_ready"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "enum": ["content_ops_model_candidate/v1"]},
+    "candidate_only": {"type": "boolean", "enum": [true]},
+    "business_skill_id": {"type": "string", "enum": ["content_ops.content_production"]},
+    "title": {"type": "string", "minLength": 12, "maxLength": 60, "pattern": "Truzhen", "description": "可直接用于抖音的完整中文标题，不能只写品牌名。"},
+    "hook": {"type": "string", "minLength": 18, "maxLength": 120, "pattern": "Truzhen", "description": "完整开场句，必须点名 Truzhen，不能只写品牌名。"},
+    "spoken_script": {
+      "type": "string",
+      "minLength": 80,
+      "maxLength": 1200,
+      "description": "完整可公开口播。必须忠实覆盖 Owner request 明确要求出现的角色分工与事实；不得出现 transaction_ref、evidence_refs、decision_ref、receipt_ref、run_id、nonce、UUID、本机路径或其它内部标识名。",
+      "allOf": [
+        {"pattern": "Truzhen"},
+        {"pattern": "Codex CLI"},
+        {"pattern": "(?:Owner|我).{0,20}负责.{0,20}(?:方向|判断)"},
+        {"pattern": "(?:Truzhen.{0,80}(?:调度|Gate|审核).{0,40}(?:Receipt|回执)|(?:调度|Gate|审核).{0,40}(?:Receipt|回执).{0,40}Truzhen)"},
+        {"pattern": "Codex CLI.{0,24}(?:Hands|执行助手|执行方|执行)"},
+        {"pattern": "内容运营工作台"},
+        {"pattern": "Qwen3\\.6-35B"},
+        {"pattern": "E2E"},
+        {"pattern": "(?:13\\s*万|十三万)"},
+        {"pattern": "(?:当前|目前|现在).{0,12}(?:只是|还只是).{0,12}(?:候选|内容候选)"},
+        {"pattern": "是否.{0,20}发布.{0,20}(?:Owner|我).{0,20}决定"},
+        {"not": {"pattern": "最后.{0,24}(发布|发出)"}},
+        {"not": {"pattern": "(?:领取|我发|索取).{0,20}(?:模板|资料|完整版|候选)"}}
+      ]
+    },
+    "duration_seconds": {"type": "integer", "minimum": 30, "maximum": 60},
+    "shot_list": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["time_range", "visual", "voiceover", "on_screen_text"],
+        "properties": {
+          "time_range": {"type": "string", "minLength": 1},
+          "visual": {"type": "string", "minLength": 1, "description": "可公开拍摄画面，不展示 UUID、本机路径或内部字段名。"},
+          "voiceover": {"type": "string", "minLength": 1, "description": "来自 spoken_script 的可公开口播片段，不得出现内部标识名。"},
+          "on_screen_text": {"type": "string", "minLength": 1, "description": "面向观众的自然语言屏幕字，不得出现 transaction_ref、evidence_refs、decision_ref、receipt_ref、run_id、nonce 等内部字段名。"}
+        }
+      }
+    },
+    "subtitle_highlights": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 12,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "cover_text": {"type": "string", "minLength": 8, "maxLength": 30, "pattern": "Truzhen", "allOf": [{"not": {"pattern": "Truzzen"}}]},
+    "pinned_comment": {"type": "string", "minLength": 1, "maxLength": 300, "allOf": [{"not": {"pattern": "(?:领取|我发|索取).{0,20}(?:模板|资料|完整版|候选)"}}]},
+    "channels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"}
+    },
+    "evidence_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"}
+    },
+    "fact_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["supported_claims", "claims_to_review"],
+      "properties": {
+        "supported_claims": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "claims_to_review": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "uncertainties": {"type": "array", "items": {"type": "string"}},
+    "owner_judgement_items": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "cta": {"type": "string", "minLength": 1, "maxLength": 160, "allOf": [{"not": {"pattern": "(?:领取|我发|索取).{0,20}(?:模板|资料|完整版|候选)"}}]},
+    "publish_ready": {"type": "boolean", "enum": [false]}
+  }
+}
