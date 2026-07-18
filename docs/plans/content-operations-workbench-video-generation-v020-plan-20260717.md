@@ -1,5 +1,7 @@
 # 内容运营工作台 Pack 0.2.0 真实视频生成计划
 
+> 2026-07-18 执行校正：最新主线已经有 `resource-openmontage-media-gen-v1`、11 OpenMontage sidecar、真实 Remotion MP4 与 03 Receipt。为避免平行 Provider，本轮复用该链并新增 FFmpeg/Pillow 竖屏 Owner 素材渲染模式；08 TTS 未伪装接通，改为可选 Owner 口播，缺失时明确静音 AAC。MoneyPrinterTurbo、Pixelle/ComfyUI/LTX 继续留在增强 backlog。
+
 日期：2026-07-17  
 目标版本：`scene_pack://content-operations-workbench@0.2.0`  
 当前状态：`设计中`（仅完成计划；0.1.1 的既有验收状态不变）  

@@ -64,6 +64,34 @@
       }
     },
     {
+      "id": "video_source_rights_gate",
+      "type": "human_approval",
+      "title": "Owner 确认素材使用权并授权本地成片渲染",
+      "gate_policy": {
+        "required_gate": "sovereign_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "video_render",
+      "type": "task",
+      "title": "11 Execution Gateway 通过 OpenMontage/FFmpeg 渲染 9:16 MP4 候选",
+      "gateway": "execution",
+      "provider_requirement_ref": "provider-content-ops-openmontage-render",
+      "candidate_only": true,
+      "gate_policy": {
+        "required_gate": "base_execution_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "video_artifact_receipt",
+      "type": "receipt",
+      "title": "登记视频 Artifact、SHA-256、媒体参数与正式执行回执",
+      "gateway": "receipt",
+      "candidate_only": true
+    },
+    {
       "id": "publication_package_receipt",
       "type": "receipt",
       "title": "登记候选产物、哈希与 Hands run 回执",
@@ -151,7 +179,7 @@
     {
       "id": "e9",
       "source": "fact_preflight_gate",
-      "target": "publication_package_receipt",
+      "target": "video_source_rights_gate",
       "condition": "approved"
     },
     {
@@ -164,6 +192,28 @@
       "id": "e11",
       "source": "publication_package_receipt",
       "target": "candidate_ready"
+    },
+    {
+      "id": "e9a",
+      "source": "video_source_rights_gate",
+      "target": "video_render",
+      "condition": "approved"
+    },
+    {
+      "id": "e9b",
+      "source": "video_source_rights_gate",
+      "target": "candidate_rejected",
+      "condition": "rejected"
+    },
+    {
+      "id": "e9c",
+      "source": "video_render",
+      "target": "video_artifact_receipt"
+    },
+    {
+      "id": "e9d",
+      "source": "video_artifact_receipt",
+      "target": "publication_package_receipt"
     },
     {
       "id": "e12",

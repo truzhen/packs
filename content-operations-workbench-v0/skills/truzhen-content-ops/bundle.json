@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "bundle_ref": "skill_bundle://content-operations/truzhen-content-ops@0.1.2-pack3",
   "pack_ref": "scene_pack://content-operations-workbench",
-  "pack_version": "0.1.1",
+  "pack_version": "0.2.0",
   "entrypoint": "SKILL.md",
   "output_contract": "output-contract.json",
   "model_output_schema": "model-output.schema.json",

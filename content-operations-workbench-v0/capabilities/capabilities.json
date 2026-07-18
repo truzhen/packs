@@ -22,6 +22,13 @@
       "required_gate": "same_hands_run"
     },
     {
+      "capability_ref": "truzhen.content.video_render",
+      "purpose": "把 Owner 已确认权利的图片、视频与可选口播音频渲染为可播放、可下载的本地 9:16 MP4 候选",
+      "gateway": "execution",
+      "side_effect_class": "write_artifact",
+      "required_gate": "base_execution_gate"
+    },
+    {
       "capability_ref": "truzhen.content.metrics_review",
       "purpose": "只基于人工录入或可核验导出的真实指标生成 keep/change/stop 候选",
       "gateway": "execution",
@@ -39,6 +46,15 @@
       "provider_family": "codex-cli-family",
       "fallback_policy": "provider_missing",
       "required_skill_bundle_ref": "skill_bundle://content-operations/truzhen-content-ops@0.1.2-pack3"
+    },
+    {
+      "requirement_id": "provider-content-ops-openmontage-render",
+      "capability": "truzhen.content.video_render",
+      "gateway_class": "execution",
+      "risk_class": "medium",
+      "binding": "registry_to_execution_gateway_to_base",
+      "provider_family": "openmontage-family",
+      "fallback_policy": "provider_missing"
     }
   ],
   "skill_bindings": [

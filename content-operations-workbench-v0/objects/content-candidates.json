@@ -63,6 +63,28 @@
       ],
       "missing_metrics_behavior": "blocked_with_minimum_data_request",
       "formal_object": false
+    },
+    {
+      "object_type": "ContentVideoArtifactCandidate",
+      "candidate_only": true,
+      "required_fields": [
+        "candidate_ref",
+        "transaction_ref",
+        "pack_version_ref",
+        "source_rights_confirmed",
+        "artifact_ref",
+        "receipt_ref",
+        "sha256",
+        "content_type",
+        "render_runtime",
+        "publication_status"
+      ],
+      "state_constraints": {
+        "render_allowed": "source_rights_confirmed=true and base_execution_gate=allowed",
+        "artifact_ready": "receipt_ref is formal and artifact_ref is previewable",
+        "publication_status": "not_published"
+      },
+      "formal_object": false
     }
   ],
   "forbidden_formalizations": [

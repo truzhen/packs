@@ -1,11 +1,11 @@
 {
   "pack_id": "pack_content_operations_workbench_v0",
   "pack_ref": "scene_pack://content-operations-workbench",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "lifecycle_status": "已实现",
   "name": "内容运营工作台 Pack",
   "template_family": "Founder 自营内容候选与复盘型",
-  "description": "把真实证据转成选题方向、渠道候选、人工发布包和周复盘候选；Owner 只做方向、事实、发布前判断与复盘判断。",
+  "description": "把真实证据转成选题方向、渠道候选、可播放竖屏 MP4 候选、人工发布包和周复盘候选；Owner 只做方向、素材授权、事实、发布前判断与复盘判断。",
   "author": "Truzhen Pack Studio",
   "pack_type": "domain_work_pack",
   "kind": "scene_pack",
@@ -32,6 +32,12 @@
       "display_name": "内容生产",
       "output_object": "ContentPublicationPackageCandidate",
       "owner_judgement": "fact_preflight_and_publication_authorization"
+    },
+    {
+      "mode_id": "video_render",
+      "display_name": "成片渲染",
+      "output_object": "ContentVideoArtifactCandidate",
+      "owner_judgement": "source_rights_and_artifact_acceptance"
     },
     {
       "mode_id": "weekly_review",
@@ -69,16 +75,20 @@
     "truzhen.content.evidence_read",
     "truzhen.content.candidate_generation",
     "truzhen.content.public_draft_sanitization",
+    "truzhen.content.video_render",
     "truzhen.content.metrics_review"
   ],
   "required_capabilities": [
     "truzhen.content.candidate_generation",
-    "truzhen.content.public_draft_sanitization"
+    "truzhen.content.public_draft_sanitization",
+    "truzhen.content.video_render"
   ],
   "gates": {
     "hands_run_gate": "base_execution_gate",
     "direction_selection_gate": "owner_gate",
     "fact_preflight_gate": "owner_gate",
+    "video_render_gate": "base_execution_gate",
+    "source_rights_gate": "owner_gate",
     "publication_authorization_gate": "owner_manual_only",
     "external_publish_gate": "not_implemented"
   },
@@ -86,6 +96,8 @@
     "content_hands_run_confirm",
     "direction_selection_confirm",
     "fact_preflight_confirm",
+    "video_render_confirm",
+    "source_rights_confirm",
     "publication_authorization_manual_confirm"
   ],
   "receipt_policy": {
@@ -132,6 +144,15 @@
       "binding": "registry_to_execution_gateway_to_base",
       "fallback_policy": "provider_missing",
       "provider_family": "codex-cli-family"
+    },
+    {
+      "requirement_id": "provider-content-ops-openmontage-render",
+      "capability": "truzhen.content.video_render",
+      "gateway_class": "execution",
+      "risk_class": "medium",
+      "binding": "registry_to_execution_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "provider_family": "openmontage-family"
     }
   ],
   "software_requirements": [
@@ -150,6 +171,22 @@
       "fallback_policy": "provider_missing",
       "gateway_class": "execution",
       "risk_class": "high"
+    },
+    {
+      "requirement_id": "content-ops-openmontage-ffmpeg",
+      "software_family": "openmontage-family",
+      "provider_family": "openmontage-family",
+      "version_range": ">=0.2.0,<1.0.0",
+      "required_capabilities": [
+        "owner_asset_vertical_video_render",
+        "h264_aac_mp4",
+        "artifact_snapshot_and_preview"
+      ],
+      "license_policy": "agpl-3.0-review-required",
+      "isolation_policy": "reuse_preferred",
+      "fallback_policy": "provider_missing",
+      "gateway_class": "execution",
+      "risk_class": "medium"
     }
   ],
   "notification_command_report_routes": {
@@ -206,6 +243,7 @@
     "social_platform_login",
     "real_social_upload",
     "real_social_publish",
+    "unlicensed_asset_render",
     "direct_message",
     "bulk_message",
     "contact_scraping",

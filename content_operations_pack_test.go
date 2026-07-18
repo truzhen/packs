@@ -60,16 +60,19 @@ func TestContentOperationsPackDeclaresSeparatedBoundaries(t *testing.T) {
 	if got := manifest["pack_type"]; got != "domain_work_pack" {
 		t.Fatalf("pack_type = %v", got)
 	}
+	if got := manifest["version"]; got != "0.2.0" {
+		t.Fatalf("version = %v", got)
+	}
 	security, ok := manifest["security_profile"].(map[string]any)
 	if !ok || security["candidate_only"] != true || security["no_real_publish"] != true || security["no_platform_login"] != true {
 		t.Fatalf("security_profile must be candidate-only/no-publish/no-login: %#v", manifest["security_profile"])
 	}
 
 	workModes, ok := manifest["work_modes"].([]any)
-	if !ok || len(workModes) != 3 {
+	if !ok || len(workModes) != 4 {
 		t.Fatalf("work_modes = %#v", manifest["work_modes"])
 	}
-	wants := map[string]bool{"direction_radar": false, "content_production": false, "weekly_review": false}
+	wants := map[string]bool{"direction_radar": false, "content_production": false, "video_render": false, "weekly_review": false}
 	for _, raw := range workModes {
 		mode, _ := raw.(map[string]any)
 		if _, exists := wants[fmt.Sprint(mode["mode_id"])]; exists {
@@ -83,12 +86,16 @@ func TestContentOperationsPackDeclaresSeparatedBoundaries(t *testing.T) {
 	}
 
 	providerRequirements, ok := manifest["provider_requirements"].([]any)
-	if !ok || len(providerRequirements) != 1 {
+	if !ok || len(providerRequirements) != 2 {
 		t.Fatalf("provider_requirements = %#v", manifest["provider_requirements"])
 	}
 	requirement, _ := providerRequirements[0].(map[string]any)
 	if requirement["provider_family"] != "codex-cli-family" || requirement["gateway_class"] != "execution" {
 		t.Fatalf("provider must remain external Codex Hands via execution gateway: %#v", requirement)
+	}
+	videoRequirement, _ := providerRequirements[1].(map[string]any)
+	if videoRequirement["provider_family"] != "openmontage-family" || videoRequirement["capability"] != "truzhen.content.video_render" {
+		t.Fatalf("video provider must remain external via execution gateway: %#v", videoRequirement)
 	}
 	moat, ok := manifest["moat_justification"].(map[string]any)
 	if !ok {
@@ -104,6 +111,20 @@ func TestContentOperationsPackDeclaresSeparatedBoundaries(t *testing.T) {
 	for _, reason := range stringSlice(t, moat["valid_reasons"], "moat_justification.valid_reasons") {
 		if !allowedMoatReasons[reason] {
 			t.Fatalf("unsupported Pack Studio moat reason %q", reason)
+		}
+	}
+}
+
+func TestContentOperationsVideoArtifactCandidateRemainsUnpublished(t *testing.T) {
+	objects := readContentOpsJSON(t, "objects/content-candidates.json")
+	encoded, err := json.Marshal(objects)
+	if err != nil {
+		t.Fatal(err)
+	}
+	text := string(encoded)
+	for _, required := range []string{"ContentVideoArtifactCandidate", "source_rights_confirmed", "artifact_ref", "receipt_ref", "publication_status", "not_published"} {
+		if !strings.Contains(text, required) {
+			t.Fatalf("video artifact candidate missing %q", required)
 		}
 	}
 }
@@ -146,6 +167,12 @@ func TestContentOperationsFlowCannotPublish(t *testing.T) {
 	forbiddenNodes := stringSlice(t, flow["forbidden_nodes"], "forbidden_nodes")
 	if !contentOpsContainsString(forbiddenNodes, "social_platform_publish") || !contentOpsContainsString(forbiddenNodes, "social_platform_login") {
 		t.Fatalf("flow must explicitly reject publish/login: %v", forbiddenNodes)
+	}
+	joined, _ := json.Marshal(flow)
+	for _, required := range []string{"video_source_rights_gate", "provider-content-ops-openmontage-render", "video_artifact_receipt"} {
+		if !strings.Contains(string(joined), required) {
+			t.Fatalf("video render flow missing %q", required)
+		}
 	}
 }
 
