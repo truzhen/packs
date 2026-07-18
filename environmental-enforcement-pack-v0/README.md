@@ -61,12 +61,17 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 \
 
 # 4) 卸载
 TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 \
-  python3 packs/environmental-enforcement-pack-v0/uninstall.py
+TRUZHEN_CLIENT_URL=http://127.0.0.1:5197 \
+  python3 packs/environmental-enforcement-pack-v0/uninstall.py --open-gui
 ```
+
+卸载脚本只负责 Owner 前台交接与只读等待：停用写操作必须从可信 GUI 携 Owner presence
+完成；脚本不伪造 Origin/Cookie，不自动 prepare/confirm/disable。超时或状态不可读即
+`blocked/not_ready`，不得宣称成功。
 
 加载会装入：场景包 EnabledVersion + 2 角色包 + 槽位绑定 + 15 知识域 + 45/45 源文档切分出的全部 FormalKnowledge。源文档数与 09 运行态分片数是两个指标；验收必须按 `pack_ref`、`source_ref`、scope 全量分页对账，不得把前台全局知识总数（历史曾显示 752）冒充本 Pack 的源文档数或固定分片契约。
 （大文件按章节/条款切块，约数百条，均 pending_human_review）。卸载经真实 `lifecycle/disable`
-（Base 签发 disable 决议）级联卸载知识域；**已产生的案件对象与 03 回执仍可反查——卸载不删历史**。
+（Owner 在可信 GUI 确认、Base 签发 disable 决议）级联卸载知识域；**已产生的案件对象与 03 回执仍可反查——卸载不删历史**。
 
 ## 重建知识库（资料更新后）
 

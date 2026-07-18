@@ -11,7 +11,9 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.parse
+import webbrowser
 
 # --- install 阶段码 -------------------------------------------------------
 INSTALL_GENERIC = "TZ-PACK-INSTALL-001"        # 未归类失败（兜底，避免误用）
@@ -58,6 +60,50 @@ def emit_pack_error(*, pack_dir, base, action, error_code, message):
         "message": _truncate(str(message), 2048),
     }
     print("TRUZHEN_PACK_ERROR " + json.dumps(payload, ensure_ascii=False, sort_keys=True), file=sys.stderr)
+
+
+def pack_enabled_from_readmodel(body, pack_ref):
+    """只读解析 os-14 lifecycle 真相；缺字段时保守视为仍启用。"""
+    if not isinstance(body, dict) or not isinstance(body.get("packs"), list):
+        return None
+    for entry in body["packs"]:
+        if isinstance(entry, dict) and entry.get("pack_ref") == pack_ref:
+            pointer = entry.get("enabled_pointer")
+            if not isinstance(pointer, dict):
+                return None
+            return bool(pointer.get("current_version"))
+    return False
+
+
+def wait_for_owner_disabled(call, pack_ref, timeout_seconds, poll_seconds=1.0, sleep=time.sleep):
+    """等待 GUI Owner 动作落入 os-14；本函数永远只调用 GET。"""
+    deadline = time.monotonic() + max(0.0, float(timeout_seconds))
+    path = "/v3/pack-studio/lifecycle/packs?pack_ref=" + urllib.parse.quote(pack_ref, safe="")
+    while True:
+        code, body = call("GET", path)
+        if code == 0:
+            return False, "connectivity"
+        if code != 200:
+            return False, "readmodel_http_%s" % code
+        enabled = pack_enabled_from_readmodel(body, pack_ref)
+        if enabled is False:
+            return True, "disabled"
+        if enabled is None:
+            return False, "readmodel_invalid"
+        if time.monotonic() >= deadline:
+            return False, "owner_presence_required"
+        sleep(max(0.05, float(poll_seconds)))
+
+
+def present_owner_disable_handoff(client_url, pack_ref, open_gui=False):
+    """展示前台交接；只有显式 --open-gui 才打开浏览器，不注入身份。"""
+    url = str(client_url or "").strip()
+    print("需要 Owner 在可信前台完成停用：%s" % pack_ref)
+    print("请打开 Truzhen → 场景平台 → 场景包管理，选择该 Pack 并确认停用。")
+    if url:
+        print("前台地址：%s" % url)
+        if open_gui:
+            webbrowser.open(url, new=2, autoraise=True)
 
 
 def _load_manifest(pack_dir):

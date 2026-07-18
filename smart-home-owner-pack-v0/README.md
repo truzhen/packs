@@ -9,10 +9,16 @@
 ```sh
 # 起含本分支改动的 devserver 后：
 python3 packs/smart-home-owner-pack-v0/install.py
-python3 packs/smart-home-owner-pack-v0/uninstall.py
+TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18080 \
+TRUZHEN_CLIENT_URL=http://127.0.0.1:5197 \
+  python3 packs/smart-home-owner-pack-v0/uninstall.py --open-gui
 ```
 
+`uninstall.py` 不在后台伪造 Owner：它只打开/提示可信前台的「场景包管理」，由 Owner
+显式确认停用，并只读等待 os-14 ReadModel 证明已停用。没有 Owner presence 或超时会明确
+失败，不会冒充卸载成功；历史项目与 Receipt 始终保留。
+
 本 pack 无知识库（knowledge/），install.py 会自动跳过知识入库步骤。
-产品基座默认不自带本 pack（server.go 已摘除自动 seed），只在 install 后出现、uninstall 后消失。
+产品基座默认不自带本 pack（server.go 已摘除自动 seed），只在 install 后出现；Owner 前台停用后从可运行列表消失。
 
 当前生命周期：`已实现 -> 已接线`。v1.1.0 声明、flow 与角色边界已更新，不代表真实 GUI、Frappe 或 Home Assistant 路径已经独立验收或发布。

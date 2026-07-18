@@ -1,7 +1,7 @@
 # Transaction Object、Pack Manifest 与 Pack Runtime 验收标准 v1
 
 日期：2026-07-17  
-状态：`当前客户主线；契约不变；已实现标准与回归要求，待 v18 双 Pack 独立验收`
+状态：`当前客户主线；契约不变；v18 暴露安装 Saga 与 Owner-presence 卸载 P1；待 v19 双 Pack 独立验收`
 
 ## 1. 目的与证据
 
@@ -37,7 +37,7 @@ Manifest 只声明，不能持有运行真相。新增字段不得复制 contrac
 ## 4. Pack Runtime 标准
 
 1. 装入前校验 manifest、引用文件、schema、digest、禁品和路径；错误 fail-closed，registry 不产生半安装记录。
-2. 安装、启用、停用、卸载、重装均幂等并有 03 Receipt。多资源操作中途失败必须补偿回原状态，不能半启用或半停用。
+2. 安装、启用、停用、卸载、重装均幂等并有 03 Receipt。跨 01/03/09/13/14 的安装必须消费同一 os-01 reservation，以 os-14 持久 Saga 日志逐步落账；任一步失败或崩溃均逆序补偿或在冷启动后恢复，不能半启用、半停用或为子资源另开 Gate。
 3. 每个运行入口至少在“接收候选、持久化前、Gate 前、Gateway 执行前”重新核验 transaction-bound Pack version、急停与 Provider readiness；前端预检不能替代后端真闸。
 4. KnowledgeMount 只授予可见性，不覆盖检索相关性。显式 mount refs 仍必须服从 query/as-of/辖区/权限；零相关结果应诚实 `not_ready`，不得把整库噪声塞给模型。
 5. 外部候选只能回灌到同一 transaction、run、pack version 和可恢复步骤。已完成、取消、失败或停在无关 Owner Gate 的陈旧信号返回 `stale/blocked`，零状态与 Receipt 增量。
@@ -47,6 +47,7 @@ Manifest 只声明，不能持有运行真相。新增字段不得复制 contrac
 9. 服务重启、断网、超时和重放后从权威 store 恢复；client 不依赖纯 `useState` 保留历史，也不在本地自铸“已确认”。
 10. 停用/卸载停止 RoleBinding、KnowledgeMount、Provider session、订阅、轮询和临时资源；重装不复制 registry、历史或外部对象。
 11. 基座防腐：OS 不出现具体 Pack ref、行业对象或节点专用分支；client 不持真相；Pack 不含 Provider；software 不保存 runtime/secret；contracts 不因单 Pack 缺口被现场扩张。
+12. Owner-presence 动作只能在可信 GUI Origin 内完成。CLI `uninstall.py` 只能只读发现 lifecycle、打开受控 GUI 交接并等待 os-14 真相，不得伪造 Origin、Owner presence、decision 或在脚本内串行 prepare/confirm/disable。
 
 ## 5. 三层隔离与故障断言
 
