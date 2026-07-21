@@ -20,6 +20,7 @@
   "capabilities_file": "capabilities/capabilities.json",
   "knowledge_scopes_manifest": "knowledge/knowledge-scopes.json",
   "knowledge_index": "knowledge/knowledge-index.json",
+  "legal_time_fence_file": "knowledge/legal-time-fence.json",
   "security_profile": {
     "candidate_only": true,
     "non_formal": true,
@@ -96,7 +97,7 @@
     "delegation_allowed": false
   },
   "formalization_requirement": {
-    "summary": "判事策略：线索受理、现场检查候选、证据归集、违法事实/法律依据候选、律师质询均为候选态（candidate_only/non_formal）；唯有行政处罚决定、责令改正、查封扣押、文书送达、移送公安、Receipt 归档需经 Owner 主权确认 + Base Gate 裁定后才正式化。SceneFlow 走到 end 只表示执法协助候选链已收束，不表示案件 Transaction 已完成；Transaction 完成必须分别具备正式执行、正式送达、整改复查的权威 Receipt。裁定权在 Base，不在场景包。适用法条按案发时点（as_of）择法（如生态环境法典 2026-08-15 起施行）。",
+    "summary": "判事策略：线索受理、现场检查候选、证据归集、违法事实/法律依据候选、律师质询均为候选态（candidate_only/non_formal）；唯有行政处罚决定、责令改正、查封扣押、文书送达、移送公安、Receipt 归档需经 Owner 主权确认 + Base Gate 裁定后才正式化。SceneFlow 走到 end 只表示执法协助候选链已收束，不表示案件 Transaction 已完成；Transaction 完成必须分别具备正式执行、正式送达、整改复查的权威 Receipt。裁定权在 Base，不在场景包。法律依据候选必须带案发时点（as_of）、权威来源、生效/失效期和 pending_human_review 状态；缺任一项或命中未来法时 fail-closed 为 blocked/insufficient_legal_context，不由模型补造。",
     "formalizes": [
       "FormalEnforcementDecision",
       "CorrectionOrder",
@@ -106,6 +107,19 @@
       "FormalReceipt"
     ],
     "decided_by": "owner_plus_base_gate"
+  },
+  "legal_time_fence": {
+    "policy_ref": "pack_policy://environmental-enforcement/legal-as-of-v1",
+    "source_file": "knowledge/legal-time-fence.json",
+    "required_case_inputs": [
+      "event_as_of",
+      "jurisdiction",
+      "legal_subject",
+      "evidence_source_refs"
+    ],
+    "missing_or_unverified_outcome": "blocked_insufficient_legal_context",
+    "future_law_outcome": "future_law_notice_only",
+    "formalization_forbidden": true
   },
   "provider_requirements": [
     {

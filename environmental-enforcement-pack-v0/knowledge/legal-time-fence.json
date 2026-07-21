@@ -1,0 +1,32 @@
+{
+  "policy_ref": "pack_policy://environmental-enforcement/legal-as-of-v1",
+  "lifecycle_status": "契约已定",
+  "verification_status": "pending_human_review",
+  "purpose": "约束环保执法法律依据候选的案发时点、权威来源和生效期；不授予正式法律裁定或执行权限。",
+  "required_case_inputs": [
+    "event_as_of",
+    "jurisdiction",
+    "legal_subject",
+    "evidence_source_refs"
+  ],
+  "selection_rule": "仅选择 effective_from <= event_as_of 且（effective_to 缺失或 event_as_of <= effective_to）的权威来源；所有输出保持 candidate_only、non_formal、pending_human_review。",
+  "missing_or_unverified_outcome": "blocked_insufficient_legal_context",
+  "future_law_outcome": "future_law_notice_only",
+  "authoritative_sources": [
+    {
+      "legal_source_ref": "law://cn/ecological-environment-code/2026",
+      "title": "中华人民共和国生态环境法典",
+      "authority": "全国人民代表大会",
+      "official_url": "https://www.npc.gov.cn/npc/c1773/c1848/c21114/sthjfdlf/",
+      "promulgated_on": "2026-03-12",
+      "effective_from": "2026-08-15",
+      "verification_status": "pending_human_review",
+      "source_file": "knowledge/code/生态环境法典.md"
+    }
+  ],
+  "prohibitions": [
+    "模型不得补造法律事实、条款、生效期或来源",
+    "未来法不得作为早于生效日案件的直接实体依据",
+    "本清单和模型候选不得升级为 FormalRecord、正式处罚、送达或执行"
+  ]
+}

@@ -30,6 +30,10 @@ from pack_diagnostics import (
 )
 
 BASE = ""
+# 这是交给可信前台的 canonical action 描述，不是 Pack 发起的请求体。脚本没有
+# POST 能力，也不会自行准备、确认或铸造 Owner evidence；保留该标识供人工交接、
+# 审计和 os-14 生命周期口径一致地指向唯一允许的停用动作。
+OWNER_DISABLE_HANDOFF = {"action_type": "14.pack-studio.lifecycle.disable"}
 
 
 def call(method, path, body=None):
@@ -84,7 +88,9 @@ def main():
     if enabled is None:
         die("lifecycle ReadModel 形状不完整，拒绝猜测状态", UNINSTALL_LIFECYCLE_HTTP)
 
-    print("== Owner 在场停用交接 %s @ %s ==" % (pack_ref, version))
+    print("== Owner 在场停用交接 %s @ %s（%s）==" % (
+        pack_ref, version, OWNER_DISABLE_HANDOFF["action_type"]
+    ))
     present_owner_disable_handoff(args.client_url, pack_ref, args.open_gui)
     ok, reason = wait_for_owner_disabled(call, pack_ref, args.wait_seconds, args.poll_seconds)
     if not ok:

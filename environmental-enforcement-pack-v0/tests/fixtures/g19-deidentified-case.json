@@ -1,0 +1,35 @@
+{
+  "fixture_status": "deidentified_synthetic_structurally_realistic",
+  "candidate_case_ref": "case_candidate://g19-water-discharge-001",
+  "event_as_of": "2026-07-08",
+  "jurisdiction": "jurisdiction_candidate://county-eco-environment",
+  "legal_subject": "water_discharge_candidate",
+  "evidence": [
+    {
+      "evidence_candidate_ref": "evidence_candidate://g19/lead-original",
+      "kind": "lead_original",
+      "source_ref": "source_candidate://g19/lead-original",
+      "sha256": "5c67c1313e76439d8cb6cc9197bf5cc8b07c5c1493a4bfe0ef4e37ea4c84f2c9",
+      "verification_status": "verified"
+    },
+    {
+      "evidence_candidate_ref": "evidence_candidate://g19/site-record",
+      "kind": "site_record",
+      "source_ref": "source_candidate://g19/site-record",
+      "sha256": "6a2df75db748681e0cb8ffd81eabcdb0ba8d446942d95bff81b31c1906fbf2d8",
+      "verification_status": "verified"
+    }
+  ],
+  "expected_controls": {
+    "ocr_without_provider": "manual_handoff",
+    "model_without_owner_authorized_profile": "blocked",
+    "gate_deny": "candidate_only_no_formal_action",
+    "receipt_failure": "transaction_not_complete",
+    "scene_flow_end": "transaction_not_complete"
+  },
+  "receipt_classes": [
+    "formal_execution_receipt",
+    "formal_delivery_receipt",
+    "remediation_reinspection_receipt"
+  ]
+}

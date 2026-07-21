@@ -1,0 +1,71 @@
+{
+  "goal": "G19 环保执法证据链 Pack 商品化与法律时点防线",
+  "status": "blocked",
+  "lifecycle_status": "已接线 -> blocked",
+  "scope": {
+    "modified_paths": [
+      "environmental-enforcement-pack-v0/**"
+    ],
+    "not_modified": [
+      "公共工具",
+      "其它 Pack",
+      "truzhenos 实现",
+      "contracts",
+      "Provider",
+      "客户端"
+    ]
+  },
+  "legal_time_fence": {
+    "policy_ref": "pack_policy://environmental-enforcement/legal-as-of-v1",
+    "official_source": "https://www.npc.gov.cn/npc/c1773/c1848/c21114/sthjfdlf/",
+    "authority": "全国人民代表大会",
+    "promulgated_on": "2026-03-12",
+    "effective_from": "2026-08-15",
+    "verification_status": "pending_human_review",
+    "before_after_static_cases": [
+      "2026-08-14: future_law_notice_only，禁止作为直接实体依据",
+      "2026-08-15: 可作为 candidate_only 来源，仍须人工核验与 Owner + Base Gate"
+    ]
+  },
+  "deidentified_scenario": {
+    "fixture": "tests/fixtures/g19-deidentified-case.json",
+    "description": "合成污水厂排放异常线索；仅含候选引用、证据类别与固定 SHA-256 样值，不含当事人、真实单位、OCR 产物或模型正文。"
+  },
+  "pack_changes": [
+    "manifest 声明 legal_time_fence 与 fail-closed 结果",
+    "flow 的法律候选节点要求 event_as_of、管辖、主题、证据来源；缺失/未来法阻断",
+    "文书节点显式为 DocumentDraft，要求 Model Gateway 非模板草稿；未获 Owner 授权 profile/额度时 blocked",
+    "新增 G19 Pack 内静态验收，覆盖证据 source/hash、OCR manual_handoff、模型 blocked、Gate deny、Receipt fail、SceneFlow/Transaction 隔离和三类 Receipt 不可互代",
+    "uninstall 只读 Owner 交接补齐 os-14 canonical action_type 声明，不新增 POST 或 owner evidence"
+  ],
+  "verification": {
+    "passed": [
+      "python3 environmental-enforcement-pack-v0/tests/g19_pack_contract_test.py",
+      "JSON 合法性（全仓）",
+      "install.py/uninstall.py/G19 测试脚本 py_compile",
+      "Pack 结构审计（全仓）",
+      "git diff --check",
+      "隔离 OS canvas 写穿并只读回查 legal-as-of-v1 与 DocumentDraft"
+    ],
+    "blocked_or_not_run": [
+      "install/enable/idempotency：lifecycle confirm 被知识挂载 Owner Gate 消费链拒绝",
+      "去敏案件跑线、OCR、模型草稿、Gate deny、Receipt failure、restart、disable/rollback/uninstall/reinstall：须先合法 enabled，本轮未绕过",
+      "真实模型、送达、处罚、查封、移送、整改复查：无 Owner Gate 授权，保持 blocked"
+    ],
+    "unrelated_failure": "GOWORK=off go test ./... 在环境 Pack 修复后，仍因未授权的 smart-home-owner-pack-v0/uninstall.py 缺 os-14 canonical action_type 失败；该文件未修改。"
+  },
+  "isolated_os_e2e": {
+    "os_repository": "/Users/li/Documents/truzhenos",
+    "os_sha": "29e2b0e78addcdf2f5edf48b52f440d8748c2743",
+    "devserver_base": "http://127.0.0.1:18219",
+    "result": "canvas -> lifecycle draft -> readiness -> promote 成功；confirm HTTP 422",
+    "gate_receipt": {
+      "gate_status": "blocked",
+      "error": "pack_knowledge_mount_enable_explicit_owner_confirmation_consumer_not_wired",
+      "receipt_status": "未产生启用 Receipt；不得伪造"
+    },
+    "rollback_cleanup": "devserver 已停止；18219 已释放；隔离 test-store 已移入 /Users/li/.Trash/g19-os-qEdiUO-20260721（可恢复）；未对正式数据、真实案件或外部系统产生动作。",
+    "handoff": "docs/G19-I04-基座阻断移交-20260721.md"
+  },
+  "final_line": "push/merge/tag/deploy: 未执行，等待 Owner。"
+}
