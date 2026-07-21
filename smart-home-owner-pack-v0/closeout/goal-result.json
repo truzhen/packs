@@ -1,0 +1,83 @@
+{
+  "goal": "G20 智能家居老板项目经营 Pack 商品化",
+  "status": "blocked",
+  "lifecycle_status": "已接线",
+  "scope": {
+    "modified_repository": "truzhen-packs",
+    "modified_paths": [
+      "smart-home-owner-pack-v0/docs/G20-派活卡.md",
+      "smart-home-owner-pack-v0/tests/test_pack_contract.py",
+      "smart-home-owner-pack-v0/README.md",
+      "smart-home-owner-pack-v0/closeout/goal-result.json"
+    ],
+    "os_repository": {
+      "action": "read_and_isolated_test_only",
+      "sha": "29e2b0e78addcdf2f5edf48b52f440d8748c2743",
+      "modified": false
+    },
+    "provider_actions": {
+      "frappe_write": "not_executed_owner_gate_required",
+      "home_assistant_device_action": "not_executed_owner_gate_required",
+      "home_assistant_default": "not_ready",
+      "baserow_runtime_resolution": "not_executed_due_to_os_product_test_block"
+    }
+  },
+  "isolated_e2e": {
+    "base": "http://127.0.0.1:18220",
+    "initial_registry_count": 0,
+    "pack_ref": "scene_pack://smart-home-owner-project-ops",
+    "enabled_version": "1.1.0",
+    "flow_id": "smart-home-owner-project-ops-flow",
+    "lifecycle_receipt_ref": "0a1599be-a14c-4eb4-8429-6beed7b2eb68",
+    "role_pack_enabled": "role_pack://smart-home-project-manager",
+    "slot_binding_receipt_ref": "36fb90a7-ac4e-4956-ad7f-5218b0e1a867",
+    "restart_idempotency": "install.py 第二次运行保留 1.1.0 enabled，并跳过场景/角色重复装入",
+    "owner_handoff": {
+      "command": "TRUZHEN_OWNER_HANDOFF_WAIT_SECONDS=0 python3 uninstall.py --wait-seconds 0",
+      "result": "blocked_owner_presence_required",
+      "error_code": "TZ-PACK-UNINSTALL-003",
+      "network_write_by_uninstall_script": 0
+    }
+  },
+  "verification": [
+    {
+      "command": "python3 -c JSON scan + python3 -m py_compile + Pack structure audit + forbidden artifact scan + git diff --check",
+      "result": "passed"
+    },
+    {
+      "command": "python3 -m unittest discover -s smart-home-owner-pack-v0/tests -v",
+      "result": "passed (4 tests)"
+    },
+    {
+      "command": "GOWORK=off go test ./...",
+      "repository": "truzhenos",
+      "result": "passed"
+    },
+    {
+      "command": "TRUZHEN_PACKS_ROOT=<G20 worktree> GOWORK=off go test ./backend/tests/devserver -run TestSmartHomeOwner -count=1 -v",
+      "repository": "truzhenos",
+      "result": "failed as expected: smart_home_owner_pack_product_test.go hard-codes 1.0.0 while Pack manifest is 1.1.0"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "I04-smart-home-product-test-version-drift",
+      "root_cause": "OS product test /Users/li/Documents/truzhenos/backend/tests/devserver/smart_home_owner_pack_product_test.go expects enabled_version=1.0.0, but the current authoritative Pack manifest declares 1.1.0.",
+      "impact": "The required single-project five-stage, Frappe candidate/write separation, timeout/accepted-unknown/restart and history path cannot receive valid product-test evidence on the current OS SHA.",
+      "required_owner_or_integration_action": "I04 must update the OS test to read the Pack manifest version (or otherwise use a compatible expected version), then rerun with TRUZHEN_PACKS_ROOT pointing to this worktree.",
+      "not_fixed_here": "The Owner authorization prohibits OS changes."
+    },
+    {
+      "id": "owner-gate-real-actions",
+      "root_cause": "No Owner Gate was granted for Frappe writeback, Home Assistant action, or trusted-GUI Pack disable/uninstall.",
+      "impact": "No real Provider write, device action, disable/rollback/reinstall or Gate/Receipt execution evidence may be claimed.",
+      "required_owner_action": "Provide a trusted GUI Owner-presence session and explicitly authorize only the named harmless test entity/action if those lanes are required."
+    }
+  ],
+  "cleanup": {
+    "devserver": "stopped; 127.0.0.1:18220 no longer listening",
+    "test_store": "moved to /Users/li/.Trash/truzhen-g20-lIwmmI (recoverable removal)",
+    "formal_or_external_data": "none created"
+  },
+  "final_notice": "push/merge/tag/deploy: 未执行，等待 Owner。"
+}
