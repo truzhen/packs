@@ -32,6 +32,11 @@ from pack_diagnostics import (
 
 BASE = ""
 
+# 这是交给可信前台的 canonical action 描述，不是 Pack 发起的请求体。脚本没有
+# POST 能力，也不会自行准备、确认或铸造 Owner evidence；保留该标识供人工交接、
+# 审计和 os-14 生命周期口径一致地指向唯一允许的停用动作。
+OWNER_DISABLE_HANDOFF = {"action_type": "14.pack-studio.lifecycle.disable"}
+
 
 def call(method, path, body=None):
     if method != "GET" or body is not None:

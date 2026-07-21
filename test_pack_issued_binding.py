@@ -105,10 +105,28 @@ class TestPackIssuedBinding(unittest.TestCase):
                 with open(manifest_path, encoding="utf-8") as stream:
                     pack_ref = mod.json.load(stream)["pack_ref"]
                 disabled = []
+                lifecycle_calls = [0]
+
+                # Detect read-only uninstall before overriding mod.call.
+                # environmental declares OWNER_DISABLE_HANDOFF; smart-home
+                # raises RuntimeError on any non-GET call.
+                is_read_only = hasattr(mod, "OWNER_DISABLE_HANDOFF")
+                if not is_read_only:
+                    try:
+                        mod.call("POST", "/dummy", {})
+                    except RuntimeError as exc:
+                        is_read_only = "read-only" in str(exc)
+                    except Exception:
+                        pass
 
                 def fake_call(_method, path, body=None):
                     if "/lifecycle/packs?" in path:
-                        return 200, {"packs": [{"pack_ref": pack_ref, "enabled_pointer": {"current_version": "0.1.0"}}]}
+                        lifecycle_calls[0] += 1
+                        # First call: pack is enabled. Second call (from
+                        # wait_for_owner_disabled): pack is disabled.
+                        if lifecycle_calls[0] == 1:
+                            return 200, {"packs": [{"pack_ref": pack_ref, "enabled_pointer": {"current_version": "0.1.0"}}]}
+                        return 200, {"packs": [{"pack_ref": pack_ref, "enabled_pointer": {"current_version": ""}}]}
                     if path.endswith("/prepare"):
                         return 200, {"issue": {"issue_ref": "issue-1"}}
                     if path.endswith("/confirm"):
@@ -119,10 +137,34 @@ class TestPackIssuedBinding(unittest.TestCase):
                     self.fail("unexpected path: " + path)
 
                 mod.call = fake_call
-                with contextlib.redirect_stdout(io.StringIO()):
-                    mod.main()
-                self.assertEqual(len(disabled), 1)
-                self.assertEqual(disabled[0]["owner_action_evidence_ref"], "owner_action_evidence://base/confirmed-1")
+                # The production uninstall.py requires an explicit devserver base;
+                # tests must set it before invoking main(). Also zero the owner
+                # handoff wait so the test does not sleep for the default 300s.
+                old_base = os.environ.get("TRUZHEN_DEVSERVER_BASE")
+                old_wait = os.environ.get("TRUZHEN_OWNER_HANDOFF_WAIT_SECONDS")
+                os.environ["TRUZHEN_DEVSERVER_BASE"] = "http://127.0.0.1:18080"
+                os.environ["TRUZHEN_OWNER_HANDOFF_WAIT_SECONDS"] = "0"
+                try:
+                    with contextlib.redirect_stdout(io.StringIO()):
+                        mod.main()
+                finally:
+                    if old_base is None:
+                        os.environ.pop("TRUZHEN_DEVSERVER_BASE", None)
+                    else:
+                        os.environ["TRUZHEN_DEVSERVER_BASE"] = old_base
+                    if old_wait is None:
+                        os.environ.pop("TRUZHEN_OWNER_HANDOFF_WAIT_SECONDS", None)
+                    else:
+                        os.environ["TRUZHEN_OWNER_HANDOFF_WAIT_SECONDS"] = old_wait
+                # Read-only uninstall.py (environmental/smart-home) never POSTs
+                # /lifecycle/disable; it waits for the Owner to disable via GUI.
+                # Legacy uninstall.py (backup/housekeeping/shuxuejia) POSTs and
+                # must forward the exact confirm evidence.
+                if is_read_only:
+                    self.assertEqual(len(disabled), 0, "read-only uninstall must not POST /lifecycle/disable")
+                else:
+                    self.assertEqual(len(disabled), 1)
+                    self.assertEqual(disabled[0]["owner_action_evidence_ref"], "owner_action_evidence://base/confirmed-1")
 
 
 if __name__ == "__main__":
