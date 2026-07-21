@@ -1,0 +1,86 @@
+{
+  "goal": "Truzhen v4 发布前 G18：备份管理员 Pack 商品化与影子恢复",
+  "status": "blocked",
+  "blocked_reason": "仅限本 Pack 的授权边界内，隔离 E2E 与本 Pack 修复已通过；仓库级指定 Python / Go 测试仍被其他 Pack 的既有失败阻断，最小复现已交 I04。",
+  "lifecycle": {
+    "pack": "已接线",
+    "isolated_e2e": "已验收",
+    "release_gate": "blocked"
+  },
+  "scope": {
+    "modified": [
+      "backup-administrator-workbench-v0/install.py",
+      "backup-administrator-workbench-v0/uninstall.py",
+      "backup-administrator-workbench-v0/docs/g18-dispatch-card.md",
+      "backup-administrator-workbench-v0/docs/I04-public-root-cause-repro.md",
+      "backup-administrator-workbench-v0/closeout/goal-result.json"
+    ],
+    "not_modified": [
+      "packs 根公共工具与其他 Pack",
+      "truzhenos / cloud / software / client / contracts",
+      "生产备份目标、在线数据、外部 bucket、正式 restic repo"
+    ]
+  },
+  "isolated_e2e": {
+    "base_url": "http://127.0.0.1:18218",
+    "os_sha": "29e2b0e78addcdf2f5edf48b52f440d8748c2743",
+    "project": "一次性本地 test-store 项目（两个无敏感 fixture 资产；已移入废纸篓）",
+    "provider": "restic 0.19.1 darwin/arm64，本地受控 repo",
+    "registry": "clean records=[] -> install 0.1.0 enabled；重复 install 跳过场景和已启用角色",
+    "role_and_slot_binding": "backup-administrator、recovery-auditor 均 enabled；两个 SlotBinding 均 enabled",
+    "candidate_workflow": "流程已声明资产盘点、RPO/RTO 建议、恢复审计质询与 Owner 对照确认；所有角色保持 Proposer",
+    "backup": {
+      "transaction_ref": "transaction://g18-isolated-project/backup-1",
+      "decision_ref": "gated_owner_decision_983efb555fc4413a",
+      "receipt_ref": "receipt://03-receipt-ledger/formal/ceada29c-136d-44b3-8190-d398e74ddc27",
+      "event_type": "recovery.backup.created",
+      "source_digest": "sha256:ed504d31c79fef21306331cd8a3998f46ab7eceb26c271f3477333993382a66f"
+    },
+    "shadow_restore": {
+      "transaction_ref": "transaction://g18-isolated-project/restore-1",
+      "decision_ref": "gated_owner_decision_edd34a0ca1c29970",
+      "receipt_ref": "receipt://03-receipt-ledger/formal/c72ae061-764e-4150-8d21-7a6021f91bed",
+      "event_type": "recovery.restore.verified",
+      "verified": true,
+      "verified_digest": "sha256:ed504d31c79fef21306331cd8a3998f46ab7eceb26c271f3477333993382a66f",
+      "shadow_target": "服务端一次性、路径脱敏的 os19_one_time_shadow"
+    },
+    "safety": {
+      "source_hash_unchanged": true,
+      "gate_deny": "无受信任 Owner Origin 的 confirm 返回 403 trusted_owner_origin_required",
+      "bad_backup_fact": "restore prepare 返回 400，拒绝非权威 backup receipt",
+      "wrong_password": "对隔离 repo 的 restic snapshots 返回 exit 12；服务端状态仍 ready 且快照数不变",
+      "provider_missing": "模块 19 resticbackupdev 的 TestStatusProviderMissingWithoutBinary 通过",
+      "receipt_failure": "backupservice 的 backup / restore receipt rollback 测试通过，快照或 shadow 必清理",
+      "non_empty_target": "backupservice 的 TestShadowRestoreRefusesNonEmptyTarget 通过",
+      "network_interruption": "不适用：此受控 Provider 是本地 restic repo，未配置或触达任何网络目标；未以此代替外部 bucket 验收"
+    },
+    "restart_and_lifecycle": {
+      "restart": "OS 重启后两条 03 Receipt 与 enabled pointer 均可反查",
+      "disable_receipt_ref": "receipt://03-receipt-ledger/formal/c0715078-7934-4f1a-a935-13783d9b71ed",
+      "role_rollback": "applied_default_fallback，随后同版本 re-enable 成功",
+      "reinstall": "disable -> role rollback -> reactivate/reinstall -> duplicate install 全部通过；历史 backup Receipt 保留"
+    },
+    "cleanup": "devserver 已停止，18218 无监听；隔离 test-store、repo、shadow 和 cookie 已移至 /Users/li/.Trash/truzhen-g18-backup-Z8OkBv，未留在运行路径"
+  },
+  "validation": {
+    "passed": [
+      "JSON 合法",
+      "install.py / uninstall.py Python 编译",
+      "forbidden artifact 扫描",
+      "Pack 结构审计",
+      "test_pack_diagnostics.py（6 tests）",
+      "GOWORK=off go test ./backend/internal/devserver/resticbackupdev ./backend/internal/recovery/backupservice ./backend/internal/recovery/resticengine（OS 只读相关测试）",
+      "git diff --check"
+    ],
+    "blocked": [
+      "python3 test_pack_issued_binding.py：environmental-enforcement-pack-v0 与 smart-home-owner-pack-v0 的既有 argparse / devserver-base 失败",
+      "GOWORK=off go test ./...：environmental-enforcement-pack-v0 缺少 os-14 canonical action_type"
+    ],
+    "repro": "backup-administrator-workbench-v0/docs/I04-public-root-cause-repro.md"
+  },
+  "fixes": [
+    "uninstall.py 仅转发已登录会话显式提供的 server-issued Owner presence proof；不生成或伪造 proof。",
+    "install.py 在角色被 disable / rollback 后重新启用时生成新的生命周期尝试 idempotency key，避免重放旧 enabled 状态。"
+  ],
+  "final_notice": "push/merge/tag/deploy: 未执行，等待 Owner。"}
