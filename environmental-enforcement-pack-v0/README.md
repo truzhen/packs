@@ -19,6 +19,7 @@ environmental-enforcement-pack-v0/
 ├── knowledge/
 │   ├── knowledge-scopes.json      # 15 个知识域声明（mount_on_pack_enable）
 │   ├── knowledge-index.json       # 45 份源文档 → scope/kind/source_ref/title/生效日期
+│   ├── legal-time-fence.json       # G19 法律 as_of、官方来源与 fail-closed 声明
 │   ├── code/ legal-basis/ water/ air/ radiation/ noise/
 │   ├── eia-permit/ ecology/ penalty/ criminal/ risk/
 │   ├── guide-overview/ pollution-source-overview/
@@ -28,6 +29,7 @@ environmental-enforcement-pack-v0/
 ├── install.py                     # 装入（加载）到正在运行的 devserver
 ├── uninstall.py                   # 卸载
 ├── tools/build-knowledge-from-source.py   # 从权威资料重建 knowledge/（可重跑）
+├── tests/g19_pack_contract_test.py # 不触网的法律时点 / 候选隔离专项验收
 └── _source-materials/             # 原始权威资料投放区（.gitignore，不进库）
 ```
 
@@ -38,6 +40,7 @@ environmental-enforcement-pack-v0/
 - **provider 未接通诚实降级**：返回 `blocked / provider_missing / not_ready`，不假成功。
 - **namespace 隔离**：`environmental_enforcement_ns`，与其它 pack 不串。
 - **知识 pending_human_review**：knowledge 内容来自权威资料导入，每条标 `verification_status=pending_human_review`；正式适用前须经法务/业务核验，以现行有效官方法规标准原文为准。
+- **法律时点防线**：法律依据候选必须带 `event_as_of`、管辖、法律主题、证据来源及权威来源的生效/失效期；缺项、未核验或命中未来法统一返回 `blocked_insufficient_legal_context` 或“未来法提示”，不得由模型补造依据。生态环境法典的官方来源和 `2026-08-15` 生效期见 `knowledge/legal-time-fence.json`。
 - **Flow 完成不等于案件完成**：流程 end 只表示执法协助候选链收束；05 Transaction Object 只有在正式执行、正式送达、整改复查三类权威 Receipt 齐备后才能进入案件完成态。
 
 ## 加载 / 卸载（不与基座混；产品默认不自带本 pack）
@@ -88,3 +91,4 @@ python3 tools/build-knowledge-from-source.py [权威资料知识库路径]
 - 2026-06-25 的隔离 devserver 历史记录曾验证 install、角色绑定、KnowledgeMount 与 disable/re-enable 生命周期。
 - 2026-07-11 R1 修复复验曾记录前台全局 752 条知识；该数字不再作为本 Pack 数量契约。当前 Pack 权威资产为 45 份源文档、15 个 scope，运行态必须以本 Pack 归属全量分页覆盖为准。法律知识仍为 `pending_human_review`，Pack 尚未发布。
 - C01 法律金标见 `docs/C01-法律金标-20260711.md`。该金标只约束候选输出和人工复核，不构成正式法律意见。
+- G19 的去敏场景、静态验收和运行 closeout 分别见 `tests/fixtures/g19-deidentified-case.json`、`tests/g19_pack_contract_test.py` 和 `docs/G19-closeout/goal-result.json`（运行后生成；不得写入真实案件或模型正文）。
