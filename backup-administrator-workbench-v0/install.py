@@ -298,7 +298,10 @@ def main():
 def install_role_pack(rp):
     sani = re.sub(r'[/:@\s]+', "-", rp["role_pack_id"]).strip("-")
     draft_id = "role_pack_draft-pack-install-" + sani
-    idem = "pack-install-" + sani
+    # 角色处于 enabled 时会在调用方直接跳过，普通重复装入保持幂等；但 disable /
+    # rollback 后同一固定 key 会被 13 重放成旧 enabled 结果，和当前 disabled 状态
+    # 冲突。仅在确实要重新启用时生成新的生命周期尝试键，让 Base + 03 重新裁定。
+    idem = "pack-install-" + sani + "-" + uuid.uuid4().hex
     cs = rp.get("communication_style", {})
     code, body = call("POST", "/v3/agent-orchestration/role-packs/drafts", {
         "draft_id": draft_id, "role_pack_id": rp["role_pack_id"], "version": rp["version"],
