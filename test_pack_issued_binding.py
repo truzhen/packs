@@ -6,7 +6,9 @@ import contextlib
 import importlib.util
 import io
 import os
+import sys
 import unittest
+from unittest import mock
 
 
 REPO = os.path.dirname(os.path.abspath(__file__))
@@ -94,8 +96,9 @@ class TestPackIssuedBinding(unittest.TestCase):
 
                 mod.call = fake_call
                 with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-                    with self.assertRaises(SystemExit):
-                        mod.main()
+                    with mock.patch.object(sys, "argv", [mod.__file__]):
+                        with self.assertRaises(SystemExit):
+                            mod.main()
 
     def test_uninstall_forwards_exact_confirm_evidence(self):
         for pack in PACKS:
@@ -107,17 +110,10 @@ class TestPackIssuedBinding(unittest.TestCase):
                 disabled = []
                 lifecycle_calls = [0]
 
-                # Detect read-only uninstall before overriding mod.call.
-                # environmental declares OWNER_DISABLE_HANDOFF; smart-home
-                # raises RuntimeError on any non-GET call.
+                # Read-only handoff is an explicit production declaration.
+                # Do not probe production call() and do not swallow an unknown
+                # exception: an undeclared mode must follow the legacy contract.
                 is_read_only = hasattr(mod, "OWNER_DISABLE_HANDOFF")
-                if not is_read_only:
-                    try:
-                        mod.call("POST", "/dummy", {})
-                    except RuntimeError as exc:
-                        is_read_only = "read-only" in str(exc)
-                    except Exception:
-                        pass
 
                 def fake_call(_method, path, body=None):
                     if "/lifecycle/packs?" in path:
@@ -146,7 +142,8 @@ class TestPackIssuedBinding(unittest.TestCase):
                 os.environ["TRUZHEN_OWNER_HANDOFF_WAIT_SECONDS"] = "0"
                 try:
                     with contextlib.redirect_stdout(io.StringIO()):
-                        mod.main()
+                        with mock.patch.object(sys, "argv", [mod.__file__]):
+                            mod.main()
                 finally:
                     if old_base is None:
                         os.environ.pop("TRUZHEN_DEVSERVER_BASE", None)
