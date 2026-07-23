@@ -1,7 +1,7 @@
 # G22 内容运营工作台候选生产与绝不自动发布：派活卡
 
 日期：2026-07-24
-状态：`blocked`；生命周期：`已接线`，未达到“候选包已验收”，未发布。
+状态：`blocked`；生命周期：隔离候选包 lifecycle 已验收，正向候选生产未获逐次授权，未发布。
 
 | 维度 | 本次裁定 |
 | --- | --- |
@@ -12,13 +12,13 @@
 | 风险 | 黄：候选文本与人工发布包；橙：Gateway、Provider 和隔离 E2E；红：素材权利确认、真实 Codex / OpenMontage 执行、账号登录、上传、发送、发布。 |
 | 契约影响 | 无。沿用 Pack 的 `candidate_only`、`never_formalizes`、`owner_manual_only` 与 Gateway-issued ref 约束。 |
 | 禁止边界 | 不访问平台账号，不读取 Cookie/凭据，不上传、不发送、不发布；不自铸 OwnerDecision、Gate、Receipt 或执行证明；不提交源素材、MP4、运行日志或 test-store。 |
-| 最小验收 | Pack 静态门禁全绿；隔离 OS 的 Gate / 素材权利拒绝路径可复核；正向产出仅在逐次 Gate、素材授权和 Provider 允许后才可开始。 |
+| 最小验收 | Pack 静态门禁全绿；以权威 OS SHA 的隔离 test-store 跑通 install / enable / disable / uninstall / restart / reinstall，并复核 Gate、素材权利与 Provider 拒绝路径；正向产出仅在逐次 Gate、素材授权和 Provider 允许后才可开始。 |
 
 ## 本次阻断
 
-1. 隔离 OS 对无可信 Owner origin 的 `11.execution.openmontage.content_video_candidate` Gate prepare 返回 HTTP 403 `trusted_owner_origin_required`。没有 Owner presence，不能 install / enable 或签发执行证明。
+1. 无可信 Owner origin 的 Gate prepare 返回 HTTP 403 `trusted_owner_origin_required`；这是安全拒绝路径，未形成正式 Gate 或 Receipt。
 2. Codex Hands 的真实内容生产没有逐次 Owner Gate；未调用。
-3. OpenMontage 只做 read-only readiness；视频请求在 `source_rights_confirmed=false` 时返回 HTTP 422，未渲染、未生成 MP4。没有素材权利确认与独立 Gate，不能进入正向视频路径。
-4. 固定 SHA OS 在 `TRUZHEN_ANDROID_AUTO_RUNTIME=0` 时仍因 Windows VM 自动探测启动执行侧车，并加载本机持久 keyfile。进程随 devserver 停止；没有调用 Codex/OpenMontage、没有渲染。该环境越界自启动应移交 I04，未修复前不应重启本 lane。
+3. OpenMontage 只做 read-only readiness，返回 `provider_missing`；视频请求在 `source_rights_confirmed=false` 时返回 HTTP 422，未渲染、未生成 MP4。没有素材权利确认与独立 Gate，不能进入正向视频路径。
+4. 当前权威 OS SHA `751473a5dd1b0ee2965397b541ef57a72e8ce273` 下，G22 以空的软件注册表根和 `TRUZHEN_EXECUTION_SIDECAR_AUTOSTART=0` 隔离启动；未发现任务 OS 的 execution sidecar 或持久 keyfile 加载。旧 SHA 的 I04 观察已由审计更正记录取代，不能作为当前阻断。
 
-前三项阻断是主权边界正常生效，不是可由本 Pack 文档或脚本修复的缺陷；第四项是公共 OS 组合根因。I04 关闭越界自启动后，解锁方应在同一隔离端口重新执行 install / enable、三种内容技能、视频探针、disable / uninstall / reinstall 和失败恢复验证。
+前三项是主权与能力边界正常生效，不是可由本 Pack 文档或脚本修复的缺陷。隔离 lifecycle 已以受控本地 Owner presence 完成 Gate / Receipt 验证，但该 Gate 不授予 Codex Hands、OpenMontage 或任何平台操作的逐次授权。详见 [审计更正](audit-correction-751473a5.md)。
