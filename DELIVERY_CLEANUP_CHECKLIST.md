@@ -1,10 +1,16 @@
 # truzhen-packs 交付清理清单
 
-更新时间：2026-07-11
+更新时间：2026-07-23
 
 本文件登记本仓交付级遗留。它不是功能完成声明，也不替代 Pack 安装、启用、停用、回执或商品化验收。
 
 > **账本制度（2026-07-11）**：本文件是 packs 仓**分账**；六仓交付债务**总账** = truzhenos 仓 `DELIVERY_CLEANUP_CHECKLIST.md`。集中处理计划：truzhenos `docs/plans/six-repo-delivery-cleanup-debt-consolidation-plan-20260711.md`。
+
+## 2026-07-23 第五批 Packs 收口
+
+- [x] G18/G19/G20 候选已组成 K04R；独立 Python discovery 的 `sys.argv` 污染与吞异常已根因修复，28/28 discovery、Go、JSON、结构、语法和禁品门全绿。
+- [x] K05R 已以独立端口和 test-store 重验三条 lane；原 G19 知识挂载阻断由 OS K01R 显式 Owner 授权消费闭环，原 G20 `1.0.0` 硬编码由 OS K02 改为权威 ReadModel 版本消费。
+- [ ] 真实处罚/送达/外发、Home Assistant/设备动作、卸载 Owner-presence、生产备份仓与在线数据恢复均未执行；这些是发布运行门，不得由本仓 Pack 静态或隔离验收替代。
 
 ## 2026-07-07 分支吸收 E 项
 

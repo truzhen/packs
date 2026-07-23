@@ -3,6 +3,15 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
+## 0.-3 Truzhen v4 发布前第五批收口（2026-07-23）
+
+| 目标 | 结果与边界 | 生命周期 / 证据 |
+| --- | --- | --- |
+| G18 备份管理员 Pack | lifecycle 重入防线、restic 备份和影子恢复在独立 OS/test-store lane 通过；正式 Receipt 可反查，未覆盖在线数据、未触碰生产备份仓。 | `已验收、未发布`；`backup-administrator-workbench-v0/docs/g18-dispatch-card.md`、`/Users/li/Documents/truzhenv3worktree/v4-release-20260719/closeout/K05R-three-pack-lanes-closeout-20260722.md` |
+| G19 环保执法 Pack | 法律 `as_of`、官方来源和证据链保持 candidate-only / `pending_human_review`；原知识挂载阻断已由 OS K01R 改为显式 Owner 授权消费，K05R 重验 15 个知识域挂载与 425 项审批。未执行处罚、送达、外发或真实模型。 | 原叶子 `blocked` 已由纠正验收闭环取代，当前 `已验收、未发布`；`environmental-enforcement-pack-v0/docs/G19-closeout/goal-result.json`、K05R closeout |
+| G20 智能家居老板 Pack | 权威 manifest 为 `1.1.0`；OS K02 已移除产品测试的旧版本硬编码，隔离 lifecycle 通过且真实 Provider/设备动作为 0。卸载仍要求 Owner presence，不视为生产完成。 | `已验收、未发布`，卸载为受控发布门；`smart-home-owner-pack-v0/docs/G20-派活卡.md`、K05R closeout |
+| K04R 候选公共门 | 修复独立 Python discovery 的 `sys.argv` 污染与未知异常吞噬；28/28 discovery、Go、JSON、结构、语法和禁品扫描全绿。 | `已验收、未发布`；`docs/acceptance/K04R-batch5-packs-candidate-closeout-20260722.md` |
+
 ## 0.-2 F01–F10 集成登记
 
 | 分支 / worktree | 做什么 | 开工 | 状态 |
