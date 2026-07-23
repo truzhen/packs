@@ -1,0 +1,98 @@
+{
+  "schema": "truzhen-packs.g22-content-ops.evidence-envelope.v1",
+  "goal": "G22 内容运营工作台 Pack 候选生产与绝不自动发布",
+  "status": "blocked",
+  "lifecycle": "已接线",
+  "scope": [
+    "content-operations-workbench-v0/**"
+  ],
+  "base": {
+    "packs_commit": "87a67feb47fff1c46c7aa82916ba75e8aa4fcf67",
+    "os_commit": "3a97db377d1cbbf171b18ff5a98fcaf4c2e417c1",
+    "os_endpoint": "http://127.0.0.1:18222",
+    "os_store": "isolated temporary test-store"
+  },
+  "asset_hashes": {
+    "manifest_sha256": "0ab4812f5db6a411ca7987c7d9dfe8f36d57243f0ae44217bf003e3945a66716",
+    "flow_sha256": "2e150a8ee5b1a4bdfc7c8606c7d5b0ab38b8f0a837903f6b4fd6df741b3bd7b1",
+    "skill_bundle_sha256": "59a55ee56afd8ad6cc46222031c381bf2eb66f979b44d5e8ef6c0b709d72ae69",
+    "dispatch_card_sha256": "d5ff2bfd84ad8197e474bb55b622098a080065a2c467d2a8c030fa0e0d4a1b74",
+    "i04_handoff_sha256": "c5aa61c2175f9aa220bb7fe2ba3c2e06446b0129042ad9b5752d4cbf990fe107",
+    "goal_result_sha256": "08692138dcd2b002396fedbe294efd4e0cb54b61be7e25b6fda1f61e6e25e3bb"
+  },
+  "authorization": {
+    "product_evidence": "Owner-authorized de-identified product evidence only; no raw source material was read or committed",
+    "platform_actions": "never authorized and not performed",
+    "codex_hands_execution": "no per-run Owner Gate; not invoked",
+    "openmontage_render": "no per-run Owner Gate or source-rights confirmation; not invoked"
+  },
+  "static_verification": [
+    {
+      "command": "python3 JSON parse; install/uninstall py_compile; unittest discovery",
+      "result": "pass: JSON valid, Python syntax valid, 28/28 tests"
+    },
+    {
+      "command": "Pack structure audit",
+      "result": "pass"
+    },
+    {
+      "command": "tracked forbidden-artifact scan",
+      "result": "pass: no matches"
+    },
+    {
+      "command": "GOWORK=off go test ./...",
+      "result": "pass"
+    }
+  ],
+  "isolated_e2e": {
+    "devserver": "pass: fixed-SHA local product started on 127.0.0.1:18222 with a task-specific temporary data root",
+    "initial_lifecycle_state": "pack registry has zero records; schedules are empty",
+    "gate_deny": {
+      "request": "prepare video execution Gate without trusted Owner origin",
+      "http_status": 403,
+      "result": "trusted_owner_origin_required",
+      "formal_gate_or_receipt_created": false
+    },
+    "rights_deny": {
+      "request": "content-video candidate with source_rights_confirmed=false",
+      "http_status": 422,
+      "result": "content_video_source_rights_confirmation_required",
+      "mp4_created": false,
+      "formal_gate_or_receipt_created": false
+    },
+    "read_only_provider_preflight": {
+      "result": "ready; candidate-only preflight receipt recorded in the isolated test-store",
+      "real_render": false,
+      "publication": false
+    },
+    "restart": "not attempted: the initial fixed-SHA OS process auto-started a Windows VM execution sidecar despite TRUZHEN_ANDROID_AUTO_RUNTIME=0; it stopped with the devserver and no task-owned listener remained"
+  },
+  "artifact_policy": {
+    "candidate_content": "not created; no Codex Hands Gate",
+    "public_draft": "not created",
+    "manual_publication_package": "not created",
+    "weekly_review": "not created; no authorized metrics input",
+    "video": "not created; no source-rights Gate or render Gate",
+    "platform_session_upload_send_publish": "not performed"
+  },
+  "blockers": [
+    "trusted Owner origin and presence are required before Pack lifecycle or execution Gate issuance",
+    "Codex Hands requires a separate per-run Owner Gate",
+    "OpenMontage requires a separate per-run Owner Gate and confirmed source rights",
+    "I04: OS composition auto-started an execution sidecar and loaded a persistent keyfile despite the Android runtime disable flag; no further restart is safe before the root cause is fixed"
+  ],
+  "handoff": "content-operations-workbench-v0/docs/G22-closeout/I04-os-composition-handoff.md",
+  "cleanup": {
+    "devserver": "temporary fixed-SHA process must be stopped after closeout",
+    "test_store": "task-specific temporary directory only; excluded from Git",
+    "committed_runtime_artifacts": false
+  },
+  "publication": {
+    "never_formalizes": true,
+    "owner_manual_only": true,
+    "platform_login": false,
+    "upload": false,
+    "send": false,
+    "publish": false
+  }
+}

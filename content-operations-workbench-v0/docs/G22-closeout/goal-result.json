@@ -1,0 +1,19 @@
+{
+  "schema": "truzhen-packs.g22-content-ops.goal-result.v1",
+  "goal_id": "G22",
+  "status": "blocked",
+  "date": "2026-07-24",
+  "pack_ref": "scene_pack://content-operations-workbench",
+  "pack_version": "0.2.0",
+  "lifecycle": "已接线；正向候选生产未获 Gate，未达到候选包已验收；未发布",
+  "closeout": "content-operations-workbench-v0/docs/G22-closeout/evidence-envelope.json",
+  "decision": "No Pack-owned fix is permitted: Owner Gate and source-rights authority block positive runs; I04 must also fix the OS composition auto-start that launched an execution sidecar despite the runtime-disable flag.",
+  "next_owner_action": [
+    "在受信任 Owner origin 完成 presence 后，对 install / enable 进行逐次确认",
+    "分别签发 Codex Hands 内容生产与 OpenMontage 渲染的逐次 Gate",
+    "提供明确可用、去敏且已确认权利的素材与真实指标引用",
+    "待 I04 关闭越界自启动后，仅在隔离 test-store 重新执行正向候选、视频、disable / uninstall / reinstall 与 restart / Receipt-failure 验证"
+  ],
+  "publication": "never_formalizes; owner_manual_only; platform login/upload/send/publish not performed",
+  "push_merge_tag_deploy": "未执行，等待 Owner。"
+}
