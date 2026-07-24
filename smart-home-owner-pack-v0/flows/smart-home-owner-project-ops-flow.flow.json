@@ -1,7 +1,7 @@
 {
   "flow_id": "smart-home-owner-project-ops-flow",
   "title": "智能家居单项目完整经营周期",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "nodes": [
     {
       "id": "opportunity_intake",
@@ -28,7 +28,15 @@
     {
       "id": "frappe_snapshot",
       "type": "capability.invoke",
-      "title": "读取 Frappe 项目/客户快照",
+      "title": "读取 Frappe 项目快照",
+      "provider_requirement_ref": "frappe_project_snapshot",
+      "candidate_type": "ExternalSnapshotCandidate"
+    },
+    {
+      "id": "frappe_customer_snapshot",
+      "type": "capability.invoke",
+      "title": "读取 Frappe 客户关系快照",
+      "provider_requirement_ref": "frappe_customer_snapshot",
       "candidate_type": "ExternalSnapshotCandidate"
     },
     {
@@ -66,6 +74,7 @@
       "id": "frappe_write_candidate",
       "type": "capability.invoke",
       "title": "Frappe 五阶段写回候选",
+      "provider_requirement_ref": "frappe_project_lifecycle_write_candidate",
       "candidate_type": "ExecutionIntentCandidate"
     },
     {
@@ -81,6 +90,7 @@
       "id": "gateway_execution",
       "type": "gateway.execution_intent",
       "title": "受控 Frappe 写回",
+      "provider_requirement_ref": "frappe_project_lifecycle_write_candidate",
       "candidate_type": "CapabilityInvocationCandidate"
     },
     {
@@ -97,6 +107,7 @@
       "id": "optional_device_control_candidate",
       "type": "capability.invoke",
       "title": "可选 Home Assistant 设备动作候选",
+      "provider_requirement_ref": "home_assistant_device_control_candidate",
       "candidate_type": "ExecutionIntentCandidate",
       "optional": true
     },
@@ -114,6 +125,7 @@
       "id": "optional_device_gateway",
       "type": "gateway.execution_intent",
       "title": "可选 Home Assistant L2 Provider 执行",
+      "provider_requirement_ref": "home_assistant_device_control_candidate",
       "optional": true,
       "candidate_type": "CapabilityInvocationCandidate"
     },
@@ -153,6 +165,11 @@
     {
       "id": "e5",
       "source": "frappe_snapshot",
+      "target": "frappe_customer_snapshot"
+    },
+    {
+      "id": "e5b",
+      "source": "frappe_customer_snapshot",
       "target": "manager_advice"
     },
     {

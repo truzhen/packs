@@ -21,7 +21,7 @@ TRUZHEN_CLIENT_URL=http://127.0.0.1:5197 \
 本 pack 无知识库（knowledge/），install.py 会自动跳过知识入库步骤。
 产品基座默认不自带本 pack（server.go 已摘除自动 seed），只在 install 后出现；Owner 前台停用后从可运行列表消失。
 
-当前生命周期：`已实现 -> 已接线`。v1.1.0 声明、flow 与角色边界已更新，不代表真实 GUI、Frappe 或 Home Assistant 路径已经独立验收或发布。
+当前生命周期：`已实现`。v1.2.0 完成 ProviderRequirement 唯一真相源、软件需求引用、能力引用和 flow 节点绑定；尚未进入 P8 的基座接线，也不代表真实 GUI、Frappe 或 Home Assistant 路径已经验收或发布。
 
 ## 离线 Pack 契约验证
 
@@ -30,5 +30,6 @@ python3 -m unittest discover -s smart-home-owner-pack-v0/tests -v
 ```
 
 该测试只验证 Pack 的五阶段 Candidate→Gate→Gateway→Receipt 声明、Frappe 写回门控、
-Home Assistant 的可选 `not_ready` 降级，以及 Frappe 16 / Baserow / Home Assistant 的软件声明；
+Home Assistant 的可选 `not_ready` 降级，以及 Frappe Suite 16 / Frappe MCP 0.2.1 /
+Home Assistant 的软件声明、能力引用闭合和 flow ProviderRequirement 绑定；
 不连接或控制任何 Provider。

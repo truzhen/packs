@@ -121,7 +121,6 @@ def main():
     manifest = load("manifest.json")
     flow = load(manifest["flow_file"])
     role_slots_doc = load(manifest["role_slots_file"])
-    caps = load(manifest["capabilities_file"])
     scopes_doc = load_opt(manifest.get("knowledge_scopes_manifest"), {"scopes": []})
     kindex = load_opt(manifest.get("knowledge_index"), {"entries": []})
     # 装入前先证 pack 自身完整性：知识内容与 index checksum 漂移即拒绝装入（防漂移 #10）。
@@ -178,11 +177,9 @@ def main():
 
         # 2. lifecycle draft（六件事 + 知识域）
         print("[2/6] lifecycle draft（六件事 + %d 知识域）..." % len(scopes_doc.get("scopes", [])))
-        provider_reqs = []
-        for p in caps.get("provider_requirements", []):
-            provider_reqs.append({k: p[k] for k in ("requirement_id", "capability", "gateway_class",
-                                                    "risk_class", "fallback_policy", "provider_family") if k in p}
-                                 | ({"optional": p["optional"]} if p.get("optional") else {}))
+        # ProviderRequirement 的唯一真相源是 manifest 顶层声明；capabilities.json
+        # 只保存 capability 定义和 provider_requirement_ref，不能再复制整条门槛。
+        provider_reqs = [dict(p) for p in manifest.get("provider_requirements", [])]
         ks = []
         for s in scopes_doc.get("scopes", []):
             ks.append({"scope_ref": s["scope_ref"], "display_name": s["display_name"],

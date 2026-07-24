@@ -48,6 +48,11 @@ ISOLATION_POLICIES = {"reuse_preferred", "isolated_install", "coexist_multi_vers
 FALLBACK_POLICIES = {"blocked", "provider_missing", "manual_handoff", "not_ready"}
 GATEWAY_CLASSES = {"execution", "communication", "model", "memory"}
 RISK_CLASSES = {"low", "medium", "high", "critical"}
+PROVIDER_REQUIREMENT_FIELDS = {
+    "requirement_id", "provider_family", "gateway_class", "required_capabilities",
+    "software_requirement_refs", "risk_class", "fallback_policy", "optional",
+}
+CAPABILITY_FIELDS = {"capability_id", "provider_requirement_ref", "description", "optional"}
 _EXCLUDE_DIRS = {"__pycache__", ".git", "node_modules", "dist", "build", ".vite"}
 _EXCLUDE_SUFFIXES = (".pyc", ".db", ".sqlite", ".sqlite3", ".log", ".jsonl")
 
@@ -84,14 +89,29 @@ def _validate(pack_dir):
         for script in ("install.py", "uninstall.py"):
             if not os.path.isfile(os.path.join(pack_dir, script)):
                 raise ValueError("场景荚市场制品缺 %s" % script)
-    _validate_software_requirements(manifest.get("software_requirements", []))
-    _validate_provider_requirements(manifest.get("provider_requirements", []))
     for key in ("flow_file", "role_slots_file", "capabilities_file", "knowledge_index",
                 "knowledge_scopes_manifest"):
         rel = manifest.get(key)
         if rel and not os.path.isfile(os.path.join(pack_dir, rel)):
             raise ValueError("manifest 声明的 %s=%s 在 pack 内不存在" % (key, rel))
+    software_requirements = manifest.get("software_requirements", [])
+    provider_requirements = manifest.get("provider_requirements", [])
+    _validate_software_requirements(software_requirements)
+    _validate_provider_requirements(provider_requirements)
+    capabilities_doc = _load_declared_json(pack_dir, manifest.get("capabilities_file"), "capabilities")
+    flow_doc = _load_declared_json(pack_dir, manifest.get("flow_file"), "flow")
+    _validate_provider_requirement_bindings(
+        provider_requirements, software_requirements, capabilities_doc, flow_doc)
     return manifest
+
+
+def _load_declared_json(pack_dir, relative_path, label):
+    if not relative_path:
+        if label == "capabilities":
+            return {"capabilities": []}
+        return {"nodes": []}
+    with open(os.path.join(pack_dir, relative_path), encoding="utf-8") as handle:
+        return json.load(handle)
 
 
 def _validate_software_requirements(items):
@@ -122,6 +142,11 @@ def _validate_provider_requirements(items):
     seen = set()
     required = ("requirement_id", "provider_family", "fallback_policy", "gateway_class", "risk_class")
     for item in items:
+        unknown = sorted(set(item) - PROVIDER_REQUIREMENT_FIELDS)
+        if unknown:
+            raise ValueError(
+                "migration_warning: provider_requirement 含非法字段 %s；canonical pack 暂不可执行"
+                % ", ".join(unknown))
         missing = [field for field in required if not item.get(field)]
         if missing:
             raise ValueError("provider_requirement 缺 %s" % ", ".join(missing))
@@ -133,6 +158,118 @@ def _validate_provider_requirements(items):
             raise ValueError("provider_requirement fallback_policy 非 canonical：%s" % item["fallback_policy"])
         if item["gateway_class"] not in GATEWAY_CLASSES or item["risk_class"] not in RISK_CLASSES:
             raise ValueError("provider_requirement gateway_class/risk_class 非 canonical")
+        capabilities = item.get("required_capabilities")
+        if not isinstance(capabilities, list) or not capabilities or any(
+                not isinstance(value, str) or not value for value in capabilities):
+            raise ValueError("provider_requirement required_capabilities 必须是非空字符串列表：%s" % rid)
+        if len(capabilities) != len(set(capabilities)):
+            raise ValueError("provider_requirement required_capabilities 重复：%s" % rid)
+        software_refs = item.get("software_requirement_refs")
+        if not isinstance(software_refs, list) or not software_refs or any(
+                not isinstance(value, str) or not value for value in software_refs):
+            raise ValueError("provider_requirement software_requirement_refs 必须是非空字符串列表：%s" % rid)
+        if len(software_refs) != len(set(software_refs)):
+            raise ValueError("provider_requirement software_requirement_refs 重复：%s" % rid)
+
+
+def _validate_provider_requirement_bindings(provider_items, software_items, capabilities_doc, flow_doc):
+    """校验 Pack 内 ProviderRequirement、软件需求、能力定义和流程引用的闭合性。"""
+    providers = {item["requirement_id"]: item for item in provider_items}
+    software = {item["requirement_id"]: item for item in software_items}
+    referenced_software = set()
+    for provider in provider_items:
+        provider_id = provider["requirement_id"]
+        for software_id in provider["software_requirement_refs"]:
+            if "://" in software_id or software_id not in software:
+                raise ValueError(
+                    "provider_requirement %s 引用了未知或跨 Pack software_requirement：%s"
+                    % (provider_id, software_id))
+            referenced_software.add(software_id)
+            software_family = software[software_id].get("provider_family")
+            if software_family and software_family != provider["provider_family"]:
+                raise ValueError(
+                    "provider_requirement %s 与 software_requirement %s provider_family 不一致：%s != %s"
+                    % (provider_id, software_id, provider["provider_family"], software_family))
+            software_capabilities = set(software[software_id].get("required_capabilities", []))
+            missing_capabilities = sorted(set(provider["required_capabilities"]) - software_capabilities)
+            if missing_capabilities:
+                raise ValueError(
+                    "provider_requirement %s 的 capability 未被 software_requirement %s 声明：%s"
+                    % (provider_id, software_id, ", ".join(missing_capabilities)))
+    orphaned = sorted(set(software) - referenced_software)
+    if orphaned:
+        raise ValueError("software_requirement 孤儿声明（未被任何 ProviderRequirement 引用）：%s" % ", ".join(orphaned))
+
+    if not isinstance(capabilities_doc, dict):
+        raise ValueError("capabilities 文件必须是对象；canonical pack 暂不可执行")
+    if "provider_requirements" in capabilities_doc:
+        raise ValueError(
+            "migration_warning: capabilities.json 不得重复 provider_requirements；canonical pack 暂不可执行")
+    unknown_top = sorted(set(capabilities_doc) - {"capabilities"})
+    if unknown_top:
+        raise ValueError("capabilities.json 含非法顶层字段：%s" % ", ".join(unknown_top))
+    capabilities = capabilities_doc.get("capabilities")
+    if not isinstance(capabilities, list):
+        raise ValueError("capabilities.json capabilities 必须是列表")
+    capability_ids = set()
+    capability_provider_refs = {}
+    for capability in capabilities:
+        if not isinstance(capability, dict):
+            raise ValueError("capabilities.json 每项必须是对象")
+        unknown = sorted(set(capability) - CAPABILITY_FIELDS)
+        if unknown:
+            raise ValueError("capabilities.json 含非法字段：%s" % ", ".join(unknown))
+        capability_id = capability.get("capability_id")
+        provider_ref = capability.get("provider_requirement_ref")
+        if not capability_id or not provider_ref:
+            raise ValueError("capabilities.json 缺 capability_id/provider_requirement_ref")
+        if capability_id in capability_ids:
+            raise ValueError("capability_id 重复：%s" % capability_id)
+        capability_ids.add(capability_id)
+        capability_provider_refs[capability_id] = provider_ref
+        if "://" in provider_ref or provider_ref not in providers:
+            raise ValueError("capability %s 引用了未知或跨 Pack ProviderRequirement：%s" %
+                             (capability_id, provider_ref))
+
+    expected_capabilities = set()
+    for provider in provider_items:
+        provider_id = provider["requirement_id"]
+        expected_capabilities.update(provider["required_capabilities"])
+        for capability_id in provider["required_capabilities"]:
+            if capability_id not in capability_ids:
+                raise ValueError("ProviderRequirement %s 缺 capability 定义：%s" % (provider_id, capability_id))
+            if capability_provider_refs[capability_id] != provider_id:
+                raise ValueError("capability %s 的 provider_requirement_ref 与 ProviderRequirement 不一致" %
+                                 capability_id)
+    orphaned_capabilities = sorted(capability_ids - expected_capabilities)
+    if orphaned_capabilities:
+        raise ValueError("capability 孤儿声明（未被 ProviderRequirement 使用）：%s" %
+                         ", ".join(orphaned_capabilities))
+
+    if not isinstance(flow_doc, dict):
+        raise ValueError("flow 文件必须是对象")
+    nodes = flow_doc.get("nodes", [])
+    if not isinstance(nodes, list):
+        raise ValueError("flow nodes 必须是列表")
+    flow_provider_refs = set()
+    node_ids = set()
+    for node in nodes:
+        if not isinstance(node, dict) or not node.get("id"):
+            raise ValueError("flow node 必须含非空 id")
+        if node["id"] in node_ids:
+            raise ValueError("flow node id 重复：%s" % node["id"])
+        node_ids.add(node["id"])
+        provider_ref = node.get("provider_requirement_ref")
+        if provider_ref is None:
+            continue
+        if not isinstance(provider_ref, str) or not provider_ref:
+            raise ValueError("flow node provider_requirement_ref 必须是非空字符串")
+        if "://" in provider_ref or provider_ref not in providers:
+            raise ValueError("flow node 引用了未知或跨 Pack ProviderRequirement：%s" % provider_ref)
+        flow_provider_refs.add(provider_ref)
+    missing_flow_refs = sorted(set(providers) - flow_provider_refs)
+    if missing_flow_refs:
+        raise ValueError("ProviderRequirement 未接入 flow 节点：%s" % ", ".join(missing_flow_refs))
 
 
 def _iter_pack_files(pack_dir):

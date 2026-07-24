@@ -36,7 +36,7 @@ def _make_fake_pack(root, name, with_install=True):
     open(os.path.join(pd, "uninstall.py"), "w").write("# uninstall\n")
     open(os.path.join(pd, "flows", "f.flow.json"), "w").write("{}")
     open(os.path.join(pd, "role-slots", "role-slots.json"), "w").write('{"role_slots":[]}')
-    open(os.path.join(pd, "capabilities", "capabilities.json"), "w").write('{"provider_requirements":[]}')
+    open(os.path.join(pd, "capabilities", "capabilities.json"), "w").write('{"capabilities":[]}')
     if with_install:
         open(os.path.join(pd, "install.py"), "w").write("from pack_diagnostics import emit_pack_error\n")
     return pd

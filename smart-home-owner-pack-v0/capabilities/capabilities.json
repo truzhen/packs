@@ -1,51 +1,25 @@
 {
-  "provider_requirements": [
+  "capabilities": [
     {
-      "requirement_id": "frappe_project_snapshot",
-      "capability": "project_external_snapshot",
-      "gateway_class": "execution",
-      "risk_class": "low",
-      "fallback_policy": "provider_missing",
-      "provider_family": "frappe",
+      "capability_id": "project_external_snapshot",
+      "provider_requirement_ref": "frappe_project_snapshot",
       "description": "读取 Frappe 项目快照，只读；Provider 未接通返回 provider_missing。"
     },
     {
-      "requirement_id": "frappe_customer_snapshot",
-      "capability": "customer_relationship_snapshot",
-      "gateway_class": "execution",
-      "risk_class": "low",
-      "fallback_policy": "provider_missing",
-      "provider_family": "frappe",
-      "description": "读取 Frappe 客户关系快照，只读。"
+      "capability_id": "customer_relationship_snapshot",
+      "provider_requirement_ref": "frappe_customer_snapshot",
+      "description": "读取 Frappe 客户关系快照，只读；Provider 未接通返回 provider_missing。"
     },
     {
-      "requirement_id": "frappe_project_lifecycle_write_candidate",
-      "capability": "project_lifecycle_write_candidate",
-      "gateway_class": "execution",
-      "risk_class": "medium",
-      "fallback_policy": "blocked",
-      "provider_family": "frappe",
-      "description": "覆盖商机、立项、进度、物料、交付的 Frappe 写回候选；必须经 Owner + Base Gate、Execution Gateway 与 Receipt。"
+      "capability_id": "project_lifecycle_write_candidate",
+      "provider_requirement_ref": "frappe_project_lifecycle_write_candidate",
+      "description": "生成商机、立项、进度、物料、交付的 Frappe 写回候选；必须经 Owner + Base Gate、Execution Gateway 与 Receipt。"
     },
     {
-      "requirement_id": "home_assistant_device_state_snapshot",
-      "capability": "smart_home_device_state_snapshot",
-      "gateway_class": "execution",
-      "risk_class": "low",
-      "fallback_policy": "not_ready",
-      "provider_family": "home_assistant",
+      "capability_id": "smart_home_device_control_candidate",
+      "provider_requirement_ref": "home_assistant_device_control_candidate",
       "optional": true,
-      "description": "可选读取 Home Assistant 测试实体状态；缺配置或 Provider 时明确 not_ready，不影响项目五阶段主链。"
-    },
-    {
-      "requirement_id": "home_assistant_device_control_candidate",
-      "capability": "smart_home_device_control_candidate",
-      "gateway_class": "execution",
-      "risk_class": "high",
-      "fallback_policy": "not_ready",
-      "provider_family": "home_assistant",
-      "optional": true,
-      "description": "可选 Home Assistant service call 候选；确认前必须展示 entity、action、impact，经 Owner + Base Gate 与 Execution Gateway，Pack 不实现驱动。"
+      "description": "生成 Home Assistant service call 候选；确认前必须展示 entity、action、impact，经 Owner + Base Gate 与 Execution Gateway，Pack 不实现驱动。"
     }
   ]
 }

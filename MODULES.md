@@ -45,7 +45,7 @@ Pack 不直接生成 Formal Record，不直接执行 provider，不直接写基�
 | 包 | pack 标识 | template_family | 成熟度 | 职责 |
 |---|---|---|---|---|
 | `environmental-enforcement-pack-v0/` | `scene_pack://environmental-enforcement-flow` | 合规审查执法证据链型 | 完整文件夹包；材料硬门、事实锚定、检索相关性与 Flow/Transaction 完成语义为`已实现 -> 已接线`，待 v18 按三标准单项目复验（未发布） | 生态环境执法证据链：线索、立案、取证、证据三性、执法精英 / 挑剔律师对照、处置、文书、Owner/Base 裁定、Receipt。 |
-| `smart-home-owner-pack-v0/` | `scene_pack://smart-home-owner-project-ops` | 长周期项目交付型 | v1.1.0 完整文件夹包；v17 后端/Provider 单项目 11 次闭环通过，GUI 待 v18 在允许的受控会话按三标准补验（未发布） | 智能家居老板项目经营：商机、立项、进度、物料、交付、历史查询、Frappe 受控写回；硬件仅可选复用 Home Assistant L2 Provider，不自造程序且不作为项目主链放行前提。 |
+| `smart-home-owner-pack-v0/` | `scene_pack://smart-home-owner-project-ops` | 长周期项目交付型 | v1.2.0 canonical 文件夹包；当前 `已实现`，P4 分支待 P8 接线、P9 展示和 P10 独立验收（未发布） | 智能家居老板项目经营：商机、立项、进度、物料、交付、历史查询、Frappe 受控写回；ProviderRequirement 唯一真相在 manifest，capability 只保留引用；硬件仅可选复用 Home Assistant L2 Provider，不自造程序且不作为项目主链放行前提。 |
 | `housekeeping-ops-pack-v0/` | `scene_pack://housekeeping-ops`，兼容 `pack_housekeeping_ops_v0` | 客户服务全生命周期型 | 可装入 / 可卸载文件夹包：manifest、flow、capabilities、2 角色包、role-slots、install、uninstall；`knowledge/` 待补 | 家政客户服务全生命周期：受理咨询、顾问出方案、质检质询、对照确认门、排期报价、派工确认、通知客户、上门服务、服务回执、归档。 |
 | `content-operations-workbench-v0/` | `scene_pack://content-operations-workbench` | Founder 自营内容候选与复盘型 | v0.1.1 已完成打包前验收：业务 Skill、输出契约和按三种工作模式选择的模型 Schema 均由 framed hash 锁定；真实 GUI 已生成完整 45 秒抖音候选，并可反查 T06、动态 Gate、08 usage、11 执行与 03 Receipt；v0.2.0 真实视频生成升级处于`设计中`，尚未接 Provider、OS 或 Client；代码发布不等于产品已安装、启用或上架 | 把真实产品证据变成方向候选、母内容、渠道候选、人工发布包与周复盘；0.2.0 计划增加本地可播放 MP4 候选，但 Pack 仍不含 CLI / Provider / 平台登录 / 自动发布，真实渲染由 software + 11 Gateway 供给。 |
 | `shuxuejia-renovation-pack-v0/` | `scene_pack://shuxuejia-large-home-renovation` | 长周期项目交付型 | 完整文件夹包；2026-07-08 已完成隔离 install / uninstall / reinstall、457 / 457 SceneFlowRun 与前端用户视角检查，生命周期`已接线`（未发布）；任务、知识、沟通与 ProviderRequirement 仍有前端投影缺口 | 墅学家大宅装修设计指导：设计准备、深化设计、材料合同付款、现场质量验收、售后保修，多角色候选协作，Owner/Base Gate 和 Receipt 回放。 |
@@ -94,7 +94,7 @@ Pack 不直接生成 Formal Record，不直接执行 provider，不直接写基�
 | `flows/*.flow.json` | GateFlowSpec / Scene Flow 图纸，声明节点、边、等待点和门控 | Pack 声明；运行解释归基座 06 |
 | `role-slots/role-slots.json` | 场景角色槽、责任、默认角色包、绑定期望 | Pack 声明；绑定执行归基座 13 |
 | `role-packs/*.json` | 角色人格、口吻、决策习惯、模型策略和权限边界 | Pack 声明；启用归基座 13 |
-| `capabilities/capabilities.json` | 能力需求、ProviderRequirement、gateway class、risk class、fallback policy | Pack 声明；provider 真相归基座 / 外部 provider |
+| `capabilities/capabilities.json` | capability 定义、`provider_requirement_ref` 和说明；不复制完整 ProviderRequirement | Pack 声明；provider readiness 真相归基座 / 外部 provider |
 | `knowledge/knowledge-scopes.json` | 知识域、挂载策略、知识 kind | Pack 知识索引；正式知识真相归基座 09 |
 | `knowledge/knowledge-index.json` | 知识条目、source_ref、scope、kind、verification status | Pack 知识索引；正式知识真相归基座 09 |
 | `knowledge/**/*.md` | 结构化知识内容 | 本仓可分发资料；正式适用需人工核验 |
@@ -167,12 +167,13 @@ Pack 不直接生成 Formal Record，不直接执行 provider，不直接写基�
 - `manifest.json`
 - `flows/smart-home-owner-project-ops-flow.flow.json`
 - 角色包：`role_pack://smart-home-project-manager`
-- 能力需求：Frappe 项目快照、客户快照、项目写回候选
+- 能力定义与引用：Frappe 项目快照、客户快照、项目写回候选；可选 Home Assistant 设备动作候选
 - `install.py` / `uninstall.py`
 
 **纪律**：
 
 - Frappe 只是 ProviderRequirement，不是真相源。
+- ProviderRequirement 与 software requirement 只在 `manifest.json` 声明；`capabilities.json` 仅保留 capability 定义和引用，flow 节点必须显式绑定本 Pack requirement。
 - 里程碑、采购、施工、对外承诺、Frappe 写回必须经 Owner + Base Gate。
 - 本 pack 当前无知识库；不得声称有 FormalKnowledge 装入。
 

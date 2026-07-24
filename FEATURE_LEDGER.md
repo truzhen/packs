@@ -3,13 +3,23 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
+## 0.-4 AI Transaction Operation Layer：P4 Smart Home Pack canonicalization（2026-07-24）
+
+| 维度 | 结论 |
+| --- | --- |
+| 我要做的事 | 收敛智能家居 Pack 的 ProviderRequirement、software requirement、capability 引用和 flow 节点绑定；构建器对非法字段、孤儿声明、跨 Pack / 悬空引用和 family mismatch fail-closed。 |
+| 真实客户 / 场景证据 | Owner 已指定智能家居老板项目经营 Pack 为当前第一现金流样板；本轮证据是既有 Frappe 项目快照 / 写回候选与可选 Home Assistant 场景边界。真实 Provider / 设备动作仍未执行。 |
+| 真相源 / 归属 | Pack manifest 是 ProviderRequirement 与 software requirement 声明真相；`capabilities.json` 只保留 capability 定义和 `provider_requirement_ref`；flow 只引用本 Pack 的 requirement；Provider readiness 与运行事实归 `truzhenos` / `truzhen-software`。 |
+| 风险 / 契约 | 黄（Pack 声明与构建门）；不改 contracts、不实现 Provider、不执行真实 Frappe / Home Assistant、不改变 Base Gate / Receipt 主权。 |
+| 状态 / 验收 | `已实现`，分支 `codex/ai-transaction-operation-p4-packs-20260724`，待合并 / 未发布。Pack 离线契约、builder fail-closed、JSON / Python / bundle 验证通过后，P8 才能升级为`已接线`，P10 才能进入`已验收`。 |
+
 ## 0.-3 Truzhen v4 发布前第五批收口（2026-07-23）
 
 | 目标 | 结果与边界 | 生命周期 / 证据 |
 | --- | --- | --- |
 | G18 备份管理员 Pack | lifecycle 重入防线、restic 备份和影子恢复在独立 OS/test-store lane 通过；正式 Receipt 可反查，未覆盖在线数据、未触碰生产备份仓。 | `已验收、未发布`；`backup-administrator-workbench-v0/docs/g18-dispatch-card.md`、`/Users/li/Documents/truzhenv3worktree/v4-release-20260719/closeout/K05R-three-pack-lanes-closeout-20260722.md` |
 | G19 环保执法 Pack | 法律 `as_of`、官方来源和证据链保持 candidate-only / `pending_human_review`；原知识挂载阻断已由 OS K01R 改为显式 Owner 授权消费，K05R 重验 15 个知识域挂载与 425 项审批。未执行处罚、送达、外发或真实模型。 | 原叶子 `blocked` 已由纠正验收闭环取代，当前 `已验收、未发布`；`environmental-enforcement-pack-v0/docs/G19-closeout/goal-result.json`、K05R closeout |
-| G20 智能家居老板 Pack | 权威 manifest 为 `1.1.0`；OS K02 已移除产品测试的旧版本硬编码，隔离 lifecycle 通过且真实 Provider/设备动作为 0。卸载仍要求 Owner presence，不视为生产完成。 | `已验收、未发布`，卸载为受控发布门；`smart-home-owner-pack-v0/docs/G20-派活卡.md`、K05R closeout |
+| G20 智能家居老板 Pack | 历史实测基线保持；本轮 P4 将权威 manifest 收敛为 `1.2.0`，ProviderRequirement / software / capability / flow 引用闭合。真实 Provider/设备动作为 0，卸载仍要求 Owner presence。 | 当前分支 `已实现`、待 P8 接线与 P10 验收；历史 G20 证据仍只证明旧运行基线，不替代本轮 canonicalization 验证 |
 | K04R 候选公共门 | 修复独立 Python discovery 的 `sys.argv` 污染与未知异常吞噬；28/28 discovery、Go、JSON、结构、语法和禁品扫描全绿。 | `已验收、未发布`；`docs/acceptance/K04R-batch5-packs-candidate-closeout-20260722.md` |
 
 ## 0.-2 F01–F10 集成登记
@@ -42,7 +52,7 @@
 | 真实客户 / 场景证据 | 环保 v15 发现急停启用缺 central 03 Receipt；智能家居 v15.1 已跑通 Frappe 项目任务、更新和交付缺陷，但仍缺商机、立项、物料的单项目全周期以及安全核心直达入口。Owner 2026-07-15 明确硬件控制复用 Home Assistant，不单独造程序。 |
 | 真相源 / 归属 | Pack 资产归本仓；lifecycle/项目/Run/模型/知识/回执归 truzhenos 14/05/06/08/09/03；client 只展示。本仓只更新计划和成熟度登记。 |
 | 风险 / 契约 | 计划文档为绿；直接 lifecycle/候选为黄；ProviderRequirement 为橙；正式法律裁定、环保处罚/送达/删除/对外提交及生产设备动作均为红。不改 contracts 或跨仓 schema；Pack 不得向基座塞行业专用分支、Provider、Gate/Gateway/Receipt 或 seed。Home Assistant 只作为可选 ProviderRequirement，缺失须 `not_ready/provider_missing`。 |
-| 验收与状态 | 新计划：`docs/plans/environmental-enforcement-prepackage-real-use-test-campaign-v16-20260715.md`、`docs/plans/smart-home-service-provider-test-campaign-v16-20260715.md`。Pack v1.1.0 当前声明为`已接线`；JSON/Python/结构/禁品/Go 测试及跨仓 EGR 全绿，待全新 GUI 和独立复核后方可`已验收（打包前）`，当前未发布。 |
+| 验收与状态 | 新计划：`docs/plans/environmental-enforcement-prepackage-real-use-test-campaign-v16-20260715.md`、`docs/plans/smart-home-service-provider-test-campaign-v16-20260715.md`。P4 分支 Pack v1.2.0 当前声明为`已实现`；P4 离线结构与打包门通过后，待 P8 接线、P9 展示和 P10 独立验收，当前未发布。 |
 
 ## 0.0.1 墅学家生命周期治理校正
 
