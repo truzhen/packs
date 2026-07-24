@@ -131,7 +131,6 @@ def main():
     manifest = load("manifest.json")
     flow = load(manifest["flow_file"])
     role_slots_doc = load(manifest["role_slots_file"])
-    caps = load(manifest["capabilities_file"])
     scopes_doc = load_opt(manifest.get("knowledge_scopes_manifest"), {"scopes": []})
     kindex = load_opt(manifest.get("knowledge_index"), {"entries": []})
     # 装入前先证 pack 自身完整性：知识内容与 index checksum 漂移即拒绝装入（防漂移 #10）。
@@ -195,11 +194,10 @@ def main():
         pvr = pack_ref + "@" + install_version
         # 2. lifecycle draft（六件事 + 知识域）
         print("[2/6] lifecycle draft（六件事 + %d 知识域）..." % len(scopes_doc.get("scopes", [])))
-        provider_reqs = []
-        for p in caps.get("provider_requirements", []):
-            provider_reqs.append({k: p[k] for k in ("requirement_id", "capability", "gateway_class",
-                                                    "risk_class", "fallback_policy", "provider_family") if k in p}
-                                 | ({"optional": p["optional"]} if p.get("optional") else {}))
+        # manifest.json 是 ProviderRequirement / PackSoftwareRequirement 的唯一
+        # 声明真相；capabilities.json 只保存 capability_id -> provider ref 图，
+        # 不再重复承载 provider requirements。
+        provider_reqs = manifest.get("provider_requirements", [])
         ks = []
         for s in scopes_doc.get("scopes", []):
             ks.append({"scope_ref": s["scope_ref"], "display_name": s["display_name"],
@@ -216,6 +214,7 @@ def main():
                             "slice_scope_policy": s.get("slice_scope_policy", ""),
                             "node_type": s.get("node_type", "")} for s in role_slots_doc["role_slots"]],
             "provider_requirements": provider_reqs,
+            "software_requirements": manifest.get("software_requirements", []),
             "formalization_requirement": manifest["formalization_requirement"]["summary"],
             "notification_routes": routes.get("notification", []),
             "command_candidates": routes.get("command_candidate", []),

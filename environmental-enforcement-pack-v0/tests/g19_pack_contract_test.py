@@ -65,10 +65,9 @@ def test_evidence_and_fail_closed_controls(manifest, flow, fixture):
     require(doc["candidate_type"] == "DocumentDraft", "文书必须路由到 Model Gateway 的 DocumentDraft")
     require(doc["params"]["draft_generation"] == "model_gateway_non_template", "文书不得退化为模板拼接")
     require(doc["params"]["template_only_forbidden"] is True, "必须禁止模板冒充模型正文")
-    cap = next(x for x in load("capabilities/capabilities.json")["provider_requirements"] if x["requirement_id"] == "legal_doc_draft")
-    require(cap["fallback_policy"] == "blocked", "模型文书未接通不得假成功")
-    ocr = next(x for x in load("capabilities/capabilities.json")["provider_requirements"] if x["requirement_id"] == "doc_ocr")
-    require(ocr["fallback_policy"] == "manual_handoff", "OCR 降级必须人工交接")
+    providers = {x["requirement_id"]: x for x in manifest["provider_requirements"]}
+    require(providers["legal_doc_draft"]["fallback_policy"] == "blocked", "模型文书未接通不得假成功")
+    require(providers["doc_ocr"]["fallback_policy"] == "manual_handoff", "OCR 降级必须人工交接")
 
     receipts = manifest["receipt_policy"]["transaction_completion_proofs"]
     require(receipts == fixture["receipt_classes"], "三类完成 Receipt 口径漂移")
