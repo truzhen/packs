@@ -5,16 +5,16 @@
   "date": "2026-07-25",
   "pack_ref": "scene_pack://content-operations-workbench",
   "pack_version": "0.2.0",
-  "lifecycle": "已验收：schema 1.1 候选包、内部/公开稿隔离、人工发布包、隔离 lifecycle 与受控竖屏 MP4 均可复核；未发布",
+  "lifecycle": "候选包已验收；未发布",
   "closeout": "content-operations-workbench-v0/docs/G22-closeout/evidence-envelope.json",
-  "decision": "G22 的本地 OpenMontage/FFmpeg 候选路径已在 af45a07b 的最小只读 registry 投影中经真实 Gateway、单次 Base Gate 和 Receipt 验收。审计纠正后，Codex Hands 当前首因是 source lock 所需 Docker 离线物料未 material-ready：官方 Provider candidate 返回 controlled_download_stage_required，fresh store 无 Provider/Runtime 投影；本地 os-08 模型已可见但不能旁路该链。Hands 未调用，故目标整体保持 blocked。",
+  "decision": "G22 的本地 OpenMontage/FFmpeg 候选路径已在 af45a07b 的最小只读 registry 投影中经真实 Gateway、单次 Base Gate 和 Receipt 验收。当前 b843186 的官方 Docker Hands 物料路径既不接受 task-owned 临时离线目录，也会在受锁物料未就绪时要求联网拉取；同时 devserver 组合根会在 autostart=0 生效前读取持久 Windows guest-agent key。Hands 未调用，故目标整体保持 blocked。",
   "current_os": {
-    "commit": "af45a07b69c2ea44ed4b9d38612468bde0b2050d",
+    "commit": "b843186cd2a7e93682f5d67e62d79a228376e368",
     "endpoint": "http://127.0.0.1:18222",
-    "historical_closeout_commit": "751473a5dd1b0ee2965397b541ef57a72e8ce273"
+    "historical_closeout_commit": "af45a07b69c2ea44ed4b9d38612468bde0b2050d"
   },
   "next_owner_action": [
-    "若 Owner 单独授权受控 Docker 物料取得与官方安装链，先从空 store 重新完成 Provider/Runtime 投影，再重新验证 Codex Hands readiness 并逐次签发内容生产 Gate",
+    "由 OS Owner 提供读取持久 guest-agent key 前生效的正式 devserver disable 开关，并由 OS/software Owner 定义受锁的 task-owned 离线物料采纳契约；两项完成后才可从空 store 重新完成 Provider/Runtime 投影与逐次内容生产 Gate",
     "提供人工发布后的真实指标，才可解除 weekly_review blocked",
     "商业分发、随安装包分发或网络服务前完成 OpenMontage/FFmpeg 的 Owner/legal 许可证裁定"
   ],

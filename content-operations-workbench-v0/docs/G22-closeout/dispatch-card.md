@@ -1,19 +1,19 @@
 # G22 内容运营工作台候选生产与绝不自动发布：派活卡
 
-日期：2026-07-24
-状态：`blocked`；生命周期：隔离候选包 lifecycle 已验收，正向候选生产未获逐次授权，未发布。
+日期：2026-07-25
+状态：`blocked`；生命周期：候选包已验收；未发布。
 
 ## 2026-07-25 恢复轮（已收口）
 
 | 维度 | 本轮裁定 |
 | --- | --- |
-| 固定依据 | OS `af45a07b69c2ea44ed4b9d38612468bde0b2050d`，以全新 task-owned store、空 software registry 和 `127.0.0.1:18222` 验收；`751473a5` 仅作历史证据。 |
+| 固定依据 | OS `b843186cd2a7e93682f5d67e62d79a228376e368`；`af45a07b` 的 OpenMontage 验收仅为历史候选证据。 |
 | 真实证据 | Owner 仅授权 Truzhen 自有、已去敏或合成素材；不得把合成素材表述为客户、发布或运营事实。 |
 | 可做的动作 | 可在 Provider readiness、版本与 license 可反查且逐次本地 Base Gate 生效时，受控调用本机 Codex Hands / OpenMontage / ffmpeg 生成本地候选。 |
 | 禁止边界 | 不登录、上传、发送、发布、私信、评论或抓取联系人；`publication_authorized=false`、`publication_status=not_published` 不得改变。 |
 | 验收 | schema 1.1 bundle 的 internal/public 隔离、bundle-index 一一映射、公开稿清洗、候选 MP4 媒体检查、Gate/Receipt、生命周期重启与幂等、失败不留假产物。 |
 
-结果：OpenMontage 本地渲染经最小只读投影、任务侧车、逐次 Base Gate 与官方 Gateway 成功产出候选 MP4；经当前 SHA Docker Hands 审计纠正，Codex Hands 的首因是 source-lock Docker 离线物料未就绪（`controlled_download_stage_required`），不是宿主版本漂移。固定 digest 镜像与本地 os-08 模型均不能旁路官方 Provider/Runtime 投影，故没有调用、没有 session。候选文本包已按 schema 1.1 通过校验，周复盘因没有真实发布指标保持 `blocked`。本恢复轮的结论因此是“局部候选验收通过、整体 G22 有证据 blocked”，绝不等同于发布。
+结果：OpenMontage 本地渲染的历史候选证据保持有效，本轮不重复。`b843186` 审计确认固定 digest 镜像不能旁路官方物料、Provider/Runtime 投影；且 devserver 在正式 `autostart=0` 判定前读取持久 Windows guest-agent key，无法满足无凭据读取的隔离要求。没有继续 Hands、模型或平台动作。候选文本包已按 schema 1.1 通过校验，周复盘因没有真实发布指标保持 `not_ready`。本恢复轮的结论是“候选包已验收；未发布；整体 G22 有证据 blocked”。
 
 | 维度 | 本次裁定 |
 | --- | --- |
@@ -29,8 +29,8 @@
 ## 本次阻断
 
 1. 无可信 Owner origin 的 Gate prepare 返回 HTTP 403 `trusted_owner_origin_required`；这是安全拒绝路径，未形成正式 Gate 或 Receipt。
-2. 当前 SHA 的 Codex Hands Docker Provider candidate 为 `not_ready / controlled_download_stage_required`；动态 os-08 binding 无法投影到尚未官方安装的 Provider/Runtime。fresh store 的 Hands Gate decision、run Receipt、session、trace、artifact 与 Provider install row 均为 0；未调用。
+2. 当前 SHA 的 source lock 不支持 task-owned 临时离线物料或已有 image 采纳，官方物料 fetch 会联网 `docker pull`，而其受锁输出目录位于未授权的 `truzhen-software`。未执行 Provider candidate、Hands 或模型调用。
 3. OpenMontage 只做 read-only readiness，返回 `provider_missing`；视频请求在 `source_rights_confirmed=false` 时返回 HTTP 422，未渲染、未生成 MP4。没有素材权利确认与独立 Gate，不能进入正向视频路径。
-4. 当前权威 OS SHA 是 `af45a07b69c2ea44ed4b9d38612468bde0b2050d`。G22 以空的软件注册表根和禁 Android/execution-sidecar autostart 隔离启动；任务 18222 服务已停止并释放端口。旧 `751473a5` 与宿主版本漂移仅作历史证据，不能作为当前阻断。
+4. 当前权威 OS SHA 是 `b843186cd2a7e93682f5d67e62d79a228376e368`。`MaybeLoadWindowsGuestTicketPrivateKey` 在 `TRUZHEN_EXECUTION_SIDECAR_AUTOSTART=0` 生效前无条件读取持久 key，且没有真实 devserver 的读取前禁用开关；按安全纠正已停止服务并释放 18222。旧 SHA 仅作历史证据，不能作为当前阻断。
 
-前三项是主权与能力边界正常生效，不是可由本 Pack 文档或脚本修复的缺陷。隔离 lifecycle 已以受控本地 Owner presence 完成 Gate / Receipt 验证，但该 Gate 不授予 Codex Hands、OpenMontage 或任何平台操作的逐次授权。详见 [当前 SHA Docker Hands 审计更正](audit-correction-af45a07b-docker-hands.md)。
+前三项是主权与能力边界正常生效，不是可由本 Pack 文档或脚本修复的缺陷。隔离 lifecycle 已以受控本地 Owner presence 完成 Gate / Receipt 验证，但该 Gate 不授予 Codex Hands、OpenMontage 或任何平台操作的逐次授权。详见 [b843186 审计更正](audit-correction-b843186-windows-composition.md)。

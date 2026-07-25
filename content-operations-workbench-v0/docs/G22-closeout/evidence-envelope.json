@@ -2,11 +2,11 @@
   "schema": "truzhen-packs.g22-content-ops.evidence-envelope.v1",
   "goal": "G22 内容运营工作台 Pack 候选生产与绝不自动发布",
   "status": "blocked",
-  "lifecycle": "已验收：schema 1.1 候选包、隔离 lifecycle 与竖屏 MP4 Gateway 产物均可复核；Codex Hands 仍 not_ready；未发布",
+  "lifecycle": "候选包已验收；未发布",
   "scope": ["content-operations-workbench-v0/**"],
   "base": {
     "packs_commit_before_closeout": "548924ff775ed3e0a956f7f9f5065b57531ee748",
-    "os_commit": "af45a07b69c2ea44ed4b9d38612468bde0b2050d",
+    "os_commit": "b843186cd2a7e93682f5d67e62d79a228376e368",
     "historical_os_commit": "751473a5dd1b0ee2965397b541ef57a72e8ce273",
     "os_endpoint": "http://127.0.0.1:18222",
     "os_store": "fresh task-owned temporary test-store",
@@ -35,6 +35,14 @@
     "zero_sessions": "code_assistant_run decisions=0; code_assistant_run receipts=0; execution product sessions/traces/artifacts empty; provider install candidates=0",
     "artifact_summary_sha256": "7f8eaaa09552936062ba2b18c22add11f92cb56d7f1325834c223766647c6a78",
     "audit_record": "docs/G22-closeout/audit-correction-af45a07b-docker-hands.md"
+  },
+  "b843186_offline_chain_and_composition_correction": {
+    "os_commit": "b843186cd2a7e93682f5d67e62d79a228376e368",
+    "image": "read-only verified local truzhen/codex-hands@sha256:08b687b435e7bb00bf803e2e2f099bfb05d9701ae7900f60a7fbde256aae97f5; linux/arm64; user 10001:10001; not treated as ready",
+    "source_lock": "official material output is fixed under truzhen-software/providers/codex-hands/docker/materials, which is absent; the official fetcher performs docker pull and does not accept a task-owned offline material directory or adopt an existing final image",
+    "composition_root": "MaybeLoadWindowsGuestTicketPrivateKey is unconditional and precedes TRUZHEN_EXECUTION_SIDECAR_AUTOSTART evaluation; no read-before-key-disable product switch exists for a real devserver",
+    "post_correction_zero_actions": "no service restarted; 18222 released; no Provider prepare/execute, Hands, model request, platform action, new session, trace, artifact, install candidate or Receipt",
+    "audit_record": "docs/G22-closeout/audit-correction-b843186-windows-composition.md"
   },
   "candidate_bundle": {
     "schema_version": "1.1",
@@ -80,7 +88,7 @@
     "pass: GOWORK=off go test ./..., closeout sensitive scan, and git diff --check passed after the final documentation update"
   ],
   "blockers": [
-    "Codex Hands current af45a07b blocker is Docker source-lock material readiness: controlled_download_stage_required prevents official Provider/Runtime and model-binding projection; no bypass or fake readiness was used",
+    "Codex Hands on b843186 is blocked by two external formal conditions: the source lock does not support task-owned existing-image offline adoption and the devserver composition root reads a persistent guest-agent key before any official autostart disable takes effect",
     "weekly review needs real manual publication facts and metrics",
     "commercial distribution or network service of the OpenMontage/FFmpeg path still requires Owner/legal license review"
   ],
@@ -88,7 +96,7 @@
     "temporary_os_worktree": "removed after closeout",
     "task_store": "removed after closeout",
     "sidecar": "stopped after closeout",
-    "codex_hands_audit_store": "moved to local Trash after the current-SHA audit; 18222 released; no session was created",
+    "codex_hands_audit_store": "historical af45 audit store and b843 pre-correction task directories moved to local Trash; 18222 released; no post-correction session was created",
     "committed_runtime_artifacts": false
   },
   "publication": {
