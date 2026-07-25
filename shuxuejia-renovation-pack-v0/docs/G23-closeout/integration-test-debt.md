@@ -1,6 +1,6 @@
 # G23 集成测试债：R23C governed uninstall
 
-状态：当前唯一 G23 blocker；待 Packs 集成 worktree 的协调线程处理。本 G23 worktree 无权修改仓根共享测试。
+状态：已解决；R21B Packs 集成提交 `38dd98a` 已更新仓根共享测试。
 
 ## 需要的共享测试变更
 
@@ -25,3 +25,10 @@ POST `/v3/pack-studio/lifecycle/uninstall`，原样转发 decision/run/nonce/evi
 
 当前复现命令为 `GOWORK=off go test ./...`，唯一失败日志 SHA256 为
 `dedb85cd8089ce2ca3560770c52903cb8543c6e7fdbae5fcfff786d71ba51b33`。
+
+## 解决证据
+
+R21B 将家政与墅学家登记为 formal uninstall Pack：共享 scanner 同时要求 exact
+uninstall action/endpoint 并拒绝 disable 双语义；issued-binding 测试注入外部签发 proof，
+断言只调用 formal uninstall 且原样转发治理绑定。递归 JSON、Python compile/discovery
+28/28、Pack 结构、禁品、`GOWORK=off go test ./...` 与 `git diff --check` 全绿。

@@ -2,9 +2,9 @@
   "goal_id": "G23",
   "title": "墅学家 457 节点装修 Pack 商品化与长周期回放",
   "date": "2026-07-25",
-  "status": "blocked",
-  "lifecycle": "Pack owned uninstall 已验收；等待共享扫描器集成",
-  "supersedes": "此前 PASS 已由 G21 同类双语义审计撤销：legacy disable handoff 已删除，当前只保留 formal uninstall；剩余 blocker 是共享扫描器契约漂移。",
+  "status": "pass",
+  "lifecycle": "已验收；未发布",
+  "supersedes": "此前双语义 PASS 已撤销；legacy disable handoff 已删除，R21B 共享扫描器集成完成后重新通过。",
   "branch": "codex/v4-release-G23-pack-shuxuejia",
   "pack_head_before_closeout": "cffd715edf14b1ac85d76e7c812d6757cadc92d9",
   "packs_fixed_base": "87a67feb47fff1c46c7aa82916ba75e8aa4fcf67",
@@ -29,7 +29,7 @@
   "verification_commands": [
     {"command": "python3 shuxuejia-renovation-pack-v0/test_uninstall_proof.py -v", "exit_code": 0, "result": "7/7；要求 uninstall 并拒绝 disable/prepare/confirm/self-mint"},
     {"command": "GOWORK=off go test -run '^TestPackErrorCodeTaxonomyIsSubdivided$' .", "exit_code": 0},
-    {"command": "GOWORK=off go test ./...（Packs worktree）", "exit_code": 1, "log_sha256": "dedb85cd8089ce2ca3560770c52903cb8543c6e7fdbae5fcfff786d71ba51b33", "only_failure": "public pack_forbidden_artifacts_test.go still requires legacy disable action literal"}
+    {"command": "GOWORK=off go test ./...（R21B Packs integration worktree）", "exit_code": 0, "result": "共享 formal-uninstall scanner 与 issued-binding contract 已同步"}
   ],
   "side_effects": {
     "real_contract_change": 0,
@@ -41,7 +41,7 @@
     "external_artifact_delivery": 0,
     "openship": "not connected or deployed"
   },
-  "blocker": "公共 pack_forbidden_artifacts_test.go 仍要求每个 uninstall.py 含 legacy 14.pack-studio.lifecycle.disable 字面量。为避免双语义/死标记，本 Pack 已删除该标记；只有共享扫描器更新为 exact formal uninstall 语义后才可重新 PASS。",
+  "resolved_integration_blocker": "R21B commit 38dd98a 已把公共 scanner 与 issued-binding 测试更新为 exact formal uninstall，并明确拒绝 legacy disable 双语义；全量 Packs 门通过。",
   "cleanup": "验证结束后停止 task-owned 18223；18225 未恢复；端口释放，store 保留为唯一可复核运行态。",
   "push_merge_tag_deploy": "未执行，等待 Owner"
 }

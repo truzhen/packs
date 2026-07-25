@@ -1,6 +1,6 @@
 # G21 → I05：公共静态扫描与 formal uninstall 契约漂移
 
-状态：阻断 G21 发布前 PASS；需要公共 Pack 治理 Owner 处理。
+状态：已解决；R21B 集成提交 `38dd98a` 已修复共享扫描与 issued-binding 测试。
 
 ## 事实
 
@@ -24,3 +24,11 @@ housekeeping-ops-pack-v0 owned path，G21 未修改。
 
 曾短暂加入的 LEGACY_DISABLE_ACTION_COMPAT 兼容标记已删除，并将从未推送的本地提交
 历史中移除；它从未被提交到 OS 请求路径，也未触发任何 disable 或外部动作。
+
+## 集成解决
+
+共享测试现在按明确 Pack 清单区分 formal uninstall 与 legacy disable：家政与墅学家必须
+同时包含 canonical uninstall action 和 endpoint，并且出现任意 disable action/endpoint
+都会失败；其余 Pack 保持既有语义。`test_pack_issued_binding.py` 同时验证 external proof
+原样转发、禁止脚本自行 Prepare/Confirm。递归 JSON、Python compile/discovery 28/28、
+Pack 结构、禁品、`GOWORK=off go test ./...` 与 `git diff --check` 全绿。
