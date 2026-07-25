@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "goal_id": "G21",
+  "goal_name": "家政日常运营 Pack 商品化与派工/报价隔离",
+  "status": "blocked",
+  "closed_at": "2026-07-25",
+  "lifecycle": {
+    "pack": "已实现",
+    "g21": "受阻关闭",
+    "release": "未发布"
+  },
+  "evidence_envelope": "evidence-envelope.json",
+  "os_sha": "b843186cd2a7e93682f5d67e62d79a228376e368",
+  "superseded_blocker": "I02-EXECUTION-SIDECAR-AUTOSTART at af45a07b is superseded: b843186c honors explicit TRUZHEN_EXECUTION_SIDECAR_AUTOSTART=0; no task-owned sidecar PID or listener started on 18221 lifecycle.",
+  "blocked_by": "I05-PUBLIC-STATIC-SCAN-CONTRACT-DRIFT: repository-root pack_forbidden_artifacts_test.go accepts only legacy disable action for every uninstall.py, while the fixed OS requires formal uninstall; public test is outside G21 owned path.",
+  "historical_record": "I04-os-receipt-fixture-handoff.md and prior af45 I02 observation are historical only; this result is independent b843 evidence.",
+  "integration_request": "I05-public-static-scan-integration-request.md",
+  "composition_root_observation": "R21A verification passed; documented in I02-execution-sidecar-observation.md; no execution endpoint or external Provider was invoked",
+  "real_actions": {
+    "quote_send": 0,
+    "dispatch": 0,
+    "onsite_execution": 0,
+    "customer_contact": 0
+  },
+  "push_merge_tag_deploy": "not_performed",
+  "final_line": "push/merge/tag/deploy: 未执行，等待 Owner。"
+}

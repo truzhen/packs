@@ -47,4 +47,6 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18080 python3 housekeeping-ops-pack-v0/i
 TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18080 python3 housekeeping-ops-pack-v0/uninstall.py
 ```
 
-卸载脚本先经 Base gated-action prepare / confirm 取得真签发的 `decision_ref/run_id/nonce`，再调用 Pack Studio lifecycle disable。卸载只停用当前 Pack，不删除历史事务对象、候选或 03 回执。
+卸载脚本只消费可信 Owner 前台或 OS 受控测试握手签发的 `TRUZHEN_PACK_UNINSTALL_PROOF_JSON`，并严格比对 `14.pack-studio.lifecycle.uninstall`、Pack 与 transaction 后才调用 Pack Studio formal uninstall。脚本不自行 Prepare/Confirm，不生成或伪造 Owner presence。
+
+formal uninstall 会清除 enabled pointer、保留历史事务对象与 Receipt，并要求后续通过新的受治理 local-source install 走同版本重新安装；不得以 disable/reactivate 冒充卸载/重装。

@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-家政运营 Pack（客户服务全生命周期）—— 从正在运行的 Truzhen devserver 卸载。
+"""Formally uninstall the housekeeping Scene Pack from a running devserver.
 
-走真实 lifecycle/disable 端点：先经 Base gated-action prepare→confirm 取得真签发的
-decision_ref/run_id/nonce（禁自铸），再 disable。卸载只停用 Pack 当前版本；
-已产生的事务对象、候选和回执在 03 仍可反查，卸载不删除历史。
-
-用法：
-  TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18080 python3 housekeeping-ops-pack-v0/uninstall.py
+The script deliberately consumes a server-issued governed proof rather than
+creating, guessing, or replaying Owner presence.  A trusted Owner surface (or
+the OS controlled test handshake) must obtain that proof for the exact Pack,
+action, and transaction first.
 """
 import json
 import os
@@ -22,95 +19,98 @@ REPO_DIR = os.path.dirname(PACK_DIR)
 if REPO_DIR not in sys.path:
     sys.path.insert(0, REPO_DIR)
 from pack_diagnostics import (
-    emit_pack_error, UNINSTALL_GENERIC, UNINSTALL_CONNECTIVITY, UNINSTALL_LIFECYCLE_HTTP)
+    emit_pack_error, UNINSTALL_CONNECTIVITY, UNINSTALL_GENERIC, UNINSTALL_LIFECYCLE_HTTP,
+)
 
-BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080")
+BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080").rstrip("/")
 OWNER = os.environ.get("TRUZHEN_PACK_OWNER", "owner://local/default")
+PROOF_RAW = os.environ.get("TRUZHEN_PACK_UNINSTALL_PROOF_JSON", "").strip()
 
 
 def call(method, path, body=None):
     data = json.dumps(body).encode("utf-8") if body is not None else None
-    req = urllib.request.Request(BASE + path, data=data, method=method)
+    request = urllib.request.Request(BASE + path, data=data, method=method)
     if data is not None:
-        req.add_header("Content-Type", "application/json")
+        request.add_header("Content-Type", "application/json")
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            raw = resp.read().decode("utf-8")
-            return resp.status, json.loads(raw) if raw else {}
-    except urllib.error.HTTPError as e:
-        raw = e.read().decode("utf-8")
+        with urllib.request.urlopen(request, timeout=120) as response:
+            raw = response.read().decode("utf-8")
+            return response.status, json.loads(raw) if raw else {}
+    except urllib.error.HTTPError as error:
+        raw = error.read().decode("utf-8")
         try:
-            return e.code, json.loads(raw) if raw else {}
+            return error.code, json.loads(raw) if raw else {}
         except json.JSONDecodeError:
-            return e.code, {"_raw": raw}
-    except Exception as e:
-        return 0, {"_transport_error": str(e)}
+            return error.code, {"_raw": raw}
+    except Exception as error:
+        return 0, {"_transport_error": str(error)}
 
 
-def die(msg, error_code=UNINSTALL_GENERIC):
-    emit_pack_error(pack_dir=PACK_DIR, base=BASE, action="uninstall", error_code=error_code, message=msg)
-    print("卸载失败：" + msg, file=sys.stderr)
+def die(message, error_code=UNINSTALL_GENERIC):
+    emit_pack_error(
+        pack_dir=PACK_DIR, base=BASE, action="uninstall", error_code=error_code, message=message
+    )
+    print("卸载失败：" + message, file=sys.stderr)
     sys.exit(1)
 
 
+def load_proof(pack_ref, version):
+    if not PROOF_RAW:
+        die("缺少可信 Owner 前台签发的 TRUZHEN_PACK_UNINSTALL_PROOF_JSON")
+    try:
+        proof = json.loads(PROOF_RAW)
+    except json.JSONDecodeError as error:
+        die("Owner 卸载证明不是合法 JSON：" + str(error))
+    required = ("decision_ref", "run_id", "nonce", "owner_action_evidence_ref")
+    expected_transaction = "transaction://pack-uninstall:" + pack_ref + "@" + version
+    if (
+        proof.get("action_type") != "14.pack-studio.lifecycle.uninstall"
+        or proof.get("target_ref") != pack_ref
+        or proof.get("transaction_ref") != expected_transaction
+        or any(not proof.get(key) for key in required)
+    ):
+        die("Owner 卸载证明与 Pack/action/transaction 不匹配")
+    return proof
+
+
 def main():
-    with open(os.path.join(PACK_DIR, "manifest.json"), encoding="utf-8") as f:
-        manifest = json.load(f)
+    with open(os.path.join(PACK_DIR, "manifest.json"), encoding="utf-8") as file:
+        manifest = json.load(file)
     pack_ref = manifest["pack_ref"]
     version = manifest["version"]
     pack_name = manifest.get("name", "家政运营 Pack")
-    print("== 卸载 %s @ %s（%s）==" % (pack_ref, version, BASE))
+    print("== 正式卸载 %s @ %s（%s）==" % (pack_ref, version, BASE))
 
-    query = urllib.parse.urlencode({"pack_ref": pack_ref})
-    code, body = call("GET", "/v3/pack-studio/lifecycle/packs?" + query)
+    code, body = call(
+        "GET", "/v3/pack-studio/lifecycle/packs?" + urllib.parse.urlencode({"pack_ref": pack_ref})
+    )
     if code == 0:
         die("连不上 devserver（%s）" % BASE, UNINSTALL_CONNECTIVITY)
-
-    enabled = False
-    for entry in body.get("packs", []) or []:
-        if entry.get("pack_ref") == pack_ref:
-            ptr = entry.get("enabled_pointer") or {}
-            if ptr.get("current_version"):
-                enabled = True
-                break
+    enabled = any(
+        entry.get("pack_ref") == pack_ref
+        and (entry.get("enabled_pointer") or {}).get("current_version")
+        for entry in body.get("packs", []) or []
+    )
     if not enabled:
-        print("场景包未处于启用态，无需卸载。")
-        return
+        die("场景包未处于启用态，拒绝把非正式状态冒充为已卸载")
 
-    code, body = call("POST", "/v3/base/gated-actions/prepare", {
-        "action_type": "14.pack-studio.lifecycle.disable",
-        "target_ref": pack_ref,
-        "content_summary": "停用家政运营 Pack：" + pack_ref,
-        "impact_summary": "停用客户服务全生命周期场景包；历史事务对象、候选和回执保留可反查",
-        "transaction_ref": "transaction://pack-disable:" + pack_ref + "@" + version,
-    })
+    proof = load_proof(pack_ref, version)
+    code, body = call(
+        "POST",
+        "/v3/pack-studio/lifecycle/uninstall",
+        {
+            "pack_ref": pack_ref,
+            "owner_ref": OWNER,
+            "reason": "Owner 正式卸载 " + pack_name,
+            "decision_ref": proof["decision_ref"],
+            "run_id": proof["run_id"],
+            "nonce": proof["nonce"],
+            "owner_action_evidence_ref": proof["owner_action_evidence_ref"],
+        },
+    )
     if code != 200:
-        die("gated prepare HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
-    issue_ref = (body.get("issue") or {}).get("issue_ref")
-    if not issue_ref:
-        die("gated prepare 无 issue_ref: %s" % body, UNINSTALL_LIFECYCLE_HTTP)
-
-    code, body = call("POST", "/v3/base/gated-actions/confirm", {"issue_ref": issue_ref})
-    if code != 200:
-        die("gated confirm HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
-    issue = body.get("issue") or {}
-    if not all(issue.get(key) for key in ("decision_ref", "run_id", "nonce", "owner_action_evidence_ref")):
-        die("gated confirm 返回的 issued binding 不完整: %s" % body, UNINSTALL_LIFECYCLE_HTTP)
-
-    code, body = call("POST", "/v3/pack-studio/lifecycle/disable", {
-        "pack_ref": pack_ref,
-        "owner_ref": OWNER,
-        "reason": "Owner 卸载" + pack_name,
-        "decision_ref": issue["decision_ref"],
-        "run_id": issue.get("run_id", ""),
-        "nonce": issue.get("nonce", ""),
-        "owner_action_evidence_ref": issue["owner_action_evidence_ref"],
-    })
-    if code != 200:
-        die("disable HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
-
-    print("\n卸载成功：%s 已停用。" % pack_ref)
-    print("已产生的事务对象、候选和 03 回执仍可反查；卸载不删除历史。")
+        die("formal uninstall HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
+    print("正式卸载成功：%s 已进入 uninstalled；历史事务与 Receipt 保留可反查。" % pack_ref)
 
 
 if __name__ == "__main__":

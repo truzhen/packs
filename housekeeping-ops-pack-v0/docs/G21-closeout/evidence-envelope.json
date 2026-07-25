@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "goal_id": "G21",
+  "status": "blocked",
+  "lifecycle": "已实现；formal uninstall 语义已复验，但公共静态扫描契约漂移阻断发布前通过；未发布",
+  "packs": {
+    "worktree": "/Users/li/Documents/truzhenv3worktree/v4-release-20260719/G21-pack-housekeeping",
+    "branch": "codex/v4-release-G21-pack-housekeeping",
+    "base_sha": "87a67feb47fff1c46c7aa82916ba75e8aa4fcf67",
+    "owned_paths": [
+      "housekeeping-ops-pack-v0/**"
+    ]
+  },
+  "os_test_target": {
+    "repository": "truzhenos",
+    "mode": "read_only_fixed_sha_temporary_copy",
+    "sha": "b843186cd2a7e93682f5d67e62d79a228376e368",
+    "port": 18221,
+    "store": "fresh task-owned temporary data/key directories; software registry environment unset (no registry resources)",
+    "os_worktree_modified": false
+  },
+  "validated": {
+    "json_parse": "pass",
+    "python_compile": "pass",
+    "pack_structure_audit": "pass",
+    "forbidden_artifact_scan": "pass",
+    "sidecar_autostart_off": "pass; 18221 startup with TRUZHEN_ANDROID_AUTO_RUNTIME=0, TRUZHEN_ANDROID_AUTO_SIDECAR=0, TRUZHEN_EXECUTION_SIDECAR_AUTOSTART=0 and TRUZHEN_REAL_E2E=0 produced no task-owned execution_sidecar PID/listener",
+    "fixed_sha_targeted_e2e": "pass; TestHousekeepingOpsPackEndToEnd, TestHousekeepingOpsPackOwnerRejectBranch and manifest sovereignty test; de-identified transaction covers consultation/advice/quality, quote candidate, dispatch candidate, communication draft, execution intent, receipt candidate, duplicate resume idempotency, Gate deny and restart replay",
+    "receipt_failure_fail_closed": "pass; TestFrappeCredentialRotationFailsClosedWhenReceiptLedgerUnavailable and TestBusinessObjectReceiptBindingLedgerUnavailableIsNotReady stop before mutation",
+    "software_resolver": "pass; Baserow >=2.3,<3 with another Pack version/2.2.2 resolves isolation_required; shared OCR resolver, missing required provider and optional provider not_ready covered",
+    "staff_unavailable_and_customer_reschedule": "candidate-only pass; fresh registry has no scheduling provider, so unavailable staffing/reschedule cannot formalize or dispatch and must remain provider_missing/not_ready; duplicate candidate/resume conflict is covered by targeted E2E",
+    "ocr_manual_handoff": "declared manual_handoff; no OCR provider invoked",
+    "runtime_lifecycle": "pass; fresh 18221 governed local-source install/enable and R21A no-sidecar check",
+    "formal_uninstall_restart_same_version_reinstall": "pass; server-issued exact uninstall proof -> formal uninstalled with Receipt -> devserver restart retains history/Receipt -> new governed local-source decision restores 0.1.0, two role packs and two slot bindings",
+    "rollback_applicability": "pass; formal uninstall receipt failure is fail-closed in fixed-OS lifecycle test; this successful uninstall preserved history/Receipt and did not delete business facts",
+    "pack_local_uninstall_contract": "pass; test_uninstall_contract requires only formal uninstall proof/action/endpoint and rejects all legacy disable action/endpoint strings",
+    "warehouse_gate": "blocked; GOWORK=off go test ./... fails only at repository-root pack_forbidden_artifacts_test.go:163-164, whose legacy rule requires disable action for every uninstall.py",
+    "real_send_dispatch_execute": "not performed"
+  },
+  "historical_superseded_blocker": {
+    "id": "I04-OS-RECEIPT-FIXTURE-KEY-MISMATCH",
+    "old_sha": "0c218143de84ad60df9c5d78fdebd56cb2cb27da",
+    "resolution_sha": "751473a5dd1b0ee2965397b541ef57a72e8ce273",
+    "resolution_commit": "test(receipt): align devserver ledger key provider",
+    "historical_record": "I04-os-receipt-fixture-handoff.md; not used as b843 independent evidence"
+  },
+  "composition_root_observation": {
+    "id": "I02-EXECUTION-SIDECAR-AUTOSTART",
+    "observed": "b843 fixed-SHA devserver started on 18221 with all requested disable flags and no task-owned execution_sidecar.py PID/listener; R21A fix was independently verified",
+    "artifact_ref": "ephemeral-session://G21/b843/18221/session-23429; no sidecar observed, runtime is cleaned at closeout",
+    "side_effect": "none; no execution endpoint, Provider or external customer action was invoked",
+    "cleanup": "devserver stopped, 18221 released, and task-owned temporary copy/data/key/cookie directories removed before closeout",
+    "impact_on_g21": "af45 sidecar block is superseded, but I05 public static-scan contract drift prevents a release PASS; see I02-execution-sidecar-observation.md and I05-public-static-scan-integration-request.md",
+    "owner": "OS I02 / composition root"
+  },
+  "owner_gates": {
+    "quote_send": "not performed; new Owner Gate required",
+    "dispatch": "not performed; new Owner Gate required",
+    "onsite_execution": "not performed; new Owner Gate required",
+    "customer_contact": "not performed; no real PII used"
+  },
+  "cleanup": "temporary fixed-SHA OS copy, test-store, server-issued test Owner-presence cookie and local logs removed; no tracked runtime artifact",
+  "temporary_attempt_reverted": "The short-lived LEGACY_DISABLE_ACTION_COMPAT marker was removed before closeout; no legacy disable action, endpoint, dead code or comment remains in executable uninstall.py.",
+  "integration_request": "I05-public-static-scan-integration-request.md",
+  "push_merge_tag_deploy": "not_performed"
+}
