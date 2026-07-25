@@ -1,0 +1,74 @@
+{
+  "goal_id": "G23",
+  "status": "blocked",
+  "lifecycle": "Pack owned uninstall 已验收；等待共享扫描器集成",
+  "repository": "truzhen-packs",
+  "pack_ref": "scene_pack://shuxuejia-large-home-renovation",
+  "os_fixed_sha": "af45a07b69c2ea44ed4b9d38612468bde0b2050d",
+  "pack_head_before_closeout": "cffd715edf14b1ac85d76e7c812d6757cadc92d9",
+  "runtime": {
+    "address": "127.0.0.1:18223",
+    "store_provenance": "此前可恢复清理后的唯一任务 store；恢复后继续，未创建或复制第二真相源",
+    "safety_controls": [
+      "empty task-specific software registry",
+      "TRUZHEN_EXECUTION_SIDECAR_AUTOSTART=0",
+      "TRUZHEN_ANDROID_AUTO_RUNTIME=0",
+      "TRUZHEN_ANDROID_AUTO_SIDECAR=0",
+      "VM, guest-agent and sidecar address/token unset only in child process",
+      "task-owned execution/android sidecar delta=0"
+    ]
+  },
+  "checks": [
+    {"name": "Pack uninstall-proof tests", "result": "7/7 pass; exact uninstall and legacy-path rejection"},
+    {"name": "Pack error-code taxonomy", "result": "pass"},
+    {"name": "R23D retained-vs-created and recovery targeted normal/race", "result": "pass"},
+    {"name": "negative matrix", "exit_code": 0, "elapsed_seconds": 8, "log_sha256": "9a6283fbc1204d3e31e55f51cb18a398eb6b9e68300eae8a9f843ca004175bb8"}
+  ],
+  "parity": {
+    "nodes": 457,
+    "edges": 543,
+    "stages": 8,
+    "role_slots": 7,
+    "gate_nodes": 96,
+    "acceptance_evidence_candidates": 77,
+    "step_runs_succeeded": "457/457",
+    "waits_historic": 96,
+    "receipt_candidate_to_formal_lookup": "98/98"
+  },
+  "lifecycle_evidence": {
+    "direct_disabled_install": "422 fail-closed with a new decision",
+    "reactivate": "same-version recovery and four knowledge mounts restored",
+    "formal_uninstall": "state=uninstalled; four mounts disabled; Receipt lookup",
+    "reinstall": "same-version local source reran draft→readiness→promote→enable",
+    "restart_replay": "25 unique lifecycle/mount Receipt lookups; facts unchanged",
+    "receipt_and_compensation": "same-generation retry idempotent; retained prior knowledge/Receipt preserved while only current-generation created refs compensate; v1 ambiguity remains recovery_required with reservation"
+  },
+  "representative_scenarios": {
+    "items": ["change/S5_033", "delay/S5_009", "material_substitution/S5_060", "acceptance_failure/S7_015", "after_sales_reopen/S8_014"],
+    "creation": "5×201", "idempotent_replay": "5×200 deduplicated", "receipt_lookup": "5/5", "post_restart": "all five persisted candidate_only/non_formal/state=candidate", "formal_task_count": 0
+  },
+  "controlled_side_effects": {
+    "controlled_external_send_attempts": 0,
+    "communication_dispatch": 0,
+    "communication_send_result": 0,
+    "download_grants": 0,
+    "transfer_authorizations": 0,
+    "business_object_finance_snapshots": 0,
+    "real_external_actions": 0
+  },
+  "shared_scanner_blocker": {
+    "command": "GOWORK=off go test ./...（Packs worktree）",
+    "exit_code": 1,
+    "log_sha256": "dedb85cd8089ce2ca3560770c52903cb8543c6e7fdbae5fcfff786d71ba51b33",
+    "only_failure": "public pack_forbidden_artifacts_test.go requires legacy disable action literal",
+    "owned_fix": "uninstall.py now retains only exact formal uninstall action and endpoint; its 7/7 local proof test rejects disable, prepare, confirm and self-minted evidence",
+    "integration_request": "replace the public scanner's disable literal requirement with exact uninstall action requirement and reject legacy disable/prepare/confirm paths"
+  },
+  "command_evidence": [
+    {"command": "python3 -m unittest discover -s shuxuejia-renovation-pack-v0/tests -v", "exit_code": 0, "result": "6/6"},
+    {"command": "python3 shuxuejia-renovation-pack-v0/test_uninstall_proof.py -v", "exit_code": 0, "result": "6/6"},
+    {"command": "GOWORK=off go test ./...（Packs worktree）", "exit_code": 1, "log_sha256": "dedb85cd8089ce2ca3560770c52903cb8543c6e7fdbae5fcfff786d71ba51b33"},
+    {"command": "JSON recursive parse; Python compile; Pack structure; forbidden-artifact scan; git diff --check", "exit_code": 0}
+  ],
+  "supersedes": "旧 lifecycle blocked 已由 af45a07b 运行态复验取代；此前 PASS 因 legacy double semantics 撤销，当前仅保留共享扫描器 blocker。"
+}

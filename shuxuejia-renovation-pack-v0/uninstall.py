@@ -3,9 +3,9 @@
 """
 墅学家大宅装修设计指导 Pack —— 从正在运行的 Truzhen devserver 卸载（可卸载）。
 
-走真实 lifecycle/disable 端点：先经 Base gated-action prepare→confirm 取得真签发的
-decision_ref/run_id/nonce（停用与启用同纪律，禁自铸），再 disable。pack 停用会经
-driveDisableMounts 级联卸载知识域。已产生的案件对象与回执在 03 仍可反查（卸载≠删历史）。
+只消费 Owner 前台 / Base 已签发并外部注入的卸载证明，调用正式 lifecycle/uninstall
+端点。脚本不会自行 Prepare/Confirm、也不会把环境变量伪装成主权
+裁定。正式卸载会级联停用知识域；历史对象和 Receipt 仍可反查（卸载≠删历史）。
 
 用法：
   python3 packs/shuxuejia-renovation-pack-v0/uninstall.py
@@ -21,10 +21,15 @@ REPO_DIR = os.path.dirname(PACK_DIR)
 if REPO_DIR not in sys.path:
     sys.path.insert(0, REPO_DIR)
 from pack_diagnostics import (
-    emit_pack_error, UNINSTALL_GENERIC, UNINSTALL_CONNECTIVITY, UNINSTALL_LIFECYCLE_HTTP)
+    emit_pack_error, UNINSTALL_CONNECTIVITY, UNINSTALL_GENERIC,
+    UNINSTALL_LIFECYCLE_HTTP)
 
 BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080")
 OWNER = os.environ.get("TRUZHEN_PACK_OWNER", "owner://local/default")
+PROOF_ENV = "TRUZHEN_PACK_UNINSTALL_PROOF_JSON"
+# 这是可信前台应签发的 canonical action 描述，不是 Pack 发起的请求体。
+OWNER_UNINSTALL_HANDOFF = {"action_type": "14.pack-studio.lifecycle.uninstall"}
+UNINSTALL_ACTION = OWNER_UNINSTALL_HANDOFF["action_type"]
 
 
 def call(method, path, body=None):
@@ -51,53 +56,45 @@ def die(msg, error_code=UNINSTALL_GENERIC):
     sys.exit(1)
 
 
+def load_uninstall_proof(pack_ref, version):
+    """只接受已签发的外部证明；本地只做形状和不可变绑定核验。"""
+    raw = os.environ.get(PROOF_ENV, "").strip()
+    if not raw:
+        die("卸载需要可信 Owner 前台签发的 %s；脚本不会自行 Prepare/Confirm。" % PROOF_ENV,
+            UNINSTALL_LIFECYCLE_HTTP)
+    try:
+        proof = json.loads(raw)
+    except json.JSONDecodeError:
+        die("Owner 卸载证明不是合法 JSON。", UNINSTALL_LIFECYCLE_HTTP)
+    if not isinstance(proof, dict):
+        die("Owner 卸载证明必须是对象。", UNINSTALL_LIFECYCLE_HTTP)
+
+    expected_transaction = "transaction://pack-uninstall:%s@%s" % (pack_ref, version)
+    required = ("decision_ref", "run_id", "nonce", "owner_action_evidence_ref")
+    if (proof.get("action_type") != UNINSTALL_ACTION or
+            proof.get("target_ref") != pack_ref or
+            proof.get("transaction_ref") != expected_transaction or
+            any(not isinstance(proof.get(key), str) or not proof[key].strip() for key in required)):
+        die("Owner 卸载证明与 Pack、版本、action、transaction 或签发绑定不匹配。",
+            UNINSTALL_LIFECYCLE_HTTP)
+    return proof
+
+
 def main():
     with open(os.path.join(PACK_DIR, "manifest.json"), encoding="utf-8") as f:
         manifest = json.load(f)
     pack_ref = manifest["pack_ref"]
     version = manifest["version"]
     print("== 卸载 %s @ %s（%s）==" % (pack_ref, version, BASE))
-
-    # 已是停用/不存在则幂等返回
-    code, body = call("GET", "/v3/pack-studio/lifecycle/packs?pack_ref=" + pack_ref)
-    if code == 0:
-        die("连不上 devserver（%s）" % BASE, UNINSTALL_CONNECTIVITY)
-    enabled = False
-    for entry in (body.get("packs", []) or []):
-        if entry.get("pack_ref") == pack_ref:
-            ptr = entry.get("enabled_pointer") or {}
-            if ptr.get("current_version"):
-                enabled = True
-    if not enabled:
-        print("场景包未处于启用态，无需卸载。")
-        return
-
-    # 1. Base 签发 disable decision
-    code, body = call("POST", "/v3/base/gated-actions/prepare", {
-        "action_type": "14.pack-studio.lifecycle.disable", "target_ref": pack_ref,
-        "content_summary": "停用墅学家大宅装修设计指导 pack：" + pack_ref,
-        "impact_summary": "停用墅学家场景包并级联卸载其知识域；历史回执保留可反查",
-        "transaction_ref": "transaction://pack-disable:" + pack_ref + "@" + version})
-    if code != 200:
-        die("gated prepare HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
-    issue_ref = (body.get("issue") or {}).get("issue_ref")
-    if not issue_ref:
-        die("gated prepare 无 issue_ref: %s" % body, UNINSTALL_LIFECYCLE_HTTP)
-    code, body = call("POST", "/v3/base/gated-actions/confirm", {"issue_ref": issue_ref})
-    if code != 200:
-        die("gated confirm HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
-    iss = body.get("issue") or {}
-    if not all(iss.get(key) for key in ("decision_ref", "run_id", "nonce", "owner_action_evidence_ref")):
-        die("gated confirm 返回的 issued binding 不完整: %s" % body, UNINSTALL_LIFECYCLE_HTTP)
-
-    # 2. disable
-    code, body = call("POST", "/v3/pack-studio/lifecycle/disable", {
+    proof = load_uninstall_proof(pack_ref, version)
+    code, body = call("POST", "/v3/pack-studio/lifecycle/uninstall", {
         "pack_ref": pack_ref, "owner_ref": OWNER, "reason": "Owner 卸载墅学家大宅装修设计指导 pack",
-        "decision_ref": iss["decision_ref"], "run_id": iss.get("run_id", ""), "nonce": iss.get("nonce", ""),
-        "owner_action_evidence_ref": iss["owner_action_evidence_ref"]})
+        "decision_ref": proof["decision_ref"], "run_id": proof["run_id"], "nonce": proof["nonce"],
+        "owner_action_evidence_ref": proof["owner_action_evidence_ref"]})
     if code != 200:
-        die("disable HTTP %d: %s" % (code, body), UNINSTALL_LIFECYCLE_HTTP)
-    print("\n✅ 卸载成功：%s 已停用，知识域已级联卸载。前端「场景包管理」刷新即消失。" % pack_ref)
+        error_code = UNINSTALL_CONNECTIVITY if code == 0 and "_transport_error" in body else UNINSTALL_LIFECYCLE_HTTP
+        die("uninstall HTTP %d: %s" % (code, body), error_code)
+    print("\n✅ 卸载成功：%s 已进入 uninstalled，知识域已级联停用。" % pack_ref)
     print("   （已产生的案件对象与 03 回执仍可反查——卸载不删历史。）")
 
 

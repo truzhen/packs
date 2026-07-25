@@ -1,0 +1,47 @@
+{
+  "goal_id": "G23",
+  "title": "墅学家 457 节点装修 Pack 商品化与长周期回放",
+  "date": "2026-07-25",
+  "status": "blocked",
+  "lifecycle": "Pack owned uninstall 已验收；等待共享扫描器集成",
+  "supersedes": "此前 PASS 已由 G21 同类双语义审计撤销：legacy disable handoff 已删除，当前只保留 formal uninstall；剩余 blocker 是共享扫描器契约漂移。",
+  "branch": "codex/v4-release-G23-pack-shuxuejia",
+  "pack_head_before_closeout": "cffd715edf14b1ac85d76e7c812d6757cadc92d9",
+  "packs_fixed_base": "87a67feb47fff1c46c7aa82916ba75e8aa4fcf67",
+  "os_fixed_sha": "af45a07b69c2ea44ed4b9d38612468bde0b2050d",
+  "isolated_runtime": {
+    "address": "127.0.0.1:18223",
+    "store": "唯一恢复的任务专属 store；未复制、未新建、未写入 Git",
+    "safety": "空任务专属 software registry；execution/Android autostart 关闭；子进程清除 VM、guest-agent 与 sidecar 环境；task-owned sidecar=0"
+  },
+  "parity": {
+    "nodes": 457,
+    "edges": 543,
+    "stages": 8,
+    "role_slots": 7,
+    "gate_nodes": 96,
+    "acceptance_evidence_candidates": 77,
+    "flow_result": "457/457 succeeded；96 waits 已历史化；98/98 Receipt candidate key 映射并反查 FormalReceipt"
+  },
+  "lifecycle_result": "initial install、disabled direct-install=422、reactivate、正式 uninstall、restart/replay、同版本 local-source draft→readiness→promote→enable 重装均通过；加强 restart/replay 对 25 个去重 lifecycle/mount Receipt 逐一反查。",
+  "representative_projection": "合同变更、材料延期、材料替代、验收失败整改、售后重开各一个去敏 candidate-only/non-formal 投影；首次 5×201、同键重放 5×200 deduplicated、Receipt 5/5 反查；重启同一 store 后仍保持 candidate-only，FormalTask=0。",
+  "negative_matrix": "固定 OS 定向矩阵 exit=0，log SHA256=9a6283fbc1204d3e31e55f51cb18a398eb6b9e68300eae8a9f843ca004175bb8；覆盖 provider_missing、Memory scope、model Gate/transaction/usage、communication blocked、payment hard floor、artifact export、Gate deny、Receipt failure/recovery/rollback/compensation。",
+  "verification_commands": [
+    {"command": "python3 shuxuejia-renovation-pack-v0/test_uninstall_proof.py -v", "exit_code": 0, "result": "7/7；要求 uninstall 并拒绝 disable/prepare/confirm/self-mint"},
+    {"command": "GOWORK=off go test -run '^TestPackErrorCodeTaxonomyIsSubdivided$' .", "exit_code": 0},
+    {"command": "GOWORK=off go test ./...（Packs worktree）", "exit_code": 1, "log_sha256": "dedb85cd8089ce2ca3560770c52903cb8543c6e7fdbae5fcfff786d71ba51b33", "only_failure": "public pack_forbidden_artifacts_test.go still requires legacy disable action literal"}
+  ],
+  "side_effects": {
+    "real_contract_change": 0,
+    "real_payment_or_refund": 0,
+    "real_provider": 0,
+    "real_send_or_execution": 0,
+    "customer_or_vendor_notification": 0,
+    "formal_acceptance_or_after_sales_closure": 0,
+    "external_artifact_delivery": 0,
+    "openship": "not connected or deployed"
+  },
+  "blocker": "公共 pack_forbidden_artifacts_test.go 仍要求每个 uninstall.py 含 legacy 14.pack-studio.lifecycle.disable 字面量。为避免双语义/死标记，本 Pack 已删除该标记；只有共享扫描器更新为 exact formal uninstall 语义后才可重新 PASS。",
+  "cleanup": "验证结束后停止 task-owned 18223；18225 未恢复；端口释放，store 保留为唯一可复核运行态。",
+  "push_merge_tag_deploy": "未执行，等待 Owner"
+}

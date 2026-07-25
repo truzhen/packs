@@ -27,8 +27,15 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 shuxuejia-renovation-pack-
 卸载：
 
 ```sh
-TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 shuxuejia-renovation-pack-v0/uninstall.py
+TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 \
+TRUZHEN_PACK_UNINSTALL_PROOF_JSON='<Owner 前台 / Base 已签发的完整 proof JSON>' \
+python3 shuxuejia-renovation-pack-v0/uninstall.py
 ```
+
+卸载脚本只消费外部注入的 `TRUZHEN_PACK_UNINSTALL_PROOF_JSON`，并核验
+`14.pack-studio.lifecycle.uninstall`、本 Pack、版本交易 ref、decision/run/nonce/evidence
+绑定后调用正式 uninstall 端点；缺失或不匹配一律拒绝。脚本不自行 Prepare/Confirm，不调用
+disable，不能代替 Owner 或 Base Gate。
 
 ## 验收口径
 

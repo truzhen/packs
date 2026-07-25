@@ -442,6 +442,7 @@
         "y": 1034.3
       },
       "candidate_type": "TaskCandidate",
+      "slot_ref": "home_owner",
       "gate_policy": {
         "required_gate": "shuxuejia_owner_base_gate",
         "pending_owner_confirmation": true
@@ -541,7 +542,8 @@
         "x": 1141.0,
         "y": 805.8
       },
-      "candidate_type": "TaskCandidate"
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "third_party_consultant"
     },
     {
       "id": "S1_051",
@@ -1566,7 +1568,8 @@
         "x": 3270.8,
         "y": 636.0
       },
-      "candidate_type": "TaskCandidate"
+      "candidate_type": "TaskCandidate",
+      "slot_ref": "project_manager"
     },
     {
       "id": "S3_010",
