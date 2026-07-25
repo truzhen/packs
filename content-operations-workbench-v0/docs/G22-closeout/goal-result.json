@@ -2,42 +2,22 @@
   "schema": "truzhen-packs.g22-content-ops.goal-result.v1",
   "goal_id": "G22",
   "status": "blocked",
-  "date": "2026-07-24",
+  "date": "2026-07-25",
   "pack_ref": "scene_pack://content-operations-workbench",
   "pack_version": "0.2.0",
-  "lifecycle": "已验收（仅隔离候选包 lifecycle）；正向候选生产未获逐次 Gate；未发布",
+  "lifecycle": "已验收：schema 1.1 候选包、内部/公开稿隔离、人工发布包、隔离 lifecycle 与受控竖屏 MP4 均可复核；未发布",
   "closeout": "content-operations-workbench-v0/docs/G22-closeout/evidence-envelope.json",
-  "decision": "隔离 lifecycle 和安全拒绝路径已在当前权威 OS main SHA 验收；不允许 Pack 自行修复或绕过 Owner Gate、素材权利和 Provider 边界。旧 SHA I04 观察已被审计更正取代，不是当前阻断。",
+  "decision": "G22 的本地 OpenMontage/FFmpeg 候选路径已在 af45a07b 的最小只读 registry 投影中经真实 Gateway、单次 Base Gate 和 Receipt 验收。Codex Hands 因登记版本/adapter/model-binding 漂移保持 not_ready，未调用，故目标整体保持 blocked 而非伪造 end-to-end Hands 成功。",
+  "current_os": {
+    "commit": "af45a07b69c2ea44ed4b9d38612468bde0b2050d",
+    "endpoint": "http://127.0.0.1:18222",
+    "historical_closeout_commit": "751473a5dd1b0ee2965397b541ef57a72e8ce273"
+  },
   "next_owner_action": [
-    "分别签发 Codex Hands 内容生产与 OpenMontage 渲染的逐次 Gate",
-    "提供明确可用、去敏且已确认权利的素材与真实指标引用",
-    "在隔离 test-store 中执行正向候选、视频与 Receipt-failure 验证；不得登录、上传、发送或发布到平台"
+    "在 software registry 与实际 Codex binary/adapter/model binding 对齐后，重新验证 Codex Hands readiness 并逐次签发内容生产 Gate",
+    "提供人工发布后的真实指标，才可解除 weekly_review blocked",
+    "商业分发、随安装包分发或网络服务前完成 OpenMontage/FFmpeg 的 Owner/legal 许可证裁定"
   ],
-  "audit_correction": {
-    "authoritative_os_commit": "751473a5dd1b0ee2965397b541ef57a72e8ce273",
-    "superseded_os_commit": "3a97db377d1cbbf171b18ff5a98fcaf4c2e417c1",
-    "record": "content-operations-workbench-v0/docs/G22-closeout/audit-correction-751473a5.md"
-  },
-  "verification_basis": {
-    "os_endpoint": "http://127.0.0.1:18222",
-    "os_commit": "751473a5dd1b0ee2965397b541ef57a72e8ce273",
-    "commands": [
-      "isolated devserver lifecycle: install, Gate-confirmed disable, uninstall, restart, reinstall",
-      "read-only provider readiness, Gate-origin denial, source-rights denial, execution readmodel check",
-      "Pack JSON/Python/structure/forbidden-artifact checks and GOWORK=off go test ./..."
-    ],
-    "receipts": [
-      "receipt://03-receipt-ledger/formal/cb684fda-5243-4816-8acd-007edbdddef9",
-      "receipt://03-receipt-ledger/formal/995da606-47b7-479b-8cfe-20dcd4780c5e"
-    ],
-    "artifact_hashes": {
-      "manifest_sha256": "0ab4812f5db6a411ca7987c7d9dfe8f36d57243f0ae44217bf003e3945a66716",
-      "flow_sha256": "2e150a8ee5b1a4bdfc7c8606c7d5b0ab38b8f0a837903f6b4fd6df741b3bd7b1",
-      "skill_bundle_sha256": "59a55ee56afd8ad6cc46222031c381bf2eb66f979b44d5e8ef6c0b709d72ae69"
-    },
-    "authorization": "受控本地 Owner presence 仅用于 lifecycle Gate；Codex Hands、OpenMontage、素材使用与平台操作均未获逐次授权且未调用。",
-    "cleanup": "devserver 与任务专属临时 OS worktree/test-store 已在 closeout 后清理；未提交运行态。"
-  },
-  "publication": "never_formalizes; owner_manual_only; platform login/upload/send/publish not performed",
+  "publication": "never_formalizes; owner_manual_only; publication_authorized=false; publication_status=not_published; platform login/upload/send/publish not performed",
   "push_merge_tag_deploy": "未执行，等待 Owner。"
 }

@@ -2,95 +2,82 @@
   "schema": "truzhen-packs.g22-content-ops.evidence-envelope.v1",
   "goal": "G22 内容运营工作台 Pack 候选生产与绝不自动发布",
   "status": "blocked",
-  "lifecycle": "已验收（仅隔离候选包 lifecycle）；正向候选生产仍 blocked",
-  "scope": [
-    "content-operations-workbench-v0/**"
-  ],
+  "lifecycle": "已验收：schema 1.1 候选包、隔离 lifecycle 与竖屏 MP4 Gateway 产物均可复核；Codex Hands 仍 not_ready；未发布",
+  "scope": ["content-operations-workbench-v0/**"],
   "base": {
-    "packs_commit": "87a67feb47fff1c46c7aa82916ba75e8aa4fcf67",
-    "os_commit": "751473a5dd1b0ee2965397b541ef57a72e8ce273",
-    "superseded_os_commit": "3a97db377d1cbbf171b18ff5a98fcaf4c2e417c1",
+    "packs_commit_before_closeout": "548924ff775ed3e0a956f7f9f5065b57531ee748",
+    "os_commit": "af45a07b69c2ea44ed4b9d38612468bde0b2050d",
+    "historical_os_commit": "751473a5dd1b0ee2965397b541ef57a72e8ce273",
     "os_endpoint": "http://127.0.0.1:18222",
-    "os_store": "isolated temporary test-store"
-  },
-  "asset_hashes": {
-    "manifest_sha256": "0ab4812f5db6a411ca7987c7d9dfe8f36d57243f0ae44217bf003e3945a66716",
-    "flow_sha256": "2e150a8ee5b1a4bdfc7c8606c7d5b0ab38b8f0a837903f6b4fd6df741b3bd7b1",
-    "skill_bundle_sha256": "59a55ee56afd8ad6cc46222031c381bf2eb66f979b44d5e8ef6c0b709d72ae69",
-    "dispatch_card_sha256": "9799e02cda9f44efa0b978b51ddfa0074f710fee67089984198adf159ff8fb3d",
-    "i04_handoff_sha256": "e0f253bd7616a51f63d52e76ae19b5e5a08c228be783895cbfdfc89a3c999c2e",
-    "goal_result_sha256": "85667ac2007dcf75ae5e4ff437d1a360c200678e9468eb53fedf82b2b3cc77f2",
-    "audit_correction_sha256": "737d852a959fa86b85ab44eefd434581ba58c7d6db2aa33fd587793bc4fdd64f"
+    "os_store": "fresh task-owned temporary test-store",
+    "registry": "minimal read-only projection containing only resource-openmontage-media-gen-v1; no key or cloud provider configured"
   },
   "authorization": {
-    "product_evidence": "Owner-authorized de-identified product evidence only; no raw source material was read or committed",
-    "platform_actions": "never authorized and not performed",
-    "codex_hands_execution": "no per-run Owner Gate; not invoked",
-    "openmontage_render": "no per-run Owner Gate or source-rights confirmation; not invoked"
+    "evidence_and_assets": "Owner authorized only Truzhen-owned, de-identified, or synthetic assets; the input image was synthetic and rights-confirmed in the one-time local Gate flow",
+    "local_gate": "controlled local Owner presence issued a one-time Base Gate for content video only",
+    "codex_hands": "not invoked: readiness remained not_ready because registered host Codex 0.144.1 is adapter-pending/not-configured while the local binary is 0.145.0-alpha.30",
+    "openmontage": "invoked only through the official 11 Execution Gateway and task-owned loopback sidecar after real preflight ready",
+    "platform_actions": "never authorized and not performed"
+  },
+  "provider_evidence": {
+    "openmontage_source": "main@9066dcb2e319727789820c5bcd28274695f2a18a",
+    "openmontage_license": "AGPL-3.0 review-required; local single-Owner acceptance allowed, commercial distribution and network service not approved",
+    "ffmpeg": "8.1.2; GPL version 3 or later build with libx264",
+    "pillow": "12.2.0",
+    "preflight": "pass: local Remotion/FFmpeg rendering ready; cloud image/video/TTS providers remained unconfigured and unused"
+  },
+  "candidate_bundle": {
+    "schema_version": "1.1",
+    "run_id": "g22-af45a07b-candidate",
+    "status": "package_ready_for_owner_review",
+    "preflight_status": "pending",
+    "publication_authorized": false,
+    "publication_status": "not_published",
+    "result": "direction radar, Chinese mother content, Douyin/Bilibili/WeChat internal and sanitized public candidates, and manual publication package validated; weekly review is blocked because no real manually published metrics exist",
+    "hashes": {
+      "run_manifest_sha256": "4992e95cd5a1db57d3397033438f4ef9be95505848f5782fe183498e472a9637",
+      "bundle_index_sha256": "e8433d33ccdf9ae30a33d33ad7257a689d470c6e7e22807daf3f7a3888a7712d",
+      "internal_mother_sha256": "8d780eac87ed8a2170c3ad5b2a177f31d68062982360f95b0afad10979bdba2a",
+      "public_mother_sha256": "191c441e97fe572c40afda4ee29d1e74edda9e9d687f05e5845382629314acb8",
+      "public_douyin_sha256": "3077eead1408c0bebff8e43633335b622da99aaa382e31775cd3b89c7851d125",
+      "public_bilibili_sha256": "16c3acd3f26256952078145d474c2c279c91efe3a755bb4b4b5b1808d4c5599b",
+      "public_wechat_sha256": "a5c7487fd85134e771f296a751206d1fa7548b93427957f5fb422d4fda4d83c1",
+      "publication_package_sha256": "cb2d3ea98722cf92ee33683dff17c4557b99c420193588e87b98d4c7958ad147"
+    }
+  },
+  "video_candidate": {
+    "status": "rendered",
+    "candidate_ref": "openmontage_candidate://execution/content-video/2617760573f90d37",
+    "artifact_ref": "Gateway-owned temporary execution artifact; formal ref intentionally omitted from Pack assets",
+    "receipt_ref": "6b35ae6a-8b99-430a-82ca-c185a54b1247",
+    "sha256": "df96d0cc7bccdd42608f184890958cc0ab2eeb0bac66f29093405053adb12467",
+    "media": "H.264, AAC silent track, 1080x1920, 30fps, 15.000000s, 95598 bytes",
+    "input": "one Owner-authorized synthetic 1080x1920 PNG; no source asset committed",
+    "restart": "pass: post-restart official artifact download preserved the same SHA-256"
+  },
+  "gates_and_receipts": {
+    "origin_deny": "pass: no trusted Owner origin returned HTTP 403 trusted_owner_origin_required",
+    "video_gate_receipt": "pass: one-time Base Gate and formal Receipt were written in the temporary OS test-store; formal ref intentionally omitted from Pack assets",
+    "video_rights_deny": "pass: source_rights_confirmed=false returned HTTP 422 content_video_source_rights_confirmation_required and created no task-store MP4",
+    "video_replay_deny": "pass: consumed decision replay returned HTTP 403 decision_ref_not_backend_issued; no extra task-store MP4",
+    "lifecycle_disable_gate_receipt": "pass: lifecycle disable Base Gate and formal Receipt were written in the temporary OS test-store; formal ref intentionally omitted from Pack assets",
+    "lifecycle": "pass: install/enable, restart, Gate-confirmed disable, uninstall schedule pause, same-version reactivate/reinstall, and second install idempotency completed; both schedules final active"
   },
   "static_verification": [
-    {
-      "command": "python3 JSON parse; install/uninstall py_compile; unittest discovery",
-      "result": "pass: JSON valid, Python syntax valid, 28/28 tests"
-    },
-    {
-      "command": "Pack structure audit",
-      "result": "pass"
-    },
-    {
-      "command": "tracked forbidden-artifact scan",
-      "result": "pass: no matches"
-    },
-    {
-      "command": "GOWORK=off go test ./...",
-      "result": "pass"
-    }
+    "pass: all tracked JSON parsed; install/uninstall Python compiled; unittest discovery 28/28 passed",
+    "pass: Pack structure audit and tracked forbidden-artifact scan passed",
+    "pass: schema 1.1 candidate bundle and public-draft sensitive scan passed before task-store cleanup",
+    "pass: GOWORK=off go test ./..., closeout sensitive scan, and git diff --check passed after the final documentation update"
   ],
-  "isolated_e2e": {
-    "devserver": "pass: fixed-SHA local product started on 127.0.0.1:18222 with a task-specific temporary data root",
-    "initial_lifecycle_state": "pack registry has zero records; schedules are empty",
-    "gate_deny": {
-      "request": "prepare video execution Gate without trusted Owner origin",
-      "http_status": 403,
-      "result": "trusted_owner_origin_required",
-      "formal_gate_or_receipt_created": false
-    },
-    "rights_deny": {
-      "request": "content-video candidate with source_rights_confirmed=false",
-      "http_status": 422,
-      "result": "content_video_source_rights_confirmation_required",
-      "mp4_created": false,
-      "formal_gate_or_receipt_created": false
-    },
-    "read_only_provider_preflight": {
-      "result": "provider_missing: openmontage_execution_sidecar_not_configured; candidate-only preflight receipt recorded in the isolated test-store",
-      "real_render": false,
-      "publication": false
-    },
-    "lifecycle_gate_and_receipt": "pass: controlled local Owner presence confirmed the lifecycle-disable Gate using the canonical Pack Studio transaction; disable returned formal receipt receipt://03-receipt-ledger/formal/cb684fda-5243-4816-8acd-007edbdddef9",
-    "disable_uninstall": "pass: Pack disabled, uninstall paused both Pack schedules and cleared the active pointer",
-    "restart": "pass: same task-only test-store retained disabled state and paused schedules after devserver restart; no task-owned execution sidecar process was observed",
-    "reinstall": "pass: same version reactivated, schedules resumed, and lifecycle receipt receipt://03-receipt-ledger/formal/995da606-47b7-479b-8cfe-20dcd4780c5e was recorded",
-    "execution_safety": "pass: isolated empty software registry plus explicit sidecar autostart disable produced no task-owned sidecar, no persistent keyfile load, zero execution runtime runs, and zero execution artifacts"
-  },
-  "artifact_policy": {
-    "candidate_content": "not created; no Codex Hands Gate",
-    "public_draft": "not created",
-    "manual_publication_package": "not created",
-    "weekly_review": "not created; no authorized metrics input",
-    "video": "not created; no source-rights Gate or render Gate",
-    "platform_session_upload_send_publish": "not performed"
-  },
   "blockers": [
-    "trusted Owner origin and presence are required before Pack lifecycle or execution Gate issuance",
-    "Codex Hands requires a separate per-run Owner Gate",
-    "OpenMontage requires a separate per-run Owner Gate and confirmed source rights",
-    "positive content and video runs require their own per-run Owner Gates, confirmed source rights, and authorized providers"
+    "Codex Hands provider is not ready under the registered version/adapter/model-binding contract; no bypass or fake readiness was used",
+    "weekly review needs real manual publication facts and metrics",
+    "commercial distribution or network service of the OpenMontage/FFmpeg path still requires Owner/legal license review"
   ],
-  "audit_correction": "content-operations-workbench-v0/docs/G22-closeout/audit-correction-751473a5.md",
   "cleanup": {
-    "devserver": "temporary fixed-SHA process stopped after closeout",
-    "test_store": "task-specific temporary directory only; excluded from Git",
+    "temporary_os_worktree": "removed after closeout",
+    "task_store": "removed after closeout",
+    "sidecar": "stopped after closeout",
     "committed_runtime_artifacts": false
   },
   "publication": {

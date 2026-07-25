@@ -3,6 +3,18 @@
 日期：2026-07-24
 状态：`blocked`；生命周期：隔离候选包 lifecycle 已验收，正向候选生产未获逐次授权，未发布。
 
+## 2026-07-25 恢复轮（已收口）
+
+| 维度 | 本轮裁定 |
+| --- | --- |
+| 固定依据 | OS `af45a07b69c2ea44ed4b9d38612468bde0b2050d`，以全新 task-owned store、空 software registry 和 `127.0.0.1:18222` 验收；`751473a5` 仅作历史证据。 |
+| 真实证据 | Owner 仅授权 Truzhen 自有、已去敏或合成素材；不得把合成素材表述为客户、发布或运营事实。 |
+| 可做的动作 | 可在 Provider readiness、版本与 license 可反查且逐次本地 Base Gate 生效时，受控调用本机 Codex Hands / OpenMontage / ffmpeg 生成本地候选。 |
+| 禁止边界 | 不登录、上传、发送、发布、私信、评论或抓取联系人；`publication_authorized=false`、`publication_status=not_published` 不得改变。 |
+| 验收 | schema 1.1 bundle 的 internal/public 隔离、bundle-index 一一映射、公开稿清洗、候选 MP4 媒体检查、Gate/Receipt、生命周期重启与幂等、失败不留假产物。 |
+
+结果：OpenMontage 本地渲染经最小只读投影、任务侧车、逐次 Base Gate 与官方 Gateway 成功产出候选 MP4；Codex Hands 因登记版本、adapter 和 model binding 未就绪，保持 `not_ready` 且没有调用。候选文本包已按 schema 1.1 通过校验，周复盘因没有真实发布指标保持 `blocked`。本恢复轮的结论因此是“局部候选验收通过、整体 G22 有证据 blocked”，绝不等同于发布。
+
 | 维度 | 本次裁定 |
 | --- | --- |
 | 要做的事 | 在隔离运行态中验证内容运营 Pack 的 install / enable、选题、母内容、渠道候选、公开稿清洗、人工发布包、周复盘与竖屏 MP4 候选；任何平台发布永远由 Owner 手工完成。 |
