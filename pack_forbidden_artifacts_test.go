@@ -139,6 +139,10 @@ func TestPackAssetsDoNotCarryBusinessDataFormalRefsOrRawSecrets(t *testing.T) {
 }
 
 func TestPackGlueDoesNotMintOwnerActionEvidence(t *testing.T) {
+	formalUninstallers := map[string]struct{}{
+		"housekeeping-ops-pack-v0/uninstall.py":     {},
+		"shuxuejia-renovation-pack-v0/uninstall.py": {},
+	}
 	installers, err := filepath.Glob("*-v0/install.py")
 	if err != nil {
 		t.Fatal(err)
@@ -160,8 +164,27 @@ func TestPackGlueDoesNotMintOwnerActionEvidence(t *testing.T) {
 		if strings.Contains(source, "owner_action_evidence://") {
 			t.Fatalf("%s: Pack glue 禁止自铸 owner_action_evidence_ref", path)
 		}
-		if strings.HasSuffix(path, "uninstall.py") && !strings.Contains(source, `"action_type": "14.pack-studio.lifecycle.disable"`) {
-			t.Fatalf("%s: 卸载缺少 os-14 canonical action_type", path)
+		if !strings.HasSuffix(path, "uninstall.py") {
+			continue
+		}
+		hasDisableAction := strings.Contains(source, `"action_type": "14.pack-studio.lifecycle.disable"`)
+		hasDisableEndpoint := strings.Contains(source, `"/v3/pack-studio/lifecycle/disable"`)
+		hasUninstallAction := strings.Contains(source, `"14.pack-studio.lifecycle.uninstall"`)
+		hasUninstallEndpoint := strings.Contains(source, `"/v3/pack-studio/lifecycle/uninstall"`)
+		if _, formal := formalUninstallers[path]; formal {
+			if !hasUninstallAction || !hasUninstallEndpoint {
+				t.Fatalf("%s: formal uninstall 必须同时声明 canonical uninstall action 与 endpoint", path)
+			}
+			if hasDisableAction || hasDisableEndpoint {
+				t.Fatalf("%s: formal uninstall 禁止用 legacy disable 字符串、死代码或双语义满足扫描", path)
+			}
+			continue
+		}
+		if !hasDisableAction {
+			t.Fatalf("%s: 停用型卸载缺少 os-14 canonical disable action_type", path)
+		}
+		if hasUninstallAction || hasUninstallEndpoint {
+			t.Fatalf("%s: 未登记为 formal uninstall，却混入 uninstall action/endpoint", path)
 		}
 	}
 }

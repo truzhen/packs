@@ -19,6 +19,10 @@ PACKS = [
     "shuxuejia-renovation-pack-v0",
     "smart-home-owner-pack-v0",
 ]
+FORMAL_UNINSTALL_PACKS = {
+    "housekeeping-ops-pack-v0",
+    "shuxuejia-renovation-pack-v0",
+}
 
 
 def load_script(pack, name):
@@ -106,14 +110,18 @@ class TestPackIssuedBinding(unittest.TestCase):
                 mod = load_script(pack, "uninstall")
                 manifest_path = os.path.join(mod.PACK_DIR, "manifest.json")
                 with open(manifest_path, encoding="utf-8") as stream:
-                    pack_ref = mod.json.load(stream)["pack_ref"]
+                    manifest = mod.json.load(stream)
+                pack_ref = manifest["pack_ref"]
+                version = manifest["version"]
                 disabled = []
+                uninstalled = []
                 lifecycle_calls = [0]
 
                 # Read-only handoff is an explicit production declaration.
                 # Do not probe production call() and do not swallow an unknown
                 # exception: an undeclared mode must follow the legacy contract.
                 is_read_only = hasattr(mod, "OWNER_DISABLE_HANDOFF")
+                is_formal_uninstall = pack in FORMAL_UNINSTALL_PACKS
 
                 def fake_call(_method, path, body=None):
                     if "/lifecycle/packs?" in path:
@@ -130,6 +138,9 @@ class TestPackIssuedBinding(unittest.TestCase):
                     if path.endswith("/lifecycle/disable"):
                         disabled.append(body)
                         return 200, {}
+                    if path.endswith("/lifecycle/uninstall"):
+                        uninstalled.append(body)
+                        return 200, {}
                     self.fail("unexpected path: " + path)
 
                 mod.call = fake_call
@@ -138,8 +149,21 @@ class TestPackIssuedBinding(unittest.TestCase):
                 # handoff wait so the test does not sleep for the default 300s.
                 old_base = os.environ.get("TRUZHEN_DEVSERVER_BASE")
                 old_wait = os.environ.get("TRUZHEN_OWNER_HANDOFF_WAIT_SECONDS")
+                old_proof = os.environ.get("TRUZHEN_PACK_UNINSTALL_PROOF_JSON")
                 os.environ["TRUZHEN_DEVSERVER_BASE"] = "http://127.0.0.1:18080"
                 os.environ["TRUZHEN_OWNER_HANDOFF_WAIT_SECONDS"] = "0"
+                if is_formal_uninstall:
+                    os.environ["TRUZHEN_PACK_UNINSTALL_PROOF_JSON"] = mod.json.dumps({
+                        "action_type": "14.pack-studio.lifecycle.uninstall",
+                        "target_ref": pack_ref,
+                        "transaction_ref": "transaction://pack-uninstall:%s@%s" % (pack_ref, version),
+                        "decision_ref": "decision-1",
+                        "run_id": "run-1",
+                        "nonce": "nonce-1",
+                        "owner_action_evidence_ref": "owner_action_evidence://base/confirmed-1",
+                    })
+                    if hasattr(mod, "PROOF_RAW"):
+                        mod.PROOF_RAW = os.environ["TRUZHEN_PACK_UNINSTALL_PROOF_JSON"]
                 try:
                     with contextlib.redirect_stdout(io.StringIO()):
                         with mock.patch.object(sys, "argv", [mod.__file__]):
@@ -153,14 +177,28 @@ class TestPackIssuedBinding(unittest.TestCase):
                         os.environ.pop("TRUZHEN_OWNER_HANDOFF_WAIT_SECONDS", None)
                     else:
                         os.environ["TRUZHEN_OWNER_HANDOFF_WAIT_SECONDS"] = old_wait
+                    if old_proof is None:
+                        os.environ.pop("TRUZHEN_PACK_UNINSTALL_PROOF_JSON", None)
+                    else:
+                        os.environ["TRUZHEN_PACK_UNINSTALL_PROOF_JSON"] = old_proof
                 # Read-only uninstall.py (environmental/smart-home) never POSTs
                 # /lifecycle/disable; it waits for the Owner to disable via GUI.
-                # Legacy uninstall.py (backup/housekeeping/shuxuejia) POSTs and
-                # must forward the exact confirm evidence.
-                if is_read_only:
+                # Formal uninstall consumes a separately issued exact proof and
+                # forwards the binding to /lifecycle/uninstall without minting.
+                # Remaining legacy disable scripts still forward confirm evidence.
+                if is_formal_uninstall:
+                    self.assertEqual(len(disabled), 0)
+                    self.assertEqual(len(uninstalled), 1)
+                    self.assertEqual(
+                        uninstalled[0]["owner_action_evidence_ref"],
+                        "owner_action_evidence://base/confirmed-1",
+                    )
+                elif is_read_only:
                     self.assertEqual(len(disabled), 0, "read-only uninstall must not POST /lifecycle/disable")
+                    self.assertEqual(len(uninstalled), 0)
                 else:
                     self.assertEqual(len(disabled), 1)
+                    self.assertEqual(len(uninstalled), 0)
                     self.assertEqual(disabled[0]["owner_action_evidence_ref"], "owner_action_evidence://base/confirmed-1")
 
 
