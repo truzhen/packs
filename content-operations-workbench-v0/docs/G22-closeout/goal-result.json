@@ -7,14 +7,15 @@
   "pack_version": "0.2.0",
   "lifecycle": "候选包已验收；未发布",
   "closeout": "content-operations-workbench-v0/docs/G22-closeout/evidence-envelope.json",
-  "decision": "G22 的本地 OpenMontage/FFmpeg 候选路径已在 af45a07b 的最小只读 registry 投影中经真实 Gateway、单次 Base Gate 和 Receipt 验收。当前 b843186 的官方 Docker Hands 物料路径既不接受 task-owned 临时离线目录，也会在受锁物料未就绪时要求联网拉取；同时 devserver 组合根会在 autostart=0 生效前读取持久 Windows guest-agent key。Hands 未调用，故目标整体保持 blocked。",
+  "decision": "G22 的本地 OpenMontage/FFmpeg 候选路径已在 af45a07b 的最小只读 registry 投影中经真实 Gateway、单次 Base Gate 和 Receipt 验收。R22A 已解除 devserver 读取持久 key 前的自动探测阻断；R22B 的本机离线物料也通过 Software 验证。但当前 OS Provider resolver 要求 tarballs=0700 与 receipt 生成的 material-ready.json，而 R22B 产出 tarballs=0755 和 material-set.json，正式 install candidate 在 Gate 前 HTTP 503 拒绝。Hands 未调用，故目标整体保持 blocked。",
   "current_os": {
-    "commit": "b843186cd2a7e93682f5d67e62d79a228376e368",
+    "commit": "4784c2dc9048968542262349844d413c252f0e51",
     "endpoint": "http://127.0.0.1:18222",
-    "historical_closeout_commit": "af45a07b69c2ea44ed4b9d38612468bde0b2050d"
+    "software_commit": "346018276e5cc970f10b513ff9413520763f1323",
+    "historical_closeout_commit": "b843186cd2a7e93682f5d67e62d79a228376e368"
   },
   "next_owner_action": [
-    "由 OS Owner 提供读取持久 guest-agent key 前生效的正式 devserver disable 开关，并由 OS/software Owner 定义受锁的 task-owned 离线物料采纳契约；两项完成后才可从空 store 重新完成 Provider/Runtime 投影与逐次内容生产 Gate",
+    "由 OS/software Owner 统一离线 material adoption 契约：tarballs 权限、material-set.json 验真、Owner Gate/Receipt 和 Runtime projection 必须由同一正式链消费；完成后才可从空 store 重新完成 Provider/Runtime 投影与逐次内容生产 Gate",
     "提供人工发布后的真实指标，才可解除 weekly_review blocked",
     "商业分发、随安装包分发或网络服务前完成 OpenMontage/FFmpeg 的 Owner/legal 许可证裁定"
   ],

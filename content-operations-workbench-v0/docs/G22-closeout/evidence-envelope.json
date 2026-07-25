@@ -44,6 +44,18 @@
     "post_correction_zero_actions": "no service restarted; 18222 released; no Provider prepare/execute, Hands, model request, platform action, new session, trace, artifact, install candidate or Receipt",
     "audit_record": "docs/G22-closeout/audit-correction-b843186-windows-composition.md"
   },
+  "r22a_r22b_current_baseline": {
+    "os_commit": "4784c2dc9048968542262349844d413c252f0e51",
+    "software_commit": "346018276e5cc970f10b513ff9413520763f1323",
+    "lane": "127.0.0.1:18222; fresh task-owned HOME/store/workroot/keys; TRUZHEN_WINDOWS_VM_AUTODETECT=0; Android and sidecar autostart disabled",
+    "no_credential_bypass": "no dummy key, caller marker, alternate key, registry/source-lock edit, Docker pull/fetch/build/run/login, or platform action",
+    "material_set_sha256": "a1a92b054b8a94c2f660320a5e35813106e7b580e194ee3f1c35589d5b585485",
+    "material_verification": "Software verify-materials.py passed; image digest sha256:08b687b435e7bb00bf803e2e2f099bfb05d9701ae7900f60a7fbde256aae97f5",
+    "official_candidate_response": "HTTP 503 providerinstall source registry or provider assets invalid: Docker material directory is not owner-only; response SHA-256 948e8eaf66c4944a16847f025cb01bc88db4f142624a7921a854e6d750b1f77f",
+    "root_cause": "R22B tarballs mode is 0755 while OS requires 0700; R22B provides material-set.json while current OS only consumes receipt-backed material-ready.json",
+    "zero_execution": "provider_install_candidates=0; base_gated_action_issues=0; no task/provider execution Receipt; execution product sessions/traces/artifacts empty",
+    "audit_record": "docs/G22-closeout/audit-correction-4784c2dc-r22-integration-gap.md"
+  },
   "candidate_bundle": {
     "schema_version": "1.1",
     "run_id": "g22-af45a07b-candidate",
@@ -88,7 +100,7 @@
     "pass: GOWORK=off go test ./..., closeout sensitive scan, and git diff --check passed after the final documentation update"
   ],
   "blockers": [
-    "Codex Hands on b843186 is blocked by two external formal conditions: the source lock does not support task-owned existing-image offline adoption and the devserver composition root reads a persistent guest-agent key before any official autostart disable takes effect",
+    "Codex Hands on current R22A/R22B baselines is blocked before Gate because the Software offline material format/permissions are not consumed by the OS Provider resolver; no bypass was used",
     "weekly review needs real manual publication facts and metrics",
     "commercial distribution or network service of the OpenMontage/FFmpeg path still requires Owner/legal license review"
   ],
@@ -96,7 +108,7 @@
     "temporary_os_worktree": "removed after closeout",
     "task_store": "removed after closeout",
     "sidecar": "stopped after closeout",
-    "codex_hands_audit_store": "historical af45 audit store and b843 pre-correction task directories moved to local Trash; 18222 released; no post-correction session was created",
+    "codex_hands_audit_store": "historical audit stores and the R22A/R22B fresh test-store moved to local Trash; 18222 released; no Provider candidate or Hands session was created",
     "committed_runtime_artifacts": false
   },
   "publication": {
