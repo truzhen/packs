@@ -15,7 +15,7 @@
   "authorization": {
     "evidence_and_assets": "Owner authorized only Truzhen-owned, de-identified, or synthetic assets; the input image was synthetic and rights-confirmed in the one-time local Gate flow",
     "local_gate": "controlled local Owner presence issued a one-time Base Gate for content video only",
-    "codex_hands": "not invoked: readiness remained not_ready because registered host Codex 0.144.1 is adapter-pending/not-configured while the local binary is 0.145.0-alpha.30",
+    "codex_hands": "not invoked: current af45a07b Docker audit verified the local digest-pinned image and local os-08 model, but the official source-lock candidate remained not_ready/controlled_download_stage_required. No existing image or host binary was treated as a readiness bypass.",
     "openmontage": "invoked only through the official 11 Execution Gateway and task-owned loopback sidecar after real preflight ready",
     "platform_actions": "never authorized and not performed"
   },
@@ -25,6 +25,16 @@
     "ffmpeg": "8.1.2; GPL version 3 or later build with libx264",
     "pillow": "12.2.0",
     "preflight": "pass: local Remotion/FFmpeg rendering ready; cloud image/video/TTS providers remained unconfigured and unused"
+  },
+  "codex_hands_audit_correction": {
+    "os_commit": "af45a07b69c2ea44ed4b9d38612468bde0b2050d",
+    "lane": "127.0.0.1:18222; fresh task-owned store; Android and execution-sidecar autostart disabled",
+    "docker_image": "local digest-pinned truzhen/codex-hands@sha256:08b687b435e7bb00bf803e2e2f099bfb05d9701ae7900f60a7fbde256aae97f5; linux/arm64; user 10001:10001",
+    "model_gateway": "local-omlx/Qwen3.6-35B-A3B-4bit was ready in os-08 readmodel; binding probe stopped at code-assistant provider projection unavailable because the Docker Provider/Runtime had no installed projection",
+    "provider_readiness": "official provider install candidate: not_ready / controlled_download_stage_required; source-lock offline materials absent; external fetch/install/build prohibited in this run",
+    "zero_sessions": "code_assistant_run decisions=0; code_assistant_run receipts=0; execution product sessions/traces/artifacts empty; provider install candidates=0",
+    "artifact_summary_sha256": "7f8eaaa09552936062ba2b18c22add11f92cb56d7f1325834c223766647c6a78",
+    "audit_record": "docs/G22-closeout/audit-correction-af45a07b-docker-hands.md"
   },
   "candidate_bundle": {
     "schema_version": "1.1",
@@ -70,7 +80,7 @@
     "pass: GOWORK=off go test ./..., closeout sensitive scan, and git diff --check passed after the final documentation update"
   ],
   "blockers": [
-    "Codex Hands provider is not ready under the registered version/adapter/model-binding contract; no bypass or fake readiness was used",
+    "Codex Hands current af45a07b blocker is Docker source-lock material readiness: controlled_download_stage_required prevents official Provider/Runtime and model-binding projection; no bypass or fake readiness was used",
     "weekly review needs real manual publication facts and metrics",
     "commercial distribution or network service of the OpenMontage/FFmpeg path still requires Owner/legal license review"
   ],
@@ -78,6 +88,7 @@
     "temporary_os_worktree": "removed after closeout",
     "task_store": "removed after closeout",
     "sidecar": "stopped after closeout",
+    "codex_hands_audit_store": "moved to local Trash after the current-SHA audit; 18222 released; no session was created",
     "committed_runtime_artifacts": false
   },
   "publication": {
