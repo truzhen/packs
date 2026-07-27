@@ -50,6 +50,8 @@
 
 需要参考基座范式时，只读 `/Users/li/Documents/truzhenos` 根治理文件（旧 `truzhenv3` 已封棺冻结）；需要修改或测试基座仓时，必须先获 Owner 重新授权。
 
+复杂任务的节点、交接、单写者、独立验收、预算和停止条件以 `AGENTS.md`“任务图执行纪律”为准；本文件不重复正文。
+
 ## 4.1 固定主仓与 main 基准
 
 六仓固定主仓目录为 `/Users/li/Documents/truzhen-client-web-desktop`、`/Users/li/Documents/truzhen-cloud`、`/Users/li/Documents/truzhen-software`、`/Users/li/Documents/truzhen-contracts`、`/Users/li/Documents/truzhenos`、`/Users/li/Documents/truzhen-packs`。拉新分支、合并后同步和主线核查都以这些目录为准。
