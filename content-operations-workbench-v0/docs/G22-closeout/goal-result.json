@@ -2,22 +2,25 @@
   "schema": "truzhen-packs.g22-content-ops.goal-result.v1",
   "goal_id": "G22",
   "status": "blocked",
-  "date": "2026-07-25",
+  "date": "2026-07-28",
   "pack_ref": "scene_pack://content-operations-workbench",
   "pack_version": "0.2.0",
   "lifecycle": "候选包已验收；未发布",
   "closeout": "content-operations-workbench-v0/docs/G22-closeout/evidence-envelope.json",
-  "decision": "G22 的本地 OpenMontage/FFmpeg 候选路径已在 af45a07b 的最小只读 registry 投影中经真实 Gateway、单次 Base Gate 和 Receipt 验收。R22A 已解除 devserver 读取持久 key 前的自动探测阻断；R22B 的本机离线物料也通过 Software 验证。但当前 OS Provider resolver 要求 tarballs=0700 与 receipt 生成的 material-ready.json，而 R22B 产出 tarballs=0755 和 material-set.json，正式 install candidate 在 Gate 前 HTTP 503 拒绝。Hands 未调用，故目标整体保持 blocked。",
-  "current_os": {
-    "commit": "4784c2dc9048968542262349844d413c252f0e51",
-    "endpoint": "http://127.0.0.1:18222",
-    "software_commit": "346018276e5cc970f10b513ff9413520763f1323",
-    "historical_closeout_commit": "b843186cd2a7e93682f5d67e62d79a228376e368"
+  "decision": "本轮使用全新 task-owned store 和 Software 临时副本走官方离线材料路径。先前错误指向固定 Software 忽略目录的 ACL 拒绝已作废，且没有形成候选。官方 prepare-offline-materials.py 随后在新目录前置拒绝：锁定的本机 source image digest 08b687… 已不存在；同标签仅为 R22C 受控安装产物 7a86b0…，RepoDigest 不匹配。因而没有 Provider candidate、Owner/Base Gate、Receipt、安装、运行探针、模型调用或内容候选；本 Pack 不能重标镜像、修改 source-lock 或旁路。",
+  "current_baseline": {
+    "os": "f26d99c238a7d28af45ed96d5c5794550c313de3",
+    "software": "614e771086fa3da9bf495a0ba7b89aca50170015",
+    "client": "802bb5e92d420197d80c44316bacd42c6e80b8dd",
+    "cloud": "ff728c3ea46508b1d539cb32a4e163a9af3ce2c3",
+    "contracts": "07854fef597f0641aae88ae42e1eff137b6ceab0",
+    "packs": "7289f83684d697756be7f51034138fd0afa1d568",
+    "endpoint": "http://127.0.0.1:18222"
   },
   "next_owner_action": [
-    "由 OS/software Owner 统一离线 material adoption 契约：tarballs 权限、material-set.json 验真、Owner Gate/Receipt 和 Runtime projection 必须由同一正式链消费；完成后才可从空 store 重新完成 Provider/Runtime 投影与逐次内容生产 Gate",
-    "提供人工发布后的真实指标，才可解除 weekly_review blocked",
-    "商业分发、随安装包分发或网络服务前完成 OpenMontage/FFmpeg 的 Owner/legal 许可证裁定"
+    "由 OS/Software Owner 恢复或以受治理方式重新投影 source-lock 所要求的 exact local image 08b687…；不得重标 R22C 的 7a86b0… 产物、修改锁或通过网络获取。",
+    "在新的空 store 中重新运行官方 prepare/verify 后，才可新建两阶段 Provider candidate 并由 Owner 在可信 UI 逐次确认。",
+    "真实手工发布后才可提供周复盘指标；本目标不授予任何平台操作。"
   ],
   "publication": "never_formalizes; owner_manual_only; publication_authorized=false; publication_status=not_published; platform login/upload/send/publish not performed",
   "push_merge_tag_deploy": "未执行，等待 Owner。"

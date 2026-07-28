@@ -2,113 +2,64 @@
   "schema": "truzhen-packs.g22-content-ops.evidence-envelope.v1",
   "goal": "G22 内容运营工作台 Pack 候选生产与绝不自动发布",
   "status": "blocked",
+  "date": "2026-07-28",
   "lifecycle": "候选包已验收；未发布",
   "scope": ["content-operations-workbench-v0/**"],
-  "base": {
-    "packs_commit_before_closeout": "548924ff775ed3e0a956f7f9f5065b57531ee748",
-    "os_commit": "b843186cd2a7e93682f5d67e62d79a228376e368",
-    "historical_os_commit": "751473a5dd1b0ee2965397b541ef57a72e8ce273",
-    "os_endpoint": "http://127.0.0.1:18222",
-    "os_store": "fresh task-owned temporary test-store",
-    "registry": "minimal read-only projection containing only resource-openmontage-media-gen-v1; no key or cloud provider configured"
+  "fixed_baseline": {
+    "os": "f26d99c238a7d28af45ed96d5c5794550c313de3",
+    "client": "802bb5e92d420197d80c44316bacd42c6e80b8dd",
+    "cloud": "ff728c3ea46508b1d539cb32a4e163a9af3ce2c3",
+    "contracts": "07854fef597f0641aae88ae42e1eff137b6ceab0",
+    "software": "614e771086fa3da9bf495a0ba7b89aca50170015",
+    "packs": "7289f83684d697756be7f51034138fd0afa1d568",
+    "lane": "127.0.0.1:18222"
   },
   "authorization": {
-    "evidence_and_assets": "Owner authorized only Truzhen-owned, de-identified, or synthetic assets; the input image was synthetic and rights-confirmed in the one-time local Gate flow",
-    "local_gate": "controlled local Owner presence issued a one-time Base Gate for content video only",
-    "codex_hands": "not invoked: current af45a07b Docker audit verified the local digest-pinned image and local os-08 model, but the official source-lock candidate remained not_ready/controlled_download_stage_required. No existing image or host binary was treated as a readiness bypass.",
-    "openmontage": "invoked only through the official 11 Execution Gateway and task-owned loopback sidecar after real preflight ready",
-    "platform_actions": "never authorized and not performed"
+    "assets": "仅 Truzhen 自有、去敏或合成素材；无源素材、视频或凭据提交",
+    "local_provider": "仅允许经正式 Provider install candidate、逐次可信 Owner/Base Gate 与 Receipt 后调用",
+    "platform": "publication_authorized=false; publication_status=not_published; 未登录、上传、发送或发布"
   },
-  "provider_evidence": {
-    "openmontage_source": "main@9066dcb2e319727789820c5bcd28274695f2a18a",
-    "openmontage_license": "AGPL-3.0 review-required; local single-Owner acceptance allowed, commercial distribution and network service not approved",
-    "ffmpeg": "8.1.2; GPL version 3 or later build with libx264",
-    "pillow": "12.2.0",
-    "preflight": "pass: local Remotion/FFmpeg rendering ready; cloud image/video/TTS providers remained unconfigured and unused"
+  "r22c_readonly_context": {
+    "closeout": "/Users/li/.codex/truzhenv3-process/closeouts/R22C-r22k-fresh-owner-gate-dynamic-closeout-20260728.md",
+    "installed_output_image": "sha256:7a86b09e2bda34d17531cc5fe0aacd5527e49d1b3f0bf12ed49a1bf21bb3f926",
+    "historical_source_image": "sha256:08b687b435e7bb00bf803e2e2f099bfb05d9701ae7900f60a7fbde256aae97f5",
+    "not_reused": "R22C store、candidate、Gate proof、Receipt、marker 与材料均未复用"
   },
-  "codex_hands_audit_correction": {
-    "os_commit": "af45a07b69c2ea44ed4b9d38612468bde0b2050d",
-    "lane": "127.0.0.1:18222; fresh task-owned store; Android and execution-sidecar autostart disabled",
-    "docker_image": "local digest-pinned truzhen/codex-hands@sha256:08b687b435e7bb00bf803e2e2f099bfb05d9701ae7900f60a7fbde256aae97f5; linux/arm64; user 10001:10001",
-    "model_gateway": "local-omlx/Qwen3.6-35B-A3B-4bit was ready in os-08 readmodel; binding probe stopped at code-assistant provider projection unavailable because the Docker Provider/Runtime had no installed projection",
-    "provider_readiness": "official provider install candidate: not_ready / controlled_download_stage_required; source-lock offline materials absent; external fetch/install/build prohibited in this run",
-    "zero_sessions": "code_assistant_run decisions=0; code_assistant_run receipts=0; execution product sessions/traces/artifacts empty; provider install candidates=0",
-    "artifact_summary_sha256": "7f8eaaa09552936062ba2b18c22add11f92cb56d7f1325834c223766647c6a78",
-    "audit_record": "docs/G22-closeout/audit-correction-af45a07b-docker-hands.md"
-  },
-  "b843186_offline_chain_and_composition_correction": {
-    "os_commit": "b843186cd2a7e93682f5d67e62d79a228376e368",
-    "image": "read-only verified local truzhen/codex-hands@sha256:08b687b435e7bb00bf803e2e2f099bfb05d9701ae7900f60a7fbde256aae97f5; linux/arm64; user 10001:10001; not treated as ready",
-    "source_lock": "official material output is fixed under truzhen-software/providers/codex-hands/docker/materials, which is absent; the official fetcher performs docker pull and does not accept a task-owned offline material directory or adopt an existing final image",
-    "composition_root": "MaybeLoadWindowsGuestTicketPrivateKey is unconditional and precedes TRUZHEN_EXECUTION_SIDECAR_AUTOSTART evaluation; no read-before-key-disable product switch exists for a real devserver",
-    "post_correction_zero_actions": "no service restarted; 18222 released; no Provider prepare/execute, Hands, model request, platform action, new session, trace, artifact, install candidate or Receipt",
-    "audit_record": "docs/G22-closeout/audit-correction-b843186-windows-composition.md"
-  },
-  "r22a_r22b_current_baseline": {
-    "os_commit": "4784c2dc9048968542262349844d413c252f0e51",
-    "software_commit": "346018276e5cc970f10b513ff9413520763f1323",
-    "lane": "127.0.0.1:18222; fresh task-owned HOME/store/workroot/keys; TRUZHEN_WINDOWS_VM_AUTODETECT=0; Android and sidecar autostart disabled",
-    "no_credential_bypass": "no dummy key, caller marker, alternate key, registry/source-lock edit, Docker pull/fetch/build/run/login, or platform action",
-    "material_set_sha256": "a1a92b054b8a94c2f660320a5e35813106e7b580e194ee3f1c35589d5b585485",
-    "material_verification": "Software verify-materials.py passed; image digest sha256:08b687b435e7bb00bf803e2e2f099bfb05d9701ae7900f60a7fbde256aae97f5",
-    "official_candidate_response": "HTTP 503 providerinstall source registry or provider assets invalid: Docker material directory is not owner-only; response SHA-256 948e8eaf66c4944a16847f025cb01bc88db4f142624a7921a854e6d750b1f77f",
-    "root_cause": "R22B tarballs mode is 0755 while OS requires 0700; R22B provides material-set.json while current OS only consumes receipt-backed material-ready.json",
-    "zero_execution": "provider_install_candidates=0; base_gated_action_issues=0; no task/provider execution Receipt; execution product sessions/traces/artifacts empty",
-    "audit_record": "docs/G22-closeout/audit-correction-4784c2dc-r22-integration-gap.md"
+  "current_preflight": {
+    "first_attempt": "错误地指向固定 Software 忽略 materials 目录；HTTP 入口在 candidate 前 fail-closed，ACL 拒绝仅记作作废 preflight",
+    "corrected_root": "新 task-owned、detached Software 副本固定 614e771…；全新 HOME/store/workroot/keys，TRUZHEN_WINDOWS_VM_AUTODETECT=0，Android/sidecar autostart=0",
+    "official_preparer": "prepare-offline-materials.py --materials <task-owned path> exit 1：local image RepoDigest does not match source lock",
+    "official_verifier": "verify-materials.py exit 1：preparer 没有生成材料目录",
+    "read_only_image_check": "锁定 tag 要求 RepoDigest/image ID 08b687…；本机同 tag 为 7a86b0…；08b687… digest 不存在",
+    "zero_effects": "provider_install_candidates=0；无 Owner/Base Gate、Receipt、marker、Docker pull/build/run/login、runtime、模型、Hands session 或内容候选"
   },
   "candidate_bundle": {
     "schema_version": "1.1",
-    "run_id": "g22-af45a07b-candidate",
     "status": "package_ready_for_owner_review",
     "preflight_status": "pending",
-    "publication_authorized": false,
-    "publication_status": "not_published",
-    "result": "direction radar, Chinese mother content, Douyin/Bilibili/WeChat internal and sanitized public candidates, and manual publication package validated; weekly review is blocked because no real manually published metrics exist",
-    "hashes": {
-      "run_manifest_sha256": "4992e95cd5a1db57d3397033438f4ef9be95505848f5782fe183498e472a9637",
-      "bundle_index_sha256": "e8433d33ccdf9ae30a33d33ad7257a689d470c6e7e22807daf3f7a3888a7712d",
-      "internal_mother_sha256": "8d780eac87ed8a2170c3ad5b2a177f31d68062982360f95b0afad10979bdba2a",
-      "public_mother_sha256": "191c441e97fe572c40afda4ee29d1e74edda9e9d687f05e5845382629314acb8",
-      "public_douyin_sha256": "3077eead1408c0bebff8e43633335b622da99aaa382e31775cd3b89c7851d125",
-      "public_bilibili_sha256": "16c3acd3f26256952078145d474c2c279c91efe3a755bb4b4b5b1808d4c5599b",
-      "public_wechat_sha256": "a5c7487fd85134e771f296a751206d1fa7548b93427957f5fb422d4fda4d83c1",
-      "publication_package_sha256": "cb2d3ea98722cf92ee33683dff17c4557b99c420193588e87b98d4c7958ad147"
-    }
+    "internal_public_isolation": "已存在并经 Pack 测试/公开敏感扫描复核；不得冒充本轮模型生成或已发布",
+    "weekly_review": "not_ready：没有真实手工发布指标"
   },
-  "video_candidate": {
-    "status": "rendered",
-    "candidate_ref": "openmontage_candidate://execution/content-video/2617760573f90d37",
-    "artifact_ref": "Gateway-owned temporary execution artifact; formal ref intentionally omitted from Pack assets",
-    "receipt_ref": "6b35ae6a-8b99-430a-82ca-c185a54b1247",
-    "sha256": "df96d0cc7bccdd42608f184890958cc0ab2eeb0bac66f29093405053adb12467",
-    "media": "H.264, AAC silent track, 1080x1920, 30fps, 15.000000s, 95598 bytes",
-    "input": "one Owner-authorized synthetic 1080x1920 PNG; no source asset committed",
-    "restart": "pass: post-restart official artifact download preserved the same SHA-256"
-  },
-  "gates_and_receipts": {
-    "origin_deny": "pass: no trusted Owner origin returned HTTP 403 trusted_owner_origin_required",
-    "video_gate_receipt": "pass: one-time Base Gate and formal Receipt were written in the temporary OS test-store; formal ref intentionally omitted from Pack assets",
-    "video_rights_deny": "pass: source_rights_confirmed=false returned HTTP 422 content_video_source_rights_confirmation_required and created no task-store MP4",
-    "video_replay_deny": "pass: consumed decision replay returned HTTP 403 decision_ref_not_backend_issued; no extra task-store MP4",
-    "lifecycle_disable_gate_receipt": "pass: lifecycle disable Base Gate and formal Receipt were written in the temporary OS test-store; formal ref intentionally omitted from Pack assets",
-    "lifecycle": "pass: install/enable, restart, Gate-confirmed disable, uninstall schedule pause, same-version reactivate/reinstall, and second install idempotency completed; both schedules final active"
+  "historical_openmontage_evidence": {
+    "scope": "仅复核既有证据，未重复长渲染",
+    "media": "H.264、AAC、1080x1920、30fps、15秒；hash df96d0cc7bccdd42608f184890958cc0ab2eeb0bac66f29093405053adb12467",
+    "coverage": "同键幂等、失败无假产物、重启 hash 一致与 source rights 拒绝均已留存历史证据"
   },
   "static_verification": [
-    "pass: all tracked JSON parsed; install/uninstall Python compiled; unittest discovery 28/28 passed",
-    "pass: Pack structure audit and tracked forbidden-artifact scan passed",
-    "pass: schema 1.1 candidate bundle and public-draft sensitive scan passed before task-store cleanup",
-    "pass: GOWORK=off go test ./..., closeout sensitive scan, and git diff --check passed after the final documentation update"
+    "pass: unittest discover 28/28",
+    "pass: tracked JSON、Python compile、Pack structure 与 forbidden-artifact scan",
+    "pass: GOWORK=off go test ./...",
+    "pass: 公开敏感扫描仅命中既有禁止条款、schema 禁止字段、loopback 示例与本 closeout 的安全状态；未发现账号态、凭据、source asset、视频或发布事实",
+    "pass: git diff --check"
   ],
-  "blockers": [
-    "Codex Hands on current R22A/R22B baselines is blocked before Gate because the Software offline material format/permissions are not consumed by the OS Provider resolver; no bypass was used",
-    "weekly review needs real manual publication facts and metrics",
-    "commercial distribution or network service of the OpenMontage/FFmpeg path still requires Owner/legal license review"
-  ],
+  "blocker": {
+    "owner": "OS/Software",
+    "reason": "source-lock 要求的 exact local source image 08b687… 不存在；现存 R22C output image 7a86b0… 不可重标或替代",
+    "pack_action": "无；不改 Software、OS、source-lock、marker、registry 或 Docker 标签"
+  },
   "cleanup": {
-    "temporary_os_worktree": "removed after closeout",
-    "task_store": "removed after closeout",
-    "sidecar": "stopped after closeout",
-    "codex_hands_audit_store": "historical audit stores and the R22A/R22B fresh test-store moved to local Trash; 18222 released; no Provider candidate or Hands session was created",
+    "service": "18222 已停止并确认无监听",
+    "task_state": "已移除 task-owned Software 副本、store、workroot、keys 与临时材料",
     "committed_runtime_artifacts": false
   },
   "publication": {
