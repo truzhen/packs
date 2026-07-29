@@ -1,22 +1,20 @@
 # G22 内容运营工作台候选生产与绝不自动发布：派活卡
 
-日期：2026-07-28。状态：`blocked`；生命周期：候选包已验收；未发布。
+日期：2026-07-29。状态：`blocked`；生命周期：候选包已验收；未发布。
 
 | 维度 | 本轮裁定 |
 | --- | --- |
-| 固定依据 | OS `f26d99c238a7d28af45ed96d5c5794550c313de3`、Software `614e771086fa3da9bf495a0ba7b89aca50170015`、Packs `7289f83684d697756be7f51034138fd0afa1d568`；其余四仓 SHA 见 evidence envelope。 |
-| 真实场景证据 | Owner 授权仅使用 Truzhen 自有、去敏或合成素材并以候选包交付；发布事实归 Owner 与外部平台。 |
-| 最小可交付 | schema 1.1 的 internal/public 双层候选包、人工发布包与历史本地视频候选证据；永不自动正式化或发布。 |
-| 归属与影响 | 仅写 `content-operations-workbench-v0/**`；OS、Software、Provider、Gate 与 Receipt 均为只读消费，未改变契约。 |
-| 风险 | 黄：候选文本与清洗；橙：Provider/Gateway；红：逐次 Owner/Base Gate、真实本地 Hands、素材权利与任何发布动作。 |
-| 禁止边界 | 不登录、上传、发送、发布、私信、抓取联系人；不读取凭据、不改镜像标签、source-lock、registry 或 marker；不提交运行态、素材或视频。 |
-| 验收 | 28 项 Pack 测试、JSON/Python/结构/禁品、敏感扫描、Go 门与 diff check；正向 Hands 仅在官方 Provider/模型均 ready 后开始。 |
+| 固定依据 | OS `be7fc745…`、Software `0768faa1…`、Cloud `e35df2da…`、Client `614f843f…`、Contracts `07854fef…`、Packs `7289f836…`。 |
+| 真实场景证据 | Owner 授权仅使用 Truzhen 自有、去敏或合成素材并交付候选；发布事实归 Owner 与外部平台。 |
+| 归属与影响 | 仅写 `content-operations-workbench-v0/**`；不改 OS、Software、Provider、Gate、Receipt 或协调现场。 |
+| 风险 | 黄：候选文本与清洗；橙：Provider/Gateway；红：逐次 Owner/Base Gate、真实 Hands、素材权利与任何发布动作。 |
+| 禁止边界 | 不登录、上传、发送、发布、私信、抓取联系人；不读取凭据、不伪造 ready、不改 marker/registry/source-lock；不提交运行态、素材或视频。 |
+| 验收 | Provider 安装链必须先正式 ready；再以 schema 1.1 双稿、bundle-index、清洗、媒体、Gate/Receipt 和 lifecycle 证明候选。 |
 
-## 2026-07-28 动态前置结果
+## 2026-07-29 受控阻断
 
-1. 首次隔离服务错误消费固定 Software 忽略目录，因 ACL fail-closed；该请求在 candidate 前返回，`provider_install_candidates=0`，已作废且不作为最终根因。
-2. 纠正后，以 task-owned、固定 `614e771…` 的临时 Software 副本运行官方 `prepare-offline-materials.py`；脚本仅允许 `image inspect/save`，没有 pull/fetch/build/run/login。
-3. 官方预备在创建任何材料前拒绝：锁定 source image 为 `sha256:08b687…`，本机同标签镜像实际为 `sha256:7a86b0…`，且 `08b687…` 不存在。官方 verifier 因未生成材料而拒绝。
-4. 所以没有 Provider candidate、Owner/Base Gate、Receipt、runtime、模型、Hands 或内容生成；平台动作始终为 0。该供给漂移属于 OS/Software 公共根因，本 Pack 无权修复。
+协调现场以全新 runtime 完成两阶段 Provider 安装、Owner/Base Gate、FormalReceipt、materials ready、离线安装、重启和幂等；外部平台动作、pull/fetch、容器运行、Provider/model 调用均为 0。该安装事实不等于可调用能力：当前 runtime/auth probe 与模型绑定仍未就绪，ReadModel 严格为 `sandbox_not_ready` / `install_completed_runtime_or_auth_probe_still_required`。
 
-详见 [当前基线审计更正](audit-correction-f26d99c-r22c-material-image-drift.md)。历史 OpenMontage 本地候选仅作既有媒体技术证据，本轮未重复长渲染。
+因此本轮没有 Hands、模型或 `pack.candidate.generate`，也不重复 OpenMontage 长渲染。下一步只能由 OS/Provider Owner 受治理地完成 runtime/auth probe 和本地 OMLX 模型绑定；ReadModel 同时 ready 后，再从新的空 store 进入一次 candidate-only 内容生成。
+
+详见 [当前安装成功与 runtime 阻断审计](audit-correction-be7fc745-provider-install-pass-runtime-blocked.md)。

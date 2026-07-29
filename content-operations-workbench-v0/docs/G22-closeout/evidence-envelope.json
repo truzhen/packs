@@ -2,64 +2,67 @@
   "schema": "truzhen-packs.g22-content-ops.evidence-envelope.v1",
   "goal": "G22 内容运营工作台 Pack 候选生产与绝不自动发布",
   "status": "blocked",
-  "date": "2026-07-28",
+  "date": "2026-07-29",
   "lifecycle": "候选包已验收；未发布",
   "scope": ["content-operations-workbench-v0/**"],
   "fixed_baseline": {
-    "os": "f26d99c238a7d28af45ed96d5c5794550c313de3",
-    "client": "802bb5e92d420197d80c44316bacd42c6e80b8dd",
-    "cloud": "ff728c3ea46508b1d539cb32a4e163a9af3ce2c3",
+    "os": "be7fc745d91b239e019a542eea8d2f64c8266d3f",
+    "client": "614f843f737e24ed86e049ed9f624feea7a7ef0b",
+    "cloud": "e35df2da32ec70a994b8341a822f6ad256575f35",
     "contracts": "07854fef597f0641aae88ae42e1eff137b6ceab0",
-    "software": "614e771086fa3da9bf495a0ba7b89aca50170015",
+    "software": "0768faa19e355697807d9d3c5271fe74798d2ea8",
     "packs": "7289f83684d697756be7f51034138fd0afa1d568",
     "lane": "127.0.0.1:18222"
   },
-  "authorization": {
-    "assets": "仅 Truzhen 自有、去敏或合成素材；无源素材、视频或凭据提交",
-    "local_provider": "仅允许经正式 Provider install candidate、逐次可信 Owner/Base Gate 与 Receipt 后调用",
-    "platform": "publication_authorized=false; publication_status=not_published; 未登录、上传、发送或发布"
+  "coordinator_evidence": {
+    "type": "0600 sanitized live evidence; consumed read-only and not copied into Pack assets",
+    "sha256": "ef7decb3182700497d7f33db831758430cc5eb081fb421ab5aba4487b0e0b30a",
+    "schema_version": 1,
+    "valid_until": "2026-07-29T03:40:22Z"
   },
-  "r22c_readonly_context": {
-    "closeout": "/Users/li/.codex/truzhenv3-process/closeouts/R22C-r22k-fresh-owner-gate-dynamic-closeout-20260728.md",
-    "installed_output_image": "sha256:7a86b09e2bda34d17531cc5fe0aacd5527e49d1b3f0bf12ed49a1bf21bb3f926",
-    "historical_source_image": "sha256:08b687b435e7bb00bf803e2e2f099bfb05d9701ae7900f60a7fbde256aae97f5",
-    "not_reused": "R22C store、candidate、Gate proof、Receipt、marker 与材料均未复用"
+  "provider_install": {
+    "provider_ref": "provider-codex-cli-docker",
+    "version": "0.144.1",
+    "two_phase_owner_base_gate": "pass: materials candidate terminal material_ready; install candidate terminal succeeded",
+    "formal_receipts": "pass: two formal Receipts and their candidate/transaction/event/source/decision/evidence reverse lookups were verified by coordinator; formal refs remain outside Pack assets",
+    "runtime_image": "sha256:5c727701f94b82ddc1c70b20a77fba3bfcd82acb1aaa1973879f116f8e132f1b; user=10001:10001; network_default=none",
+    "restart_idempotency": "pass: candidates and terminal refs/status/receipt unchanged after restart; install and material-ready receipt multiplicity each 1",
+    "boundaries": "pull/fetch/build/run/login=0; real provider/model call=0; active runtime containers=0"
   },
-  "current_preflight": {
-    "first_attempt": "错误地指向固定 Software 忽略 materials 目录；HTTP 入口在 candidate 前 fail-closed，ACL 拒绝仅记作作废 preflight",
-    "corrected_root": "新 task-owned、detached Software 副本固定 614e771…；全新 HOME/store/workroot/keys，TRUZHEN_WINDOWS_VM_AUTODETECT=0，Android/sidecar autostart=0",
-    "official_preparer": "prepare-offline-materials.py --materials <task-owned path> exit 1：local image RepoDigest does not match source lock",
-    "official_verifier": "verify-materials.py exit 1：preparer 没有生成材料目录",
-    "read_only_image_check": "锁定 tag 要求 RepoDigest/image ID 08b687…；本机同 tag 为 7a86b0…；08b687… digest 不存在",
-    "zero_effects": "provider_install_candidates=0；无 Owner/Base Gate、Receipt、marker、Docker pull/build/run/login、runtime、模型、Hands session 或内容候选"
+  "runtime_readiness": {
+    "status": "sandbox_not_ready",
+    "blocked_reason": "install_completed_runtime_or_auth_probe_still_required",
+    "delegation_ready": false,
+    "model_binding": "not ready",
+    "result": "formal_blocked_runtime_or_auth_probe_required",
+    "no_fake_ready": true
   },
   "candidate_bundle": {
     "schema_version": "1.1",
     "status": "package_ready_for_owner_review",
     "preflight_status": "pending",
-    "internal_public_isolation": "已存在并经 Pack 测试/公开敏感扫描复核；不得冒充本轮模型生成或已发布",
+    "internal_public_isolation": "已存在并经 Pack 测试/公开敏感扫描复核；未冒充本轮模型生成或已发布",
     "weekly_review": "not_ready：没有真实手工发布指标"
   },
   "historical_openmontage_evidence": {
-    "scope": "仅复核既有证据，未重复长渲染",
+    "scope": "仅核对既有证据，未重复长渲染",
     "media": "H.264、AAC、1080x1920、30fps、15秒；hash df96d0cc7bccdd42608f184890958cc0ab2eeb0bac66f29093405053adb12467",
     "coverage": "同键幂等、失败无假产物、重启 hash 一致与 source rights 拒绝均已留存历史证据"
   },
   "static_verification": [
-    "pass: unittest discover 28/28",
+    "pass: unittest discover 28/28，覆盖 install/disable/rollback/uninstall/reinstall journal、Gate evidence 与断点幂等负向路径",
     "pass: tracked JSON、Python compile、Pack structure 与 forbidden-artifact scan",
     "pass: GOWORK=off go test ./...",
-    "pass: 公开敏感扫描仅命中既有禁止条款、schema 禁止字段、loopback 示例与本 closeout 的安全状态；未发现账号态、凭据、source asset、视频或发布事实",
+    "pass: 公开敏感扫描仅命中既有禁止条款、schema 禁止字段和 loopback 示例；未发现账号态、凭据、source asset、视频或发布事实",
     "pass: git diff --check"
   ],
   "blocker": {
-    "owner": "OS/Software",
-    "reason": "source-lock 要求的 exact local source image 08b687… 不存在；现存 R22C output image 7a86b0… 不可重标或替代",
-    "pack_action": "无；不改 Software、OS、source-lock、marker、registry 或 Docker 标签"
+    "owner": "OS/Provider",
+    "reason": "正式安装链成功不等于 runtime/auth/model ready；当前 ReadModel 的 sandbox_not_ready 是正确 fail-closed 状态",
+    "pack_action": "无；不调用 Hands/模型/内容生成，不改 OS、Software、Gate、Receipt、registry 或运行态"
   },
   "cleanup": {
-    "service": "18222 已停止并确认无监听",
-    "task_state": "已移除 task-owned Software 副本、store、workroot、keys 与临时材料",
+    "live_runtime": "由协调会话持有；本 G22 不启动、不清理、不写入",
     "committed_runtime_artifacts": false
   },
   "publication": {
