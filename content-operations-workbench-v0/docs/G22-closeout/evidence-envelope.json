@@ -37,6 +37,12 @@
     "result": "formal_blocked_runtime_or_auth_probe_required",
     "no_fake_ready": true
   },
+  "owner_rc_decision": {
+    "accepted_boundary": "接受 runtime/auth/model sandbox_not_ready 为本次 RC 的可接受受控阻断",
+    "status_remains": "blocked；不提升为 pass",
+    "lifecycle_remains": "候选包已验收；未发布",
+    "non_claim": "本次 RC 不承诺或验收 Codex Hands、模型调用或 pack.candidate.generate 内容生产"
+  },
   "candidate_bundle": {
     "schema_version": "1.1",
     "status": "package_ready_for_owner_review",

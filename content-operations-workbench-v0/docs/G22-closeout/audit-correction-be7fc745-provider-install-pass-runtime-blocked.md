@@ -10,3 +10,7 @@
 4. 该现场没有 pull/fetch、容器运行、Provider/model 调用或平台登录、上传、发送、发布。
 
 当前 ReadModel 仍返回 `sandbox_not_ready`，根因为 `install_completed_runtime_or_auth_probe_still_required`，且模型绑定未就绪。这是受控 fail-closed，不得将“已安装”写成 Provider ready，亦不得调用 Hands、模型或生成内容候选。下一步归 OS/Provider Owner 的 runtime/auth probe 与本地 OMLX 绑定；本 Pack 无权绕过或修复。
+
+## Owner RC 裁定
+
+Owner 接受上述 runtime/auth/model `sandbox_not_ready` 作为本次 RC 的可接受受控阻断。此裁定不改变 G22 的 `blocked` 状态，不将安装链闭环提升为 Hands、模型或 `pack.candidate.generate` 内容生成验收；生命周期仍是“候选包已验收；未发布”，本次 RC 不承诺 Codex Hands 内容生成功能。

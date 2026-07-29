@@ -7,7 +7,8 @@
   "pack_version": "0.2.0",
   "lifecycle": "候选包已验收；未发布",
   "closeout": "content-operations-workbench-v0/docs/G22-closeout/evidence-envelope.json",
-  "decision": "旧 08b687… source-image 缺失阻断已由当前基线作废。协调现场在新的 task-owned runtime 中完成 provider-codex-cli-docker 的两阶段 Owner/Base Gate、正式 Receipt、materials ready、离线安装、重启及同键幂等；反查完整且外部平台动作为 0。但 OS ReadModel 仍诚实返回 sandbox_not_ready / install_completed_runtime_or_auth_probe_still_required，模型绑定未就绪。因此不得调用 Hands、模型或 pack.candidate.generate；G22 保持 runtime/auth/model formal blocked。",
+  "decision": "旧 08b687… source-image 缺失阻断已由当前基线作废。协调现场在新的 task-owned runtime 中完成 provider-codex-cli-docker 的两阶段 Owner/Base Gate、正式 Receipt、materials ready、离线安装、重启及同键幂等；反查完整且外部平台动作为 0。但 OS ReadModel 仍诚实返回 sandbox_not_ready / install_completed_runtime_or_auth_probe_still_required，模型绑定未就绪。因此不得调用 Hands、模型或 pack.candidate.generate；G22 保持 runtime/auth/model formal blocked。Owner 已接受此受控阻断作为本次 RC 的边界裁定，但未将其提升为 pass 或 Hands/模型/内容生成功能验收。",
+  "owner_rc_decision": "接受 runtime/auth/model sandbox_not_ready 为本次 RC 的可接受受控阻断；生命周期仍为候选包已验收、未发布；本次 RC 不承诺 Codex Hands 内容生成功能。",
   "current_baseline": {
     "os": "be7fc745d91b239e019a542eea8d2f64c8266d3f",
     "software": "0768faa19e355697807d9d3c5271fe74798d2ea8",
