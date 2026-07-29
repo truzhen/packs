@@ -3,6 +3,15 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
+## 0.-4 Truzhen v4 发布前第六批收口（2026-07-29）
+
+| 目标 | 结果与边界 | 生命周期 / 证据 |
+| --- | --- | --- |
+| G21 家政运营 Pack | 正式卸载只消费外部签发的 governed uninstall proof；脚本不自行 Prepare / Confirm，不删除历史对象、候选或 Receipt。共享 scanner 与 issued-binding 测试已同步。 | `候选包已验收、未发布`；`housekeeping-ops-pack-v0/docs/G21-closeout/goal-result.json` |
+| G22 内容运营工作台 Pack | 两阶段 Provider 安装、正式 Receipt 反查、重启与同键幂等已闭环，平台动作和真实 Provider / 模型调用均为 0；ReadModel 仍为 `sandbox_not_ready / install_completed_runtime_or_auth_probe_still_required`。Owner 接受其作为本次 RC 的受控阻断，但不提升为 pass，也不承诺 Codex Hands 内容生成功能。 | `blocked（Owner 接受的 RC 受控边界）`、`候选包已验收、未发布`；`content-operations-workbench-v0/docs/G22-closeout/goal-result.json`、`content-operations-workbench-v0/docs/G22-closeout/evidence-envelope.json` |
+| G23 墅学家 Pack | 正式卸载统一为一次 governed uninstall，拒绝 legacy disable / prepare / confirm / self-mint；EPC 457 节点、543 边和角色槽位拓扑测试已纳入。 | `候选包已验收、未发布`；`shuxuejia-renovation-pack-v0/docs/G23-closeout/goal-result.json` |
+| 第六批 Packs 集成门 | 当前 Packs 主线之上的 G21/G22/G23 净变更通过递归 JSON、Python compile、根级 28/28 与 Pack 专项测试、结构/禁品/敏感边界、`GOWORK=off go test ./...` 和 `git diff --check`。 | `已验收`；`docs/acceptance/batch6-packs-integration-closeout-20260729.md`，主线同步由最终本地 / origin / remote SHA 终检证明 |
+
 ## 0.-3 Truzhen v4 发布前第五批收口（2026-07-23）
 
 | 目标 | 结果与边界 | 生命周期 / 证据 |

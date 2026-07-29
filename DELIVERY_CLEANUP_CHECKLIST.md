@@ -1,10 +1,17 @@
 # truzhen-packs 交付清理清单
 
-更新时间：2026-07-23
+更新时间：2026-07-29
 
 本文件登记本仓交付级遗留。它不是功能完成声明，也不替代 Pack 安装、启用、停用、回执或商品化验收。
 
 > **账本制度（2026-07-11）**：本文件是 packs 仓**分账**；六仓交付债务**总账** = truzhenos 仓 `DELIVERY_CLEANUP_CHECKLIST.md`。集中处理计划：truzhenos `docs/plans/six-repo-delivery-cleanup-debt-consolidation-plan-20260711.md`。
+
+## 2026-07-29 第六批 Packs 收口
+
+- [x] G21 家政与 G23 墅学家正式卸载语义、共享扫描器和 issued-binding 测试已组成当前主线候选；全量 Packs 门通过。
+- [x] G22 两阶段 Provider 安装、正式 Receipt 反查、重启与幂等已留存去敏证据，平台动作和真实 Provider / 模型调用为 0。
+- [ ] G22 仍为 `sandbox_not_ready` 受控阻断；Owner 仅接受其作为本次 RC 边界，不承诺 Codex Hands 内容生成，不得改写为 pass。
+- [ ] 所有 Pack 均未发布；真实平台登录、上传、发送、发布以及生产 Provider 动作不在本次集成授权内。
 
 ## 2026-07-23 第五批 Packs 收口
 
