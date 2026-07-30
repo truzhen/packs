@@ -7,21 +7,23 @@
 ## 加载 / 卸载
 
 ```sh
-# 起含本分支改动的 devserver 后：
-python3 packs/smart-home-owner-pack-v0/install.py
+# 指向唯一隔离 devserver；install.py 只读等待可信 GUI 的状态。
+TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18080 \
+TRUZHEN_CLIENT_URL=http://127.0.0.1:5197 \
+  python3 packs/smart-home-owner-pack-v0/install.py --open-gui
 TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18080 \
 TRUZHEN_CLIENT_URL=http://127.0.0.1:5197 \
   python3 packs/smart-home-owner-pack-v0/uninstall.py --open-gui
 ```
 
-`uninstall.py` 不在后台伪造 Owner：它只打开/提示可信前台的「场景包管理」，由 Owner
-显式确认停用，并只读等待 os-14 ReadModel 证明已停用。没有 Owner presence 或超时会明确
-失败，不会冒充卸载成功；历史项目与 Receipt 始终保留。
+`install.py` 与 `uninstall.py` 都不在后台伪造 Owner：它们只提示可信前台，由 Owner 显式
+完成操作，再以 GET 轮询 os-14 ReadModel。install 必须观察到 manifest 的精确版本；缺字段、
+版本不符或超时都会 fail closed。该交接已实现，仍待独立验收；历史项目与 Receipt 始终保留。
 
 本 pack 无知识库（knowledge/），install.py 会自动跳过知识入库步骤。
 产品基座默认不自带本 pack（server.go 已摘除自动 seed），只在 install 后出现；Owner 前台停用后从可运行列表消失。
 
-当前生命周期：`已实现 -> 已接线`。v1.1.0 声明、flow 与角色边界已更新，不代表真实 GUI、Frappe 或 Home Assistant 路径已经独立验收或发布。
+当前生命周期：`已实现 -> 待独立验收`。v1.1.0 声明、flow 与角色边界已更新，不代表真实 GUI、Frappe 或 Home Assistant 路径已经独立验收或发布。
 
 ## 离线 Pack 契约验证
 

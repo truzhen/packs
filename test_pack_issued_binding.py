@@ -19,6 +19,7 @@ PACKS = [
     "shuxuejia-renovation-pack-v0",
     "smart-home-owner-pack-v0",
 ]
+INSTALL_MINT_PACKS = [pack for pack in PACKS if pack != "smart-home-owner-pack-v0"]
 FORMAL_UNINSTALL_PACKS = {
     "housekeeping-ops-pack-v0",
     "shuxuejia-renovation-pack-v0",
@@ -47,7 +48,7 @@ def complete_confirm():
 
 class TestPackIssuedBinding(unittest.TestCase):
     def test_install_mint_rejects_confirm_without_evidence(self):
-        for pack in PACKS:
+        for pack in INSTALL_MINT_PACKS:
             with self.subTest(pack=pack):
                 mod = load_script(pack, "install")
 
@@ -64,7 +65,7 @@ class TestPackIssuedBinding(unittest.TestCase):
                         mod.mint_decision("pack-version", "knowledge-candidate")
 
     def test_install_mint_returns_exact_confirm_evidence(self):
-        for pack in PACKS:
+        for pack in INSTALL_MINT_PACKS:
             with self.subTest(pack=pack):
                 mod = load_script(pack, "install")
 

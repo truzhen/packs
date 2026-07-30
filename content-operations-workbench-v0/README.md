@@ -34,7 +34,21 @@ Owner 已有一个约 13 万粉、以别墅装修效果和灯光为主的抖音�
 - `capabilities/capabilities.json`：Codex Hands 候选生成能力需求；无发布能力。
 - `skills/truzhen-content-ops/`：由 Codex Hands 解释的声明式 Skill bundle，不含 CLI 或凭据。
 - `docs/release-notes-0.2.0.md`：本版视频产物、Provider 需求和非目标。
-- `install.py` / `uninstall.py`：只调用 Truzhen 现有 lifecycle；不直连 Provider。
+- `install.py` / `uninstall.py`：可信 GUI 交接脚本，只 GET 等待 os-14/os-07 权威状态；不直连 Provider，也不提交 lifecycle、计划或 Base 写入。
+
+## 可信 GUI 交接
+
+```sh
+TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18080 \
+TRUZHEN_CLIENT_URL=http://127.0.0.1:5197 \
+  python3 content-operations-workbench-v0/install.py --open-gui
+
+TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18080 \
+TRUZHEN_CLIENT_URL=http://127.0.0.1:5197 \
+  python3 content-operations-workbench-v0/uninstall.py --open-gui
+```
+
+Owner 在可信 GUI 完成操作后，install 只接受 manifest 的精确 enabled 版本和全部声明计划 `active`；uninstall 只接受 Pack 停用且声明计划 `paused`、`cancelled` 或缺失。ReadModel 缺字段、版本不符、计划仍 active 或超时均 fail closed。该交接为`已实现 -> 待独立验收`，不构成真实 Provider、内容生成或平台发布验收。
 
 ## 封装
 

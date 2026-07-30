@@ -12,6 +12,12 @@
 | G23 墅学家 Pack | 正式卸载统一为一次 governed uninstall，拒绝 legacy disable / prepare / confirm / self-mint；EPC 457 节点、543 边和角色槽位拓扑测试已纳入。 | `候选包已验收、未发布`；`shuxuejia-renovation-pack-v0/docs/G23-closeout/goal-result.json` |
 | 第六批 Packs 集成门 | 当前 Packs 主线之上的 G21/G22/G23 净变更通过递归 JSON、Python compile、根级 28/28 与 Pack 专项测试、结构/禁品/敏感边界、`GOWORK=off go test ./...` 和 `git diff --check`。 | `已验收`；`docs/acceptance/batch6-packs-integration-closeout-20260729.md`，主线同步由最终本地 / origin / remote SHA 终检证明 |
 
+## 0.-4.1 U04 可信 GUI 交接（2026-07-30）
+
+| 目标 | 结果与边界 | 生命周期 / 证据 |
+| --- | --- | --- |
+| 内容运营与智能家居 Pack 交接 | 三个目标脚本仅 GET 读取 os-14/os-07：内容 Pack 装入要求精确版本与声明计划 active，停用要求 Pack 停用与计划非 active；智能家居装入要求精确版本。脚本不发 lifecycle、计划、Base、decision、evidence 或 Receipt 写入。 | `已实现 -> 待独立验收`；`docs/acceptance/U04-E1-packs-trusted-ui-handoff-closeout-20260730.md` |
+
 ## 0.-3 Truzhen v4 发布前第五批收口（2026-07-23）
 
 | 目标 | 结果与边界 | 生命周期 / 证据 |

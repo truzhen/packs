@@ -324,36 +324,29 @@ func TestContentOperationsPackHasNoProviderRuntimeOrClientMintedProof(t *testing
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !strings.Contains(string(uninstall), "issue[\"owner_action_evidence_ref\"]") {
-		t.Fatal("uninstall must consume Base-issued owner_action_evidence_ref")
-	}
 	install, err := os.ReadFile(filepath.Join(contentOperationsPackRoot, "install.py"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, required := range []string{
-		"agent-slots/readmodel",
-		"enabled_bindings",
-		"binding_key in enabled_bindings",
-		"lifecycle_occ",
-		"content-ops-pack-reactivate:%s:%d",
-		"disabled 版本 reactivate 失败",
-	} {
+	for _, required := range []string{"wait_for_owner_enabled", "wait_for_owner_schedule_states", "present_owner_install_handoff"} {
 		if !strings.Contains(string(install), required) {
-			t.Fatalf("install must prevent duplicate enabled slot bindings; missing %q", required)
+			t.Fatalf("install must use trusted GUI handoff; missing %q", required)
 		}
 	}
-	for _, required := range []string{
-		"/v3/task-governance/candidates/intake",
-		"/v3/task-governance/candidates/submit-review",
-		"/v3/task-governance/schedules/approve",
-		"/v3/task-governance/schedules/resume",
-	} {
-		if !strings.Contains(string(install), required) {
-			t.Fatalf("install must use governed 07 schedule lifecycle; missing %q", required)
+	for _, required := range []string{"wait_for_owner_disabled", "wait_for_owner_schedule_states", "present_owner_disable_handoff"} {
+		if !strings.Contains(string(uninstall), required) {
+			t.Fatalf("uninstall must use trusted GUI handoff; missing %q", required)
 		}
 	}
-	if !strings.Contains(string(uninstall), "/v3/task-governance/schedules/pause") {
-		t.Fatal("uninstall must pause Pack-owned schedules before disabling the Pack")
+	for _, source := range []string{string(install), string(uninstall)} {
+		for _, forbidden := range []string{
+			"/v3/base/gated-actions/prepare", "/v3/base/gated-actions/confirm",
+			"/v3/pack-studio/lifecycle/confirm", "/v3/pack-studio/lifecycle/disable",
+			"/v3/task-governance/schedules/approve", "/v3/task-governance/schedules/pause",
+		} {
+			if strings.Contains(source, forbidden) {
+				t.Fatalf("trusted GUI handoff script retains owner write endpoint %q", forbidden)
+			}
+		}
 	}
 }

@@ -3,6 +3,7 @@ package packs_test
 import (
 	"os"
 	"regexp"
+	"strings"
 	"testing"
 )
 
@@ -31,6 +32,7 @@ var requiredUninstallStageConsts = []string{
 }
 
 var packRoots = []string{
+	"content-operations-workbench-v0",
 	"environmental-enforcement-pack-v0",
 	"housekeeping-ops-pack-v0",
 	"smart-home-owner-pack-v0",
@@ -96,7 +98,11 @@ func TestPackErrorCodeTaxonomyIsSubdivided(t *testing.T) {
 				t.Fatalf("读取 %s/install.py: %v", root, err)
 			}
 			ic := string(install)
-			for _, c := range requiredInstallStageConsts {
+			required := requiredInstallStageConsts
+			if strings.Contains(ic, "install handoff is read-only") {
+				required = []string{"INSTALL_CONNECTIVITY", "INSTALL_LIFECYCLE_HTTP"}
+			}
+			for _, c := range required {
 				if !regexp.MustCompile(`\b` + c + `\b`).MatchString(ic) {
 					t.Errorf("%s/install.py 未接线阶段常量 %s（仍在用单一通用码？）", root, c)
 				}
