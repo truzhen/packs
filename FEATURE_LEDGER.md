@@ -30,6 +30,12 @@
 | --- | --- | --- |
 | installer Owner handoff + 组合 readiness | `install.py` 不再调用场景 lifecycle confirm/reactivate、Base prepare/confirm 或知识 approve；首次只暂存 lifecycle candidate。Owner 操作后重跑时，只有 exact enabled pointer、15 个 required active mount 和逐一可反查 FormalReceipt 同时成立才进入下游交接；partial、blocked、Receipt 缺失或冲突 mount 均早停并保留可得 audit refs。P-T2 发现原实现仍自铸 27 个 evidence 并确认角色/槽位，修复回边 1/2 已删除全部下游写请求；ready 后仅输出 2 角色、2 槽位、45 源文档的稳定可信 GUI 待办，重跑不新增候选或正式事实。未启动 OS、Provider、登录或外部动作。 | `修复回边 1/2 已实现 -> 待独立复验`；`environmental-enforcement-pack-v0/tests/test_install_owner_handoff.py`、`docs/acceptance/A00-R1-P-E2-R1-no-installer-evidence-closeout-20260730.md` |
 
+## 0.-4.4 A01-R1-N3 canonical market projection（2026-07-30）
+
+| 目标 | 结果与边界 | 生命周期 / 证据 |
+| --- | --- | --- |
+| 作者富 manifest 与市场 canonical 根分离 | 6 个正式 Pack 的作者 `manifest.json` 保留 Gate、binding、知识、工作台和许可证据；`.market.zip` 根 `manifest.json` 改由白名单确定性投影生成，并按 Contracts v0.19 校验。旧 6/6 根均失败的 TDD 已闭环；Provider `capability` 只投影为 `required_capabilities`，内部 binding/description 不进入根；OpenMontage 使用 canonical `review_required` 并把 AGPL-3.0 细节保留为作者许可证据；环保生命周期按 A00 证据诚实固定为单值`已接线`。未改 Contracts、Cloud、OS、Client 或 Software，未发布市场制品。 | `已实现 -> 待协调线程独立验收`；`test_market_manifest_projection.py`、`test_pack_bundle.py`、`/Users/li/.codex/truzhenv3-process/closeouts/truzhen-v4-unified-goal-A01-R1-N3-packs-canonical-market-projection-closeout-20260730.md` |
+
 ## 0.-3 Truzhen v4 发布前第五批收口（2026-07-23）
 
 | 目标 | 结果与边界 | 生命周期 / 证据 |

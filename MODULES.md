@@ -105,6 +105,11 @@ Pack 不直接生成 Formal Record，不直接执行 provider，不直接写基�
 
 `knowledge/` 是领域知识资产，不是可有可无的附件：可承载术语、口径、规则、例外、SOP、案例和索引（优先使用既有 `glossary / sop / checklist / index` kind），但不替代 FormalKnowledge 真相源（归基座 09）。
 
+作者仓 `manifest.json` 是富声明，不等于云市场 canonical 根。`build_pack_bundle.py --market`
+只把 Contracts v0.19 白名单字段确定性投影到 ZIP 根 `manifest.json`；内部 Gate、binding、
+作者信息、知识路径和许可证据继续保留在作者源，不得偷渡到 `additionalProperties:false`
+的市场契约。自包含交付 bundle 仍保留原始作者 manifest，不改变本地 lifecycle 读取语义。
+
 ## 4. Pack 治理六件事
 
 正式 Domain Work Pack 必须声明：
