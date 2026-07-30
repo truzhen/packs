@@ -104,14 +104,13 @@ func TestPackErrorCodeTaxonomyIsSubdivided(t *testing.T) {
 			}
 			if root == "environmental-enforcement-pack-v0" {
 				// A00-R1-P-E2 禁止 installer 自行版本 bump 或调用 Base
-				// prepare/confirm；只要求仍可发生的候选 staging、组合
-				// readiness 与下游候选阶段保持细分诊断。
+				// prepare/confirm；R1 又禁止没有 backend-issued evidence 的
+				// 下游角色/槽位/知识写入，只要求仍可发生的 lifecycle candidate
+				// staging、组合 readiness 与 checksum 阶段保持细分诊断。
 				required = []string{
 					"INSTALL_CONNECTIVITY",
 					"INSTALL_LIFECYCLE_HTTP",
 					"INSTALL_READINESS",
-					"INSTALL_ROLE_BINDING",
-					"INSTALL_KNOWLEDGE",
 					"INSTALL_KNOWLEDGE_CHECKSUM",
 				}
 			}

@@ -28,7 +28,7 @@
 
 | 目标 | 结果与边界 | 生命周期 / 证据 |
 | --- | --- | --- |
-| installer Owner handoff + 组合 readiness | `install.py` 不再调用场景 lifecycle confirm/reactivate、Base prepare/confirm 或知识 approve；首次只暂存 candidate 并输出机器可读 handoff。Owner 操作后重跑时，只有 exact enabled pointer、15 个 required active mount 和逐一可反查 FormalReceipt 同时成立才续接下游；partial、blocked、Receipt 缺失或冲突 mount 均在角色/槽位/知识前 fail closed 并保留可得 audit refs。知识只暂存 45 个稳定 candidate，重跑不新增 identity。未启动 OS、Provider、登录或外部动作。 | `已实现 -> 待独立验收`；`environmental-enforcement-pack-v0/tests/test_install_owner_handoff.py`、`docs/acceptance/A00-R1-P-E2-environmental-owner-handoff-readiness-closeout-20260730.md` |
+| installer Owner handoff + 组合 readiness | `install.py` 不再调用场景 lifecycle confirm/reactivate、Base prepare/confirm 或知识 approve；首次只暂存 lifecycle candidate。Owner 操作后重跑时，只有 exact enabled pointer、15 个 required active mount 和逐一可反查 FormalReceipt 同时成立才进入下游交接；partial、blocked、Receipt 缺失或冲突 mount 均早停并保留可得 audit refs。P-T2 发现原实现仍自铸 27 个 evidence 并确认角色/槽位，修复回边 1/2 已删除全部下游写请求；ready 后仅输出 2 角色、2 槽位、45 源文档的稳定可信 GUI 待办，重跑不新增候选或正式事实。未启动 OS、Provider、登录或外部动作。 | `修复回边 1/2 已实现 -> 待独立复验`；`environmental-enforcement-pack-v0/tests/test_install_owner_handoff.py`、`docs/acceptance/A00-R1-P-E2-R1-no-installer-evidence-closeout-20260730.md` |
 
 ## 0.-3 Truzhen v4 发布前第五批收口（2026-07-23）
 

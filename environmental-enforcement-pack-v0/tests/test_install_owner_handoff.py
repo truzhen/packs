@@ -216,6 +216,11 @@ class EnvironmentalInstallOwnerHandoffTest(unittest.TestCase):
             '"/v3/base/gated-actions/confirm"',
             '"/v3/pack-studio/lifecycle/reactivate"',
             '"/v3/memory/knowledge/candidates/"',
+            '"/v3/memory/knowledge/batches"',
+            '"/v3/agent-orchestration/role-packs/enable-confirm"',
+            '"/v3/agent-orchestration/agent-slots/confirm"',
+            '"approve": True',
+            "evidence://",
         ):
             self.assertNotIn(forbidden, source)
 
@@ -351,39 +356,40 @@ class EnvironmentalInstallOwnerHandoffTest(unittest.TestCase):
             for _, path, _ in fake.calls
         ))
 
-    def test_ready_resume_is_idempotent_and_never_formalizes_knowledge(self):
+    def test_ready_resume_only_hands_off_without_downstream_writes(self):
         fake = FakeOS(
             lifecycle_mode="enabled",
             mounts=[active_mount(scope_ref) for scope_ref in REQUIRED_SCOPES],
         )
         with tempfile.TemporaryDirectory() as state_dir:
             first = self.run_main(fake, state_dir)
-            first_batch_sets = list(fake.knowledge_batch_source_sets)
-            first_candidates = dict(fake.knowledge_candidates)
+            first_calls = list(fake.calls)
             second = self.run_main(fake, state_dir)
         self.assertEqual("awaiting_owner_confirmation", first["status"])
-        self.assertEqual("knowledge_candidates_require_trusted_owner_review", first["reason"])
-        self.assertEqual(45, len(first["candidate_refs"]))
-        self.assertEqual(first["candidate_refs"], second["candidate_refs"])
-        self.assertEqual(45, len(fake.knowledge_candidates))
-        self.assertEqual(first_candidates, fake.knowledge_candidates)
+        self.assertEqual("downstream_owner_confirmation_required", first["reason"])
+        self.assertEqual(first, second)
+        self.assertEqual([], first["candidate_refs"])
         self.assertEqual(
-            first_batch_sets,
-            fake.knowledge_batch_source_sets[len(first_batch_sets):],
-            "retry 必须复用完全相同的 versioned source_ref 集合",
+            [
+                ("role_pack_candidate_and_enable", 2),
+                ("agent_slot_candidate_and_confirm", 2),
+                ("knowledge_candidate_review_and_formalize", 45),
+            ],
+            [
+                (step["step_id"], step["target_count"])
+                for step in first["owner_steps"]
+            ],
         )
-        self.assertEqual(15, len(first_batch_sets))
-        self.assertEqual(2, len(fake.roles))
-        self.assertEqual(2, len(fake.bindings))
-        self.assertFalse(any(
-            path == "/v3/pack-studio/lifecycle/confirm"
-            or path.startswith("/v3/base/gated-actions/")
-            or ("/memory/knowledge/candidates/" in path and path.endswith("/approve"))
-            for _, path, _ in fake.calls
-        ))
-        self.assertEqual(45, sum(len(values) for values in (
-            set(source_set) for source_set in first_batch_sets
-        )))
+        self.assertEqual(
+            first_calls,
+            fake.calls[len(first_calls):],
+            "retry 必须只重读相同 readiness surfaces",
+        )
+        self.assertTrue(all(method == "GET" for method, _, _ in fake.calls))
+        self.assertEqual({}, fake.knowledge_candidates)
+        self.assertEqual([], fake.knowledge_batch_source_sets)
+        self.assertEqual(set(), fake.roles)
+        self.assertEqual(set(), fake.bindings)
 
 
 if __name__ == "__main__":

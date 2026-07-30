@@ -106,16 +106,24 @@ class TestEnvironmentalHighRiskLifecycle(unittest.TestCase):
     def test_manifest_high_risk_is_forwarded_to_lifecycle_draft(self):
         with open(os.path.join(ENV_PACK, "manifest.json"), encoding="utf-8") as f:
             manifest = json.load(f)
+        with open(os.path.join(ENV_PACK, "knowledge", "knowledge-index.json"), encoding="utf-8") as f:
+            knowledge_index = json.load(f)
         with open(os.path.join(ENV_PACK, "install.py"), encoding="utf-8") as f:
             install_source = f.read()
 
         self.assertEqual(manifest.get("risk_level"), "high")
         self.assertIn('"risk_level": manifest.get("risk_level", "medium")', install_source)
-        self.assertIn('"verification_status": "pending_human_review"', install_source)
+        self.assertTrue(knowledge_index["entries"])
+        self.assertTrue(all(
+            entry.get("verification_status") == "pending_human_review"
+            and entry.get("authority") == "reference_only"
+            for entry in knowledge_index["entries"]
+        ))
         self.assertNotIn('"verify_authority":', install_source)
         self.assertNotIn('"/v3/memory/knowledge/candidates/"', install_source)
+        self.assertNotIn("evidence://", install_source)
 
-    def test_enforcement_elite_grounding_is_declared_and_forwarded(self):
+    def test_enforcement_elite_grounding_remains_pack_asset_without_installer_write(self):
         with open(os.path.join(ENV_PACK, "role-packs", "enforcement-elite.rolepack.json"), encoding="utf-8") as f:
             role_pack = json.load(f)
         with open(os.path.join(ENV_PACK, "install.py"), encoding="utf-8") as f:
@@ -124,9 +132,9 @@ class TestEnvironmentalHighRiskLifecycle(unittest.TestCase):
         self.assertIn("涉嫌超标排放", role_pack.get("scenario", ""))
         self.assertIn("最终决定需您裁定", role_pack.get("opening_line_candidate", ""))
         self.assertEqual(2, len(role_pack.get("example_dialogues", [])))
-        self.assertIn('"scenario": rp.get("scenario", "")', install_source)
-        self.assertIn('"opening_line_candidate": rp.get("opening_line_candidate", "")', install_source)
-        self.assertIn('"example_dialogues": rp.get("example_dialogues", None)', install_source)
+        self.assertIn('"role_pack_id": role_pack["role_pack_id"]', install_source)
+        self.assertNotIn('"/v3/agent-orchestration/role-packs/drafts"', install_source)
+        self.assertNotIn('"/v3/agent-orchestration/role-packs/enable-confirm"', install_source)
 
 
 if __name__ == "__main__":

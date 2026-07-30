@@ -75,9 +75,10 @@ TRUZHEN_CLIENT_URL=http://127.0.0.1:5197 \
 `blocked/not_ready`，不得宣称成功。
 
 组合 readiness 不完整时，脚本只输出 `awaiting_owner_confirmation / not_ready / recovery`
-以及当前可获得的 Receipt 引用，并在角色、槽位、知识写入前停止。组合 readiness 完整后，
-脚本才幂等续接 2 个角色、槽位绑定和 45/45 源文档的知识候选暂存；知识候选仍须由 Owner
-在可信 GUI 中逐项治理，脚本不自动 approve，也不把候选冒充 FormalKnowledge。源文档数与
+以及当前可获得的 Receipt 引用，并在角色、槽位、知识写入前停止。组合 readiness 完整后也
+不授权 installer 写其它正式对象：脚本只列出 2 个角色、2 个槽位和 45/45 源文档的稳定
+可信 GUI 待办，不自铸 evidence、不发送 `approve/confirm/formalize`。候选暂存、审阅与正式化
+必须由 Owner 在可信 GUI 中使用 backend-issued evidence 完成。源文档数与
 09 运行态分片数是两个指标；验收必须按 `pack_ref`、`source_ref`、scope 全量分页对账，
 不得把前台全局知识总数（历史曾显示 752）冒充本 Pack 的源文档数或固定分片契约。
 （大文件按章节/条款切块，约数百条，均 pending_human_review）。卸载经真实 `lifecycle/disable`

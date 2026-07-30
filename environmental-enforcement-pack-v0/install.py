@@ -6,21 +6,19 @@
 脚本只负责 lifecycle candidate staging 与只读组合 readiness。场景包正式 confirm、
 Base prepare/confirm 和知识候选 approve 必须由可信 GUI 中的 Owner 操作完成；脚本不代办。
 只有 exact enabled pointer、每个 required scope 的 active mount 与对应 FormalReceipt
-全部可反查时，才续接角色、绑槽与 09 知识候选暂存。
+全部可反查时，才输出角色、槽位与知识的可信 GUI Owner 操作清单；不发下游写请求。
 
 前置：先在隔离 worktree 起 devserver（且已从 server.go 摘除环保自动 seed），并显式指定
 受控地址；脚本不会猜测或写入默认端口：
   TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 \
     python3 packs/environmental-enforcement-pack-v0/install.py
 
-幂等：首次 staging 以稳定 key 建 candidate；Owner 操作后重跑同一命令只读 OS 权威状态。
-已启用角色包/绑定会跳过，知识批量以 versioned source_ref + content_hash 去重。
+幂等：首次 staging 以稳定 key 建 lifecycle candidate；Owner 操作后重跑同一命令只读
+OS 权威状态并输出稳定 handoff。下游正式对象只能由可信 GUI 与 backend-issued evidence 驱动。
 """
-import hashlib
 import argparse
 import json
 import os
-import re
 import sys
 import urllib.error
 import urllib.parse
@@ -32,8 +30,7 @@ if REPO_DIR not in sys.path:
     sys.path.insert(0, REPO_DIR)
 from pack_diagnostics import (
     emit_pack_error, INSTALL_GENERIC, INSTALL_CONNECTIVITY, INSTALL_LIFECYCLE_HTTP,
-    INSTALL_READINESS, INSTALL_ROLE_BINDING, INSTALL_KNOWLEDGE,
-    INSTALL_KNOWLEDGE_CHECKSUM)
+    INSTALL_READINESS, INSTALL_KNOWLEDGE_CHECKSUM)
 from knowledge_checksums import verify_entries
 from pack_install_journal import InstallJournal
 
@@ -104,13 +101,8 @@ def die(msg, error_code=INSTALL_GENERIC):
     sys.exit(1)
 
 
-def strip_frontmatter(text):
-    m = re.match(r"^---\s*\n.*?\n---\s*\n", text, re.S)
-    return text[m.end():] if m else text
-
-
 def emit_owner_handoff(status, *, pack_ref, version, reason, audit_refs=None,
-                       readiness=None, candidate_refs=None):
+                       readiness=None, candidate_refs=None, owner_steps=None):
     """输出机器可读 Owner 交接；调用方重跑同一命令只做幂等续接。"""
     handoff = {
         "status": status,
@@ -126,6 +118,7 @@ def emit_owner_handoff(status, *, pack_ref, version, reason, audit_refs=None,
         },
         "audit_refs": sorted(set(audit_refs or [])),
         "candidate_refs": sorted(set(candidate_refs or [])),
+        "owner_steps": owner_steps or [],
     }
     if readiness is not None:
         handoff["readiness"] = readiness
@@ -289,6 +282,61 @@ def verify_combined_readiness(pack_ref, version, scopes_doc):
     }
 
 
+def downstream_owner_steps(role_slots_doc, kindex, version):
+    """只描述可信 GUI 待办；目标身份来自 Pack 资产，不铸 evidence 或正式事实。"""
+    role_targets = []
+    role_pack_dir = os.path.join(PACK_DIR, "role-packs")
+    for file_name in sorted(os.listdir(role_pack_dir)):
+        if not file_name.endswith(".json"):
+            continue
+        role_pack = load(os.path.join("role-packs", file_name))
+        role_targets.append({
+            "role_pack_id": role_pack["role_pack_id"],
+            "version": role_pack["version"],
+        })
+    slot_targets = [
+        {
+            "slot_ref": binding["slot_id"],
+            "role_pack_id": binding["role_pack_id"],
+            "agent_ref": binding["agent_ref"],
+        }
+        for binding in sorted(
+            role_slots_doc.get("bindings", []),
+            key=lambda item: item["slot_id"],
+        )
+    ]
+    knowledge_targets = [
+        {
+            "source_ref": entry["source_ref"] + "@" + version,
+            "knowledge_scope_ref": entry["knowledge_scope_ref"],
+        }
+        for entry in sorted(
+            kindex.get("entries", []),
+            key=lambda item: (item["knowledge_scope_ref"], item["source_ref"]),
+        )
+    ]
+    return [
+        {
+            "step_id": "role_pack_candidate_and_enable",
+            "target_count": len(role_targets),
+            "targets": role_targets,
+            "required_action": "在可信 GUI 审核角色候选；仅用 backend-issued evidence 完成启用。",
+        },
+        {
+            "step_id": "agent_slot_candidate_and_confirm",
+            "target_count": len(slot_targets),
+            "targets": slot_targets,
+            "required_action": "在可信 GUI 审核槽位绑定候选；由 Owner 完成确认。",
+        },
+        {
+            "step_id": "knowledge_candidate_review_and_formalize",
+            "target_count": len(knowledge_targets),
+            "targets": knowledge_targets,
+            "required_action": "在可信 GUI 暂存并审阅知识候选；保持 pending_human_review，不自动正式化。",
+        },
+    ]
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="将环保执法 Pack 装入显式指定的受控 Truzhen devserver。"
@@ -318,8 +366,6 @@ def main():
     pack_ref = manifest["pack_ref"]
     version = manifest["version"]
     flow_id = flow["flow_id"]
-    pack_version_ref = pack_ref + "@" + version
-
     print("== 装入 %s @ %s 到 %s ==" % (pack_ref, version, BASE))
     global JOURNAL
     JOURNAL = InstallJournal.open(pack_ref, BASE)
@@ -509,173 +555,17 @@ def main():
         )
         return
     JOURNAL.mark("scene_combined_ready")
-
-    # 6a. 角色包
-    print("[6/6] 组合 readiness 通过；续接角色、绑槽与知识候选 ...")
-    JOURNAL.step("role_packs")
-    code, rpbody = call("GET", "/v3/agent-orchestration/role-packs/readmodel")
-    if code != 200:
-        die("role pack ReadModel HTTP %d: %s" % (code, rpbody), INSTALL_ROLE_BINDING)
-    enabled_rp = set()
-    for ev in (rpbody.get("enabled_versions") or []):
-        rid = ev.get("role_pack_id", "")
-        enabled_rp.add(rid.split("@")[0])
-    for fn in sorted(os.listdir(os.path.join(PACK_DIR, "role-packs"))):
-        if not fn.endswith(".json"):
-            continue
-        rp = load(os.path.join("role-packs", fn))
-        rid = rp["role_pack_id"]
-        if rid in enabled_rp:
-            print("    角色包 %s 已启用，跳过" % rid)
-            continue
-        install_role_pack(rp)
-        print("    角色包 %s 已启用" % rid)
-        JOURNAL.mark_item("role_packs", rid)
-
-    # 6b. 绑槽
-    JOURNAL.step("bindings")
-    scope_ref = pack_version_ref
-    for b in role_slots_doc.get("bindings", []):
-        bind_slot(b, scope_ref)
-        JOURNAL.mark_item("bindings", b["slot_id"])
-    print("    绑槽完成")
-
-    # 6c. 知识库入库（按知识域分组）
-    JOURNAL.step("knowledge")
-    entries = kindex.get("entries", [])
-    pending_candidate_refs = []
-    if not entries:
-        print("    本 pack 无知识库，跳过知识入库")
-    else:
-        groups = {}
-        for e in entries:
-            groups.setdefault(e["knowledge_scope_ref"], []).append(e)
-        for scope_ref_k, items in groups.items():
-            pending_candidate_refs.extend(
-                ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref_k, items)
-            )
-        print("    知识候选已幂等暂存：%d 条；本脚本不代办 Base 确认。" % len(pending_candidate_refs))
-
-    JOURNAL.mark("downstream_candidates_staged")
+    owner_steps = downstream_owner_steps(role_slots_doc, kindex, version)
+    print("[6/6] 组合 readiness 通过；下游正式对象交可信 GUI Owner 处理。")
     emit_owner_handoff(
         "awaiting_owner_confirmation",
         pack_ref=pack_ref,
         version=version,
-        reason="knowledge_candidates_require_trusted_owner_review",
+        reason="downstream_owner_confirmation_required",
         audit_refs=readiness["audit_refs"],
         readiness=readiness,
-        candidate_refs=pending_candidate_refs,
+        owner_steps=owner_steps,
     )
-
-
-def install_role_pack(rp):
-    sani = re.sub(r'[/:@\s]+', "-", rp["role_pack_id"]).strip("-")
-    draft_id = "role_pack_draft-pack-install-" + sani
-    idem = "pack-install-" + sani
-    cs = rp.get("communication_style", {})
-    code, body = call("POST", "/v3/agent-orchestration/role-packs/drafts", {
-        "draft_id": draft_id, "role_pack_id": rp["role_pack_id"], "version": rp["version"],
-        "display_name": rp["display_name"], "description": rp["description"],
-        "target_use": rp.get("target_use", []), "style_summary": rp.get("style_summary", ""),
-        "decision_style_summary": rp.get("decision_style_summary", ""),
-        "scenario": rp.get("scenario", ""),
-        "opening_line_candidate": rp.get("opening_line_candidate", ""),
-        "example_dialogues": rp.get("example_dialogues", None),
-        "model_policy_ref": rp.get("model_policy_ref", ""),
-        "communication_style": {"structure": cs.get("structure", ""), "tone": cs.get("tone", ""),
-                                "forbidden_phrases": cs.get("forbidden_phrases", [])},
-        "forbidden_behavior_policy_ref": rp.get("forbidden_policy_ref", ""),
-        "risk_level": rp.get("risk_level", "medium"), "owner_ref": OWNER,
-        "evidence_refs": ["evidence://pack-install/role-pack/" + sani + "/draft"],
-        "idempotency_key": idem + "-draft"})
-    if code != 200:
-        die("role draft HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
-    draft_id = body.get("draft_id") or (body.get("draft") or {}).get("draft_id") or draft_id
-    code, body = call("POST", "/v3/agent-orchestration/role-packs/drafts/" + draft_id + "/readiness-check", {})
-    if code != 200:
-        die("role readiness HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
-    code, body = call("POST", "/v3/agent-orchestration/role-packs/drafts/" + draft_id + "/promote-candidate", {
-        "owner_ref": OWNER, "target_agent_ref": rp["role_pack_id"], "idempotency_key": idem + "-promote",
-        "evidence_refs": ["evidence://pack-install/role-pack/promote"]})
-    if code != 200 or not body.get("ok"):
-        die("role promote HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
-    code, body = call("POST", "/v3/agent-orchestration/role-packs/enable-candidate", {
-        "role_pack_id": rp["role_pack_id"], "version": rp["version"], "target_agent_ref": rp["role_pack_id"],
-        "owner_ref": OWNER, "idempotency_key": idem + "-enable",
-        "evidence_refs": ["evidence://pack-install/role-pack/enable"]})
-    if code != 200 or not body.get("ok"):
-        die("role enable-candidate HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
-    code, body = call("POST", "/v3/agent-orchestration/role-packs/enable-confirm", {
-        "role_pack_id": rp["role_pack_id"], "version": rp["version"], "target_agent_ref": rp["role_pack_id"],
-        "owner_ref": OWNER, "idempotency_key": idem + "-confirm", "approve": True,
-        "comment": rp["display_name"] + " 启用", "evidence_refs": ["evidence://pack-install/role-pack/enable-confirm"]})
-    if code != 200 or body.get("status") != "enabled":
-        die("role enable-confirm 未达 enabled HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
-
-
-def bind_slot(b, scope_ref):
-    code, rm = call("GET", "/v3/agent-orchestration/agent-slots/readmodel")
-    if code == 200:
-        for bd in (rm.get("agent_slot_bindings") or []):
-            if bd.get("slot_ref") == b["slot_id"] and bd.get("enabled_state") == "enabled" \
-               and bd.get("scope_ref") in (scope_ref, ""):
-                return
-    code, body = call("POST", "/v3/agent-orchestration/agent-slots/bind-candidate", {
-        "slot_ref": b["slot_id"], "scope_ref": scope_ref, "source_pack_ref": scope_ref,
-        "required_role": b["required_role"], "requested_agent_ref": b["agent_ref"],
-        "requested_role_pack_id": b["role_pack_id"], "ttl": "8760h",
-        "evidence_refs": ["evidence://pack-install/agent-slot/" + b["slot_id"] + "/bind"]})
-    if code != 200 or not body.get("ok"):
-        die("bind-candidate HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
-    binding_ref = body.get("binding_ref")
-    code, body = call("POST", "/v3/agent-orchestration/agent-slots/confirm", {
-        "binding_ref": binding_ref, "idempotency_key": "pack-install-slot-confirm-" + b["slot_id"],
-        "approve": True, "evidence_refs": ["evidence://pack-install/agent-slot/" + b["slot_id"] + "/confirm"]})
-    if code != 200 or body.get("status") != "enabled":
-        die("slot confirm 未达 enabled HTTP %d: %s" % (code, body), INSTALL_ROLE_BINDING)
-
-
-def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
-    source_files = []
-    scene_ref = items[0].get("scene_ref", "")
-    ver = pack_version_ref.split("@")[-1]
-    for e in items:
-        with open(os.path.join(PACK_DIR, e["file"]), encoding="utf-8") as f:
-            body_text = strip_frontmatter(f.read())
-        content = "# " + e["title"] + "\n" + body_text
-        # source_ref 带 pack 版本：把知识归属到本 pack 版本；Owner 操作后重跑时
-        # 仍使用相同 source_ref/content_hash，由 09 按稳定身份幂等返回候选。
-        versioned_source_ref = e["source_ref"] + "@" + ver
-        law_meta = {"verification_status": "pending_human_review", "source_authority": "reference_only"}
-        if e.get("authority"):
-            law_meta["authority"] = e["authority"]
-        if e.get("effective_from"):
-            law_meta["effective_from"] = e["effective_from"]
-        if e.get("effective_to"):
-            law_meta["effective_to"] = e["effective_to"]
-        source_files.append({
-            "source_ref": versioned_source_ref, "file_name": os.path.basename(e["file"]),
-            "content": content, "content_hash": "sha1-" + hashlib.sha1((content + "|" + pack_version_ref).encode("utf-8")).hexdigest(),
-            "kind": e["kind"], "evidence_refs": ["evidence://09/pack-knowledge/" + pack_ref + "/" + e["source_ref"]],
-            "law_meta": law_meta})
-    batch = {
-        "owner_id": OWNER, "scope": "Formal",
-        "transaction_ref": "transaction://pack-knowledge:" + pack_version_ref,
-        "scene_ref": scene_ref, "tags": ["pack 知识库", "环保执法"],
-        "policy_snapshot_ref": "policy_snapshot://pack-knowledge/import",
-        "source_files": source_files, "pack_ref": pack_ref, "pack_version_ref": pack_version_ref,
-        "knowledge_scope_ref": scope_ref}
-    code, body = call("POST", "/v3/memory/knowledge/batches", batch)
-    if code not in (200, 201):
-        die("knowledge batches HTTP %d (scope=%s): %s" % (code, scope_ref, body), INSTALL_KNOWLEDGE)
-    JOURNAL.mark_item("knowledge_batches", scope_ref)
-    candidates = body.get("candidates", []) or []
-    pending_refs = []
-    for c in candidates:
-        cref = c.get("candidate_ref")
-        if cref and c.get("status") == "pending":
-            pending_refs.append(cref)
-    return pending_refs
 
 
 if __name__ == "__main__":
