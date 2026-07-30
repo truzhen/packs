@@ -177,7 +177,40 @@ def test_projection_preserves_author_source_and_strips_internal_fields():
                 assert "binding" not in canonical
                 assert "capability" not in canonical
                 assert "description" not in canonical
+
+            if pack_name == "content-operations-workbench-v0":
+                rich_openmontage = source["software_requirements"][1]
+                canonical_openmontage = projected["software_requirements"][1]
+                assert rich_openmontage["license_policy"] == "review_required"
+                assert rich_openmontage["license_evidence"]["declared_license"] == "AGPL-3.0"
+                assert canonical_openmontage["license_policy"] == "review_required"
+                assert "license_evidence" not in canonical_openmontage
         print("PASS test_projection_preserves_author_source_and_strips_internal_fields")
+    finally:
+        shutil.rmtree(temp_root, ignore_errors=True)
+
+
+def test_market_sidecar_hashes_match_canonical_zip_bytes():
+    temp_root = pathlib.Path(tempfile.mkdtemp(prefix="packs-market-checksum-"))
+    try:
+        for pack_name in FORMAL_PACK_DIRS:
+            artifact = pathlib.Path(build_market_artifact(
+                str(HERE / pack_name), str(temp_root / pack_name)
+            ))
+            sidecar = json.loads(
+                artifact.with_name(artifact.name.removesuffix(".zip") + ".manifest.json")
+                .read_text(encoding="utf-8")
+            )
+            declared = {item["path"]: item["sha256"] for item in sidecar["files"]}
+            assert list(declared).count("manifest.json") == 1
+            with zipfile.ZipFile(artifact) as archive:
+                names = archive.namelist()
+                assert names.count("manifest.json") == 1
+                for name in names:
+                    assert _sha256_bytes(archive.read(name)) == declared[name], \
+                        f"{pack_name}: {name} sidecar checksum 漂移"
+            assert _sha256_bytes(artifact.read_bytes()) == sidecar["artifact_sha256"]
+        print("PASS test_market_sidecar_hashes_match_canonical_zip_bytes")
     finally:
         shutil.rmtree(temp_root, ignore_errors=True)
 
@@ -185,4 +218,5 @@ def test_projection_preserves_author_source_and_strips_internal_fields():
 if __name__ == "__main__":
     test_all_real_market_roots_match_contracts_v019()
     test_projection_preserves_author_source_and_strips_internal_fields()
+    test_market_sidecar_hashes_match_canonical_zip_bytes()
     print("ALL PASS")

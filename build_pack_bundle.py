@@ -48,6 +48,25 @@ ISOLATION_POLICIES = {"reuse_preferred", "isolated_install", "coexist_multi_vers
 FALLBACK_POLICIES = {"blocked", "provider_missing", "manual_handoff", "not_ready"}
 GATEWAY_CLASSES = {"execution", "communication", "model", "memory"}
 RISK_CLASSES = {"low", "medium", "high", "critical"}
+LICENSE_POLICIES = {"any_osi", "copyleft_excluded", "review_required"}
+CANONICAL_MANIFEST_FIELDS = (
+    "pack_id", "name", "version", "kind", "min_truzhen_version", "description",
+    "lifecycle_status", "region_code", "arch_tags", "software_requirements",
+    "provider_requirements", "risk_types", "external_software_refs",
+)
+CANONICAL_SOFTWARE_REQUIREMENT_FIELDS = (
+    "requirement_id", "software_family", "provider_family", "version_range",
+    "adapter_range", "required_capabilities", "license_policy", "isolation_policy",
+    "fallback_policy", "optional", "gateway_class", "risk_class",
+)
+CANONICAL_PROVIDER_REQUIREMENT_FIELDS = (
+    "requirement_id", "provider_family", "gateway_class", "required_capabilities",
+    "software_requirement_refs", "risk_class", "fallback_policy", "optional",
+)
+CANONICAL_RISK_TYPE_FIELDS = (
+    "risk_type_id", "definition", "trigger_action_types", "evidence_requirement",
+    "escalation_path", "fallback",
+)
 _EXCLUDE_DIRS = {"__pycache__", ".git", "node_modules", "dist", "build", ".vite"}
 _EXCLUDE_SUFFIXES = (".pyc", ".db", ".sqlite", ".sqlite3", ".log", ".jsonl")
 
@@ -114,6 +133,8 @@ def _validate_software_requirements(items):
             raise ValueError("software_requirement isolation_policy 非 canonical：%s" % item["isolation_policy"])
         if item["fallback_policy"] not in FALLBACK_POLICIES:
             raise ValueError("software_requirement fallback_policy 非 canonical：%s" % item["fallback_policy"])
+        if item.get("license_policy") and item["license_policy"] not in LICENSE_POLICIES:
+            raise ValueError("software_requirement license_policy 非 canonical：%s" % item["license_policy"])
         if item["gateway_class"] not in GATEWAY_CLASSES or item["risk_class"] not in RISK_CLASSES:
             raise ValueError("software_requirement gateway_class/risk_class 非 canonical")
 
@@ -133,6 +154,45 @@ def _validate_provider_requirements(items):
             raise ValueError("provider_requirement fallback_policy 非 canonical：%s" % item["fallback_policy"])
         if item["gateway_class"] not in GATEWAY_CLASSES or item["risk_class"] not in RISK_CLASSES:
             raise ValueError("provider_requirement gateway_class/risk_class 非 canonical")
+
+
+def _project_fields(source, allowed_fields):
+    return {field: source[field] for field in allowed_fields if field in source}
+
+
+def _canonical_market_manifest(author_manifest):
+    """把作者富 manifest 投影为 Contracts v0.19 云市场 canonical 形状。"""
+    projected = _project_fields(author_manifest, CANONICAL_MANIFEST_FIELDS)
+    projected["software_requirements"] = [
+        _project_fields(item, CANONICAL_SOFTWARE_REQUIREMENT_FIELDS)
+        for item in author_manifest.get("software_requirements", [])
+    ]
+    projected_providers = []
+    for item in author_manifest.get("provider_requirements", []):
+        canonical = _project_fields(item, CANONICAL_PROVIDER_REQUIREMENT_FIELDS)
+        capabilities = item.get("required_capabilities")
+        if capabilities is None:
+            capability = item.get("capability")
+            capabilities = [capability] if capability else []
+        if not capabilities or not all(isinstance(value, str) and value for value in capabilities):
+            raise ValueError(
+                "provider_requirement %s 缺可投影的 required_capabilities"
+                % item.get("requirement_id", "<unknown>")
+            )
+        canonical["required_capabilities"] = capabilities
+        projected_providers.append(canonical)
+    projected["provider_requirements"] = projected_providers
+    projected["risk_types"] = [
+        _project_fields(item, CANONICAL_RISK_TYPE_FIELDS)
+        for item in author_manifest.get("risk_types", [])
+    ]
+    return projected
+
+
+def _write_canonical_manifest(path, manifest):
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(manifest, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
 
 
 def _iter_pack_files(pack_dir):
@@ -195,24 +255,33 @@ def build_pack_bundle(pack_dir, out_dir=None):
 
 
 def build_market_artifact(pack_dir, out_dir=None):
-    """生成 manifest.json 位于 ZIP 根的云市场制品。"""
+    """生成 Contracts canonical manifest.json 位于 ZIP 根的云市场制品。"""
     pack_dir = os.path.abspath(pack_dir.rstrip("/"))
-    manifest = _validate(pack_dir)
+    author_manifest = _validate(pack_dir)
+    manifest = _canonical_market_manifest(author_manifest)
+    _validate_software_requirements(manifest.get("software_requirements", []))
+    _validate_provider_requirements(manifest.get("provider_requirements", []))
     name = os.path.basename(pack_dir)
     out_dir = os.path.abspath(out_dir or os.path.join(REPO_ROOT, "dist"))
     os.makedirs(out_dir, exist_ok=True)
     artifact_path = os.path.join(out_dir, name + ".market.zip")
-    members = [(os.path.relpath(disk, pack_dir), disk) for disk in sorted(_iter_pack_files(pack_dir))]
-    if not any(arc == "manifest.json" for arc, _ in members):
-        raise ValueError("市场制品根目录缺少 manifest.json")
-    return _write_artifact(
-        artifact_path,
-        members,
-        name,
-        "cloud_market_pack",
-        "经 truzhen-cloud 市场下载并由 truzhenos lifecycle 受控安装：%s@%s"
-        % (manifest.get("pack_id") or manifest.get("pack_ref"), manifest.get("version")),
-    )
+    author_members = [
+        (os.path.relpath(disk, pack_dir), disk)
+        for disk in sorted(_iter_pack_files(pack_dir))
+        if os.path.relpath(disk, pack_dir) != "manifest.json"
+    ]
+    with tempfile.TemporaryDirectory(prefix="truzhen-pack-market-manifest-") as temp_dir:
+        canonical_path = os.path.join(temp_dir, "manifest.json")
+        _write_canonical_manifest(canonical_path, manifest)
+        members = [("manifest.json", canonical_path)] + author_members
+        return _write_artifact(
+            artifact_path,
+            members,
+            name,
+            "cloud_market_pack",
+            "经 truzhen-cloud 市场下载并由 truzhenos lifecycle 受控安装：%s@%s"
+            % (manifest.get("pack_id"), manifest.get("version")),
+        )
 
 
 if __name__ == "__main__":

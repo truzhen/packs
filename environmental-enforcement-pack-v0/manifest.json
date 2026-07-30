@@ -2,7 +2,7 @@
   "pack_id": "pack_environmental_enforcement_v0",
   "pack_ref": "scene_pack://environmental-enforcement-flow",
   "version": "1.0.0",
-  "lifecycle_status": "已实现 -> 已接线",
+  "lifecycle_status": "已接线",
   "risk_level": "high",
   "name": "环保执法证据链 Pack（全领域）",
   "template_family": "合规审查执法证据链型",

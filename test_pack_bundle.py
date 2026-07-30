@@ -183,6 +183,66 @@ def test_rejects_noncanonical_nested_requirement():
         shutil.rmtree(tmp, ignore_errors=True)
 
 
+def test_rejects_noncanonical_license_policy():
+    from build_pack_bundle import build_market_artifact
+    tmp = tempfile.mkdtemp()
+    try:
+        pd = _make_fake_pack(tmp, "bad-license-pack-v0")
+        manifest_path = os.path.join(pd, "manifest.json")
+        manifest = json.load(open(manifest_path, encoding="utf-8"))
+        manifest["software_requirements"] = [{
+            "requirement_id": "runtime-x",
+            "software_family": "runtime-x",
+            "version_range": ">=1.0.0,<2.0.0",
+            "license_policy": "agpl-3.0-review-required",
+            "isolation_policy": "reuse_preferred",
+            "fallback_policy": "provider_missing",
+            "gateway_class": "execution",
+            "risk_class": "medium",
+        }]
+        with open(manifest_path, "w", encoding="utf-8") as handle:
+            json.dump(manifest, handle, ensure_ascii=False)
+        try:
+            build_market_artifact(pd, os.path.join(tmp, "dist"))
+        except ValueError as error:
+            assert "license_policy" in str(error)
+        else:
+            raise AssertionError("非 Contracts 枚举的 license_policy 必须被拒")
+        print("PASS test_rejects_noncanonical_license_policy")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_rejects_provider_without_projectable_capability():
+    from build_pack_bundle import build_market_artifact
+    tmp = tempfile.mkdtemp()
+    try:
+        pd = _make_fake_pack(tmp, "bad-provider-capability-pack-v0")
+        manifest_path = os.path.join(pd, "manifest.json")
+        manifest = json.load(open(manifest_path, encoding="utf-8"))
+        manifest["provider_requirements"] = [{
+            "requirement_id": "provider-x",
+            "provider_family": "runtime-x",
+            "gateway_class": "execution",
+            "risk_class": "medium",
+            "fallback_policy": "provider_missing",
+            "binding": "internal-only",
+        }]
+        with open(manifest_path, "w", encoding="utf-8") as handle:
+            json.dump(manifest, handle, ensure_ascii=False)
+        out = os.path.join(tmp, "dist")
+        try:
+            build_market_artifact(pd, out)
+        except ValueError as error:
+            assert "required_capabilities" in str(error)
+        else:
+            raise AssertionError("缺 capability 的 provider requirement 不得产市场制品")
+        assert not os.path.exists(os.path.join(out, "bad-provider-capability-pack-v0.market.zip"))
+        print("PASS test_rejects_provider_without_projectable_capability")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 if __name__ == "__main__":
     test_bundle_self_contained()
     test_rejects_pack_missing_install()
@@ -190,4 +250,6 @@ if __name__ == "__main__":
     test_rejects_noncanonical_market_manifest_before_artifact_write()
     test_rejects_compound_lifecycle_value()
     test_rejects_noncanonical_nested_requirement()
+    test_rejects_noncanonical_license_policy()
+    test_rejects_provider_without_projectable_capability()
     print("ALL PASS")

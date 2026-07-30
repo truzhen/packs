@@ -182,7 +182,12 @@
         "h264_aac_mp4",
         "artifact_snapshot_and_preview"
       ],
-      "license_policy": "agpl-3.0-review-required",
+      "license_policy": "review_required",
+      "license_evidence": {
+        "declared_license": "AGPL-3.0",
+        "review_scope": "commercial_distribution_and_network_service",
+        "evidence_ref": "docs/release-notes-0.2.0.md"
+      },
       "isolation_policy": "reuse_preferred",
       "fallback_policy": "provider_missing",
       "gateway_class": "execution",
