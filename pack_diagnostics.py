@@ -45,6 +45,7 @@ _CANONICAL_PACK_VERSION = re.compile(
     r"(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?"
     r"(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$"
 )
+_CANONICAL_SCHEDULE_STATES = frozenset({"active", "paused", "cancelled"})
 
 
 def is_registered_code(error_code):
@@ -140,10 +141,20 @@ def wait_for_owner_schedule_states(
     sleep=time.sleep,
 ):
     """等待可信 GUI 写入 os-07 计划状态；本函数永远只调用 GET。"""
-    expected = {str(ref) for ref in transaction_refs if str(ref)}
-    targets = {str(state) for state in target_states if str(state)}
-    if not expected or not targets:
-        return True, "not_required"
+    declared = list(transaction_refs)
+    if (
+        not declared
+        or any(not isinstance(ref, str) or not ref or ref != ref.strip() for ref in declared)
+        or len(set(declared)) != len(declared)
+    ):
+        return False, "schedule_readmodel_invalid"
+    expected = set(declared)
+    targets = set(target_states)
+    if (
+        not targets
+        or any(not isinstance(state, str) or state not in _CANONICAL_SCHEDULE_STATES for state in targets)
+    ):
+        return False, "schedule_readmodel_invalid"
     deadline = time.monotonic() + max(0.0, float(timeout_seconds))
     while True:
         code, body = call("GET", "/v3/task-governance/schedules")
@@ -153,11 +164,24 @@ def wait_for_owner_schedule_states(
             return False, "schedule_readmodel_http_%s" % code
         if not isinstance(body, dict) or not isinstance(body.get("schedules"), list):
             return False, "schedule_readmodel_invalid"
-        current = {
-            item.get("transaction_ref"): item.get("status")
-            for item in body["schedules"]
-            if isinstance(item, dict) and item.get("transaction_ref") in expected
-        }
+        current = {}
+        for item in body["schedules"]:
+            if not isinstance(item, dict):
+                return False, "schedule_readmodel_invalid"
+            transaction_ref = item.get("transaction_ref")
+            status = item.get("status")
+            if (
+                not isinstance(transaction_ref, str)
+                or not transaction_ref
+                or transaction_ref != transaction_ref.strip()
+                or not isinstance(status, str)
+                or status not in _CANONICAL_SCHEDULE_STATES
+            ):
+                return False, "schedule_readmodel_invalid"
+            if transaction_ref in expected:
+                if transaction_ref in current:
+                    return False, "schedule_readmodel_invalid"
+                current[transaction_ref] = status
         if all(
             current.get(ref) in targets or (allow_missing and ref not in current)
             for ref in expected

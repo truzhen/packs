@@ -228,6 +228,92 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 module.main()
 
+    def test_schedule_helper_rejects_duplicate_and_malformed_records(self):
+        diagnostics = load_diagnostics()
+        ref = diagnostics.schedule_transaction_ref(
+            "scene_pack://content-operations-workbench", "weekday_direction_radar"
+        )
+        malformed = (
+            [{"transaction_ref": ref, "status": "paused"}, {"transaction_ref": ref, "status": "active"}],
+            [{"transaction_ref": ref, "status": "active"}, {"transaction_ref": ref, "status": "active"}],
+            [{"transaction_ref": ref, "status": "active"}, "not-an-object"],
+            [{"transaction_ref": ref}],
+            [{"transaction_ref": ref, "status": "active "}],
+            [{"transaction_ref": ref, "status": 1}],
+            [{"transaction_ref": ref + " ", "status": "active"}],
+        )
+        for schedules in malformed:
+            def fake_call(method, path, body=None):
+                self.assertEqual((method, path, body), ("GET", "/v3/task-governance/schedules", None))
+                return 200, {"schedules": schedules}
+
+            ok, reason = diagnostics.wait_for_owner_schedule_states(
+                fake_call, [ref], {"active"}, timeout_seconds=0
+            )
+            self.assertFalse(ok, schedules)
+            self.assertEqual(reason, "schedule_readmodel_invalid", schedules)
+
+        ok, reason = diagnostics.wait_for_owner_schedule_states(
+            lambda *_args: self.fail("duplicate declared refs must fail before GET"),
+            [ref, ref], {"active"}, timeout_seconds=0,
+        )
+        self.assertFalse(ok)
+        self.assertEqual(reason, "schedule_readmodel_invalid")
+
+    def test_content_consumers_reject_full_schedule_malformed_matrix(self):
+        cases = (
+            "duplicate_conflict",
+            "duplicate_same",
+            "non_object_sibling",
+            "missing_status",
+            "noncanonical_status",
+            "non_string_status",
+            "noncanonical_ref",
+        )
+        for action in ("install", "uninstall"):
+            module = load_script("content_schedule_" + action, "content-operations-workbench-v0", action)
+            manifest = module.load_json("manifest.json")
+            pack_ref = manifest["pack_ref"]
+            schedule_doc = module.load_json(manifest["schedules_file"])
+            refs = [module.schedule_transaction_ref(pack_ref, item["schedule_key"]) for item in schedule_doc["schedules"]]
+            target_status = "active" if action == "install" else "paused"
+            conflicting_status = "paused" if action == "install" else "active"
+            lifecycle_version = manifest["version"] if action == "install" else ""
+            for case in cases:
+                if case == "duplicate_conflict":
+                    schedules = [{"transaction_ref": ref, "status": target_status} for ref in refs] + [{"transaction_ref": refs[0], "status": conflicting_status}]
+                elif case == "duplicate_same":
+                    schedules = [{"transaction_ref": ref, "status": target_status} for ref in refs] + [{"transaction_ref": refs[0], "status": target_status}]
+                elif case == "non_object_sibling":
+                    schedules = [{"transaction_ref": ref, "status": target_status} for ref in refs] + ["not-an-object"]
+                elif case == "missing_status":
+                    schedules = [{"transaction_ref": refs[0]}] + [{"transaction_ref": ref, "status": target_status} for ref in refs[1:]]
+                elif case == "noncanonical_status":
+                    schedules = [{"transaction_ref": refs[0], "status": target_status + " "}] + [{"transaction_ref": ref, "status": target_status} for ref in refs[1:]]
+                elif case == "non_string_status":
+                    schedules = [{"transaction_ref": refs[0], "status": 1}] + [{"transaction_ref": ref, "status": target_status} for ref in refs[1:]]
+                else:
+                    schedules = [{"transaction_ref": refs[0] + " ", "status": target_status}] + [{"transaction_ref": ref, "status": target_status} for ref in refs[1:]]
+
+                def fake_call(method, path, body=None):
+                    if path == "/v3/task-governance/schedules":
+                        return 200, {"schedules": schedules}
+                    return 200, {"packs": [{
+                        "pack_ref": pack_ref,
+                        "enabled_pointer": {"current_version": lifecycle_version},
+                    }]}
+
+                def die_as_runtime_error(message, *_args):
+                    raise RuntimeError(message)
+
+                module.call = fake_call
+                module.die = die_as_runtime_error
+                with mock.patch.object(sys, "argv", [
+                    action + ".py", "--devserver-base", "http://127.0.0.1:18080", "--wait-seconds", "0",
+                ]):
+                    with self.assertRaisesRegex(RuntimeError, "schedule_readmodel_invalid"):
+                        module.main()
+
     def test_service_collaboration_scripts_have_no_owner_write_endpoints(self):
         scripts = (
             ("content-operations-workbench-v0", "install"),

@@ -51,3 +51,17 @@
 | 回边后完整 E1 Packs 门 | 0 | `/tmp/U04-E1-R1-final-packs-gates-20260730.log` / `716e484b042f40fc1607db53a3d3d00529234ceb4ad9450991cbbd8a68e448f8` |
 
 这轮只修复 T1 的解析根因，不启动 T1-R1、T2、OS 兼容验收或任何外部动作。候选仍为`已实现 -> 待独立验收`，应由全新独立验收上下文重新判断。
+
+## U04-T1-R1 FAIL 与修复回边 2/2（最后一次）
+
+独立复验 `U04-T1-R1` 于 2026-07-30 封存 FAIL：os-07 的既有 dict comprehension 会以最后一条记录覆盖同一 `transaction_ref` 的前序状态，使 `paused -> active`（装入）或 `active -> paused`（停用）冲突被误判确认。报告 `/Users/li/.codex/truzhenv3-process/closeouts/truzhen-v4-unified-goal-U04-T1-R1-packs-independent-reacceptance-20260730.md`，SHA256 `9f4a2e13962cc1f35a9e834e4b1521896c4f396a959f5e37ce003e35e5d3a7af`。
+
+修复回边 `2/2` 仅调整既有 `wait_for_owner_schedule_states`：声明 `transaction_ref` 必须唯一且合法；响应内每条 schedule 必须是合法对象，`transaction_ref` 与 `status` 必须是未归一化的 canonical 字符串；声明引用在 ReadModel 中必须恰好一条。重复同值、冲突、非对象 sibling、缺字段、空白/非字符串状态和非 canonical 引用一律 fail closed。未声明但合法的计划仍按原语义忽略，`allow_missing=True` 仍仅表示声明引用确实不存在。
+
+| 命令 | exit | 日志 / SHA256 |
+| --- | --- | --- |
+| 新反例红灯：schedule 重复/畸形与 content 双路径 | 1 | `/tmp/U04-E1-R2-red-schedule-readmodel-20260730.log` / `9b1e1dfb77a84ad2737fa02a27d1cd8c94c560904e78827596875ade79deb3ca` |
+| 修复后 schedule 对抗矩阵 | 0 | `/tmp/U04-E1-R2-focused-schedule-readmodel-20260730.log` / `5d0e586d193c5184e047f0b6468ee812eb8537779b30df0bc7b018d901ac602a` |
+| 回边后完整 E1 Packs 门 | 0 | `/tmp/U04-E1-R2-final-packs-gates-20260730.log` / `4d954e4075a7d4484ef680f7f5c2696cb333f32b73930e995220b7ac01ed4a81` |
+
+这是 sealed acceptance 的最后一次修复预算。不得在本节点启动 T1-R2、T2 或第三次修复；若下一次独立验收仍 FAIL，必须停止并报告。候选保持`已实现 -> 待独立验收`。
