@@ -65,3 +65,19 @@
 | 回边后完整 E1 Packs 门 | 0 | `/tmp/U04-E1-R2-final-packs-gates-20260730.log` / `4d954e4075a7d4484ef680f7f5c2696cb333f32b73930e995220b7ac01ed4a81` |
 
 这是 sealed acceptance 的最后一次修复预算。不得在本节点启动 T1-R2、T2 或第三次修复；若下一次独立验收仍 FAIL，必须停止并报告。候选保持`已实现 -> 待独立验收`。
+
+## U04-R2-P-E1：首次安装空态精确兼容
+
+`U04-T2` 的独立验收报告 `/Users/li/.codex/truzhenv3-process/closeouts/truzhen-v4-unified-goal-U04-T2-packs-first-install-openapi-acceptance-20260730.md` 确认：真实 os-14 首次安装查询会返回目标 `pack_ref`、`records: []`，并且因为尚未启用而**省略** `enabled_pointer`。旧共享解析器把该合法空态当畸形，三个可信 GUI 交接脚本都不能进入只读 handoff。
+
+本回边从 Packs `cb17c7f1643cc3161e05cf732685003dadcd83b4` 开始，只改既有 `pack_enabled_version_from_readmodel` 和直接测试：只有目标 entry 的 `records` 是精确空数组且 `enabled_pointer` 字段缺失时，才返回标准空态 `""`。目标 entry 缺失、重复 entry、`records` 缺失/非数组、`records` 非空却缺 pointer、pointer 非对象、非 canonical 版本和冲突形状全部继续 `None` / fail closed；已有 disabled/reactivate 与已安装指针行为不放宽。
+
+固定 OS handler `/Users/li/Documents/truzhenos/backend/internal/devserver/packcapabilityhttp/pack_studio_stage4.go:923-937` 只读核对显示，每个目标 entry 都带 `records`；存在 `enabled_pointer` 时它对应 lifecycle record。故既有 issued-binding 测试 fixture 改为含 `pack_ref`、`version`、`state=enabled|disabled` 的非空 record，而非用空数组机械放绿。`smart-home-owner-pack-v0/uninstall.py` 未改。
+
+| 命令 | exit | 日志 / SHA256 |
+| --- | --- | --- |
+| 新反例红灯：合法首装空态 | 1 | `/tmp/U04-R2-P-E1-red-first-install-20260730.log` / `2fe21ed7e29205b15d9d82f955cc5e7e28ba3de9d02cd90d14c9648b57880519` |
+| 首装、已安装、disabled/reactivate、uninstall、重复/畸形与 issued-binding 定向矩阵 | 0 | `/tmp/U04-R2-P-E1-focused-first-install-final-20260730.log` / `5cf54de757d9b0b1df20403a28759108c3dab995333b04534a829e88b9392144` |
+| 代码冻结后全量 Python、Go、JSON、语法、Pack 结构、禁品、敏感项、智能家居卸载不变与 `git diff --check` | 0 | `/tmp/U04-R2-P-E1-final-packs-gates-rerun-20260730.log` / `792c5afb8dfa3f0a130db601246f137b3c153194dd2214190b3a839741fd6149` |
+
+本回边生命周期为`已实现 -> 待独立验收`：未合并、未推送、未启动 OS devserver / EGR / Provider / 登录或外部动作。下一节点只能由新的独立 `P-T1` 在隔离 OS ReadModel 上验收这条首装形状；本节点不启动 P-T1 或 O-E2。

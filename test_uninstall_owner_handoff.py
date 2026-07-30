@@ -31,6 +31,19 @@ def load_diagnostics():
     return module
 
 
+def lifecycle_entry(pack_ref, version="", records=None, include_pointer=True):
+    if records is None:
+        records = [] if not include_pointer else [{
+            "pack_ref": pack_ref,
+            "version": version,
+            "state": "enabled" if version else "disabled",
+        }]
+    entry = {"pack_ref": pack_ref, "records": records}
+    if include_pointer:
+        entry["enabled_pointer"] = {"current_version": version}
+    return entry
+
+
 class OwnerHandoffPackScriptTest(unittest.TestCase):
     def _run_uninstall_success(self, pack_dir, args):
         module = load_script("uninstall_" + pack_dir.replace("-", "_"), pack_dir, "uninstall")
@@ -42,7 +55,7 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
         def fake_call(method, path, body=None):
             calls.append((method, path, body))
             enabled = states.pop(0) if states else False
-            return 200, {"packs": [{"pack_ref": pack_ref, "enabled_pointer": {"current_version": "1.0.0" if enabled else ""}}]}
+            return 200, {"packs": [lifecycle_entry(pack_ref, "1.0.0" if enabled else "")]}
 
         module.call = fake_call
         out = io.StringIO()
@@ -79,10 +92,7 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
                     for item in schedule_doc["schedules"]
                 ]}
             enabled = lifecycle_states.pop(0) if lifecycle_states else version
-            return 200, {"packs": [{
-                "pack_ref": pack_ref,
-                "enabled_pointer": {"current_version": enabled},
-            }]}
+            return 200, {"packs": [lifecycle_entry(pack_ref, enabled)]}
 
         module.call = fake_call
         out = io.StringIO()
@@ -119,10 +129,7 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
                     {"transaction_ref": ref, "status": state} for ref in refs
                 ]}
             version = lifecycle_states.pop(0) if lifecycle_states else ""
-            return 200, {"packs": [{
-                "pack_ref": pack_ref,
-                "enabled_pointer": {"current_version": version},
-            }]}
+            return 200, {"packs": [lifecycle_entry(pack_ref, version)]}
 
         module.call = fake_call
         out = io.StringIO()
@@ -144,10 +151,7 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
 
             def fake_call(method, path, body=None):
                 calls.append((method, path, body))
-                return 200, {"packs": [{
-                    "pack_ref": pack_ref,
-                    "enabled_pointer": {"current_version": current_version},
-                }]}
+                return 200, {"packs": [lifecycle_entry(pack_ref, current_version)]}
 
             module.call = fake_call
             with mock.patch.object(sys, "argv", [
@@ -169,14 +173,100 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
             [9],
         )
         for versions in malformed:
-            body = {"packs": [{
-                "pack_ref": pack_ref,
-                "enabled_pointer": {"current_version": version},
-            } for version in versions]}
+            body = {"packs": [lifecycle_entry(pack_ref, version) for version in versions]}
             self.assertIsNone(
                 diagnostics.pack_enabled_version_from_readmodel(body, pack_ref),
                 versions,
             )
+
+    def test_lifecycle_helper_accepts_only_canonical_first_install_empty_state(self):
+        diagnostics = load_diagnostics()
+        pack_ref = "scene_pack://smart-home-owner-project-ops"
+        self.assertEqual(
+            diagnostics.pack_enabled_version_from_readmodel(
+                {"packs": [lifecycle_entry(pack_ref, include_pointer=False)]}, pack_ref
+            ),
+            "",
+        )
+        self.assertEqual(
+            diagnostics.pack_enabled_version_from_readmodel(
+                {"packs": [lifecycle_entry(pack_ref, "", records=[{"state": "disabled"}])]}, pack_ref
+            ),
+            "",
+        )
+        self.assertEqual(
+            diagnostics.pack_enabled_version_from_readmodel(
+                {"packs": [lifecycle_entry(pack_ref, "1.1.0", records=[{"state": "enabled"}])]}, pack_ref
+            ),
+            "1.1.0",
+        )
+        self.assertIsNone(
+            diagnostics.pack_enabled_version_from_readmodel({"packs": []}, pack_ref),
+        )
+        self.assertIsNone(
+            diagnostics.pack_enabled_version_from_readmodel(
+                {"packs": [lifecycle_entry("scene_pack://another-pack", "1.1.0")]},
+                pack_ref,
+            ),
+        )
+        malformed = (
+            {"pack_ref": pack_ref},
+            {"pack_ref": pack_ref, "records": {}},
+            {"pack_ref": pack_ref, "records": ["record"]},
+            {"pack_ref": pack_ref, "records": [], "enabled_pointer": None},
+            {"pack_ref": pack_ref, "records": [], "enabled_pointer": {}},
+            {"pack_ref": pack_ref, "records": [{"state": "draft"}]},
+        )
+        for entry in malformed:
+            self.assertIsNone(
+                diagnostics.pack_enabled_version_from_readmodel({"packs": [entry]}, pack_ref),
+                entry,
+            )
+
+    def test_all_consumers_accept_canonical_first_install_and_reactivate_states(self):
+        for pack_dir, version in (
+            ("content-operations-workbench-v0", "0.2.0"),
+            ("smart-home-owner-pack-v0", "1.1.0"),
+        ):
+            module = load_script("first_install_" + pack_dir.replace("-", "_"), pack_dir, "install")
+            with open(os.path.join(module.PACK_DIR, "manifest.json"), encoding="utf-8") as stream:
+                manifest = module.json.load(stream)
+            pack_ref = manifest["pack_ref"]
+            for initial in (
+                lifecycle_entry(pack_ref, include_pointer=False),
+                lifecycle_entry(pack_ref),
+            ):
+                lifecycle_states = [initial, lifecycle_entry(pack_ref, version)]
+
+                def fake_call(method, path, body=None):
+                    if path == "/v3/task-governance/schedules":
+                        schedule_doc = module.load_json(manifest["schedules_file"])
+                        return 200, {"schedules": [{
+                            "transaction_ref": module.schedule_transaction_ref(pack_ref, item["schedule_key"]),
+                            "status": "active",
+                        } for item in schedule_doc["schedules"]]}
+                    return 200, {"packs": [lifecycle_states.pop(0) if lifecycle_states else lifecycle_entry(pack_ref, version)]}
+
+                module.call = fake_call
+                with mock.patch.object(sys, "argv", [
+                    "install.py", "--devserver-base", "http://127.0.0.1:18080", "--wait-seconds", "0",
+                ]):
+                    module.main()
+
+        module = load_script("first_install_content_uninstall", "content-operations-workbench-v0", "uninstall")
+        manifest = module.load_json("manifest.json")
+        pack_ref = manifest["pack_ref"]
+
+        def uninstall_call(method, path, body=None):
+            if path == "/v3/task-governance/schedules":
+                return 200, {"schedules": []}
+            return 200, {"packs": [lifecycle_entry(pack_ref, include_pointer=False)]}
+
+        module.call = uninstall_call
+        with mock.patch.object(sys, "argv", [
+            "uninstall.py", "--devserver-base", "http://127.0.0.1:18080", "--wait-seconds", "0",
+        ]):
+            module.main()
 
     def test_all_three_target_consumers_reject_duplicate_lifecycle_records(self):
         targets = (
@@ -193,8 +283,8 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
             def fake_call(method, path, body=None):
                 calls.append((method, path, body))
                 return 200, {"packs": [
-                    {"pack_ref": pack_ref, "enabled_pointer": {"current_version": canonical}},
-                    {"pack_ref": pack_ref, "enabled_pointer": {"current_version": conflict}},
+                    lifecycle_entry(pack_ref, canonical),
+                    lifecycle_entry(pack_ref, conflict),
                 ]}
 
             def die_as_runtime_error(message, *_args):
@@ -219,7 +309,7 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
         def fake_call(method, path, body=None):
             if path == "/v3/task-governance/schedules":
                 return 200, {"schedules": [{"transaction_ref": ref, "status": "active"} for ref in refs]}
-            return 200, {"packs": [{"pack_ref": pack_ref, "enabled_pointer": {"current_version": ""}}]}
+            return 200, {"packs": [lifecycle_entry(pack_ref)]}
 
         module.call = fake_call
         with mock.patch.object(sys, "argv", [
@@ -298,10 +388,7 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
                 def fake_call(method, path, body=None):
                     if path == "/v3/task-governance/schedules":
                         return 200, {"schedules": schedules}
-                    return 200, {"packs": [{
-                        "pack_ref": pack_ref,
-                        "enabled_pointer": {"current_version": lifecycle_version},
-                    }]}
+                    return 200, {"packs": [lifecycle_entry(pack_ref, lifecycle_version)]}
 
                 def die_as_runtime_error(message, *_args):
                     raise RuntimeError(message)

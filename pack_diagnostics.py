@@ -89,7 +89,13 @@ def pack_enabled_version_from_readmodel(body, pack_ref):
     if len(records) > 1:
         return None
     if records:
-        pointer = records[0].get("enabled_pointer")
+        entry = records[0]
+        lifecycle_records = entry.get("records")
+        if not isinstance(lifecycle_records, list):
+            return None
+        if "enabled_pointer" not in entry:
+            return "" if lifecycle_records == [] else None
+        pointer = entry.get("enabled_pointer")
         if not isinstance(pointer, dict):
             return None
         version = pointer.get("current_version")
@@ -100,7 +106,7 @@ def pack_enabled_version_from_readmodel(body, pack_ref):
         if not _CANONICAL_PACK_VERSION.fullmatch(version):
             return None
         return version
-    return ""
+    return None
 
 
 def wait_for_owner_enabled(call, pack_ref, version, timeout_seconds, poll_seconds=1.0, sleep=time.sleep):

@@ -91,6 +91,7 @@ class TestPackIssuedBinding(unittest.TestCase):
                     if "/lifecycle/packs?" in path:
                         return 200, {"packs": [{
                             "pack_ref": mod.json.load(open(os.path.join(mod.PACK_DIR, "manifest.json"), encoding="utf-8"))["pack_ref"],
+                            "records": [{"version": "0.1.0", "state": "enabled"}],
                             "enabled_pointer": {"current_version": "0.1.0"},
                         }]}
                     if path.endswith("/prepare"):
@@ -130,8 +131,8 @@ class TestPackIssuedBinding(unittest.TestCase):
                         # First call: pack is enabled. Second call (from
                         # wait_for_owner_disabled): pack is disabled.
                         if lifecycle_calls[0] == 1:
-                            return 200, {"packs": [{"pack_ref": pack_ref, "enabled_pointer": {"current_version": "0.1.0"}}]}
-                        return 200, {"packs": [{"pack_ref": pack_ref, "enabled_pointer": {"current_version": ""}}]}
+                            return 200, {"packs": [{"pack_ref": pack_ref, "records": [{"pack_ref": pack_ref, "version": version, "state": "enabled"}], "enabled_pointer": {"current_version": version}}]}
+                        return 200, {"packs": [{"pack_ref": pack_ref, "records": [{"pack_ref": pack_ref, "version": version, "state": "disabled"}], "enabled_pointer": {"current_version": ""}}]}
                     if path.endswith("/prepare"):
                         return 200, {"issue": {"issue_ref": "issue-1"}}
                     if path.endswith("/confirm"):
