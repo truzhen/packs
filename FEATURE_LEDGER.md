@@ -24,6 +24,12 @@
 | --- | --- | --- |
 | current-main 15/45/30 索引与口径闭合 | 两个索引保留 116 个跳转并全部改指 current-main 现存 15 scope 目录；README 案例数由 31 校正为实际 30；仅同步两个索引条目的 SHA-256。未改 installer、manifest、其它知识正文、法律状态或历史 16/53 候选。 | `已实现 -> 待 P-E2 / 独立验收`；`environmental_knowledge_asset_hygiene_test.go`、`docs/acceptance/A00-R1-P-D1-environmental-asset-hygiene-closeout-20260730.md` |
 
+## 0.-4.3 A00-R1 环保执法可信 Owner 交接 P-E2（2026-07-30）
+
+| 目标 | 结果与边界 | 生命周期 / 证据 |
+| --- | --- | --- |
+| installer Owner handoff + 组合 readiness | `install.py` 不再调用场景 lifecycle confirm/reactivate、Base prepare/confirm 或知识 approve；首次只暂存 candidate 并输出机器可读 handoff。Owner 操作后重跑时，只有 exact enabled pointer、15 个 required active mount 和逐一可反查 FormalReceipt 同时成立才续接下游；partial、blocked、Receipt 缺失或冲突 mount 均在角色/槽位/知识前 fail closed 并保留可得 audit refs。知识只暂存 45 个稳定 candidate，重跑不新增 identity。未启动 OS、Provider、登录或外部动作。 | `已实现 -> 待独立验收`；`environmental-enforcement-pack-v0/tests/test_install_owner_handoff.py`、`docs/acceptance/A00-R1-P-E2-environmental-owner-handoff-readiness-closeout-20260730.md` |
+
 ## 0.-3 Truzhen v4 发布前第五批收口（2026-07-23）
 
 | 目标 | 结果与边界 | 生命周期 / 证据 |

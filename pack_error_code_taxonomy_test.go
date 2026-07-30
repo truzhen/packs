@@ -102,6 +102,19 @@ func TestPackErrorCodeTaxonomyIsSubdivided(t *testing.T) {
 			if strings.Contains(ic, "install handoff is read-only") {
 				required = []string{"INSTALL_CONNECTIVITY", "INSTALL_LIFECYCLE_HTTP"}
 			}
+			if root == "environmental-enforcement-pack-v0" {
+				// A00-R1-P-E2 禁止 installer 自行版本 bump 或调用 Base
+				// prepare/confirm；只要求仍可发生的候选 staging、组合
+				// readiness 与下游候选阶段保持细分诊断。
+				required = []string{
+					"INSTALL_CONNECTIVITY",
+					"INSTALL_LIFECYCLE_HTTP",
+					"INSTALL_READINESS",
+					"INSTALL_ROLE_BINDING",
+					"INSTALL_KNOWLEDGE",
+					"INSTALL_KNOWLEDGE_CHECKSUM",
+				}
+			}
 			for _, c := range required {
 				if !regexp.MustCompile(`\b` + c + `\b`).MatchString(ic) {
 					t.Errorf("%s/install.py 未接线阶段常量 %s（仍在用单一通用码？）", root, c)

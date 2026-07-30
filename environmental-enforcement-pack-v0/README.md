@@ -46,7 +46,9 @@ environmental-enforcement-pack-v0/
 ## 加载 / 卸载（不与基座混；产品默认不自带本 pack）
 
 > 前置：本 pack 已从基座 `server.go` 的产品自动 seed 中摘除（`defaultPlatformPackAssetSeeds()` 返回空）。
-> 即产品启动后「场景包管理」没有已启用的环保执法 Pack。`install.py` 装入并启用版本；
+> 即产品启动后「场景包管理」没有已启用的环保执法 Pack。`install.py` 只暂存 lifecycle
+> candidate 并输出可信 GUI Owner 交接；Owner 确认后重跑同一命令，脚本以 exact enabled
+> pointer、15 个 required active mount 和逐一可反查的 FormalReceipt 作为组合 readiness；
 > `uninstall.py` 受控停用、卸载知识可见性和运行访问权，但会保留“本地已安装 / 未启用”的
 > 版本元数据，以便后续幂等重装；它不会物理删除历史项目、Receipt 或 FormalKnowledge。
 > 因此需用**含本分支改动的 devserver**（旧二进制仍会自带 1.0.2 旧种子）。
@@ -55,10 +57,10 @@ environmental-enforcement-pack-v0/
 # 1) 起 devserver（含本分支改动）
 go run ./backend/cmd/devserver
 
-# 2) 加载本 pack（走真实 lifecycle 端点 + Base Gate + 03 receipt）
+# 2) 暂存本 pack candidate；按输出去可信 GUI 完成 Owner 确认
 TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 \
   python3 packs/environmental-enforcement-pack-v0/install.py
-#   lifecycle 脚本必须显式指定受控 devserver；不会猜测默认端口。
+#   Owner 操作后重跑同一命令；脚本不会代办 lifecycle confirm 或 Base prepare/confirm。
 
 # 3) 前端「场景包管理」刷新 → 出现「环保执法证据链 Pack（全领域）」
 
@@ -72,7 +74,12 @@ TRUZHEN_CLIENT_URL=http://127.0.0.1:5197 \
 完成；脚本不伪造 Origin/Cookie，不自动 prepare/confirm/disable。超时或状态不可读即
 `blocked/not_ready`，不得宣称成功。
 
-加载会装入：场景包 EnabledVersion + 2 角色包 + 槽位绑定 + 15 知识域 + 45/45 源文档切分出的全部 FormalKnowledge。源文档数与 09 运行态分片数是两个指标；验收必须按 `pack_ref`、`source_ref`、scope 全量分页对账，不得把前台全局知识总数（历史曾显示 752）冒充本 Pack 的源文档数或固定分片契约。
+组合 readiness 不完整时，脚本只输出 `awaiting_owner_confirmation / not_ready / recovery`
+以及当前可获得的 Receipt 引用，并在角色、槽位、知识写入前停止。组合 readiness 完整后，
+脚本才幂等续接 2 个角色、槽位绑定和 45/45 源文档的知识候选暂存；知识候选仍须由 Owner
+在可信 GUI 中逐项治理，脚本不自动 approve，也不把候选冒充 FormalKnowledge。源文档数与
+09 运行态分片数是两个指标；验收必须按 `pack_ref`、`source_ref`、scope 全量分页对账，
+不得把前台全局知识总数（历史曾显示 752）冒充本 Pack 的源文档数或固定分片契约。
 （大文件按章节/条款切块，约数百条，均 pending_human_review）。卸载经真实 `lifecycle/disable`
 （Owner 在可信 GUI 确认、Base 签发 disable 决议）级联卸载知识域；**已产生的案件对象与 03 回执仍可反查——卸载不删历史**。
 

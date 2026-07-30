@@ -44,7 +44,7 @@ Pack 不直接生成 Formal Record，不直接执行 provider，不直接写基�
 
 | 包 | pack 标识 | template_family | 成熟度 | 职责 |
 |---|---|---|---|---|
-| `environmental-enforcement-pack-v0/` | `scene_pack://environmental-enforcement-flow` | 合规审查执法证据链型 | 完整文件夹包；材料硬门、事实锚定、检索相关性与 Flow/Transaction 完成语义为`已实现 -> 已接线`，待 v18 按三标准单项目复验（未发布） | 生态环境执法证据链：线索、立案、取证、证据三性、执法精英 / 挑剔律师对照、处置、文书、Owner/Base 裁定、Receipt。 |
+| `environmental-enforcement-pack-v0/` | `scene_pack://environmental-enforcement-flow` | 合规审查执法证据链型 | 完整文件夹包；材料硬门、事实锚定、检索相关性与 Flow/Transaction 完成语义为`已实现 -> 已接线`；installer 已改为可信 GUI Owner 交接，并以 exact enabled pointer + 15 个 required active mount + FormalReceipt 反查作为组合 readiness，待独立验收（未发布） | 生态环境执法证据链：线索、立案、取证、证据三性、执法精英 / 挑剔律师对照、处置、文书、Owner/Base 裁定、Receipt。 |
 | `smart-home-owner-pack-v0/` | `scene_pack://smart-home-owner-project-ops` | 长周期项目交付型 | v1.1.0 完整文件夹包；可信 GUI 装入交接已实现，只读精确版本 os-14 状态，待独立验收（未发布） | 智能家居老板项目经营：商机、立项、进度、物料、交付、历史查询、Frappe 受控写回；硬件仅可选复用 Home Assistant L2 Provider，不自造程序且不作为项目主链放行前提。 |
 | `housekeeping-ops-pack-v0/` | `scene_pack://housekeeping-ops`，兼容 `pack_housekeeping_ops_v0` | 客户服务全生命周期型 | 可装入 / 可卸载文件夹包：manifest、flow、capabilities、2 角色包、role-slots、install、uninstall；`knowledge/` 待补 | 家政客户服务全生命周期：受理咨询、顾问出方案、质检质询、对照确认门、排期报价、派工确认、通知客户、上门服务、服务回执、归档。 |
 | `content-operations-workbench-v0/` | `scene_pack://content-operations-workbench` | Founder 自营内容候选与复盘型 | v0.2.0 可信 GUI 装入/停用交接已实现，只读核验 os-14 精确版本及 os-07 声明计划状态，待独立验收（未发布）；不据此声明 Provider、OS 或 Client 动态验收 | 把真实产品证据变成方向候选、母内容、渠道候选、人工发布包与周复盘；0.2.0 计划增加本地可播放 MP4 候选，但 Pack 仍不含 CLI / Provider / 平台登录 / 自动发布，真实渲染由 software + 11 Gateway 供给。 |

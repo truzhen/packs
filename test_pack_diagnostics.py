@@ -88,9 +88,7 @@ class TestInstallStageErrorCodes(unittest.TestCase):
 
         def fake_call(method, path, body=None):
             if path.startswith("/v3/pack-studio/lifecycle/packs"):
-                return 200, {"packs": []}                     # 未装 → enabled_version=None
-            if path.endswith("/reactivate"):
-                return 409, {}                                # reactivate 失败 → 走 do_seed_scene
+                return 200, {"packs": []}                     # 首装：尚无 lifecycle record
             if path.endswith("/canvas"):
                 return 200, {"engine_sync": {"synced": True}} # canvas 同步成功
             if path.endswith("/draft"):
@@ -113,8 +111,9 @@ class TestEnvironmentalHighRiskLifecycle(unittest.TestCase):
 
         self.assertEqual(manifest.get("risk_level"), "high")
         self.assertIn('"risk_level": manifest.get("risk_level", "medium")', install_source)
-        self.assertIn('"verify_authority": False', install_source)
-        self.assertNotIn('"verify_authority": True', install_source)
+        self.assertIn('"verification_status": "pending_human_review"', install_source)
+        self.assertNotIn('"verify_authority":', install_source)
+        self.assertNotIn('"/v3/memory/knowledge/candidates/"', install_source)
 
     def test_enforcement_elite_grounding_is_declared_and_forwarded(self):
         with open(os.path.join(ENV_PACK, "role-packs", "enforcement-elite.rolepack.json"), encoding="utf-8") as f:

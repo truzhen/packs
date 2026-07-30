@@ -3,16 +3,18 @@
 """
 环保执法 Pack —— 装入正在运行的 Truzhen devserver（可加载）。
 
-走的是前端/产品种子完全相同的真实 lifecycle 端点（canvas → 06 同步 → lifecycle
-draft/readiness/promote/confirm → 角色包 lifecycle → 绑槽 → 09 知识库批量入库 +
-Base 签发 approve decision + approve），全程产 03 receipt，不手写裸塞、不绕主权链。
+脚本只负责 lifecycle candidate staging 与只读组合 readiness。场景包正式 confirm、
+Base prepare/confirm 和知识候选 approve 必须由可信 GUI 中的 Owner 操作完成；脚本不代办。
+只有 exact enabled pointer、每个 required scope 的 active mount 与对应 FormalReceipt
+全部可反查时，才续接角色、绑槽与 09 知识候选暂存。
 
 前置：先在隔离 worktree 起 devserver（且已从 server.go 摘除环保自动 seed），并显式指定
 受控地址；脚本不会猜测或写入默认端口：
   TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 \
     python3 packs/environmental-enforcement-pack-v0/install.py
 
-幂等：每次调用都先将当前 flow 写穿 06；已启用的场景包/角色包/绑定随后跳过，知识批量入库按内容去重。
+幂等：首次 staging 以稳定 key 建 candidate；Owner 操作后重跑同一命令只读 OS 权威状态。
+已启用角色包/绑定会跳过，知识批量以 versioned source_ref + content_hash 去重。
 """
 import hashlib
 import argparse
@@ -20,7 +22,6 @@ import json
 import os
 import re
 import sys
-import uuid
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -31,8 +32,8 @@ if REPO_DIR not in sys.path:
     sys.path.insert(0, REPO_DIR)
 from pack_diagnostics import (
     emit_pack_error, INSTALL_GENERIC, INSTALL_CONNECTIVITY, INSTALL_LIFECYCLE_HTTP,
-    INSTALL_READINESS, INSTALL_STATE_CONFLICT, INSTALL_ROLE_BINDING, INSTALL_KNOWLEDGE,
-    INSTALL_BASE_GATE, INSTALL_KNOWLEDGE_CHECKSUM)
+    INSTALL_READINESS, INSTALL_ROLE_BINDING, INSTALL_KNOWLEDGE,
+    INSTALL_KNOWLEDGE_CHECKSUM)
 from knowledge_checksums import verify_entries
 from pack_install_journal import InstallJournal
 
@@ -44,6 +45,19 @@ BASE = ""
 OWNER = os.environ.get("TRUZHEN_PACK_OWNER", "owner://local/default")
 
 JOURNAL = None  # 装入事务日志（#8）：main() 内初始化；die() 失败时落半装状态
+
+LIFECYCLE_RECORD_STATES = {
+    "draft",
+    "readiness_checked",
+    "pack_spec_candidate",
+    "owner_confirmed",
+    "gate_approved",
+    "pack_enabled_version",
+    "rolled_back",
+    "disabled",
+    "uninstalled",
+    "expired",
+}
 
 
 def load(rel):
@@ -60,25 +74,6 @@ def load_opt(rel, default):
         return default
     with open(path, encoding="utf-8") as f:
         return json.load(f)
-
-
-class PackVersionConflict(Exception):
-    """目标版本被历史 disabled 记录占用（unload 后 reload 场景）。"""
-
-
-def bump_patch(v):
-    parts = v.split(".")
-    if parts and parts[-1].isdigit():
-        parts[-1] = str(int(parts[-1]) + 1)
-        return ".".join(parts)
-    return v + ".1"
-
-
-def is_state_conflict(body):
-    """判断响应是否为「该版本已被 disabled/冻结、无法再次 draft/check」的状态冲突。"""
-    s = json.dumps(body, ensure_ascii=False)
-    return any(k in s for k in ("is not checkable", "state=disabled", "DraftFrozen",
-                                "draft is frozen", "not_confirmable", "ErrDraftFrozen"))
 
 
 def call(method, path, body=None):
@@ -112,6 +107,186 @@ def die(msg, error_code=INSTALL_GENERIC):
 def strip_frontmatter(text):
     m = re.match(r"^---\s*\n.*?\n---\s*\n", text, re.S)
     return text[m.end():] if m else text
+
+
+def emit_owner_handoff(status, *, pack_ref, version, reason, audit_refs=None,
+                       readiness=None, candidate_refs=None):
+    """输出机器可读 Owner 交接；调用方重跑同一命令只做幂等续接。"""
+    handoff = {
+        "status": status,
+        "pack_ref": pack_ref,
+        "target_version": version,
+        "pack_version_ref": pack_ref + "@" + version,
+        "reason": reason,
+        "owner_action": "请在可信 Truzhen GUI 中完成所列 Owner 确认；本脚本不代办 Gate。",
+        "resume": {
+            "command": "TRUZHEN_DEVSERVER_BASE=%s python3 %s" % (
+                BASE, os.path.join(PACK_DIR, "install.py")),
+            "rule": "Owner 操作后重跑同一命令；每次都重新读取 OS 权威状态。",
+        },
+        "audit_refs": sorted(set(audit_refs or [])),
+        "candidate_refs": sorted(set(candidate_refs or [])),
+    }
+    if readiness is not None:
+        handoff["readiness"] = readiness
+    print("TRUZHEN_PACK_HANDOFF=" + json.dumps(handoff, ensure_ascii=False, sort_keys=True))
+
+
+def lifecycle_entry(body, pack_ref):
+    matches = [
+        entry for entry in (body.get("packs") or [])
+        if entry.get("pack_ref") == pack_ref
+    ]
+    if len(matches) > 1:
+        die("lifecycle ReadModel 返回多个 exact pack_ref，拒绝猜测：%s" % pack_ref,
+            INSTALL_LIFECYCLE_HTTP)
+    return matches[0] if matches else {}
+
+
+def target_record_states(entry, version):
+    records = entry.get("records", [])
+    if not isinstance(records, list):
+        raise ValueError("lifecycle records 不是数组")
+    states = []
+    for record in records:
+        if not isinstance(record, dict):
+            raise ValueError("lifecycle record 不是对象")
+        if record.get("version") != version:
+            continue
+        state = record.get("state")
+        if state not in LIFECYCLE_RECORD_STATES:
+            raise ValueError("目标版本 lifecycle state 缺失或未知")
+        states.append(state)
+    return states
+
+
+def mount_audit_snapshot(mounts):
+    refs = []
+    rows = []
+    for mount in mounts:
+        for key in ("enabled_receipt_ref", "disabled_receipt_ref", "last_receipt_ref"):
+            if mount.get(key):
+                refs.append(mount[key])
+        rows.append({
+            "mount_ref": mount.get("mount_ref", ""),
+            "knowledge_scope_ref": mount.get("knowledge_scope_ref", ""),
+            "status": mount.get("status", ""),
+            "blocked_reason": mount.get("blocked_reason", ""),
+            "enabled_receipt_ref": mount.get("enabled_receipt_ref", ""),
+            "disabled_receipt_ref": mount.get("disabled_receipt_ref", ""),
+            "last_receipt_ref": mount.get("last_receipt_ref", ""),
+        })
+    return refs, rows
+
+
+def verify_combined_readiness(pack_ref, version, scopes_doc):
+    """只消费 O-T1 第 8 节：exact pointer + required active mounts + FormalReceipt。"""
+    pack_version_ref = pack_ref + "@" + version
+    required_scopes = sorted(
+        scope["scope_ref"] for scope in (scopes_doc.get("scopes") or [])
+        if scope.get("required", True)
+    )
+    base_query = {
+        "owner_id": OWNER,
+        "pack_ref": pack_ref,
+        "pack_version_ref": pack_version_ref,
+    }
+    code, body = call(
+        "GET",
+        "/v3/memory/knowledge/mounts?" + urllib.parse.urlencode(base_query),
+    )
+    if code != 200:
+        return {
+            "ready": False,
+            "status": "not_ready",
+            "reason_codes": ["knowledge_mount_truth_unavailable"],
+            "audit_refs": [],
+            "mounts": [],
+            "http_status": code,
+        }
+    all_exact_mounts = [
+        mount for mount in (body.get("mounts") or [])
+        if mount.get("owner_id") == OWNER
+        and mount.get("pack_ref") == pack_ref
+        and mount.get("pack_version_ref") == pack_version_ref
+    ]
+    audit_refs, audit_rows = mount_audit_snapshot(all_exact_mounts)
+    reason_codes = []
+    ready_mounts = []
+
+    for scope_ref in required_scopes:
+        exact_scope_mounts = [
+            mount for mount in all_exact_mounts
+            if mount.get("knowledge_scope_ref") == scope_ref
+        ]
+        if any(mount.get("status") != "active" for mount in exact_scope_mounts):
+            reason_codes.append("required_scope_has_non_active_mount:" + scope_ref)
+            continue
+        query = dict(base_query)
+        query.update({"knowledge_scope_ref": scope_ref, "status": "active"})
+        code, active_body = call(
+            "GET",
+            "/v3/memory/knowledge/mounts?" + urllib.parse.urlencode(query),
+        )
+        if code != 200:
+            reason_codes.append("active_mount_query_failed:" + scope_ref)
+            continue
+        active_mounts = [
+            mount for mount in (active_body.get("mounts") or [])
+            if mount.get("owner_id") == OWNER
+            and mount.get("pack_ref") == pack_ref
+            and mount.get("pack_version_ref") == pack_version_ref
+            and mount.get("knowledge_scope_ref") == scope_ref
+            and mount.get("status") == "active"
+        ]
+        if len(active_mounts) != 1:
+            reason_codes.append("required_scope_not_exactly_active:" + scope_ref)
+            continue
+        mount = active_mounts[0]
+        receipt_ref = mount.get("enabled_receipt_ref", "")
+        if not receipt_ref:
+            reason_codes.append("active_mount_missing_enabled_receipt:" + scope_ref)
+            continue
+        audit_refs.append(receipt_ref)
+        code, receipt = call(
+            "GET",
+            "/v3/receipts/" + urllib.parse.quote(receipt_ref, safe=""),
+        )
+        # O-T1 明确 200 响应即为 FormalReceipt；不在 Packs 自造额外 status 枚举。
+        if code != 200 or receipt.get("receipt_ref") != receipt_ref:
+            reason_codes.append("formal_receipt_lookup_failed:" + scope_ref)
+            continue
+        ready_mounts.append({
+            "mount_ref": mount.get("mount_ref", ""),
+            "knowledge_scope_ref": scope_ref,
+            "enabled_receipt_ref": receipt_ref,
+        })
+
+    if reason_codes:
+        has_recovery_signal = any(
+            row["status"] in ("blocked", "disabled")
+            or bool(row["blocked_reason"])
+            or bool(row["disabled_receipt_ref"])
+            for row in audit_rows
+        )
+        return {
+            "ready": False,
+            "status": "recovery" if has_recovery_signal else "not_ready",
+            "reason_codes": reason_codes,
+            "audit_refs": sorted(set(audit_refs)),
+            "mounts": audit_rows,
+            "required_scope_count": len(required_scopes),
+            "active_scope_count": len(ready_mounts),
+        }
+    return {
+        "ready": True,
+        "status": "ready",
+        "reason_codes": [],
+        "audit_refs": sorted(set(audit_refs)),
+        "mounts": ready_mounts,
+        "required_scope_count": len(required_scopes),
+        "active_scope_count": len(ready_mounts),
+    }
 
 
 def main():
@@ -150,29 +325,40 @@ def main():
     JOURNAL = InstallJournal.open(pack_ref, BASE)
     JOURNAL.step("scene")
 
-    # 健康检查
-    code, _ = call("GET", "/v3/pack-studio/lifecycle/packs?pack_ref=" + pack_ref)
+    # lifecycle ReadModel 是组合 readiness 的第一项，但绝不是单一真相。
+    lifecycle_path = (
+        "/v3/pack-studio/lifecycle/packs?"
+        + urllib.parse.urlencode({"pack_ref": pack_ref})
+    )
+    code, body = call("GET", lifecycle_path)
     if code == 0:
         die("连不上 devserver（%s）。请先 go run ./backend/cmd/devserver" % BASE, INSTALL_CONNECTIVITY)
-
-    # 解析装入版本：
-    #   - 该 pack 已有 enabled 版本 → 幂等跳过场景包步骤（已装）。
-    #   - 否则用 manifest 版本装入；若该版本被历史 disabled 记录占用（unload 后 reload，
-    #     共享 lifecycle 不支持同版本 disabled→enabled 经 HTTP 重启），自动 bump patch，
-    #     走 lifecycle 支持的「新版本 draft→…→enabled」路径，实现 unload 后可 reload。
-    enabled_version = None
-    code, body = call("GET", "/v3/pack-studio/lifecycle/packs?pack_ref=" + pack_ref)
-    if code == 200:
-        for entry in body.get("packs", []) or []:
-            if entry.get("pack_ref") == pack_ref:
-                cur = (entry.get("enabled_pointer") or {}).get("current_version")
-                if cur:
-                    enabled_version = cur
+    if code != 200:
+        die("lifecycle ReadModel HTTP %d: %s" % (code, body), INSTALL_LIFECYCLE_HTTP)
+    entry = lifecycle_entry(body, pack_ref)
+    pointer = entry.get("enabled_pointer")
+    try:
+        if pointer is None:
+            enabled_version = ""
+        elif not isinstance(pointer, dict):
+            raise ValueError("enabled_pointer 不是对象")
+        else:
+            enabled_version = pointer.get("current_version", "")
+            if not isinstance(enabled_version, str):
+                raise ValueError("enabled pointer current_version 不是字符串")
+        record_states = target_record_states(entry, version)
+    except ValueError as exc:
+        emit_owner_handoff(
+            "not_ready",
+            pack_ref=pack_ref,
+            version=version,
+            reason="malformed_lifecycle_readmodel_fail_closed",
+            readiness={"readmodel_error": str(exc)},
+        )
+        return
 
     def sync_canvas():
-        # flow_id 与版本无关，但它是运行时 06 的唯一规格入口。即使同版本已
-        # enabled，也必须先同步；否则 pack 文件演进后会出现“声明已更新、run
-        # 仍执行旧图”的规格漂移。同步失败必须阻止后续幂等短路，不能伪装成功。
+        # 只在尚无目标 lifecycle 候选时写穿规格；resume readiness 阶段保持只读。
         print("[1/6] 画布写穿 06 ...")
         code, body = call("POST", "/v3/pack-studio/canvas", {
             "flow_id": flow_id, "title": flow.get("title", ""),
@@ -187,14 +373,8 @@ def main():
         if not ((body.get("engine_sync") or {}).get("synced")):
             die("canvas 未同步进 06：%s" % body.get("engine_sync"), INSTALL_LIFECYCLE_HTTP)
 
-    # 先同步再判断 enabled/reactivate/new install；这是运行规格与 Pack 文件保持
-    # 一致的最低条件，且通过 OCC 重放保持幂等。
-    sync_canvas()
-
-    def do_seed_scene(install_version):
-        pvr = pack_ref + "@" + install_version
-        # 2. lifecycle draft（六件事 + 知识域）
-        print("[2/6] lifecycle draft（六件事 + %d 知识域）..." % len(scopes_doc.get("scopes", [])))
+    def stage_scene_candidate(start_state):
+        pvr = pack_ref + "@" + version
         provider_reqs = []
         for p in caps.get("provider_requirements", []):
             provider_reqs.append({k: p[k] for k in ("requirement_id", "capability", "gateway_class",
@@ -207,7 +387,7 @@ def main():
                        "knowledge_kinds": s.get("knowledge_kinds", []), "required": s.get("required", True)})
         routes = manifest.get("notification_command_report_routes", {})
         draft = {
-            "pack_ref": pack_ref, "version": install_version, "title": manifest["name"],
+            "pack_ref": pack_ref, "version": version, "title": manifest["name"],
             "template_family": manifest.get("template_family", "合规审查执法证据链型"),
             "risk_level": manifest.get("risk_level", "medium"),
             "flow_id": flow_id,
@@ -227,76 +407,115 @@ def main():
             "idempotency_key": "pack-install-draft:" + pvr,
             "actor_ref": OWNER,
         }
-        code, body = call("POST", "/v3/pack-studio/lifecycle/draft", draft)
-        if code != 200:
-            if is_state_conflict(body):
-                raise PackVersionConflict(body)
-            die("draft HTTP %d: %s" % (code, body), INSTALL_LIFECYCLE_HTTP)
+        if not start_state:
+            print("[2/6] lifecycle draft（六件事 + %d 知识域）..." % len(scopes_doc.get("scopes", [])))
+            code, response = call("POST", "/v3/pack-studio/lifecycle/draft", draft)
+            if code != 200:
+                die("draft HTTP %d: %s" % (code, response), INSTALL_LIFECYCLE_HTTP)
+        if start_state in ("", "draft"):
+            print("[3/6] readiness ...")
+            code, response = call("POST", "/v3/pack-studio/lifecycle/readiness", {
+                "pack_ref": pack_ref, "version": version, "actor_ref": OWNER})
+            if code != 200:
+                die("readiness HTTP %d: %s" % (code, response), INSTALL_LIFECYCLE_HTTP)
+            rr = (response.get("record") or {}).get("readiness_report") or {}
+            if not rr.get("ready"):
+                die("readiness 未通过：%s" % response, INSTALL_READINESS)
+        if start_state in ("", "draft", "readiness_checked"):
+            print("[4/6] promote candidate ...")
+            code, response = call("POST", "/v3/pack-studio/lifecycle/promote", {
+                "pack_ref": pack_ref, "version": version, "actor_ref": OWNER})
+            if code != 200:
+                die("promote HTTP %d: %s" % (code, response), INSTALL_LIFECYCLE_HTTP)
 
-        # 3. readiness
-        print("[3/6] readiness ...")
-        code, body = call("POST", "/v3/pack-studio/lifecycle/readiness",
-                          {"pack_ref": pack_ref, "version": install_version, "actor_ref": OWNER})
-        if code != 200:
-            if is_state_conflict(body):
-                raise PackVersionConflict(body)
-            die("readiness HTTP %d: %s" % (code, body), INSTALL_LIFECYCLE_HTTP)
-        rr = (body.get("record") or {}).get("readiness_report") or {}
-        if not rr.get("ready"):
-            die("readiness 未通过：%s" % body, INSTALL_READINESS)
+    if enabled_version != version:
+        JOURNAL.set_version(version)
+        if enabled_version:
+            emit_owner_handoff(
+                "not_ready",
+                pack_ref=pack_ref,
+                version=version,
+                reason="enabled_version_mismatch",
+                readiness={
+                    "enabled_pointer_version": enabled_version,
+                    "target_record_states": record_states,
+                },
+            )
+            return
+        if any(state in ("owner_confirmed", "gate_approved", "pack_enabled_version")
+               for state in record_states):
+            emit_owner_handoff(
+                "recovery",
+                pack_ref=pack_ref,
+                version=version,
+                reason="lifecycle_success_projection_incomplete",
+                readiness={
+                    "enabled_pointer_version": "",
+                    "target_record_states": record_states,
+                },
+            )
+            return
+        if any(state in ("pack_spec_candidate", "rolled_back", "disabled",
+                         "uninstalled", "expired") for state in record_states):
+            emit_owner_handoff(
+                "awaiting_owner_confirmation",
+                pack_ref=pack_ref,
+                version=version,
+                reason="lifecycle_candidate_requires_trusted_gui",
+                readiness={
+                    "enabled_pointer_version": "",
+                    "target_record_states": record_states,
+                },
+            )
+            return
+        start_state = record_states[-1] if record_states else ""
+        if start_state not in ("", "draft", "readiness_checked"):
+            emit_owner_handoff(
+                "not_ready",
+                pack_ref=pack_ref,
+                version=version,
+                reason="unknown_lifecycle_state_fail_closed",
+                readiness={
+                    "enabled_pointer_version": "",
+                    "target_record_states": record_states,
+                },
+            )
+            return
+        sync_canvas()
+        stage_scene_candidate(start_state)
+        JOURNAL.mark("scene_candidate_staged")
+        emit_owner_handoff(
+            "awaiting_owner_confirmation",
+            pack_ref=pack_ref,
+            version=version,
+            reason="lifecycle_candidate_staged",
+            readiness={
+                "enabled_pointer_version": "",
+                "target_record_states": record_states,
+            },
+        )
+        return
 
-        # 4. promote
-        print("[4/6] promote ...")
-        code, body = call("POST", "/v3/pack-studio/lifecycle/promote",
-                          {"pack_ref": pack_ref, "version": install_version, "actor_ref": OWNER})
-        if code != 200:
-            die("promote HTTP %d: %s" % (code, body), INSTALL_LIFECYCLE_HTTP)
-
-        # 5. confirm → enabled
-        print("[5/6] confirm（真 01 Base Gate + 03 receipt）...")
-        code, body = call("POST", "/v3/pack-studio/lifecycle/confirm", {
-            "pack_ref": pack_ref, "version": install_version,
-            "idempotency_key": "pack-install-confirm:" + pvr,
-            "owner_ref": OWNER, "approve": True, "comment": manifest["name"] + " 启用"})
-        if code != 200 or body.get("status") != "enabled":
-            die("confirm 未达 enabled HTTP %d: %s" % (code, body), INSTALL_LIFECYCLE_HTTP)
-
-    reactivated = False
-    if enabled_version:
-        install_version = enabled_version
-        print("[1-5/6] 场景包已启用 @%s，跳过场景包步骤。" % install_version)
-    else:
-        # 优先同版本 reactivate（unload→reload 回路；disabled→enabled，过真 Base gate +
-        # receipt，知识域随版本重挂，无需重灌、不 bump 版本）。
-        rk = "pack-reactivate:" + pack_ref + "@" + version + ":" + uuid.uuid4().hex
-        code, body = call("POST", "/v3/pack-studio/lifecycle/reactivate", {
-            "pack_ref": pack_ref, "version": version, "owner_ref": OWNER,
-            "idempotency_key": rk, "comment": manifest["name"] + " 重新启用"})
-        if code == 200 and body.get("status") == "enabled":
-            install_version = version
-            reactivated = True
-            print("[1-5/6] 同版本 reactivate 成功（unload→reload）@%s，知识域已重挂。" % version)
-        else:
-            # 记录从未存在（全新装）→ 完整 draft→…→confirm；极端遗留态用 bump patch 兜底。
-            install_version = version
-            for _ in range(20):
-                try:
-                    do_seed_scene(install_version)
-                    break
-                except PackVersionConflict:
-                    nv = bump_patch(install_version)
-                    print("    版本 %s 遗留态占用，改用 %s 重试" % (install_version, nv))
-                    install_version = nv
-            else:
-                die("连续 20 个版本都被占用，无法装入", INSTALL_STATE_CONFLICT)
-    pack_version_ref = pack_ref + "@" + install_version
-    JOURNAL.set_version(install_version)
-    JOURNAL.mark("scene_enabled")
+    JOURNAL.set_version(version)
+    readiness = verify_combined_readiness(pack_ref, version, scopes_doc)
+    if not readiness["ready"]:
+        emit_owner_handoff(
+            readiness["status"],
+            pack_ref=pack_ref,
+            version=version,
+            reason="combined_readiness_incomplete",
+            audit_refs=readiness["audit_refs"],
+            readiness=readiness,
+        )
+        return
+    JOURNAL.mark("scene_combined_ready")
 
     # 6a. 角色包
-    print("[6/6] 角色包 + 绑槽 + 知识库 ...")
+    print("[6/6] 组合 readiness 通过；续接角色、绑槽与知识候选 ...")
     JOURNAL.step("role_packs")
     code, rpbody = call("GET", "/v3/agent-orchestration/role-packs/readmodel")
+    if code != 200:
+        die("role pack ReadModel HTTP %d: %s" % (code, rpbody), INSTALL_ROLE_BINDING)
     enabled_rp = set()
     for ev in (rpbody.get("enabled_versions") or []):
         rid = ev.get("role_pack_id", "")
@@ -324,22 +543,29 @@ def main():
     # 6c. 知识库入库（按知识域分组）
     JOURNAL.step("knowledge")
     entries = kindex.get("entries", [])
-    if reactivated:
-        print("    reactivate 路径：知识域已随版本重挂，跳过重灌")
-    elif not entries:
+    pending_candidate_refs = []
+    if not entries:
         print("    本 pack 无知识库，跳过知识入库")
     else:
         groups = {}
         for e in entries:
             groups.setdefault(e["knowledge_scope_ref"], []).append(e)
-        total = 0
         for scope_ref_k, items in groups.items():
-            n = ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref_k, items)
-            total += n
-        print("    知识库入库完成：%d 条已确认为 FormalKnowledge（pending_human_review）" % total)
+            pending_candidate_refs.extend(
+                ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref_k, items)
+            )
+        print("    知识候选已幂等暂存：%d 条；本脚本不代办 Base 确认。" % len(pending_candidate_refs))
 
-    JOURNAL.complete()
-    print("\n✅ 装入成功：%s @ %s 已 enabled。前端「场景包管理」刷新可见。" % (pack_ref, install_version))
+    JOURNAL.mark("downstream_candidates_staged")
+    emit_owner_handoff(
+        "awaiting_owner_confirmation",
+        pack_ref=pack_ref,
+        version=version,
+        reason="knowledge_candidates_require_trusted_owner_review",
+        audit_refs=readiness["audit_refs"],
+        readiness=readiness,
+        candidate_refs=pending_candidate_refs,
+    )
 
 
 def install_role_pack(rp):
@@ -417,8 +643,8 @@ def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
         with open(os.path.join(PACK_DIR, e["file"]), encoding="utf-8") as f:
             body_text = strip_frontmatter(f.read())
         content = "# " + e["title"] + "\n" + body_text
-        # source_ref 带 pack 版本：把知识归属到本 pack 版本；同版本重装按 source_ref 幂等
-        # 去重。unload→reload 走 reactivate（同版本 disabled→enabled）会重挂这批知识，无需重灌。
+        # source_ref 带 pack 版本：把知识归属到本 pack 版本；Owner 操作后重跑时
+        # 仍使用相同 source_ref/content_hash，由 09 按稳定身份幂等返回候选。
         versioned_source_ref = e["source_ref"] + "@" + ver
         law_meta = {"verification_status": "pending_human_review", "source_authority": "reference_only"}
         if e.get("authority"):
@@ -444,47 +670,12 @@ def ingest_knowledge_scope(pack_ref, pack_version_ref, scope_ref, items):
         die("knowledge batches HTTP %d (scope=%s): %s" % (code, scope_ref, body), INSTALL_KNOWLEDGE)
     JOURNAL.mark_item("knowledge_batches", scope_ref)
     candidates = body.get("candidates", []) or []
-    approved = 0
+    pending_refs = []
     for c in candidates:
         cref = c.get("candidate_ref")
-        if not cref or c.get("status") != "pending":
-            continue
-        if cref in JOURNAL.approved_refs(scope_ref):
-            continue  # 断点续装：上次已 approve 的候选不再重复走 Base gate
-        dref, run_id, nonce, owner_evidence_ref = mint_decision(pack_version_ref, cref)
-        code, abody = call("POST", "/v3/memory/knowledge/candidates/" + urllib.parse.quote(cref, safe="") + "/approve", {
-            "actor_ref": OWNER,
-            "owner_action_evidence_ref": owner_evidence_ref,
-            "decision_ref": dref, "run_id": run_id, "nonce": nonce,
-            "policy_snapshot_ref": "policy_snapshot://pack-knowledge/approve",
-	        # 装入 Pack 只确认来源与分发，不等于逐条完成法律效力人工核验。
-	        "verify_authority": False,
-	        "reason": "随场景包装入；法律知识保持 pending_human_review，待逐条人工核验"})
-        if code != 200:
-            die("knowledge approve HTTP %d for %s: %s" % (code, cref, abody), INSTALL_KNOWLEDGE)
-        JOURNAL.add_approved(scope_ref, cref)
-        approved += 1
-    return approved
-
-
-def mint_decision(scope_ref, candidate_ref):
-    code, body = call("POST", "/v3/base/gated-actions/prepare", {
-        "action_type": "memory_knowledge_approve", "target_ref": candidate_ref,
-        "content_summary": "pack 知识库入库审批：" + candidate_ref,
-        "impact_summary": "把 pack 声明的领域知识候选确认为 FormalKnowledge（pending_human_review）",
-        "transaction_ref": "transaction://pack-knowledge:" + scope_ref})
-    if code != 200:
-        die("gated prepare HTTP %d: %s" % (code, body), INSTALL_BASE_GATE)
-    issue_ref = (body.get("issue") or {}).get("issue_ref")
-    if not issue_ref:
-        die("gated prepare 无 issue_ref: %s" % body, INSTALL_BASE_GATE)
-    code, body = call("POST", "/v3/base/gated-actions/confirm", {"issue_ref": issue_ref})
-    if code != 200:
-        die("gated confirm HTTP %d: %s" % (code, body), INSTALL_BASE_GATE)
-    iss = body.get("issue") or {}
-    if not all(iss.get(key) for key in ("decision_ref", "run_id", "nonce", "owner_action_evidence_ref")):
-        die("gated confirm 返回的 issued binding 不完整: %s" % body, INSTALL_BASE_GATE)
-    return iss["decision_ref"], iss["run_id"], iss["nonce"], iss["owner_action_evidence_ref"]
+        if cref and c.get("status") == "pending":
+            pending_refs.append(cref)
+    return pending_refs
 
 
 if __name__ == "__main__":
