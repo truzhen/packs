@@ -93,8 +93,10 @@ def pack_enabled_version_from_readmodel(body, pack_ref):
         lifecycle_records = entry.get("records")
         if not isinstance(lifecycle_records, list):
             return None
+        if lifecycle_records == []:
+            return "" if "enabled_pointer" not in entry else None
         if "enabled_pointer" not in entry:
-            return "" if lifecycle_records == [] else None
+            return None
         pointer = entry.get("enabled_pointer")
         if not isinstance(pointer, dict):
             return None

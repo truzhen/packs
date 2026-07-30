@@ -213,6 +213,8 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
             {"pack_ref": pack_ref},
             {"pack_ref": pack_ref, "records": {}},
             {"pack_ref": pack_ref, "records": ["record"]},
+            lifecycle_entry(pack_ref, "1.1.0", records=[]),
+            lifecycle_entry(pack_ref, "", records=[]),
             {"pack_ref": pack_ref, "records": [], "enabled_pointer": None},
             {"pack_ref": pack_ref, "records": [], "enabled_pointer": {}},
             {"pack_ref": pack_ref, "records": [{"state": "draft"}]},
@@ -267,6 +269,33 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
             "uninstall.py", "--devserver-base", "http://127.0.0.1:18080", "--wait-seconds", "0",
         ]):
             module.main()
+
+    def test_all_consumers_reject_orphan_enabled_pointers_with_empty_records(self):
+        targets = (
+            ("content-operations-workbench-v0", "install", "0.2.0"),
+            ("content-operations-workbench-v0", "uninstall", ""),
+            ("smart-home-owner-pack-v0", "install", "1.1.0"),
+        )
+        for pack_dir, action, orphan_version in targets:
+            module = load_script("orphan_pointer_" + pack_dir.replace("-", "_") + "_" + action, pack_dir, action)
+            with open(os.path.join(module.PACK_DIR, "manifest.json"), encoding="utf-8") as stream:
+                manifest = module.json.load(stream)
+            pack_ref = manifest["pack_ref"]
+            calls = []
+
+            def fake_call(method, path, body=None):
+                calls.append((method, path, body))
+                if path == "/v3/task-governance/schedules":
+                    return 200, {"schedules": []}
+                return 200, {"packs": [lifecycle_entry(pack_ref, orphan_version, records=[])]}
+
+            module.call = fake_call
+            with mock.patch.object(sys, "argv", [
+                action + ".py", "--devserver-base", "http://127.0.0.1:18080", "--wait-seconds", "0",
+            ]):
+                with self.assertRaises(SystemExit):
+                    module.main()
+            self.assertTrue(all(method == "GET" and body is None for method, _, body in calls), calls)
 
     def test_all_three_target_consumers_reject_duplicate_lifecycle_records(self):
         targets = (

@@ -81,3 +81,19 @@
 | 代码冻结后全量 Python、Go、JSON、语法、Pack 结构、禁品、敏感项、智能家居卸载不变与 `git diff --check` | 0 | `/tmp/U04-R2-P-E1-final-packs-gates-rerun-20260730.log` / `792c5afb8dfa3f0a130db601246f137b3c153194dd2214190b3a839741fd6149` |
 
 本回边生命周期为`已实现 -> 待独立验收`：未合并、未推送、未启动 OS devserver / EGR / Provider / 登录或外部动作。下一节点只能由新的独立 `P-T1` 在隔离 OS ReadModel 上验收这条首装形状；本节点不启动 P-T1 或 O-E2。
+
+## U04-R2-P-E1 修复回边 1/2：拒绝孤儿 enabled pointer
+
+独立验收 `U04-R2-P-T1` 于 2026-07-30 封存 FAIL：目标 entry 的 `records: []` 但仍携带 `enabled_pointer` 时，上一版 helper 会直接解析 pointer，令三条消费路径把没有 lifecycle 事实的矛盾投影视为已安装或已停用。报告 `/Users/li/.codex/truzhenv3-process/closeouts/truzhen-v4-unified-goal-U04-R2-P-T1-packs-independent-acceptance-20260730.md`，SHA256 `79bd36f2fffc3443300727489f9707103b27e34141fe6f8ca9924278d83824a8`。
+
+从 `4e470b742148f2932f4863ac3e88943e4b833dcd` 的干净候选回边，helper 现先区分 records 空态：`records == []` 时仅 `enabled_pointer` 字段**完全缺省**可返回首次安装空串；只要该键出现，无论值为对象、空对象、`null`、字符串或任意 `current_version`，均返回 `None`。records 非空时仍按真实 lifecycle record 搭配 pointer 解析，保留 canonical 已安装版本与空 `current_version` 的 disabled/uninstall 语义。
+
+回归直接覆盖 helper 与内容装入、内容停用、智能家居装入三条路径：两种孤儿 pointer（canonical version / 空 version）都在首个 ReadModel GET 后 fail closed；合法首次安装仍进入 handoff，已安装、disabled/reactivate、uninstall fixture 都含非空 lifecycle record。未改三条脚本的网络边界，未改 `smart-home-owner-pack-v0/uninstall.py`。
+
+| 命令 | exit | 日志 / SHA256 |
+| --- | --- | --- |
+| 新反例红灯：孤儿 pointer helper 与三消费路径 | 1 | `/tmp/U04-R2-P-E1-R1-red-orphan-pointer-20260730.log` / `5cdfdbb0aa843435584100da46432b3d979c245dac258eeb0ccb8682e69a9f6b` |
+| 修复后定向矩阵：首装、已安装、disabled/reactivate、uninstall、孤儿 pointer、重复/畸形、issued-binding | 0 | `/tmp/U04-R2-P-E1-R1-focused-orphan-pointer-20260730.log` / `d691065345269af194d130745fae7fb7ad5fd7d91cfade7fead021f73e7d294d` |
+| 代码冻结后全量 Python、Go、JSON、语法、Pack 结构、禁品、敏感项、智能家居卸载不变与 `git diff --check` | 0 | `/tmp/U04-R2-P-E1-R1-final-packs-gates-20260730.log` / `b3da128020d3a88979a756eeeea9f11dab58d77c6f7f04dc065c43661619e4c1` |
+
+候选仍为`已实现 -> 待独立验收`，未合并、未推送、未启动 P-T1-R1 / O-E2 / T2，也没有 OS、Provider、登录或外部动作。本轮仅剩一次独立验收预算；下一节点必须由新的独立 P-T1-R1 决定是否放行。
