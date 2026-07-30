@@ -37,3 +37,17 @@
 ## 独立验收下一步
 
 本候选不替代 OS 兼容验收。独立验收应在新的隔离 OS 实例仅作 ReadModel 验证：确认 `GET /v3/pack-studio/lifecycle/packs` 与 `GET /v3/task-governance/schedules` 形状、精确版本、计划状态和缺字段 fail-closed 行为；不得启动 OS EGR、不得写入、不得使用真实身份或 Provider。通过后才由协调线程按任务图决定后续集成。
+
+## U04-T1 FAIL 与修复回边 1/2
+
+独立验收 `U04-T1` 于 2026-07-30 封存 FAIL：同一目标 `pack_ref` 同时返回 `1.1.0` 与冲突 `9.9.9` 时，旧 helper 首条记录短路并误报成功。报告 `/Users/li/.codex/truzhenv3-process/closeouts/truzhen-v4-unified-goal-U04-T1-packs-independent-acceptance-20260730.md`，其 SHA256 为 `bb47fcc799387b42081b4455f74942baec11664319cfd8ddc5d04b705620dfef`。
+
+修复回边 `1/2` 仅调整既有 `pack_enabled_version_from_readmodel`：目标记录必须恰好一条，`current_version` 必须是未归一化的 canonical 版本字符串；重复目标记录（包括同值）、enabled/disabled 冲突、前后空白、空白-only 与非字符串均返回非法状态。三条消费路径均在初始 lifecycle ReadModel 处 fail closed。
+
+| 命令 | exit | 日志 / SHA256 |
+| --- | --- | --- |
+| 新反例红灯：重复冲突与三消费路径 | 1 | `/tmp/U04-E1-R1-red-lifecycle-readmodel-20260730.log` / `26c3595d02f58fb16e6e4ddfec7f5b48fb0dc5fefced2fce1f38ead9ab6744c9` |
+| 修复后对抗测试 | 0 | `/tmp/U04-E1-R1-focused-lifecycle-readmodel-20260730.log` / `9cfb6ac2dcad4d4640e4a2d12e3753cd2a0cd710238a511ab402c0da8d9ac3d4` |
+| 回边后完整 E1 Packs 门 | 0 | `/tmp/U04-E1-R1-final-packs-gates-20260730.log` / `716e484b042f40fc1607db53a3d3d00529234ceb4ad9450991cbbd8a68e448f8` |
+
+这轮只修复 T1 的解析根因，不启动 T1-R1、T2、OS 兼容验收或任何外部动作。候选仍为`已实现 -> 待独立验收`，应由全新独立验收上下文重新判断。

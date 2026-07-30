@@ -40,6 +40,11 @@ PACK_ERROR_CODES = (
 )
 
 _CODE_SHAPE = re.compile(r"^TZ-PACK-[A-Z0-9]{2,10}-\d{3}$")
+_CANONICAL_PACK_VERSION = re.compile(
+    r"^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)"
+    r"(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?"
+    r"(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$"
+)
 
 
 def is_registered_code(error_code):
@@ -71,16 +76,29 @@ def pack_enabled_from_readmodel(body, pack_ref):
 
 
 def pack_enabled_version_from_readmodel(body, pack_ref):
-    """只读解析 os-14 enabled pointer；空串表示未启用，None 表示形状非法。"""
+    """只读解析唯一、canonical 的 os-14 enabled pointer；其它形状一律 fail closed。"""
     if not isinstance(body, dict) or not isinstance(body.get("packs"), list):
         return None
+    records = []
     for entry in body["packs"]:
-        if isinstance(entry, dict) and entry.get("pack_ref") == pack_ref:
-            pointer = entry.get("enabled_pointer")
-            if not isinstance(pointer, dict):
-                return None
-            version = pointer.get("current_version")
-            return version.strip() if isinstance(version, str) else None
+        if not isinstance(entry, dict):
+            return None
+        if entry.get("pack_ref") == pack_ref:
+            records.append(entry)
+    if len(records) > 1:
+        return None
+    if records:
+        pointer = records[0].get("enabled_pointer")
+        if not isinstance(pointer, dict):
+            return None
+        version = pointer.get("current_version")
+        if not isinstance(version, str):
+            return None
+        if version == "":
+            return ""
+        if not _CANONICAL_PACK_VERSION.fullmatch(version):
+            return None
+        return version
     return ""
 
 

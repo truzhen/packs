@@ -22,6 +22,15 @@ def load_script(name, pack_dir, action):
     return module
 
 
+def load_diagnostics():
+    spec = importlib.util.spec_from_file_location(
+        "u04_pack_diagnostics", os.path.join(REPO, "pack_diagnostics.py")
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 class OwnerHandoffPackScriptTest(unittest.TestCase):
     def _run_uninstall_success(self, pack_dir, args):
         module = load_script("uninstall_" + pack_dir.replace("-", "_"), pack_dir, "uninstall")
@@ -145,6 +154,58 @@ class OwnerHandoffPackScriptTest(unittest.TestCase):
                 "install.py", "--devserver-base", "http://127.0.0.1:18080", "--wait-seconds", "0",
             ]):
                 with self.assertRaises(SystemExit):
+                    module.main()
+            self.assertTrue(all(method == "GET" and body is None for method, _, body in calls), calls)
+
+    def test_lifecycle_helper_rejects_duplicate_conflicts_and_noncanonical_versions(self):
+        diagnostics = load_diagnostics()
+        pack_ref = "scene_pack://smart-home-owner-project-ops"
+        malformed = (
+            ["1.1.0", "9.9.9"],
+            ["1.1.0", ""],
+            ["1.1.0", "1.1.0"],
+            [" 1.1.0 "],
+            ["   "],
+            [9],
+        )
+        for versions in malformed:
+            body = {"packs": [{
+                "pack_ref": pack_ref,
+                "enabled_pointer": {"current_version": version},
+            } for version in versions]}
+            self.assertIsNone(
+                diagnostics.pack_enabled_version_from_readmodel(body, pack_ref),
+                versions,
+            )
+
+    def test_all_three_target_consumers_reject_duplicate_lifecycle_records(self):
+        targets = (
+            ("content-operations-workbench-v0", "install", "0.2.0", "9.9.9"),
+            ("content-operations-workbench-v0", "uninstall", "0.2.0", ""),
+            ("smart-home-owner-pack-v0", "install", "1.1.0", "9.9.9"),
+        )
+        for pack_dir, action, canonical, conflict in targets:
+            module = load_script("duplicate_" + pack_dir.replace("-", "_") + "_" + action, pack_dir, action)
+            with open(os.path.join(module.PACK_DIR, "manifest.json"), encoding="utf-8") as stream:
+                pack_ref = module.json.load(stream)["pack_ref"]
+            calls = []
+
+            def fake_call(method, path, body=None):
+                calls.append((method, path, body))
+                return 200, {"packs": [
+                    {"pack_ref": pack_ref, "enabled_pointer": {"current_version": canonical}},
+                    {"pack_ref": pack_ref, "enabled_pointer": {"current_version": conflict}},
+                ]}
+
+            def die_as_runtime_error(message, *_args):
+                raise RuntimeError(message)
+
+            module.call = fake_call
+            module.die = die_as_runtime_error
+            with mock.patch.object(sys, "argv", [
+                action + ".py", "--devserver-base", "http://127.0.0.1:18080", "--wait-seconds", "0",
+            ]):
+                with self.assertRaisesRegex(RuntimeError, "lifecycle ReadModel 形状不完整"):
                     module.main()
             self.assertTrue(all(method == "GET" and body is None for method, _, body in calls), calls)
 
