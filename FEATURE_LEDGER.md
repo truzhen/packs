@@ -18,6 +18,12 @@
 | --- | --- | --- |
 | 内容运营与智能家居 Pack 交接 | 三个目标脚本仅 GET 读取 os-14/os-07：内容 Pack 装入要求精确版本与声明计划 active，停用要求 Pack 停用与计划非 active；智能家居装入要求精确版本。脚本不发 lifecycle、计划、Base、decision、evidence 或 Receipt 写入。 | `已实现 -> 待独立验收`；`docs/acceptance/U04-E1-packs-trusted-ui-handoff-closeout-20260730.md` |
 
+## 0.-4.2 A00-R1 环保执法资产卫生 P-D1（2026-07-30）
+
+| 目标 | 结果与边界 | 生命周期 / 证据 |
+| --- | --- | --- |
+| current-main 15/45/30 索引与口径闭合 | 两个索引保留 116 个跳转并全部改指 current-main 现存 15 scope 目录；README 案例数由 31 校正为实际 30；仅同步两个索引条目的 SHA-256。未改 installer、manifest、其它知识正文、法律状态或历史 16/53 候选。 | `已实现 -> 待 P-E2 / 独立验收`；`environmental_knowledge_asset_hygiene_test.go`、`docs/acceptance/A00-R1-P-D1-environmental-asset-hygiene-closeout-20260730.md` |
+
 ## 0.-3 Truzhen v4 发布前第五批收口（2026-07-23）
 
 | 目标 | 结果与边界 | 生命周期 / 证据 |

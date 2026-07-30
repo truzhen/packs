@@ -485,7 +485,7 @@
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
       "verification_status": "pending_human_review",
-      "checksum": "sha256:10f2d291c8057172c70470d857773f5093b8971754792de20ed2f7c22834d7d1"
+      "checksum": "sha256:93b3531ea19c19c27f08b842432c06236362527d15599ba416b05e95b47e759c"
     },
     {
       "file": "knowledge/index/违法行为分类索引.md",
@@ -496,7 +496,7 @@
       "scene_ref": "scene://environmental-enforcement",
       "authority": "reference_only",
       "verification_status": "pending_human_review",
-      "checksum": "sha256:ac9f07aa8099da2ed267c0d68efb3f4a7ae7e1eb6f88405e75970b8bee5a2bbd"
+      "checksum": "sha256:1976d6afd94d620fcf7bb8944e9249a4e85738881211c17bfe6f1b7de7c6bc5c"
     }
   ]
 }

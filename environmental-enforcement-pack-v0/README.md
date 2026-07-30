@@ -23,7 +23,7 @@ environmental-enforcement-pack-v0/
 │   ├── code/ legal-basis/ water/ air/ radiation/ noise/
 │   ├── eia-permit/ ecology/ penalty/ criminal/ risk/
 │   ├── guide-overview/ pollution-source-overview/
-│   ├── cases/                     # 31 个真实案例（行政篇 + 公益诉讼篇）
+│   ├── cases/                     # 30 个真实案例
 │   └── index/                     # 法条速查索引 + 违法行为分类索引
 ├── capabilities/capabilities.json # 5 个 provider 需求（OCR/文书生成/送达/执法动作/在线监测）
 ├── install.py                     # 装入（加载）到正在运行的 devserver
