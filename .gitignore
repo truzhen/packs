@@ -17,3 +17,14 @@ reports/
 
 # 运行态监控/临时产物（install E2E 会写 .tmp/system-monitoring）
 .tmp/
+
+# G0H hygiene: Pack assets may not carry local credentials or editor backups.
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.bak*
+*.restore*
