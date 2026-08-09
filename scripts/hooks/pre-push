@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+push_input="$(mktemp "${TMPDIR:-/tmp}/truzhen-pre-push.XXXXXX")"
+trap 'rm -f "$push_input"' EXIT
+cat > "$push_input"
+bash scripts/hygiene-gate.sh outgoing --pre-push-input "$push_input"
+echo "[pre-push] PASS" >&2
