@@ -1,1 +1,19 @@
-{"schema":"truzhen.g0h.hygiene-tool-lock/v1","scanner":{"filename":"truzhen-hygiene-scan.pyz","version":"1.0.1","sha256":"084069e3ceeb2a46b49674fc30b7f982acd2c97dd938b2657d467d9485f418ad"},"rules":{"filename":"hygiene-rules.json","sha256":"61e5440fffec2eb6b0ef145226a1a0a56770395f6a0bab271c32b3849c1905aa"},"gitleaks":{"version":"8.30.1","sha256":"f414bc2fb952be6c9072b75cb411e3368614ef4b16d48dbd9ad238034afd2302"},"allowlist":{"sha256":"52ce07201031fbc8adfb1f0affab5e5909f4ec531f6f5afebc3d5b315972b465"}}
+{
+  "schema": "truzhen.g0h.hygiene-tool-lock/v1",
+  "scanner": {
+    "filename": "truzhen-hygiene-scan.pyz",
+    "version": "1.0.2",
+    "sha256": "c9d702ab7959694a84a5df61192df359c3b001d24841c8bf9c5f640506bcde6d"
+  },
+  "rules": {
+    "filename": "hygiene-rules.json",
+    "sha256": "61e5440fffec2eb6b0ef145226a1a0a56770395f6a0bab271c32b3849c1905aa"
+  },
+  "gitleaks": {
+    "version": "8.30.1",
+    "sha256": "f414bc2fb952be6c9072b75cb411e3368614ef4b16d48dbd9ad238034afd2302"
+  },
+  "allowlist": {
+    "sha256": "52ce07201031fbc8adfb1f0affab5e5909f4ec531f6f5afebc3d5b315972b465"
+  }
+}
