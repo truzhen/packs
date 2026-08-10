@@ -1,0 +1,14 @@
+title = "Truzhen Pack hygiene exceptions"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Exact public phase identifier that default generic-api-key misclassifies"
+regexTarget = "match"
+regexes = [
+  '''p15_e2e_walkthrough''',
+]
+paths = [
+  '''^capability-pack-candidates/short-video-ops-v0/docs/commercial-frontend-backend-handoff-runbook\.json$''',
+]
