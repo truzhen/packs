@@ -2,8 +2,8 @@
   "schema": "truzhen.g0h.hygiene-tool-lock/v1",
   "scanner": {
     "filename": "truzhen-hygiene-scan.pyz",
-    "version": "1.0.2",
-    "sha256": "c9d702ab7959694a84a5df61192df359c3b001d24841c8bf9c5f640506bcde6d"
+    "version": "1.0.4",
+    "sha256": "ea2deacebc549225b1a919841ca001ef815cdf91de598264da0bad7c3501457d"
   },
   "rules": {
     "filename": "hygiene-rules.json",

@@ -30,7 +30,7 @@
   },
   "handoff_phases": [
     {
-      "phase_key": "phase_ref://commercial-handoff-phase",
+      "phase_key": "p12_backend_safe_lifecycle",
       "phase_order": 1,
       "required_source_slice": "p12_safe_lifecycle_sample",
       "source_evidence_group": "required_backend_endpoints",
@@ -105,7 +105,7 @@
       }
     },
     {
-      "phase_key": "phase_ref://commercial-handoff-phase",
+      "phase_key": "p13_frontend_lifecycle_panel",
       "phase_order": 2,
       "required_source_slice": "p13_gui_lifecycle_panel",
       "source_evidence_group": "required_frontend_surfaces",
@@ -181,7 +181,7 @@
       }
     },
     {
-      "phase_key": "phase_ref://commercial-handoff-phase",
+      "phase_key": "p15_e2e_walkthrough",
       "phase_order": 3,
       "required_source_slice": "p15_gui_walkthrough_three_candidates",
       "source_evidence_group": "required_e2e_scenarios",
@@ -242,7 +242,7 @@
       }
     },
     {
-      "phase_key": "phase_ref://commercial-handoff-phase",
+      "phase_key": "terminal_forbidden_checks",
       "phase_order": 4,
       "required_source_slice": "p15_gui_walkthrough_three_candidates",
       "source_evidence_group": "required_forbidden_action_checks",
