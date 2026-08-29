@@ -355,18 +355,20 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 <pack>/install.py
 - Pack 只能声明需求和引用能力，不持主权、不持凭据、不保存客户生产数据、不执行真实动作；真实可用性由 truzhenos / cloud / software 的受控链路证明。
 - 提交前必须运行 forbidden artifact / business data 静态扫描，确认构建产物、数据库、日志、密钥和本地临时文件未进入 Git。
 
-## 战略对齐与 90 天纪律（2026-08-29 裁定）
+## 战略对齐与三线纪律（2026-08-29 裁定 v2）
 
-本节依据五份正典文件写入（本机路径 /Users/remote/Documents/truzhen/doc/）：《Truzhen最终白皮书-20260829.md》（对外正典）、《Truzhen技术说明书-中文裁定版-20260829.md》（对内技术正典）、《Truzhen下一步工作建议-执行版-20260828.md》（90 天细节）、《战略调整审核意见书-20260829.md》（D1–D5 裁定记录）及归档件。冲突时以上述文件为准。
+本节依据三份最新正典（本机 /Users/remote/Documents/truzhen/doc/）：《Truzhen项目白皮书-完整系统-20260829.md》（对外正典）、《Truzhen技术说明书-完整系统-20260829.md》（对内技术正典，其第一章「架构宪法 15 条」为全仓最高技术纪律）、《Truzhen执行计划-20260829.md》（统一施工正典）；附件《云版架构设计-草案v1-20260829.md》（云版实现，含 Spike-1 与 Q1–Q10 裁定、L1–L6 勘误）。旧版（最终白皮书/技术说明书中文裁定版/90 天执行版）已归档降级，冲突以新三件为准。
 
 全局裁定（六仓一致，任何开发不得违反）：
-1. 90 天主线是经济智能体 PMF：Economic Object → Persistent Agent → Authority → Execution → Receipt → Outcome；发布线 G-RELEASE-PACK-SELFHOST-01 按裁定继续/暂停对应阶段。
-2. 主权链不变式不动：AI 仅 Proposer、fail-closed、诚实阻断（blocked/not_ready，禁止 mock 充真）、全动作留 Receipt、服务器签发 ref。
-3. Mac 本地版与 90 天试点主线不引入新基础设施组件（Postgres/NATS/Matrix/Temporal/Keycloak/Centrifugo/SeaweedFS 等一律不落地）；云服务器版多租户包装层的组件选型统一归《云版架构设计》交付物裁定；其余设想仍为技术说明书 [未来] 槽位，启动前须 Owner 重新裁定。
-4. 产品双档并立（Owner 2026-08-29 原生确认）：云服务器版 = 普通用户资产管理智能体的多租户载体；Mac 本地版 = 高阶版，保持现有全部功能，运行生意经营智能体与高阶用户的资产管理智能体。两档同源：云版复用 truzhenos 主权链核心语义 + 多租户包装层，禁止平行真相；本地版保持 Go+SQLite 不换栈。云版=获客入口，与试点主线同步开发（Owner 2026-08-29 追加裁定）：《云版架构设计》→ 多租户地基 → 90 天内最小可获客版本上线试用；云上主权链语义不得为抢速裁剪。
-5. Provider 执行分级 L1–L5（官方 API → 授权平台 → 受控设备 → 人工操作员 → Owner 手动）为正式分级模型；90 天实施 L1/L5，L2 按需，L3 后移 180 天。
+1. 唯一主权链与唯一内核：truzhenos = Economic OS Kernel；双 Profile（Truzhen Hosted / Truzhen Private Node）跑同一套 Candidate → Base/Gate → Gateway → Receipt → Outcome 语义；禁止平行真相；用户升级只迁 Runtime Home 与 Data Authority Domain。
+2. 不变式：AI 仅 Proposer；fail-closed；诚实阻断（blocked/not_ready/provider_missing，禁止 mock 充真）；全动作留 Receipt（回执失败即动作失败）；ref 一律服务端 Base 签发；Outcome 诚实（观察不到记「未观察到」）。
+3. 三线并行（执行计划 W1–W13）：线一试点主线（真实 Owner 经营闭环，最高优先）、线二 Hosted 获客线（M-C1→M-C3，90 天 ≥5 名真实外部用户注册→首个回执）、线三 Private Node 与手机线（P5 Node Alpha / P6 工作手机 Alpha / Owner Mobile Control Plane）。三线各自独立验收；每次合并须 Owner 确认。
+4. 技术栈纪律：本地版保持 Go+SQLite 不换栈；Hosted MVP 新增基础设施组件=0（cell 化：一租户一 SQLite 库+独立组合根）；Postgres/NATS/Centrifugo/S3/Temporal/Keycloak/K8s 一律为规模化档阈值触发；contracts 冻结 v0.20（v0.21 已发 tag 冻结不消费），additive 额度已裁定给 DelegationGrant.Scope.ObjectRefs + Scope.ActionClasses（2 个用满），ReceiptEnvelope.ObjectRef 走 OS-local 侧表。
+5. 执行分级 L1–L6 正式版（旧 L1–L5 编号作废，映射见执行计划 §9.2 冲突 3）：L1 官方 API / L2 授权商业平台 / L3 浏览器结构化自动化（Playwright）/ L4 Owner 自有工作手机（ADB/Appium/scrcpy）/ L5 结构化人工操作员 / L6 Owner 手动兜底；无合法路径→blocked。Hosted 90 天仅 L1+L6，云上禁 L3/L4；Computer Use 仅为 last-mile fallback，不是第一执行层。
+6. 通信双网：对话网（云通信服务起步；Matrix 仅为 CommunicationProvider 的可选实现，Contract 不锁死；聊天消息不能直接形成正式经济执行）与运行事件网（进程内分发+SQLite outbox 起步；不做 Everything-is-Event）。
+7. 商业化诚实：Economic Passport 仅解冻 Basic 免费档（估值一律「AI Market Estimate」+区间/置信度/as-of/免责，严禁「官方认证价值/Certified Value」类表述，严禁把验证资产与验证估值混同）；会员五档（Free/Owner199/Pro999/Business1999+/Enterprise）为 [假设] 定价草案；ProductClass 七类与 BillingPolicy 从第一天诚实分类，不借混装 SKU 规避平台支付规则；云版话术禁止「凭据永不出本机」（该卖点专属 Private Node 并作为升级转化点）。
 
 本仓（packs）专属边界：
-- 90 天首要产出方向：试点垂直领域的 Concierge 核心流 Pack（事件监测 → Candidate 生成 → 授权 → Gateway 执行 → 反馈接收 → Outcome 观察）。
-- Pack 根原则不变：只声明与编排，不持 Base 主权、不实现 Provider、不绕 Gateway。
-- Pack 声明的 Provider 依赖须标注 L1–L5 能力级别。
+- 三类 Pack（Role / Capability / Domain Work）不增第四类；私有通信方案（如 Matrix）必须落为 Capability Pack + Software Provider 组合，不是新 Pack 类型。
+- 本季首要产出：线一 P-W6 首个 Property Domain Work Pack（object schema 引用 / flow / actions / providers / gates / evidence / outcomes / operator handoff 齐备）。
+- Pack 声明的 Provider 依赖须标注 L1–L6 能力级别与 runtime_requirement（cloud_ok / local_preferred / local_required）；根原则不变：只声明与编排，不持主权、不绕 Gateway。
