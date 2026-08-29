@@ -362,8 +362,8 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 <pack>/install.py
 全局裁定（六仓一致，任何开发不得违反）：
 1. 90 天主线是经济智能体 PMF：Economic Object → Persistent Agent → Authority → Execution → Receipt → Outcome；发布线 G-RELEASE-PACK-SELFHOST-01 按裁定继续/暂停对应阶段。
 2. 主权链不变式不动：AI 仅 Proposer、fail-closed、诚实阻断（blocked/not_ready，禁止 mock 充真）、全动作留 Receipt、服务器签发 ref。
-3. 90 天内不引入新基础设施组件（Postgres/NATS/Matrix/Temporal/Keycloak/Centrifugo/SeaweedFS 等一律不落地）；相关设想登记为技术说明书第五节 [未来] 槽位 F1–F8，启动前须 Owner 重新裁定。
-4. 部署主档 = 本机 OS（本地优先、单 Owner），云为薄协调层；「云优先多租户」不是基础档。
+3. Mac 本地版与 90 天试点主线不引入新基础设施组件（Postgres/NATS/Matrix/Temporal/Keycloak/Centrifugo/SeaweedFS 等一律不落地）；云服务器版多租户包装层的组件选型统一归《云版架构设计》交付物裁定；其余设想仍为技术说明书 [未来] 槽位，启动前须 Owner 重新裁定。
+4. 产品双档并立（Owner 2026-08-29 原生确认）：云服务器版 = 普通用户资产管理智能体的多租户载体；Mac 本地版 = 高阶版，保持现有全部功能，运行生意经营智能体与高阶用户的资产管理智能体。两档同源：云版复用 truzhenos 主权链核心语义 + 多租户包装层，禁止平行真相；本地版保持 Go+SQLite 不换栈。90 天主线仍以现有核心跑通试点闭环，云版并行立项（《云版架构设计》+ 多租户地基原型）。
 5. Provider 执行分级 L1–L5（官方 API → 授权平台 → 受控设备 → 人工操作员 → Owner 手动）为正式分级模型；90 天实施 L1/L5，L2 按需，L3 后移 180 天。
 
 本仓（packs）专属边界：
