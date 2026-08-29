@@ -354,3 +354,19 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 <pack>/install.py
 - Pack 仓只保存行业工作台声明、流程、角色、知识、能力引用、manifest、示例和可复核验收材料；不得保存业务数据、正式 `decision_ref` / `receipt_ref` / `pack_version_ref`、License / Entitlement 真相或内部运营计划。
 - Pack 只能声明需求和引用能力，不持主权、不持凭据、不保存客户生产数据、不执行真实动作；真实可用性由 truzhenos / cloud / software 的受控链路证明。
 - 提交前必须运行 forbidden artifact / business data 静态扫描，确认构建产物、数据库、日志、密钥和本地临时文件未进入 Git。
+
+## 战略对齐与 90 天纪律（2026-08-29 裁定）
+
+本节依据五份正典文件写入（本机路径 /Users/remote/Documents/truzhen/doc/）：《Truzhen最终白皮书-20260829.md》（对外正典）、《Truzhen技术说明书-中文裁定版-20260829.md》（对内技术正典）、《Truzhen下一步工作建议-执行版-20260828.md》（90 天细节）、《战略调整审核意见书-20260829.md》（D1–D5 裁定记录）及归档件。冲突时以上述文件为准。
+
+全局裁定（六仓一致，任何开发不得违反）：
+1. 90 天主线是经济智能体 PMF：Economic Object → Persistent Agent → Authority → Execution → Receipt → Outcome；发布线 G-RELEASE-PACK-SELFHOST-01 按裁定继续/暂停对应阶段。
+2. 主权链不变式不动：AI 仅 Proposer、fail-closed、诚实阻断（blocked/not_ready，禁止 mock 充真）、全动作留 Receipt、服务器签发 ref。
+3. 90 天内不引入新基础设施组件（Postgres/NATS/Matrix/Temporal/Keycloak/Centrifugo/SeaweedFS 等一律不落地）；相关设想登记为技术说明书第五节 [未来] 槽位 F1–F8，启动前须 Owner 重新裁定。
+4. 部署主档 = 本机 OS（本地优先、单 Owner），云为薄协调层；「云优先多租户」不是基础档。
+5. Provider 执行分级 L1–L5（官方 API → 授权平台 → 受控设备 → 人工操作员 → Owner 手动）为正式分级模型；90 天实施 L1/L5，L2 按需，L3 后移 180 天。
+
+本仓（packs）专属边界：
+- 90 天首要产出方向：试点垂直领域的 Concierge 核心流 Pack（事件监测 → Candidate 生成 → 授权 → Gateway 执行 → 反馈接收 → Outcome 观察）。
+- Pack 根原则不变：只声明与编排，不持 Base 主权、不实现 Provider、不绕 Gateway。
+- Pack 声明的 Provider 依赖须标注 L1–L5 能力级别。
