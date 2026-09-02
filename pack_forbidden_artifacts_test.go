@@ -94,6 +94,7 @@ func TestPackAssetsDoNotCarryBusinessDataFormalRefsOrRawSecrets(t *testing.T) {
 		"inquiry-management-pack-v0",
 		"smart-home-owner-pack-v0",
 		"templates/scene-pack-software-template",
+		"receivable-management-pack-v0",
 	}
 
 	for _, root := range assetRoots {

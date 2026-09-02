@@ -78,6 +78,7 @@
 | `shuxuejia-renovation-pack-v0/` | 大宅装修设计师如何用 457 节点 EPC 流程组织设计、材料、施工、验收和售后候选 |
 | `project-watch-pack-v0/` | 项目关注 Pack：读 ERPNext Project/Task/Sales Invoice 受控快照 → 05 项目异常读模型 → 关注/异常候选；lifecycle_status 设计中 |
 | `inquiry-management-pack-v0/` | 零售获客怎么把询盘从线索、线索池、价值分诊做到报价单，同时把客户与报价单的真相留在外部 ERP（`设计中`，仅声明骨架） |
+| `receivable-management-pack-v0/` | 应收管理 Domain Work Pack，账龄巡检 + 催办候选，只声明不执行，lifecycle 设计中 |
 | `templates/scene-pack-software-template/` | 新作者起步的最小骨架 |
 
 以上均为样板，用来学习结构和口径；完整清单见 [MODULES.md](MODULES.md)。
