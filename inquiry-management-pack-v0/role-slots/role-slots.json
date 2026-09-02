@@ -1,0 +1,20 @@
+{
+  "role_slots": [
+    {
+      "slot_id": "inquiry_manager",
+      "responsibility": "以询盘经理身份澄清询盘事实、给出价值分诊理由、跟进与报价的下一步候选（Proposer）",
+      "required_role": "询盘经理",
+      "default_role_pack_ref": "role_pack://inquiry-manager",
+      "slice_scope_policy": "transaction_scoped_inquiry",
+      "node_type": "advice"
+    }
+  ],
+  "bindings": [
+    {
+      "slot_id": "inquiry_manager",
+      "agent_ref": "role_pack://inquiry-manager",
+      "role_pack_id": "role_pack://inquiry-manager",
+      "required_role": "询盘经理"
+    }
+  ]
+}

@@ -1,0 +1,335 @@
+{
+  "pack_id": "inquiry-management-pack",
+  "pack_ref": "scene_pack://inquiry-management",
+  "version": "0.1.0",
+  "kind": "scene_pack",
+  "pack_type": "domain_work_pack",
+  "min_truzhen_version": "3.0.0",
+  "lifecycle_status": "设计中",
+  "manifest_version": "v3",
+  "name": "询盘管理 Pack（零售客户线索到报价）",
+  "template_family": "线索到报价客户获取型",
+  "author": "Truzhen Pack Studio",
+  "target_industry": "零售装修 / 家装家居 / 渠道分销型零售服务",
+  "target_audience": "零售获客负责人、询盘经理、渠道对接人",
+  "description": "零售客户获取链段 1-4（线索 / 线索池 / 商机分诊 / 报价单）的场景荚。客户、线索与报价单的真相在外部 ERP，本 Pack 只持受控快照引用与声明：不自建客户主数据、不做通用 CRM、不在 Pack 层自建对象真相。询盘对象化、价值分诊、跟进草稿与报价单一律先成候选，正式化经 Owner + Base Gate、受控 Gateway 与可反查 Receipt；Provider 未接通时诚实返回 provider_missing / not_ready。生成合同与项目交付是向项目关注 Pack 的交接点，回款与开票归应收 Pack，均不在本 Pack 边界内。",
+  "flow_spec_ref": "scene_flow_spec:inquiry-management-flow@0.1.0",
+  "flow_file": "flows/inquiry-management-flow.flow.json",
+  "role_slots_file": "role-slots/role-slots.json",
+  "capabilities_file": "capabilities/capabilities.json",
+  "security_profile": {
+    "candidate_only": true,
+    "non_formal": true,
+    "requires_base_gate": true,
+    "requires_receipt_candidate": true,
+    "default_provider_mode": "disabled",
+    "no_real_send": true,
+    "no_real_execute": true,
+    "no_real_model_call": false,
+    "isolated_namespace": "inquiry_management_ns"
+  },
+  "external_truth_source": {
+    "authority": "external_erp",
+    "authoritative_object_kinds": [
+      "lead",
+      "quotation",
+      "customer"
+    ],
+    "provider_requirement_refs": [
+      "inquiry_lead_snapshot_read",
+      "inquiry_customer_snapshot_read",
+      "inquiry_quotation_snapshot_read",
+      "inquiry_quotation_write_candidate"
+    ],
+    "pack_holds": "只持受控快照引用与场景声明；不自建客户主数据、不做通用 CRM、不在 Pack 层自建对象真相。",
+    "snapshot_only": true,
+    "owner_ruling_ref": "Owner 裁定 2026-09-02（真相源 / 零售客户口径 / 询盘 Pack 边界）"
+  },
+  "inquiry_object_declaration": {
+    "object_type": "inquiry",
+    "primary_anchor": "外部 ERP 线索对象（lead）；本 Pack 不新建线索或客户主数据对象。",
+    "declared_fields": [
+      "object_type",
+      "inquiry_source",
+      "channel_customer_ref",
+      "owner_party_kind",
+      "owner_party_ref",
+      "need_summary",
+      "triage",
+      "quotation_party_policy"
+    ],
+    "inquiry_source_enum": [
+      "channel",
+      "direct"
+    ],
+    "retail_party_semantics": "渠道（设计师 / 工长 / 异业）与业主都是外部 ERP 的客户对象：渠道 = 线索与商机来源，业主 = 服务主体，业主记录链接来源渠道。",
+    "quotation_party_policy": {
+      "default": "owner_party",
+      "configurable": [
+        "owner_party",
+        "channel"
+      ],
+      "owner_ruling_pending": "Owner 第 15 条未裁定前，channel 策略只可声明不可默认启用；README 已诚实标注。"
+    },
+    "opportunity_doctype_dependency": false,
+    "triage_carrier": "分诊结果由外部线索状态 + 询盘 payload.triage 承载，第一版不依赖独立商机对象类型。",
+    "pii_out_of_pack_fields": [
+      "mobile_no",
+      "email_id",
+      "phone",
+      "address",
+      "id_number",
+      "bank_account"
+    ]
+  },
+  "chain_scope": {
+    "in_scope_segments": [
+      "1-线索",
+      "2-线索池",
+      "3-商机分诊",
+      "4-报价单"
+    ],
+    "handoff_out": [
+      "生成合同与项目交付 → 项目关注 Pack",
+      "回款与开票 → 应收 Pack",
+      "月度群发额度与催办话术 → 私域运营 / 沟通 Pack"
+    ]
+  },
+  "role_slots": [
+    {
+      "slot_id": "inquiry_manager",
+      "responsibility": "询盘经理：澄清询盘事实、给出价值分诊与下一步候选（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://inquiry-manager"
+    }
+  ],
+  "capabilities_required": [
+    "truzhen.external_snapshot.read",
+    "truzhen.capability.inquiry_triage",
+    "truzhen.communication.draft",
+    "truzhen.capability.quote"
+  ],
+  "required_capabilities": [
+    "truzhen.external_snapshot.read",
+    "truzhen.capability.inquiry_triage",
+    "truzhen.communication.draft",
+    "truzhen.capability.quote"
+  ],
+  "gates": {
+    "inquiry_object_confirm": "inquiry_management_object_gate",
+    "triage_confirm": "base_gate",
+    "followup_send_confirm": "base_send_gate",
+    "quotation_confirm": "base_execution_gate"
+  },
+  "gate_flags": [
+    "inquiry_object_confirm",
+    "triage_confirm",
+    "followup_send_confirm",
+    "quotation_confirm"
+  ],
+  "receipt_policy": {
+    "ledger_group": "inquiry_management",
+    "append_only": true,
+    "requires_witness": true
+  },
+  "person_strategy": {
+    "summary": "判人策略：询盘经理只是 Proposer，只能提出询盘对象化、价值分诊、跟进草稿和报价单候选；对外发送、报价单写入与任何对客户的口径承诺一律回 Owner + Base Gate 裁定，不得由角色 agent 自决，也不得委托给模型或 Pack。",
+    "proposer_roles": [
+      "inquiry_manager"
+    ],
+    "high_risk_actions_return_to_owner": [
+      "inquiry_object_confirm",
+      "triage_confirm",
+      "followup_send_confirm",
+      "quotation_confirm"
+    ],
+    "delegation_allowed": false
+  },
+  "formalization_requirement": {
+    "summary": "判事策略：询盘对象、价值分诊、跟进草稿、报价单意图全部先为 Candidate（candidate_only / non_formal）；正式任务、对外发送与报价单写入必须经 Owner 主权确认、Base Gate 裁定、受控 Gateway 与可反查 Receipt。外部 ERP 的线索 / 报价单 / 客户仍是外部真相，Pack 侧快照不得升级为真相。",
+    "formalizes": [
+      "FormalTask",
+      "CommunicationSend",
+      "QuotationWrite",
+      "FormalReceipt"
+    ],
+    "decided_by": "owner_plus_base_gate"
+  },
+  "provider_requirements": [
+    {
+      "requirement_id": "inquiry_lead_snapshot_read",
+      "capability": "truzhen.external_snapshot.read",
+      "required_capabilities": [
+        "truzhen.external_snapshot.read"
+      ],
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "provider_family": "frappe",
+      "scope": "只读外部线索对象受控快照（列表与单条），字段按白名单投影；不写、不导出联系方式。"
+    },
+    {
+      "requirement_id": "inquiry_customer_snapshot_read",
+      "capability": "truzhen.external_snapshot.read",
+      "required_capabilities": [
+        "truzhen.external_snapshot.read"
+      ],
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "provider_family": "frappe",
+      "scope": "只读外部客户对象受控快照（来源渠道与业主两类同一对象类型）；Pack 不建第二份客户主数据。"
+    },
+    {
+      "requirement_id": "inquiry_quotation_snapshot_read",
+      "capability": "truzhen.external_snapshot.read",
+      "required_capabilities": [
+        "truzhen.external_snapshot.read"
+      ],
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "provider_family": "frappe",
+      "scope": "只读外部报价单受控快照（列表与单条），用于回读与看板；不含成本明细导出。"
+    },
+    {
+      "requirement_id": "inquiry_quotation_write_candidate",
+      "capability": "truzhen.capability.quote",
+      "required_capabilities": [
+        "truzhen.capability.quote"
+      ],
+      "gateway_class": "execution",
+      "risk_class": "medium",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "not_ready",
+      "provider_family": "frappe",
+      "scope": "报价单写入候选：必须经 Owner + Base Gate、Execution Gateway 与 Receipt；Provider 未就绪时 not_ready，不假成功。"
+    }
+  ],
+  "software_requirements": [
+    {
+      "requirement_id": "inquiry-erp-runtime",
+      "software_family": "frappe-erpnext-stack",
+      "provider_family": "frappe",
+      "version_range": ">=16.0.0,<17.0.0",
+      "required_capabilities": [
+        "truzhen.external_snapshot.read",
+        "truzhen.capability.quote"
+      ],
+      "license_policy": "review_required",
+      "isolation_policy": "reuse_preferred",
+      "fallback_policy": "provider_missing",
+      "gateway_class": "execution",
+      "risk_class": "medium"
+    }
+  ],
+  "notification_command_report_routes": {
+    "notification": [
+      "owner_inquiry_review_inbox",
+      "inquiry_transaction_timeline"
+    ],
+    "command_candidate": [
+      "create_inquiry_object_candidate",
+      "create_inquiry_triage_candidate",
+      "draft_inquiry_followup",
+      "prepare_quotation_write_candidate",
+      "request_owner_inquiry_gate"
+    ],
+    "report": [
+      "inquiry_board",
+      "inquiry_transaction_timeline",
+      "receipt_ledger",
+      "external_snapshot_review"
+    ],
+    "report_topic_binding": {
+      "department": "inquiry",
+      "topic": "inquiry",
+      "quotation_followup_topic": "quotation_followup"
+    }
+  },
+  "multi_role_comparison": {
+    "summary": "本 Pack 单角色（询盘经理）经显式 advice 节点提出候选，分诊、发送、报价单三处分别回 Owner / Base Gate；无 runtime 内隐藏 agent 回路，也无角色间自动互评。",
+    "explicit_nodes": [
+      "inquiry_manager_advice(inquiry_manager/advice)"
+    ],
+    "hidden_agent_loops_forbidden": true
+  },
+  "risk_types": [
+    {
+      "risk_type_id": "inquiry_pii_exposure",
+      "definition": "询盘声明字段或外部快照把手机号、邮箱、住址、证件、银行账户等联系方式与身份信息带进 Pack 侧存储或看板。",
+      "trigger_action_types": [
+        "external_snapshot_read",
+        "inquiry_object_candidate"
+      ],
+      "evidence_requirement": "快照字段白名单投影记录 + 读回执引用；被丢弃字段不得进入候选 payload。",
+      "escalation_path": "owner_plus_base_gate",
+      "fallback": "blocked"
+    },
+    {
+      "risk_type_id": "external_truth_drift",
+      "definition": "外部 ERP 的线索 / 报价单 / 客户已变更，Pack 侧快照过期，却被当作当前事实用于分诊、跟进或报价。",
+      "trigger_action_types": [
+        "external_snapshot_read",
+        "quotation_write_candidate"
+      ],
+      "evidence_requirement": "每次快照读带 snapshot 版本与读回执引用；冲突时保留冲突候选而非覆盖。",
+      "escalation_path": "owner_plus_base_gate",
+      "fallback": "provider_missing"
+    },
+    {
+      "risk_type_id": "premature_quotation_commitment",
+      "definition": "报价单候选在 Owner 未确认前被当作对客户的正式报价，或跟进草稿被当作已发送。",
+      "trigger_action_types": [
+        "communication_draft",
+        "quotation_write_candidate"
+      ],
+      "evidence_requirement": "Owner 确认证据 + Base Gate 裁定 + Gateway 执行回执三者齐备才可称正式。",
+      "escalation_path": "owner_plus_base_gate",
+      "fallback": "not_ready"
+    }
+  ],
+  "moat_justification": {
+    "question": "用户能否一句话让最强模型直接做出同样结果？",
+    "passes_moat": true,
+    "valid_reasons": [
+      "real_system_integration",
+      "auditable_evidence_receipt",
+      "transaction_lifecycle_replay"
+    ],
+    "rationale": "零售询盘从线索、线索池、价值分诊到报价单，需要外部 ERP 的受控只读快照与写入候选、渠道与业主两类客户的来源链接口径、Owner 与 Base Gate 的分诊 / 发送 / 报价三道门，以及可反查的 Receipt 回放；一句话模型只能生成文本，无法形成可审计、可重试、可交接给项目与应收 Pack 的闭环，也无法承担写错报价单的后果。"
+  },
+  "ui_surface_slots": [
+    "pod",
+    "object",
+    "capsule",
+    "candidate",
+    "execution",
+    "receipt",
+    "setting"
+  ],
+  "workbench_coverage": {
+    "work_modes": "backlog",
+    "transaction_flow": "declared",
+    "business_objects_and_domain_semantics": "partial",
+    "capability_reference": "declared",
+    "role_reference": "declared",
+    "ui_surface_declaration": "partial",
+    "note": "六部分覆盖与缺口以 README 的诚实表为准；partial / backlog 不得被当作已实现。"
+  },
+  "forbidden_artifacts": [
+    "node_modules",
+    "dist",
+    "build",
+    ".vite",
+    "*.db",
+    "*.sqlite",
+    "*.log",
+    "*.jsonl",
+    "__pycache__",
+    "*.pyc"
+  ]
+}

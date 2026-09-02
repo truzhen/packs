@@ -50,6 +50,7 @@ Pack 不直接生成 Formal Record，不直接执行 provider，不直接写基�
 | `content-operations-workbench-v0/` | `scene_pack://content-operations-workbench` | Founder 自营内容候选与复盘型 | v0.2.0 可信 GUI 装入/停用交接已实现，只读核验 os-14 精确版本及 os-07 声明计划状态，待独立验收（未发布）；不据此声明 Provider、OS 或 Client 动态验收 | 把真实产品证据变成方向候选、母内容、渠道候选、人工发布包与周复盘；0.2.0 计划增加本地可播放 MP4 候选，但 Pack 仍不含 CLI / Provider / 平台登录 / 自动发布，真实渲染由 software + 11 Gateway 供给。 |
 | `shuxuejia-renovation-pack-v0/` | `scene_pack://shuxuejia-large-home-renovation` | 长周期项目交付型 | 完整文件夹包；2026-07-08 已完成隔离 install / uninstall / reinstall、457 / 457 SceneFlowRun 与前端用户视角检查，生命周期`已接线`（未发布）；任务、知识、沟通与 ProviderRequirement 仍有前端投影缺口 | 墅学家大宅装修设计指导：设计准备、深化设计、材料合同付款、现场质量验收、售后保修，多角色候选协作，Owner/Base Gate 和 Receipt 回放。 |
 | `project-watch-pack-v0/` | `scene_pack://project-watch` | 长周期项目交付型 | 仅声明与离线契约测试，生命周期`设计中`，未跑隔离 devserver 端到端装入 / 启用 / SceneFlowRun 验收（未发布） | 项目关注 Pack：读 ERPNext Project/Task/Sales Invoice 受控快照 → 05 项目异常读模型 → 关注/异常候选；lifecycle_status 设计中。 |
+| `inquiry-management-pack-v0/` | `scene_pack://inquiry-management` | 线索到报价客户获取型 | v0.1.0 声明骨架，生命周期`设计中`：manifest、flow、单角色槽 / 角色包、能力引用、install / uninstall 与离线契约测试齐备；**无知识库**，Provider 未接通，无隔离 devserver E2E、无真实模型草稿、无前端验收 | 零售客户获取链段 1-4：询盘对象化、线索池扫描、价值分诊、跟进草稿、报价单候选；客户 / 线索 / 报价单真相在外部 ERP，Pack 只持受控快照引用；生成合同交接项目关注 Pack，回款开票归应收 Pack。 |
 | `capability-pack-candidates/short-video-ops-v0/` | `capability-pack-candidate-set://short-video-ops-v0` | 短视频运营能力候选集 | 候选资产：3 个 Capability Pack 候选 JSON、OSS 证据矩阵、Code Assistant 调用候选台账、运行请求候选台账、candidate bundle 导出台账、candidate bundle dry-run 台账、PatchCandidate 承接台账、PatchCandidate 复核台账、P11 lifecycle preflight 执行规格、P12 开跑前门禁候选、P12 / P13 / P15 / P16 / P17 / P18 运行后证据验收门候选、P12-P18 执行规格 / 授权卡 / 机器证据契约 / 覆盖 `evidence_id` 的证据台账骨架 / 执行就绪证据写回计划、带写回摘要的商用跨仓执行队列、带写回总计并消费 P12 / P13 / P15 / P16 / P17 / P18 后验收门的商用 readiness verifier、消费写回门禁和 P12 / P13 / P15 / P16 / P17 / P18 后验收门的商用 go/no-go 候选门禁、商用后验收门覆盖 verifier、商用禁入动作覆盖 verifier、商用执行就绪守卫覆盖 verifier、消费商用后验收门 / 禁入动作 / 执行就绪守卫覆盖 verifier 的目标完成证据地图候选、P12-P18 商用证据契约总索引和逐分片签字矩阵、前后端证据交接 runbook / 命令计划、GUI/API/Receipt 追踪矩阵、商用独立验收签收矩阵、P14 商用 readiness 审计、商用改进清单、商用最终证据包模板、授权路线图、商用缺口台账、源材料占位；不安装、不启用、不发布 | 用 MoneyPrinterTurbo、Pixelle-Video、social-auto-upload 压测能力包制作台的 GitHub OSS 证据、代码助手胶水边界、11 run 请求候选、候选 bundle 导出、candidate bundle dry-run 阻断、PatchCandidate 结果承接与复核、lifecycle preflight 商用缺口、P12 安全样本 lifecycle 待授权项、P13 GUI lifecycle 面板待授权项、P14 商用缺口审计、P15 GUI 实操待授权项、P16 受控 run 待授权项、P17 provider 归属待授权项、P18 云市场 sandbox 待授权项和候选 Pack 产出；当前明确 not commercial ready。 |
 | `role-pack-candidates/team-office-v0/` | `role-pack-candidate-set://team-office-v0` | 团队办公室角色候选集 | 候选资产：秘书长 + 五顾问 6 个 Role Pack 候选 JSON、团队角色槽、团队设置绑定候选、安装后团队设置角色目录候选、六角色能力引用样例、秘书长音色 / VRM asset ref、秘书长音色 / VRM 授权证据候选、云商品草稿候选（含买家可见六角色商品组件清单）、artifact manifest、sandbox 商品化流程候选、商品化交接候选、License / Entitlement 策略候选、订单 / 支付状态机候选、售后 / 退款 / 撤回策略候选、买家已购库 / 安装状态候选、发布者账号 / 结算 / 发票策略候选、商业条款 / 隐私 / 数据边界候选、发布候选包、下载 / 安装访问控制矩阵候选、确定性打包规格候选、候选包整体 digest、安装兼容性矩阵、云市场审核提交候选、商品化上线批准候选、生产发布晋级门候选（含下载 / 安装访问矩阵硬门）、商品化回执链候选、商业分发回执记录规格候选、安装预检请求候选、运行使用候选、用户视角 GUI 场景候选、用户视角 GUI 执行脚本候选、GUI 证据采集协议候选、上传前 secret / raw asset 扫描候选、商品化完成证据矩阵、目标完成证据地图候选、角色制作台问题台账回填门槛、商品化执行包、E2E 证据运行记录包、商品化证据门槛候选、sandbox 商品化环境就绪候选、商品化监控 / 诊断候选、正常商品化完成审计候选、正常商品化链路核验器候选、商品化 go/no-go 门禁候选、商品化 readiness verifier 候选、P0-P11 阶段覆盖矩阵候选、计划 TC 测试用例覆盖矩阵候选、独立验收签收矩阵候选、P0-P11 商品化阻塞清单候选、商品阶段前后端收口报告候选、P11 正常商品化通过门候选、P11 正常商品化验证记录模板、P11 证据接入绑定器候选、P11 sandbox 执行 runbook 候选、P11 sandbox 开跑前预检门候选、P11 sandbox 执行请求候选、P11 证据验收检查清单候选、P11 商品化最终证据包模板（含云上传商品草稿报告、秘书长音色 / VRM 证据报告、安装后能力 Pack 引用报告）、商品化前后端 API 契约候选、跨仓执行卡（含生产晋级控制施工卡）、跨仓执行就绪包（含生产晋级阶段）、Owner 授权证据接入口候选、商品化跨仓执行队列候选（含生产晋级控制阶段）、商品化跨仓证据台账候选（含生产晋级回执写回）、前后端接线映射（含 P11 GUI/API traceability）和台账；不安装、不启用、不发布 | 用团队办公室角色制作、能力引用、团队设置替换、云端商品草稿、sandbox 购买 / 下载 / 安装设计压测角色制作台与商品化链路；真实 GUI、云端、支付、安装均待跨仓接线。 |
 | `templates/` | — | — | 作者端脚手架 | Pack 作者工程模板，不参与 enabled pack 分发。 |
@@ -222,6 +223,29 @@ Pack 不直接生成 Formal Record，不直接执行 provider，不直接写基�
 - 大宅装修设计、合同、付款、验收、对外发送和售后关闭均只能先产候选，正式化必须经 Owner + Base Gate。
 - Provider 未接通时必须 `provider_missing / not_ready / blocked`。
 - 前端用户视角验收必须真实使用 `truzhen-client-web-desktop` 页面；若缺入口，只能登记缺口，不能用 API 冒充通过。
+
+### 6.5-A `inquiry-management-pack-v0/`
+
+> 新增登记（2026-09-02，Owner 裁定口径）；append-only，不改上列其它包的条目。
+
+**定位**：零售询盘管理 Pack，覆盖零售 CRM 七段链的段 1-4（线索 / 线索池 / 商机分诊 / 报价单）。
+
+**核心资产**：
+
+- `manifest.json`：主权六件事、`external_truth_source`、`inquiry_object_declaration`、`chain_scope`、3 条 `risk_types`。
+- `flows/inquiry-management-flow.flow.json`：20 节点 / 20 边，四道显式 Owner/Base 门（`inquiry_object_confirm` / `triage_confirm` / `followup_send_confirm` / `quotation_confirm`）、两个回执节点、一个向项目关注 Pack 的交接终点；每个能力节点显式声明 04 契约字段 `capability_domain` + `capability_operation`。
+- 角色包：`role_pack://inquiry-manager`（单槽 `inquiry_manager`，`delegation_allowed = false`）。
+- 能力需求：`truzhen.external_snapshot.read`、`truzhen.capability.inquiry_triage`、`truzhen.communication.draft`、`truzhen.capability.quote`；4 条 ProviderRequirement（三读 `provider_missing` / 一写 `not_ready`）。
+- `install.py`（只读 os-14 交接）/ `uninstall.py`（走 `/v3/pack-studio/lifecycle/uninstall` 正式卸载正门）。
+- `tests/test_pack_contract.py`：manifest ↔ capabilities ↔ flow 三处名字闭合、候选八类白名单、厂商词边界、PII 静态扫描。
+
+**纪律**：
+
+- 客户、线索、报价单真相在外部 ERP；Pack 只持受控快照引用，不自建客户主数据、不做通用 CRM、不在 Pack 层自建对象真相。
+- 厂商词只允许出现在 `provider_requirements[].provider_family` 与 `software_requirements[].provider_family / software_family`，不得进 `capability_operation` 与 flow 节点标题。
+- `quotation_party_policy` 默认 `owner_party`，`channel` 待 Owner 第 15 条裁定前只登记不启用。
+- 生成合同 / 项目交付归项目关注 Pack，回款 / 开票归应收 Pack，群发额度与催办话术归私域运营线，均不在本 Pack 边界。
+- 本 pack 当前无知识库；不得声称有 FormalKnowledge 装入。生命周期停在`设计中`，无运行时证据，不得宣称已接线或已验收。
 
 ### 6.5 `templates/scene-pack-software-template/`
 
