@@ -26,7 +26,7 @@ from pack_diagnostics import (  # noqa: E402
     emit_pack_error, UNINSTALL_CONNECTIVITY, UNINSTALL_GENERIC,
     UNINSTALL_LIFECYCLE_HTTP)
 
-BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "").strip()
+BASE = os.environ.get("TRUZHEN_DEVSERVER_BASE", "http://127.0.0.1:18080").strip()
 OWNER = os.environ.get("TRUZHEN_PACK_OWNER", "owner://local/default")
 PROOF_ENV = "TRUZHEN_PACK_UNINSTALL_PROOF_JSON"
 # 这是可信前台应签发的 canonical action 描述，不是 Pack 发起的请求体。

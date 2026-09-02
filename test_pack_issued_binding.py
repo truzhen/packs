@@ -16,16 +16,23 @@ PACKS = [
     "backup-administrator-workbench-v0",
     "environmental-enforcement-pack-v0",
     "housekeeping-ops-pack-v0",
+    "project-watch-pack-v0",
     "shuxuejia-renovation-pack-v0",
     "smart-home-owner-pack-v0",
 ]
-# 环保 Pack 已采用可信 GUI Owner handoff，不再由 install.py 调 Base prepare/confirm。
+# 环保 / 智能家居 / 项目关注三个 Pack 已采用可信 GUI Owner handoff（install.py 只读，
+# 不调 Base prepare/confirm，也不提供 mint_decision）。
 INSTALL_MINT_PACKS = [
     pack for pack in PACKS
-    if pack not in {"environmental-enforcement-pack-v0", "smart-home-owner-pack-v0"}
+    if pack not in {
+        "environmental-enforcement-pack-v0",
+        "project-watch-pack-v0",
+        "smart-home-owner-pack-v0",
+    }
 ]
 FORMAL_UNINSTALL_PACKS = {
     "housekeeping-ops-pack-v0",
+    "project-watch-pack-v0",
     "shuxuejia-renovation-pack-v0",
 }
 
