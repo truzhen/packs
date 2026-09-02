@@ -11,7 +11,7 @@
   },
   "gitleaks": {
     "version": "8.30.1",
-    "sha256": "f414bc2fb952be6c9072b75cb411e3368614ef4b16d48dbd9ad238034afd2302"
+    "sha256": "ba52fb1bfabbcde42f032afad3d6e0b19dff8ed105229a16e7caa338bbc0e84f"
   },
   "allowlist": {
     "sha256": "52ce07201031fbc8adfb1f0affab5e5909f4ec531f6f5afebc3d5b315972b465"
