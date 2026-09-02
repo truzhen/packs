@@ -28,3 +28,7 @@ python3 backup-administrator-workbench-v0/uninstall.py
 - Pack 内无 runtime / binary / secret；仓库密码归 SecureStore `credential_ref`，Pack 不可见。
 - 恢复只进一次性影子目标；覆盖在线数据属禁止边界。
 - 生命周期：`已实现`（声明层）；产品级验收以 truzhenos 门禁 + 03 回执为准。
+
+## 已知缺口
+
+- 已知债（2026-09-02，truzhenos os-14 fix 6b64078f/edc77a17 登记）：`flows/backup-lifecycle.flow.json` 的 `review` 节点类型未被 06/14 任一摄入路径识别（`/v3/pack-studio/canvas` 与 `/v3/scene-flow/specs` 均不认），folder pack 装入会 4xx（UNKNOWN_STUDIO_NODE_TYPE / UNKNOWN_NODE_TYPE）；此前靠摄入层静默降级为 task 才装入成功，该后门已按主权纪律关闭。处置：改用 `task` 类型或等 06 补充正式 review 节点类型后再迁移；G4 后处置。
