@@ -327,6 +327,7 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 <pack>/install.py
 | `smart-home-owner-pack-v0/` | 完整文件夹包，含 install / uninstall、单角色、Frappe ProviderRequirement，无知识库 | Frappe 只能是 provider requirement / write candidate，不是真相源 |
 | `housekeeping-ops-pack-v0/` | 可装入 / 可卸载文件夹包，含 manifest、flow、capabilities、2 角色包、install / uninstall（`uninstall.py` 实存，2026-07-11 口径修正）；`knowledge/` 待补 | 不得标成完整知识包 |
 | `project-watch-pack-v0/` | 设计中（声明层齐；os 侧隔离 E2E 在 truzhenos 分支 `codex/g4-wc-project-watch-os-20260902` 跑通，待 os 批合入） | 分支 `codex/g4-wc-project-watch-pack-20260902`；阈值判定全部在 truzhenos 只读投影，Pack 只以 `policy_ref` 引用，不写条件分支 |
+| `inquiry-management-pack-v0/` | 询盘管理 Pack（Domain Work Pack，零售 CRM 七段链段 1–4，真相源=外部 ERPNext Lead/Quotation/Customer，05 仅受控快照）；设计中；分支 `codex/g4-wc-inquiry-pack-20260902` | 不自建客户主数据；quotation_to 固定业主（Owner 第 15 条）；隔离 devserver E2E 待 os 侧 facet 落地 |
 | `templates/` | 脚手架 | 不参与分发，不作为 enabled pack |
 
 ## 11. 哪些变更必须回 Owner
