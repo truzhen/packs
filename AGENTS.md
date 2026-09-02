@@ -326,6 +326,7 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 <pack>/install.py
 | `environmental-enforcement-pack-v0/` | 完整文件夹包，含 install / uninstall、flow、2 角色包、capabilities、knowledge | 高风险法律知识默认 `pending_human_review`；知识域声明必须与实际 scopes 保持一致 |
 | `smart-home-owner-pack-v0/` | 完整文件夹包，含 install / uninstall、单角色、Frappe ProviderRequirement，无知识库 | Frappe 只能是 provider requirement / write candidate，不是真相源 |
 | `housekeeping-ops-pack-v0/` | 可装入 / 可卸载文件夹包，含 manifest、flow、capabilities、2 角色包、install / uninstall（`uninstall.py` 实存，2026-07-11 口径修正）；`knowledge/` 待补 | 不得标成完整知识包 |
+| `project-watch-pack-v0/` | 设计中（声明层齐；os 侧隔离 E2E 在 truzhenos 分支 `codex/g4-wc-project-watch-os-20260902` 跑通，待 os 批合入） | 分支 `codex/g4-wc-project-watch-pack-20260902`；阈值判定全部在 truzhenos 只读投影，Pack 只以 `policy_ref` 引用，不写条件分支 |
 | `templates/` | 脚手架 | 不参与分发，不作为 enabled pack |
 
 ## 11. 哪些变更必须回 Owner
