@@ -370,5 +370,5 @@ TRUZHEN_DEVSERVER_BASE=http://127.0.0.1:18099 python3 <pack>/install.py
 
 本仓（packs）专属边界：
 - 三类 Pack（Role / Capability / Domain Work）不增第四类；私有通信方案（如 Matrix）必须落为 Capability Pack + Software Provider 组合，不是新 Pack 类型。
-- 本季首要产出：线一 P-W6 首个 Property Domain Work Pack（object schema 引用 / flow / actions / providers / gates / evidence / outcomes / operator handoff 齐备）。
+- 本季首要产出：官方三部门 Pack（询盘管理/项目关注/应收管理，G4/G5 W-C）；Property Domain Pack 归增长底盘，本季不开发。
 - Pack 声明的 Provider 依赖须标注 L1–L6 能力级别与 runtime_requirement（cloud_ok / local_preferred / local_required）；根原则不变：只声明与编排，不持主权、不绕 Gateway。
