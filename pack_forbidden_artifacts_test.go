@@ -91,6 +91,7 @@ func TestPackAssetsDoNotCarryBusinessDataFormalRefsOrRawSecrets(t *testing.T) {
 		"environmental-enforcement-pack-v0",
 		"housekeeping-ops-pack-v0",
 		"project-watch-pack-v0",
+		"inquiry-management-pack-v0",
 		"smart-home-owner-pack-v0",
 		"templates/scene-pack-software-template",
 	}
@@ -143,6 +144,7 @@ func TestPackGlueDoesNotMintOwnerActionEvidence(t *testing.T) {
 	formalUninstallers := map[string]struct{}{
 		"housekeeping-ops-pack-v0/uninstall.py":     {},
 		"project-watch-pack-v0/uninstall.py":        {},
+		"inquiry-management-pack-v0/uninstall.py":   {},
 		"shuxuejia-renovation-pack-v0/uninstall.py": {},
 	}
 	installers, err := filepath.Glob("*-v0/install.py")

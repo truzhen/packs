@@ -1,0 +1,97 @@
+{
+  "capabilities_required": [
+    {
+      "capability_ref": "truzhen.external_snapshot.read",
+      "purpose": "只读外部真相源的线索 / 客户 / 报价单受控快照，按白名单投影供分诊与看板使用",
+      "gateway": "capability",
+      "required_gate": "base_gate",
+      "capability_bindings": [
+        {
+          "capability_domain": "customer-relationship",
+          "capability_operation": "customer.list_leads"
+        },
+        {
+          "capability_domain": "customer-relationship",
+          "capability_operation": "customer.get_lead"
+        },
+        {
+          "capability_domain": "customer-relationship",
+          "capability_operation": "customer.get_customer"
+        },
+        {
+          "capability_domain": "selling",
+          "capability_operation": "selling.list_quotations"
+        },
+        {
+          "capability_domain": "selling",
+          "capability_operation": "selling.get_quotation"
+        }
+      ]
+    },
+    {
+      "capability_ref": "truzhen.capability.inquiry_triage",
+      "purpose": "按需求摘要、来源渠道与既有报价历史给出询盘价值分诊候选（等级 + 理由）",
+      "gateway": "capability",
+      "required_gate": "base_gate",
+      "capability_bindings": []
+    },
+    {
+      "capability_ref": "truzhen.communication.draft",
+      "purpose": "拟询盘跟进沟通草稿（经模型网关真实生成，不直接发送）",
+      "gateway": "communication",
+      "required_gate": "base_send_gate",
+      "capability_bindings": []
+    },
+    {
+      "capability_ref": "truzhen.capability.quote",
+      "purpose": "按询盘要素形成报价单写入候选（受控，不直接写外部系统）",
+      "gateway": "execution",
+      "required_gate": "base_execution_gate",
+      "capability_bindings": [
+        {
+          "capability_domain": "selling",
+          "capability_operation": "selling.create_quotation_candidate"
+        }
+      ]
+    }
+  ],
+  "provider_requirements": [
+    {
+      "requirement_id": "inquiry_lead_snapshot_read",
+      "capability": "truzhen.external_snapshot.read",
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "description": "只读外部线索受控快照（列表 customer.list_leads / 单条 customer.get_lead）；Provider 未接通返回 provider_missing，不假成功。"
+    },
+    {
+      "requirement_id": "inquiry_customer_snapshot_read",
+      "capability": "truzhen.external_snapshot.read",
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "description": "只读外部客户受控快照（customer.get_customer）；渠道与业主同为外部客户对象，Pack 不建第二份客户主数据。"
+    },
+    {
+      "requirement_id": "inquiry_quotation_snapshot_read",
+      "capability": "truzhen.external_snapshot.read",
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "description": "只读外部报价单受控快照（selling.list_quotations / selling.get_quotation），用于跟进上下文与写入后回读。"
+    },
+    {
+      "requirement_id": "inquiry_quotation_write_candidate",
+      "capability": "truzhen.capability.quote",
+      "gateway_class": "execution",
+      "risk_class": "medium",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "not_ready",
+      "description": "报价单写入候选（selling.create_quotation_candidate）；必须经 Owner + Base Gate、Execution Gateway 与 Receipt，Provider 未就绪时 not_ready。"
+    }
+  ],
+  "note": "capability_ref 是声明层别名（与家政荚同源），真实读写以 flow 节点显式声明的 capability_domain + capability_operation 为准，经 04 能力中心解析并产 CapabilityInvocationCandidate。厂商词只出现在 manifest 的 provider_requirements[].provider_family 与 software_requirements[].provider_family / software_family，不进能力操作名与节点标题。"
+}

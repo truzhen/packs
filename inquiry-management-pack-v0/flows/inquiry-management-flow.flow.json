@@ -1,0 +1,339 @@
+{
+  "flow_id": "inquiry-management-flow",
+  "title": "零售询盘从线索到报价单",
+  "version": "0.1.0",
+  "node_vocabulary": "canvas",
+  "vocabulary_note": "节点 type 沿用画布词表（与 smart-home-owner-pack-v0 同源的 domain.action 形状）；capability_domain / capability_operation 为 04 能力中心契约字段，显式声明后不依赖标题模糊匹配。",
+  "nodes": [
+    {
+      "id": "inquiry_intake",
+      "type": "input.user_need",
+      "title": "询盘录入"
+    },
+    {
+      "id": "inquiry_object_candidate",
+      "type": "object.business_schema",
+      "title": "询盘对象化候选",
+      "candidate_type": "BusinessObjectCandidate",
+      "object_type": "inquiry",
+      "chain_segment": "1-线索",
+      "declared_fields": [
+        "object_type",
+        "inquiry_source",
+        "channel_customer_ref",
+        "owner_party_kind",
+        "owner_party_ref",
+        "need_summary",
+        "triage"
+      ],
+      "truth_note": "对象真相在外部 ERP 线索；本节点只产候选，不在 Pack 层建立第二份客户或线索主数据。"
+    },
+    {
+      "id": "owner_gate_inquiry_object",
+      "type": "policy.gate_config",
+      "title": "询盘对象化 Owner/Base 确认门",
+      "gate_policy": {
+        "required_gate": "inquiry_management_object_gate",
+        "gate_flag": "inquiry_object_confirm",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "inquiry_pool_scan",
+      "type": "capability.invoke",
+      "title": "线索池受控快照扫描",
+      "candidate_type": "CapabilityInvocationCandidate",
+      "capability_ref": "truzhen.external_snapshot.read",
+      "capability_domain": "customer-relationship",
+      "capability_operation": "customer.list_leads",
+      "provider_requirement_ref": "inquiry_lead_snapshot_read",
+      "read_only": true,
+      "chain_segment": "2-线索池"
+    },
+    {
+      "id": "lead_snapshot_read",
+      "type": "capability.invoke",
+      "title": "单条线索受控快照读取",
+      "candidate_type": "CapabilityInvocationCandidate",
+      "capability_ref": "truzhen.external_snapshot.read",
+      "capability_domain": "customer-relationship",
+      "capability_operation": "customer.get_lead",
+      "provider_requirement_ref": "inquiry_lead_snapshot_read",
+      "read_only": true
+    },
+    {
+      "id": "channel_customer_read",
+      "type": "capability.invoke",
+      "title": "来源渠道客户受控快照读取",
+      "candidate_type": "CapabilityInvocationCandidate",
+      "capability_ref": "truzhen.external_snapshot.read",
+      "capability_domain": "customer-relationship",
+      "capability_operation": "customer.get_customer",
+      "provider_requirement_ref": "inquiry_customer_snapshot_read",
+      "read_only": true,
+      "optional": true,
+      "applies_when": "inquiry_source=channel（渠道来源时读来源渠道客户；业主为服务主体，其记录链接来源渠道）"
+    },
+    {
+      "id": "inquiry_manager_advice",
+      "type": "collaboration.advice",
+      "title": "询盘经理事实澄清与下一步建议",
+      "slot_ref": "inquiry_manager",
+      "candidate_type": "AdviceCandidate",
+      "produces": "proposer_advice_only",
+      "formal_authority": "none",
+      "advice_note": "角色只提出建议与待确认项，本身不产生正式记录；建议汇入下游分诊候选由 Owner 裁定。"
+    },
+    {
+      "id": "triage_candidate",
+      "type": "flow.stage_task_candidate",
+      "title": "价值分诊候选",
+      "candidate_type": "TaskCandidate",
+      "capability_ref": "truzhen.capability.inquiry_triage",
+      "chain_segment": "3-商机分诊",
+      "report_route": {
+        "department": "inquiry",
+        "topic": "inquiry"
+      },
+      "triage_carrier": "分诊结果写回询盘 payload.triage 与外部线索状态，第一版不依赖独立商机对象类型。"
+    },
+    {
+      "id": "owner_gate_triage",
+      "type": "policy.gate_config",
+      "title": "价值分诊 Owner/Base 确认门",
+      "gate_policy": {
+        "required_gate": "base_gate",
+        "gate_flag": "triage_confirm",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "followup_draft",
+      "type": "gateway.communication_draft",
+      "title": "跟进沟通草稿候选",
+      "candidate_type": "CommunicationDraftCandidate",
+      "capability_ref": "truzhen.communication.draft",
+      "model_gateway_candidate_type": "DocumentDraft",
+      "draft_generation_gateway": "model_gateway",
+      "send_gateway": "communication_gateway",
+      "draft_note": "草稿正文必须由模型网关真实生成并带 usage 回执，不得用模板串或节点标题冒充模型输出；本节点只出草稿，真实发送在 Owner 门后由 10 沟通网关执行，不在 flow 内建节点。"
+    },
+    {
+      "id": "owner_gate_send",
+      "type": "policy.gate_config",
+      "title": "跟进发送 Owner/Base 确认门",
+      "gate_policy": {
+        "required_gate": "base_send_gate",
+        "gate_flag": "followup_send_confirm",
+        "pending_owner_confirmation": true
+      },
+      "params": {
+        "send_execution_note": "Owner 确认后由 10 ControlledExternalSend 执行真实发送并落 03 回执；本 flow 不自带发送节点（制作台词表未注册发送类节点，扩词表属跨仓治理动作）。",
+        "send_scope": "单目标单条；不可观察即 blocked，不得返回 sent。群发额度与催办话术不属本 Pack。"
+      }
+    },
+    {
+      "id": "followup_receipt",
+      "type": "receipt.link",
+      "title": "跟进发送回执归档"
+    },
+    {
+      "id": "quotation_history_read",
+      "type": "capability.invoke",
+      "title": "既有报价单受控快照列表",
+      "candidate_type": "CapabilityInvocationCandidate",
+      "capability_ref": "truzhen.external_snapshot.read",
+      "capability_domain": "selling",
+      "capability_operation": "selling.list_quotations",
+      "provider_requirement_ref": "inquiry_quotation_snapshot_read",
+      "read_only": true,
+      "optional": true
+    },
+    {
+      "id": "quotation_candidate",
+      "type": "capability.invoke",
+      "title": "报价单候选",
+      "candidate_type": "ExecutionIntentCandidate",
+      "capability_ref": "truzhen.capability.quote",
+      "capability_domain": "selling",
+      "capability_operation": "selling.create_quotation_candidate",
+      "provider_requirement_ref": "inquiry_quotation_write_candidate",
+      "chain_segment": "4-报价单",
+      "report_route": {
+        "topic": "quotation_followup"
+      },
+      "quotation_to_rule": {
+        "quotation_to": "service_party",
+        "summary": "报价单一律发给服务主体（业主），业主付费；无可配置策略。",
+        "resolution": [
+          {
+            "owner_party_kind": "lead",
+            "quotation_to": "lead",
+            "party_name_source": "业主线索"
+          },
+          {
+            "owner_party_kind": "customer",
+            "quotation_to": "customer",
+            "party_name_source": "业主客户"
+          }
+        ],
+        "channel_party_forbidden": true,
+        "channel_party_note": "来源渠道客户不得作为 quotation_to 或 party_name；渠道只是线索与商机来源。",
+        "owner_ruling": "Owner 第 15 条已裁 2026-09-02：报价单发给业主、业主付费。"
+      }
+    },
+    {
+      "id": "owner_gate_quotation",
+      "type": "policy.gate_config",
+      "title": "报价单 Owner/Base 确认门",
+      "gate_policy": {
+        "required_gate": "base_execution_gate",
+        "gate_flag": "quotation_confirm",
+        "pending_owner_confirmation": true
+      }
+    },
+    {
+      "id": "gateway_execution",
+      "type": "gateway.execution_intent",
+      "title": "受控报价单写入",
+      "candidate_type": "CapabilityInvocationCandidate",
+      "capability_ref": "truzhen.capability.quote",
+      "capability_domain": "selling",
+      "capability_operation": "selling.create_quotation_candidate",
+      "provider_requirement_ref": "inquiry_quotation_write_candidate"
+    },
+    {
+      "id": "quotation_snapshot_read",
+      "type": "capability.invoke",
+      "title": "报价单受控快照回读",
+      "candidate_type": "CapabilityInvocationCandidate",
+      "capability_ref": "truzhen.external_snapshot.read",
+      "capability_domain": "selling",
+      "capability_operation": "selling.get_quotation",
+      "provider_requirement_ref": "inquiry_quotation_snapshot_read",
+      "read_only": true
+    },
+    {
+      "id": "receipt",
+      "type": "receipt.link",
+      "title": "报价单回执归档"
+    },
+    {
+      "id": "handoff_to_project",
+      "type": "flow.end",
+      "title": "链段 1-4 收口与交接点",
+      "handoff": {
+        "next_pack": "项目关注 Pack",
+        "trigger": "生成合同",
+        "out_of_scope": [
+          "生成合同与项目交付",
+          "回款与开票（应收 Pack）",
+          "月度群发额度与催办话术"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "inquiry_intake",
+      "target": "inquiry_object_candidate"
+    },
+    {
+      "id": "e2",
+      "source": "inquiry_object_candidate",
+      "target": "owner_gate_inquiry_object"
+    },
+    {
+      "id": "e3",
+      "source": "owner_gate_inquiry_object",
+      "target": "inquiry_pool_scan",
+      "condition": "approved"
+    },
+    {
+      "id": "e4",
+      "source": "inquiry_pool_scan",
+      "target": "lead_snapshot_read"
+    },
+    {
+      "id": "e5",
+      "source": "lead_snapshot_read",
+      "target": "channel_customer_read",
+      "condition": "inquiry_source_channel"
+    },
+    {
+      "id": "e6",
+      "source": "channel_customer_read",
+      "target": "inquiry_manager_advice"
+    },
+    {
+      "id": "e7",
+      "source": "lead_snapshot_read",
+      "target": "inquiry_manager_advice",
+      "condition": "inquiry_source_direct"
+    },
+    {
+      "id": "e8",
+      "source": "inquiry_manager_advice",
+      "target": "triage_candidate"
+    },
+    {
+      "id": "e9",
+      "source": "triage_candidate",
+      "target": "owner_gate_triage"
+    },
+    {
+      "id": "e10",
+      "source": "owner_gate_triage",
+      "target": "followup_draft",
+      "condition": "approved"
+    },
+    {
+      "id": "e11",
+      "source": "followup_draft",
+      "target": "owner_gate_send"
+    },
+    {
+      "id": "e12",
+      "source": "owner_gate_send",
+      "target": "followup_receipt",
+      "condition": "approved"
+    },
+    {
+      "id": "e13",
+      "source": "followup_receipt",
+      "target": "quotation_history_read"
+    },
+    {
+      "id": "e14",
+      "source": "quotation_history_read",
+      "target": "quotation_candidate"
+    },
+    {
+      "id": "e15",
+      "source": "quotation_candidate",
+      "target": "owner_gate_quotation"
+    },
+    {
+      "id": "e16",
+      "source": "owner_gate_quotation",
+      "target": "gateway_execution",
+      "condition": "approved"
+    },
+    {
+      "id": "e17",
+      "source": "gateway_execution",
+      "target": "quotation_snapshot_read"
+    },
+    {
+      "id": "e18",
+      "source": "quotation_snapshot_read",
+      "target": "receipt"
+    },
+    {
+      "id": "e19",
+      "source": "receipt",
+      "target": "handoff_to_project"
+    }
+  ]
+}
