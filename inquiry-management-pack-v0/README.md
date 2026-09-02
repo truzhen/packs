@@ -59,7 +59,7 @@ manifest 内部一律用厂商中立表述（`external_truth_source.authority = 
 | # | 部分 | 状态 | 说明 |
 |---|---|---|---|
 | 1 | 工作模式集 | **缺口（backlog）** | 未声明询盘经理的工作区 / 模式划分。 |
-| 2 | 事务流程 | **已声明** | `flows/inquiry-management-flow.flow.json`：20 条边、四道显式门、两个回执节点、一个交接终点。只是声明，未经 06 真实装载或运行。 |
+| 2 | 事务流程 | **已声明** | `flows/inquiry-management-flow.flow.json`：19 条边、四道显式门、两个回执节点、一个交接终点。只是声明，未经 06 真实装载或运行。 |
 | 3 | 业务对象与领域语义 | **部分** | 询盘声明字段、`inquiry_source` 枚举、渠道 / 业主口径与快照 PII 边界已在 manifest 声明；**缺**：术语表、别名、判断口径与来源核验状态（无 `knowledge/`），故不得宣称「语义完整」。 |
 | 4 | 能力引用 | **已声明** | 4 个能力别名 + 4 条 ProviderRequirement + 6 个 04 契约操作，manifest / capabilities / flow 三处名字闭合（有测试断言）。**未接通**任何 Provider。 |
 | 5 | 角色引用 | **已声明** | 单槽 `inquiry_manager` + `role_pack://inquiry-manager`，全员 Proposer，`delegation_allowed = false`。 |
