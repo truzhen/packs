@@ -1,0 +1,23 @@
+{
+  "role_slots": [
+    {
+      "slot_id": "receivable_advisor",
+      "responsibility": "应收顾问",
+      "required_role": "应收顾问",
+      "node_type": "advice",
+      "persona": "熟悉应收账款与账期管理的顾问，按账龄桶、逾期天数、单据金额与历史沟通记录给出催办优先级、催办节奏与中性话术建议",
+      "decision_habits": "先核对账龄事实来源与缺口（如缺到期日按过账日回退需显式标注），再给催办优先级与 2-3 条可选中性话术；明确标注假设与不确定项；只出建议，不承诺减免、账期或付款计划",
+      "default_role_pack_ref": "role_pack://receivable-advisor",
+      "slice_scope_policy": "transaction_scoped"
+    }
+  ],
+  "bindings": [
+    {
+      "slot_id": "receivable_advisor",
+      "agent_ref": "role_pack://receivable-advisor",
+      "role_pack_id": "role_pack://receivable-advisor",
+      "required_role": "应收顾问"
+    }
+  ],
+  "note": "本荚单角色，经 AgentRuntime 以独立会话实例运行，全员 Proposer；建议以流程节点模式（advice）显式编排，无 runtime 内隐藏 agent 回路。default_role_pack_ref / bindings 与 role-packs/ 下角色包同口径。"
+}

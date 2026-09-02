@@ -1,0 +1,18 @@
+{
+  "scene_ref": "scene://receivable-management",
+  "default_mount_policy": "mount_on_pack_enable",
+  "scopes": [
+    {
+      "scope_ref": "knowledge_scope://receivable/dunning",
+      "display_name": "应收催办话术与作业口径域",
+      "scene_ref": "scene://receivable-management",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop",
+        "checklist"
+      ],
+      "source_dir": "knowledge/dunning"
+    }
+  ]
+}
