@@ -78,6 +78,7 @@
 | 分支 / worktree | 做什么 | 开工 | 状态 |
 | --- | --- | --- | --- |
 | `codex/prepack-rc-b-canonical-pack-artifact-20260716` / `/Users/li/Documents/truzhenv3worktree/prepack-rc-b-canonical-pack-artifact-20260716-packs` | F10 P0-5/P1-1：打包器 fail-closed 校验 contracts canonical manifest 及嵌套软件 / Provider 声明；五个 Pack 产出可被 Cloud 原样接纳的 ZIP。 | 2026-07-16 | 🟡 已接线；单测与五个真实 ZIP 跨仓内容门已绿，待全仓门禁与独立验收。 |
+| `codex/g4-wc-receivable-pack-packs-20260902` / `/Users/remote/Documents/truzhen-worktrees/packs/g4-wc-receivable-pack-20260902` | G4/G5 W-C 应收管理 Pack（Domain Work Pack `receivable-management-pack-v0`）：六声明 manifest、催办流程（advice→communication→human_approval）、person_strategy 同构家政/备份荚、中性话术知识域；只声明不执行，无真实数据。 | 2026-09-02 | 🟡 设计已定，制作中 |
 
 ## 0.0 双 Pack v16 单项目完整 lifecycle 派活卡
 
