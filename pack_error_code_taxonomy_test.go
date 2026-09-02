@@ -35,6 +35,7 @@ var packRoots = []string{
 	"content-operations-workbench-v0",
 	"environmental-enforcement-pack-v0",
 	"housekeeping-ops-pack-v0",
+	"project-watch-pack-v0",
 	"smart-home-owner-pack-v0",
 	"shuxuejia-renovation-pack-v0",
 }
