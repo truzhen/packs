@@ -9,11 +9,11 @@
 | --- | --- | --- |
 | gitleaks lock 重钉 | `security/hygiene-tool.lock.json` 的 gitleaks sha256 重钉为官方 8.30.1 darwin_arm64 二进制（Owner 2026-09-02 裁定）。 | 验收=`bash scripts/hygiene-gate.sh doctor` PASS；本仓既有 scanner self-test 缺陷 #hygiene-selftest 另登记，不作本次合并门。 |
 
-## 0.-6 G4 窗口 C 项目关注 Pack 在途登记（2026-09-02）
+## 0.-6 G4 窗口 C 项目关注 Pack 合并登记（2026-09-02 合入 main 1c03155）
 
 | 分支 / worktree | 做什么 | 负责会话 | 开工 | 状态 |
 | --- | --- | --- | --- | --- |
-| `codex/g4-wc-project-watch-pack-20260902` / `/Users/remote/Documents/truzhen-worktrees/packs/g4-wc-project-watch-pack-20260902` | 新增 `project-watch-pack-v0` 场景荚全部声明文件（manifest / flow / role-slots / 2 角色包 / capabilities / knowledge / install / uninstall / 离线契约测试 / README），并向 `pack_forbidden_artifacts_test.go` assetRoots、`pack_error_code_taxonomy_test.go` packRoots 与 formalUninstallers 追加本包。阈值判定全部在 truzhenos 05 只读投影，Pack 只以 `policy_ref: project_watch_policy://default` 引用，不写任何条件分支；ProviderRequirement 全部未接通，诚实 `provider_missing / not_ready / blocked`。 | 窗口 C remote-da | 2026-09-02 | 🟡 `设计中`；只有离线契约测试与仓级门禁证据，未跑隔离 devserver 端到端装入 / 启用 / SceneFlowRun，未合并 |
+| `codex/g4-wc-project-watch-pack-20260902` / `/Users/remote/Documents/truzhen-worktrees/packs/g4-wc-project-watch-pack-20260902` | 新增 `project-watch-pack-v0` 场景荚全部声明文件（manifest / flow / role-slots / 2 角色包 / capabilities / knowledge / install / uninstall / 离线契约测试 / README），并向 `pack_forbidden_artifacts_test.go` assetRoots、`pack_error_code_taxonomy_test.go` packRoots 与 formalUninstallers 追加本包。阈值判定全部在 truzhenos 05 只读投影，Pack 只以 `policy_ref: project_watch_policy://default` 引用，不写任何条件分支；ProviderRequirement 全部未接通，诚实 `provider_missing / not_ready / blocked`。 | 窗口 C remote-da | 2026-09-02 | ✅ 已合并 2026-09-02（main `1c03155`，Owner 窗口 C 原生确认）。验收证据：verifier fresh GO_WITH_NOTES（2026-09-02，两仓分支）；packs 全套门禁绿（go test / JSON / 19 项契约测试 / 三份 Python 守卫 / 结构审计 / checksum / hygiene doctor PASS gitleaks 8.30.1）；os 侧隔离 E2E（装入 frozen pending→canonical enable→SceneFlowRun→ProjectAnomalyCandidate）在 truzhenos 分支 `codex/g4-wc-project-watch-os-20260902` 跑通，os 批待合，合入前本包 `lifecycle_status` 维持「设计中」不升级 |
 
 ## 0.-4 Truzhen v4 发布前第六批收口（2026-07-29）
 
