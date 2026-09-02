@@ -25,6 +25,7 @@
       "title": "生成催办草稿（中性事实性话术，经沟通网关策略裁剪）",
       "gateway": "communication_gateway",
       "candidate_type": "CommunicationDraftCandidate",
+      "policy_ref": "communication_policy://receivable/dunning",
       "dangerous_permissions": [
         "external_message_send"
       ],
