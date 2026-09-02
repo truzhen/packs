@@ -85,6 +85,12 @@ class ProjectWatchPackContractTest(unittest.TestCase):
             self.assertEqual(node.get("candidate_type"), base, node_id)
             self.assertEqual(node.get("domain_candidate_type"), domain, node_id)
 
+    def test_anomaly_scan_declares_readmodel_ref_for_os_dispatch(self):
+        # os 侧执行期以 readmodel_ref 键分发到项目异常读模型；capability_ref 单独保留，
+        # 用于装入时 ProviderRequirement 精确匹配，两者不互相替代。
+        self.assertEqual(self.nodes["anomaly_scan"].get("readmodel_ref"),
+                         "readmodel://business-object/project-anomalies")
+
     def test_anomaly_item_is_idempotent_on_anomaly_key(self):
         self.assertEqual(self.nodes["anomaly_item_candidate"].get("idempotency_key_source"), "anomaly_key")
 
@@ -112,11 +118,34 @@ class ProjectWatchPackContractTest(unittest.TestCase):
         self.assertEqual(self.nodes["challenger_review"].get("slot_ref"), "exception_challenger")
 
     def test_gm_handoff_is_declaration_only(self):
-        node = self.nodes["gm_handoff"]
-        self.assertTrue(node["declaration_only"])
-        self.assertEqual(node["department"], "project")
-        self.assertEqual(node["topic"], "project_watch")
-        self.assertEqual(node["fallback_policy"], "not_ready")
+        # GM 汇入约定是 manifest 级声明，不是 flow 节点：06 引擎的 nodeinfo 闭集
+        # 没有 integration.* 类型，写成 flow 节点会 UNKNOWN_STUDIO_NODE_TYPE /
+        # NODE_NOT_EXPORTABLE（即使标 declaration_only）。
+        self.assertNotIn("gm_handoff", self.nodes)
+        gm_handoff = self.manifest["gm_handoff"]
+        self.assertTrue(gm_handoff["declaration_only"])
+        self.assertEqual(gm_handoff["department"], "project")
+        self.assertEqual(gm_handoff["topic"], "project_watch")
+        self.assertEqual(gm_handoff["fallback_policy"], "not_ready")
+        self.assertEqual(gm_handoff["dedupe_key_pattern"],
+                         "project:<kind>:<project_external_id>:<as_of>")
+
+    # ---- 06 引擎装入前置：唯一起点、闭集类型、边端点齐全 ----------------------
+    def test_flow_has_exactly_one_start_node_leading_to_snapshot_refresh(self):
+        start_nodes = [node for node in self.flow["nodes"] if node.get("type") == "input.user_need"]
+        self.assertEqual(len(start_nodes), 1, "06 引擎要求恰有一个 input.user_need 起点")
+        start_id = start_nodes[0]["id"]
+        self.assertEqual(self.edges[(start_id, "snapshot_refresh")]["source"], start_id)
+
+    def test_flow_has_no_integration_node_types(self):
+        for node_id, node in self.nodes.items():
+            self.assertFalse(str(node.get("type", "")).startswith("integration."),
+                             "节点 %s 的 type 属于 06 nodeinfo 闭集之外的 integration.*" % node_id)
+
+    def test_all_edges_reference_existing_nodes(self):
+        for edge in self.flow["edges"]:
+            self.assertIn(edge["source"], self.nodes, "边 %s 的 source 不存在" % edge["id"])
+            self.assertIn(edge["target"], self.nodes, "边 %s 的 target 不存在" % edge["id"])
 
     # ---- manifest ↔ capabilities 逐条对齐 -----------------------------------
     def test_manifest_and_capabilities_requirements_align_one_by_one(self):

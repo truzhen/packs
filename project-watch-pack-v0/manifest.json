@@ -179,6 +179,15 @@
       "receipt_ledger"
     ]
   },
+  "gm_handoff": {
+    "department": "project",
+    "topic": "project_watch",
+    "dedupe_key_pattern": "project:<kind>:<project_external_id>:<as_of>",
+    "priority_hint": "high",
+    "fallback_policy": "not_ready",
+    "declaration_only": true,
+    "note": "GM 候选汇入由 truzhenos 侧 sink 按异常逐条 fan-out；本 Pack 只声明，不作 flow 节点（06 nodeinfo 闭集无 integration 类型）"
+  },
   "multi_role_comparison": {
     "summary": "显式两节点对照：project_watcher 以 advice 节点汇总项目关注候选，exception_challenger 以 challenge 节点逐条质询异常事项候选，对照结果与分歧一并呈给 Owner 裁定；禁止 runtime 内隐藏 agent 回路。",
     "explicit_nodes": [

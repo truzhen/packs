@@ -11,6 +11,11 @@
   "candidate_type_note": "candidate_type 一律取 AGENTS.md §4.2 的 8 个候选基类；domain_candidate_type 只是领域特化命名，不新增候选种类，映射表见 README.md。",
   "nodes": [
     {
+      "id": "project_watch_intake",
+      "type": "input.user_need",
+      "title": "项目关注巡检发起（Owner/GM 触发）"
+    },
+    {
       "id": "snapshot_refresh",
       "type": "capability.invoke",
       "title": "按需刷新项目外部快照",
@@ -25,6 +30,7 @@
       "type": "capability.invoke",
       "title": "读取 05 项目异常清单只读投影",
       "capability_ref": "project_anomaly_readmodel",
+      "readmodel_ref": "readmodel://business-object/project-anomalies",
       "candidate_type": "CapabilityInvocationCandidate",
       "read_model": true,
       "read_model_ref": "GET /v3/business-object/project-anomalies",
@@ -142,26 +148,17 @@
       "note": "回执由 os-03 Receipt Ledger 真实写入；Pack 不自铸 receipt 引用，回执失败即动作失败。"
     },
     {
-      "id": "gm_handoff",
-      "type": "integration.candidate_handoff",
-      "title": "候选汇入 GM 队列（仅声明）",
-      "declaration_only": true,
-      "department": "project",
-      "topic": "project_watch",
-      "intake_port": "businessruntime.CandidateIntake.Submit",
-      "intake_endpoint": "POST /v3/business-runtime/candidates/intake",
-      "dedupe_key_source": "project:<kind>:<project_external_id>:<as_of>",
-      "priority_hint": "high",
-      "fallback_policy": "not_ready",
-      "note": "下游 GM 汇入契约（窗口 D 定稿 v1）：本 Pack 只声明送入队列的部门 / 主题 / 去重键口径，不实现汇入、不 stub 冒充 queued；GM 端口未接通时诚实 not_ready。receipt_candidate 引用只许 receipt_candidate:// 前缀，任何带正式回执 / decision / run_id / nonce 的字段一律被 GM 侧拒收。"
-    },
-    {
       "id": "done",
       "type": "flow.end",
       "title": "本轮项目关注收口"
     }
   ],
   "edges": [
+    {
+      "id": "e0",
+      "source": "project_watch_intake",
+      "target": "snapshot_refresh"
+    },
     {
       "id": "e1",
       "source": "snapshot_refresh",
@@ -233,12 +230,6 @@
       "id": "e14",
       "source": "project_watch_receipt",
       "target": "done"
-    },
-    {
-      "id": "e15",
-      "source": "anomaly_item_candidate",
-      "target": "gm_handoff",
-      "condition": "declaration_only"
     }
   ]
 }

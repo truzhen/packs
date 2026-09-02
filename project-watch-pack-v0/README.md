@@ -24,7 +24,7 @@
 | # | 部分 | 本 Pack 状态 | 说明 |
 | --- | --- | --- | --- |
 | 1 | 工作模式集 | **部分实现** | 只有「项目关注」一个工作模式（一条 flow）；无多工作区切换。 |
-| 2 | 事务流程 | **已实现（声明层）** | `flows/project-watch.flow.json` 14 节点 15 边，候选 → 质询 → Owner/Base 门 → Gateway → Receipt 全链声明齐备；运行解释归基座。 |
+| 2 | 事务流程 | **已实现（声明层）** | `flows/project-watch.flow.json` 14 节点 15 边，以 `project_watch_intake`（`input.user_need`，06 引擎要求的唯一起点）发起，候选 → 质询 → Owner/Base 门 → Gateway → Receipt 全链声明齐备；运行解释归基座。 |
 | 3 | 业务对象与领域语义 | **部分实现** | 异常事项候选以 `BusinessObjectCandidate` 基类声明，幂等键取读模型的 `anomaly_key`，字段口径 100% 回推自 05 读模型响应，**不在 Pack 层自建对象真相、不照抄 smart-home 的 `project_*` 字段**。规则语义与默认阈值落在 `knowledge/`，`pending_human_review`。术语表（glossary）为 **backlog**——缺真实客户样本，不宣称语义完整。 |
 | 4 | 能力引用 | **已实现（声明层）** | 5 条 ProviderRequirement，`manifest.provider_requirements` 与 `capabilities/capabilities.json` 逐条同源，全部标注 L1–L6 执行级别与 `runtime_requirement`；均未接通，诚实 `provider_missing / not_ready / blocked`。 |
 | 5 | 角色引用 | **已实现（声明层）** | 两槽两包：`project_watcher`(advice) + `exception_challenger`(challenge)，全员 Proposer，`proposer_only` 写进角色包决策风格。 |
@@ -34,7 +34,7 @@
 
 - `material_watch` 节点：v1 只承接读模型输出的 Task 类异常，**不做任何物料判定**（`backlog: true` + `backlog_reason` 写在节点上，设计稿 D4）。真正的物料口径待真实客户证据后另立。
 - 跟进任务写回 ERPNext：本卡只出 `ExecutionIntentCandidate`，写回通路不接，`fallback_policy: blocked`。
-- GM 队列汇入：只声明契约（见第五节），不实现、不 stub。
+- GM 队列汇入：manifest 级声明契约（见第五节），不进 flow、不实现、不 stub。
 - 阈值策略的写路径（setting 端点 + 03 回执）归 05 侧另一批，本 Pack 只读默认策略。
 
 ## 三、领域候选名 → 8 个候选基类映射
@@ -43,8 +43,9 @@ Pack 只能声明 `AGENTS.md` §4.2 的 8 个候选基类。下表左列是 flow
 
 | flow 节点 | 领域候选名 | 8 基类（`candidate_type`） |
 | --- | --- | --- |
+| `project_watch_intake` | —— | ——（`input.user_need` 起点，06 引擎强制要求，不铸候选） |
 | `snapshot_refresh` | —— | `CapabilityInvocationCandidate` |
-| `anomaly_scan` | —— | `CapabilityInvocationCandidate` |
+| `anomaly_scan` | —— | `CapabilityInvocationCandidate`（另带顶层 `readmodel_ref: "readmodel://business-object/project-anomalies"`，os 执行期据此分发到项目异常读模型；`capability_ref` 单独保留供装入期 ProviderRequirement 精确匹配） |
 | `progress_watch` | `ProjectWatchTaskCandidate`（项目关注候选） | `TaskCandidate` |
 | `material_watch` | `ProjectMaterialWatchCandidate`（backlog） | `BusinessObjectCandidate` |
 | `payment_watch` | `ProjectPaymentWatchCandidate` | `TaskCandidate` |
@@ -68,15 +69,14 @@ Pack 只能声明 `AGENTS.md` §4.2 的 8 个候选基类。下表左列是 flow
 
 L6 = 本 Pack 不声明任何自动发送 / 执行手，送达与处置由 Owner 手动兜底。`software_requirements` 显式为空数组（附 `software_requirements_note` 说明理由），本 Pack 不引入任何新的底层软件本体。
 
-## 五、GM 汇入约定（只声明）
+## 五、GM 汇入约定（manifest 级声明，非 flow 节点）
 
-`gm_handoff` 节点按窗口 D 定稿 v1 声明候选汇入 GM 队列的口径，**本 Pack 不实现汇入**：
+GM 候选汇入口径落在 `manifest.json` 顶层 `gm_handoff` 段，**不是 flow 节点**：06 引擎的 nodeinfo 闭集（`truzhenos backend/internal/packstudio/nodeinfo/nodeinfo.go`）没有 `integration.*` 类型，`integration.candidate_handoff` 会触发 `UNKNOWN_STUDIO_NODE_TYPE`，标 `declaration_only` 也仍会被判 `NODE_NOT_EXPORTABLE`；因此本 Pack 把 GM 汇入约定改为**纯声明**，不进 flow：
 
 - 队列定位：`department: "project"`、`topic: "project_watch"`。
-- 端口 / 端点：`businessruntime.CandidateIntake.Submit` / `POST /v3/business-runtime/candidates/intake`。
-- 去重键：`project:<kind>:<project_external_id>:<as_of>`，与读模型的 `anomaly_key` 同源。
-- `priority_hint: high`；`object_refs` 取 Project 外部链接引用，`evidence_refs` 取读模型 evidence。
-- GM 端口未接通时诚实 `not_ready`，不 stub 冒充 queued。任何带正式回执 / decision / run_id / nonce 的字段会被 GM 侧拒收。
+- 去重键：`dedupe_key_pattern: "project:<kind>:<project_external_id>:<as_of>"`，与读模型的 `anomaly_key` 同源。
+- `priority_hint: "high"`；`fallback_policy: "not_ready"`；`declaration_only: true`。
+- **本 Pack 不实现汇入、不 stub 冒充 queued**：SceneFlow 每次 run 产 1 条 `ProjectAnomalyCandidate`（`payload` 含 `anomalies[]` 明细），GM 汇入由 truzhenos 侧 sink 按异常逐条 fan-out，端口未接通时诚实 `not_ready`。任何带正式回执 / decision / run_id / nonce 的字段会被 GM 侧拒收。
 
 ## 六、知识域
 
