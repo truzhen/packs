@@ -142,7 +142,7 @@ func TestPackAssetsDoNotCarryBusinessDataFormalRefsOrRawSecrets(t *testing.T) {
 func TestPackGlueDoesNotMintOwnerActionEvidence(t *testing.T) {
 	formalUninstallers := map[string]struct{}{
 		"housekeeping-ops-pack-v0/uninstall.py":     {},
-		"project-watch-pack-v0/uninstall.py":       {},
+		"project-watch-pack-v0/uninstall.py":        {},
 		"shuxuejia-renovation-pack-v0/uninstall.py": {},
 	}
 	installers, err := filepath.Glob("*-v0/install.py")
