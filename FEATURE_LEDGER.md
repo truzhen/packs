@@ -15,6 +15,12 @@
 | --- | --- | --- | --- | --- |
 | `codex/g4-wc-project-watch-pack-20260902` / `/Users/remote/Documents/truzhen-worktrees/packs/g4-wc-project-watch-pack-20260902` | 新增 `project-watch-pack-v0` 场景荚全部声明文件（manifest / flow / role-slots / 2 角色包 / capabilities / knowledge / install / uninstall / 离线契约测试 / README），并向 `pack_forbidden_artifacts_test.go` assetRoots、`pack_error_code_taxonomy_test.go` packRoots 与 formalUninstallers 追加本包。阈值判定全部在 truzhenos 05 只读投影，Pack 只以 `policy_ref: project_watch_policy://default` 引用，不写任何条件分支；ProviderRequirement 全部未接通，诚实 `provider_missing / not_ready / blocked`。 | 窗口 C remote-da | 2026-09-02 | ✅ 已合并 2026-09-02（main `1c03155`，Owner 窗口 C 原生确认）。验收证据：verifier fresh GO_WITH_NOTES（2026-09-02，两仓分支）；packs 全套门禁绿（go test / JSON / 19 项契约测试 / 三份 Python 守卫 / 结构审计 / checksum / hygiene doctor PASS gitleaks 8.30.1）；os 侧隔离 E2E（装入 frozen pending→canonical enable→SceneFlowRun→ProjectAnomalyCandidate）在 truzhenos 分支 `codex/g4-wc-project-watch-os-20260902` 跑通，os 批待合，合入前本包 `lifecycle_status` 维持「设计中」不升级 |
 
+## 0.-7 G4 窗口 B 应收管理 Pack 合并登记（2026-09-03 合入 main 036921a）
+
+| 分支 / worktree | 做什么 | 负责会话 | 开工 | 状态 |
+| --- | --- | --- | --- | --- |
+| `codex/g4-wc-receivable-pack-packs-20260902` / `/Users/remote/Documents/truzhen-worktrees/packs/g4-wc-receivable-pack-20260902` | 新增 `receivable-management-pack-v0` 场景荚全部声明文件（六声明 manifest / flow：task→advice→communication→human_approval / role-slots / 角色包 / capabilities 只引用 04 既有 `accounting.*` 与 `truzhen.communication.draft` / knowledge：中性话术模板 ID、三类禁用词、催办 SOP 与 os `dunningpolicy` 逐字对齐 / install / uninstall / README / 设计说明），`dunning_draft` 节点以一等字段 `policy_ref: communication_policy://receivable/dunning` 绑定 os 侧催办运行时；向 `pack_forbidden_artifacts_test.go` assetRoots、仓根 README/MODULES/AGENTS §10 追加本包。话术正文真相在 truzhenos `communicationgateway/dunningpolicy`（§9.5 硬编码：[09:00,18:00) 客户时区 / 7 日 ≤2 次 / 白名单模板 / 三类禁用词一票否决），Pack 只引用 ID。 | 窗口 B remote-3b | 2026-09-02 | ✅ 已合并 2026-09-03（main `036921a`，Owner 窗口 B 原生确认）。验收证据：verifier fresh GO_WITH_NOTES（2026-09-02，两仓分支）；packs 全套门禁绿（结构审计 / JSON / checksum 4 荚 / unittest 25 / go test / hygiene doctor PASS gitleaks 8.30.1 / 密钥形态与 gorm.Open 字面量零命中）；os 侧正门 fresh 隔离 E2E 三用例（/v3/scene-flow/specs→draft→readiness→promote→唯一 confirm 口→SceneFlowRun→CommunicationDraftCandidate 落既有候选表；无绑定阻断；频次触顶阻断）在 truzhenos 分支 `codex/g4-wc-receivable-pack-os-20260902`（2463dacd）跑通，os 批在门房集成批 #3 待合；合入前本包 `lifecycle_status` 维持「设计中」。Owner 同批裁定默认值：逾期基准日=ERPNext `due_date`（缺失回退 `posting_date` 并行级标 `due_basis`）、催办频次上限 2 次/7 日。已知缺口：`install.py` 尚未接错误码常量与 issued binding（`packRoots`/`PACKS` 列表未加），后续正门装入波补齐。 |
+
 ## 0.-4 Truzhen v4 发布前第六批收口（2026-07-29）
 
 | 目标 | 结果与边界 | 生命周期 / 证据 |
@@ -78,7 +84,6 @@
 | 分支 / worktree | 做什么 | 开工 | 状态 |
 | --- | --- | --- | --- |
 | `codex/prepack-rc-b-canonical-pack-artifact-20260716` / `/Users/li/Documents/truzhenv3worktree/prepack-rc-b-canonical-pack-artifact-20260716-packs` | F10 P0-5/P1-1：打包器 fail-closed 校验 contracts canonical manifest 及嵌套软件 / Provider 声明；五个 Pack 产出可被 Cloud 原样接纳的 ZIP。 | 2026-07-16 | 🟡 已接线；单测与五个真实 ZIP 跨仓内容门已绿，待全仓门禁与独立验收。 |
-| `codex/g4-wc-receivable-pack-packs-20260902` / `/Users/remote/Documents/truzhen-worktrees/packs/g4-wc-receivable-pack-20260902` | G4/G5 W-C 应收管理 Pack（Domain Work Pack `receivable-management-pack-v0`）：六声明 manifest、催办流程（advice→communication→human_approval）、person_strategy 同构家政/备份荚、中性话术知识域；只声明不执行，无真实数据。 | 2026-09-02 | 🟡 已制作、结构审计/校验链全绿、verifier GO_WITH_NOTES；待 os 主批合入与 Owner 原生确认 |
 
 ## 0.0 双 Pack v16 单项目完整 lifecycle 派活卡
 
