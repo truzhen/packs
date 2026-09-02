@@ -1,0 +1,57 @@
+{
+  "capabilities_required": [
+    {
+      "capability_ref": "accounting.get_receivable_summary",
+      "purpose": "读取应收汇总（按客户/币种的未收与逾期金额、账龄分桶），只读",
+      "gateway": "capability",
+      "side_effect_class": "read_only",
+      "required_gate": "base_gate"
+    },
+    {
+      "capability_ref": "accounting.list_invoices",
+      "purpose": "按客户/币种/账期列出应收单据（单据号、到期日、未收金额），只读",
+      "gateway": "capability",
+      "side_effect_class": "read_only",
+      "required_gate": "base_gate"
+    },
+    {
+      "capability_ref": "truzhen.communication.draft",
+      "purpose": "拟催办消息草稿（中性事实性模板，不直接发送）",
+      "gateway": "communication",
+      "required_gate": "base_send_gate"
+    }
+  ],
+  "provider_requirements": [
+    {
+      "requirement_id": "receivable_snapshot_readonly",
+      "capability": "accounting.get_receivable_summary",
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked",
+      "provider_family": "frappe",
+      "description": "应收事实来源 = Frappe / ERPNext Sales Invoice 只读快照（docstatus=1）；只读取、不写回。快照缺失或 Provider 未接通时诚实 blocked，不得用 fixture、模板或估算冒充账龄事实。"
+    },
+    {
+      "requirement_id": "receivable_invoice_list_readonly",
+      "capability": "accounting.list_invoices",
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked",
+      "provider_family": "frappe",
+      "description": "按客户 / 币种 / 账期列出应收单据的只读查询；同一 Sales Invoice 只读快照来源，缺失即 blocked。"
+    },
+    {
+      "requirement_id": "dunning_message_draft_channel",
+      "capability": "truzhen.communication.draft",
+      "gateway_class": "communication",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "not_ready",
+      "provider_family": "external_communication_hands",
+      "description": "催办消息 1:1 会话草稿通道；Pack 不实现通道、不发送。未接通时 not_ready，发送仍须 Owner + Base Gate。"
+    }
+  ],
+  "note": "能力经 04 能力中心解析 + invoke 产 CapabilityInvocationCandidate；本荚只引用 04 目录既有条目（accounting 域只读条目 + 既有沟通草稿能力域），不新造能力 id、不实现 provider。provider 未接通时诚实 blocked / not_ready，不假成功。provider_requirements 经 Registry→Gateway→Base 绑定，与 manifest 顶层 provider_requirements 同源。"
+}

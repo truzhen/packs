@@ -1,0 +1,39 @@
+{
+  "scene_ref": "scene://receivable-management",
+  "count": 3,
+  "entries": [
+    {
+      "file": "knowledge/dunning/dunning-sop.md",
+      "source_ref": "source://receivable/dunning/dunning-sop",
+      "title": "催办作业口径 SOP（时段 / 频次 / 默认态）",
+      "kind": "sop",
+      "knowledge_scope_ref": "knowledge_scope://receivable/dunning",
+      "scene_ref": "scene://receivable-management",
+      "authority": "reference_only",
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:aaaeb3a40a14e0da69b5b5f00706e91437f17e9e6b4a86eb9b2abe7fa01eb311"
+    },
+    {
+      "file": "knowledge/dunning/neutral-dunning-templates.md",
+      "source_ref": "source://receivable/dunning/neutral-dunning-templates",
+      "title": "中性事实性催办话术模板集",
+      "kind": "sop",
+      "knowledge_scope_ref": "knowledge_scope://receivable/dunning",
+      "scene_ref": "scene://receivable-management",
+      "authority": "reference_only",
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:6e6093f2312f161f0e7401097ba0a24246edd523e3d41a20faca9d1c8b02e72b"
+    },
+    {
+      "file": "knowledge/dunning/forbidden-phrases.md",
+      "source_ref": "source://receivable/dunning/forbidden-phrases",
+      "title": "催办禁用词表（一票否决）",
+      "kind": "checklist",
+      "knowledge_scope_ref": "knowledge_scope://receivable/dunning",
+      "scene_ref": "scene://receivable-management",
+      "authority": "reference_only",
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:f8eaeb90a45a8ff73a3a5a4965acd65653c5083a6f9e5f5792b3f8f18443d3a0"
+    }
+  ]
+}

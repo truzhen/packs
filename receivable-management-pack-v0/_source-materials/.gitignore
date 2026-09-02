@@ -1,0 +1,6 @@
+# Owner 投放的原始应收/合同/对账权威资料区（PDF/Word/导出表/链接清单等）。
+# 原始资料不进 Git（体积 + 版权 + 真实客户数据 + forbidden_artifacts），只留本 .gitignore 与 README 占位。
+# 据此整理出的结构化、脱敏、合成化内容才写进 pack 的 knowledge/ 目录（那部分进 Git）。
+*
+!.gitignore
+!README.md

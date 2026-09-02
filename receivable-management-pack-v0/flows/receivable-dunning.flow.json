@@ -1,0 +1,70 @@
+{
+  "flow_id": "receivable-dunning",
+  "title": "应收账龄巡检与催办候选链",
+  "version": "1.0.0",
+  "nodes": [
+    { "id": "start", "type": "start", "title": "开始：发起应收账龄巡检" },
+    {
+      "id": "aging_inspection",
+      "type": "task",
+      "title": "账龄巡检（只读账龄快照，产逾期跟进任务候选）",
+      "gateway": "task_governance",
+      "candidate_type": "TaskCandidate"
+    },
+    {
+      "id": "advisor_advice",
+      "type": "advice",
+      "title": "应收顾问出催办优先级与话术建议",
+      "gateway": "model",
+      "slot_ref": "receivable_advisor",
+      "candidate_type": "AdviceCandidate"
+    },
+    {
+      "id": "dunning_draft",
+      "type": "communication",
+      "title": "生成催办草稿（中性事实性话术，经沟通网关策略裁剪）",
+      "gateway": "communication_gateway",
+      "candidate_type": "CommunicationDraftCandidate",
+      "policy_ref": "communication_policy://receivable/dunning",
+      "dangerous_permissions": [
+        "external_message_send"
+      ],
+      "gate_policy": {
+        "required_gate": "base_send_gate",
+        "pending_owner_confirmation": true
+      },
+      "params": {
+        "policy_source": "os_communication_gateway_dunning_policy",
+        "channel_hint": "one_to_one",
+        "template_allowlist_scope_ref": "knowledge_scope://receivable/dunning",
+        "blocked_outcomes": [
+          "blocked_out_of_working_hours",
+          "blocked_frequency_cap",
+          "blocked_frequency_unknown",
+          "blocked_template_not_allowlisted",
+          "vetoed_forbidden_phrase"
+        ],
+        "formalization_forbidden": true
+      }
+    },
+    {
+      "id": "owner_approval",
+      "type": "human_approval",
+      "title": "Owner 裁定催办发送（目标/内容/影响/run_id/nonce 五要素）",
+      "gate_policy": {
+        "required_gate": "sovereign_gate",
+        "pending_owner_confirmation": true
+      }
+    },
+    { "id": "end", "type": "end", "title": "结束：本轮催办候选链归档（发送与回执由 Owner 确认后的受控链路产出）" },
+    { "id": "close_rejected", "type": "end", "title": "退回归档：Owner 打回催办草稿，事务以退回终态归档，零下游真实动作" }
+  ],
+  "edges": [
+    { "id": "e1", "source": "start", "target": "aging_inspection" },
+    { "id": "e2", "source": "aging_inspection", "target": "advisor_advice" },
+    { "id": "e3", "source": "advisor_advice", "target": "dunning_draft" },
+    { "id": "e4", "source": "dunning_draft", "target": "owner_approval" },
+    { "id": "e5", "source": "owner_approval", "target": "end", "condition": "approved" },
+    { "id": "e5r", "source": "owner_approval", "target": "close_rejected", "condition": "rejected" }
+  ]
+}
