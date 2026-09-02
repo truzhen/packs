@@ -3,6 +3,12 @@
 > 本文件记录 `/Users/li/Documents/truzhen-packs` 当前“已经有什么、体量多大、还缺什么”。
 > 它是本仓 Pack 资产进度账本，不是运行态事实源；正式启用、回执、知识挂载和执行结果归基座 Owner + Base + Gateway + Receipt 链路。
 
+## 0.-5 治理 gitleaks lock 重钉（2026-09-02）
+
+| 目标 | 结果与边界 | 生命周期 / 证据 |
+| --- | --- | --- |
+| gitleaks lock 重钉 | `security/hygiene-tool.lock.json` 的 gitleaks sha256 重钉为官方 8.30.1 darwin_arm64 二进制（Owner 2026-09-02 裁定）。 | 验收=`bash scripts/hygiene-gate.sh doctor` PASS；本仓既有 scanner self-test 缺陷 #hygiene-selftest 另登记，不作本次合并门。 |
+
 ## 0.-4 Truzhen v4 发布前第六批收口（2026-07-29）
 
 | 目标 | 结果与边界 | 生命周期 / 证据 |
