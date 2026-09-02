@@ -1,0 +1,17 @@
+{
+  "scene_ref": "scene://project-watch",
+  "count": 1,
+  "entries": [
+    {
+      "file": "knowledge/anomaly-rules/01_project_anomaly_rules.md",
+      "source_ref": "source://project-watch/01_project_anomaly_rules",
+      "title": "项目异常三条规则与分级说明",
+      "kind": "sop",
+      "knowledge_scope_ref": "knowledge_scope://project-watch/anomaly-rules",
+      "scene_ref": "scene://project-watch",
+      "authority": "reference_only",
+      "verification_status": "pending_human_review",
+      "checksum": "sha256:915f901c12f0adc1f1c08b9b0dc30040fc6e99d8478ff9c0e605acb69a75d9d8"
+    }
+  ]
+}

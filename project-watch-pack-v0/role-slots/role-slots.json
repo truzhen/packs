@@ -1,0 +1,34 @@
+{
+  "role_slots": [
+    {
+      "slot_id": "project_watcher",
+      "responsibility": "把 05 项目异常清单汇总为每项目一条的项目关注候选，并标注证据与缺口。（Proposer）",
+      "required_role": "项目关注负责人",
+      "default_role_pack_ref": "role_pack://project-watcher",
+      "slice_scope_policy": "transaction_scoped_project_watch",
+      "node_type": "advice"
+    },
+    {
+      "slot_id": "exception_challenger",
+      "responsibility": "对每条异常事项候选做质询对照：观察点、阈值触发、影响判断、处置候选、Owner 门。（Proposer）",
+      "required_role": "异常质询复核人",
+      "default_role_pack_ref": "role_pack://exception-challenger",
+      "slice_scope_policy": "transaction_scoped_project_watch",
+      "node_type": "challenge"
+    }
+  ],
+  "bindings": [
+    {
+      "slot_id": "project_watcher",
+      "agent_ref": "role_pack://project-watcher",
+      "role_pack_id": "role_pack://project-watcher",
+      "required_role": "项目关注负责人"
+    },
+    {
+      "slot_id": "exception_challenger",
+      "agent_ref": "role_pack://exception-challenger",
+      "role_pack_id": "role_pack://exception-challenger",
+      "required_role": "异常质询复核人"
+    }
+  ]
+}

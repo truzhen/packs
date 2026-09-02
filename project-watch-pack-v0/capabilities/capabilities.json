@@ -1,0 +1,92 @@
+{
+  "capabilities_required": [
+    {
+      "capability_ref": "project_external_snapshot",
+      "purpose": "按需刷新 Project / Task / Sales Invoice 的外部快照，只读",
+      "gateway": "execution",
+      "required_gate": "base_gate"
+    },
+    {
+      "capability_ref": "project_anomaly_readmodel",
+      "purpose": "读取 05 项目异常清单只读投影（延期 / 停滞 / 付款节点逾期），阈值判定在读模型内",
+      "gateway": "memory",
+      "required_gate": "base_gate"
+    },
+    {
+      "capability_ref": "project_followup_task_write_candidate",
+      "purpose": "为异常项目生成跟进任务写回候选（本版本只出意图候选，不接写回）",
+      "gateway": "execution",
+      "required_gate": "base_execution_gate"
+    },
+    {
+      "capability_ref": "truzhen.communication.draft",
+      "purpose": "拟异常通报草稿（不直接发送）",
+      "gateway": "communication",
+      "required_gate": "base_send_gate"
+    },
+    {
+      "capability_ref": "truzhen.execution.intent",
+      "purpose": "异常处置执行意图（受控，不直接执行）",
+      "gateway": "execution",
+      "required_gate": "base_execution_gate"
+    }
+  ],
+  "provider_requirements": [
+    {
+      "requirement_id": "frappe_project_snapshot",
+      "capability": "project_external_snapshot",
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "fallback_policy": "provider_missing",
+      "provider_family": "frappe",
+      "execution_level": "L1",
+      "runtime_requirement": "local_preferred",
+      "description": "经既有 ExternalLink 快照通路按需读取 ERPNext 的 Project / Task / Sales Invoice 快照，只读；真相源是 ERPNext 外部系统，05 只持快照。Provider 未接通时诚实返回 provider_missing，不用旧快照冒充新鲜数据。执行级别 L1 = ERPNext 官方 API 通路。"
+    },
+    {
+      "requirement_id": "req_project_anomaly_readmodel",
+      "capability": "project_anomaly_readmodel",
+      "gateway_class": "memory",
+      "risk_class": "low",
+      "fallback_policy": "not_ready",
+      "provider_family": "readmodel",
+      "description": "消费 truzhenos 05 的 GET /v3/business-object/project-anomalies 只读投影：延期 / 停滞 / 付款节点逾期三类异常、分级、按项目或负责人汇总，响应恒带 policy_applied 与 as_of 以便复现。阈值判定与分级全部在读模型内，Pack 只以 policy_ref: project_watch_policy://default 引用策略，不写任何条件分支。读模型不是真相源；零快照或读模型未落时诚实 not_ready，不用空清单冒充「无异常」。执行级别 L1 = 本机 os-05 官方 /v3 只读 API，不是外部执行手。",
+      "execution_level": "L1",
+      "runtime_requirement": "local_required"
+    },
+    {
+      "requirement_id": "frappe_project_followup_task_write_candidate",
+      "capability": "project_followup_task_write_candidate",
+      "gateway_class": "execution",
+      "risk_class": "medium",
+      "fallback_policy": "blocked",
+      "provider_family": "frappe",
+      "execution_level": "L1",
+      "runtime_requirement": "local_preferred",
+      "description": "把异常处置映射为 04 能力目录的 project.create_task_candidate 跟进任务写回候选。本版本只产出 ExecutionIntentCandidate，写回通路本卡不接，因此 fallback_policy 固定 blocked；真实写回必须经 Owner + Base Gate、Execution Gateway 与 Receipt。执行级别 L1 = ERPNext 官方 API 通路（未接通）。"
+    },
+    {
+      "requirement_id": "project_watch_notice_draft",
+      "capability": "truzhen.communication.draft",
+      "gateway_class": "communication",
+      "risk_class": "high",
+      "fallback_policy": "not_ready",
+      "provider_family": "communication-gateway",
+      "execution_level": "L6",
+      "runtime_requirement": "local_required",
+      "description": "为异常项目拟对内 / 对外通报草稿，只产草稿不发送；发送必须经 Owner + Base 发送门与 Communication Gateway，未接通时诚实 not_ready。执行级别 L6 = 本 Pack 不声明任何自动发送手，送达由 Owner 手动兜底。"
+    },
+    {
+      "requirement_id": "project_watch_followup_execution_intent",
+      "capability": "truzhen.execution.intent",
+      "gateway_class": "execution",
+      "risk_class": "high",
+      "fallback_policy": "not_ready",
+      "provider_family": "execution-gateway",
+      "execution_level": "L6",
+      "runtime_requirement": "local_required",
+      "description": "异常处置执行意图候选（受控，不直接执行）；真实执行经 Owner + Base 执行门与 Execution Gateway 并产 Receipt，未接通时诚实 not_ready。执行级别 L6 = 本 Pack 不声明自动执行手，处置由 Owner 手动兜底。"
+    }
+  ],
+  "note": "本文件的 provider_requirements 与 manifest.json 顶层 provider_requirements 逐条同源（同 5 条、同 requirement_id / capability / gateway_class / risk_class / fallback_policy / provider_family / execution_level / runtime_requirement），manifest 侧另带 binding，本文件侧另带 description。能力经 04 能力中心解析 + invoke 产 CapabilityInvocationCandidate；Pack 不实现任何 Provider，也不直连 ERPNext、读模型以外的任何外部系统。"
+}

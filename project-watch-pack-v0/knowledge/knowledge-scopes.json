@@ -1,0 +1,18 @@
+{
+  "scene_ref": "scene://project-watch",
+  "default_mount_policy": "mount_on_pack_enable",
+  "scopes": [
+    {
+      "scope_ref": "knowledge_scope://project-watch/anomaly-rules",
+      "display_name": "项目异常规则与分级知识域",
+      "scene_ref": "scene://project-watch",
+      "mount_policy": "mount_on_pack_enable",
+      "required": true,
+      "knowledge_kinds": [
+        "sop",
+        "checklist"
+      ],
+      "source_dir": "knowledge/anomaly-rules"
+    }
+  ]
+}

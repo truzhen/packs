@@ -1,0 +1,222 @@
+{
+  "pack_id": "project-watch-pack-v0",
+  "pack_ref": "scene_pack://project-watch",
+  "version": "0.1.0",
+  "kind": "scene_pack",
+  "pack_type": "domain_work_pack",
+  "manifest_version": "v3",
+  "min_truzhen_version": "3.0.0",
+  "lifecycle_status": "设计中",
+  "name": "项目关注 Pack",
+  "template_family": "长周期项目交付型",
+  "description": "面向长周期项目交付的「项目关注」场景荚：读 truzhenos 05 的项目异常清单只读投影（延期 / 停滞 / 付款节点逾期三类），产出项目关注候选与异常事项候选，经质询角色对照、Owner + Base Gate、受控 Gateway 与 Receipt。阈值判定全部在 05 读模型内，本 Pack 只以 policy_ref 引用策略，不写任何条件分支；真相源是 ERPNext 外部系统，05 只持快照与投影。",
+  "author": "Truzhen Pack Studio",
+  "target_industry": "长周期项目交付 / 智能家居 / 装修工程 / 工程服务",
+  "target_audience": "项目交付负责人、项目经理、老板本人（Owner）",
+  "flow_spec_ref": "scene_flow_spec:project-watch-flow@0.1.0",
+  "flow_file": "flows/project-watch.flow.json",
+  "role_slots_file": "role-slots/role-slots.json",
+  "capabilities_file": "capabilities/capabilities.json",
+  "knowledge_scopes_manifest": "knowledge/knowledge-scopes.json",
+  "knowledge_index": "knowledge/knowledge-index.json",
+  "knowledge_scopes": [
+    "knowledge_scope://project-watch/anomaly-rules"
+  ],
+  "threshold_policy_ref": "project_watch_policy://default",
+  "read_model_refs": [
+    "GET /v3/business-object/project-anomalies"
+  ],
+  "security_profile": {
+    "candidate_only": true,
+    "non_formal": true,
+    "requires_base_gate": true,
+    "requires_receipt_candidate": true,
+    "default_provider_mode": "disabled",
+    "no_real_send": true,
+    "no_real_execute": true,
+    "no_real_model_call": false,
+    "isolated_namespace": "project_watch_ns"
+  },
+  "role_slots": [
+    {
+      "slot_id": "project_watcher",
+      "responsibility": "把 05 项目异常清单汇总为每项目一条的项目关注候选，并标注证据与缺口。（Proposer）",
+      "node_type": "advice",
+      "default_role_pack_ref": "role_pack://project-watcher"
+    },
+    {
+      "slot_id": "exception_challenger",
+      "responsibility": "对每条异常事项候选做质询对照：观察点、阈值触发、影响判断、处置候选、Owner 门。（Proposer）",
+      "node_type": "challenge",
+      "default_role_pack_ref": "role_pack://exception-challenger"
+    }
+  ],
+  "capabilities_required": [
+    "project_external_snapshot",
+    "project_anomaly_readmodel",
+    "project_followup_task_write_candidate",
+    "truzhen.communication.draft",
+    "truzhen.execution.intent"
+  ],
+  "required_capabilities": [],
+  "gates": {
+    "project_gate": "project_watch_gate",
+    "state_transition_gate": "base_gate",
+    "notice_send_gate": "base_send_gate",
+    "followup_execution_gate": "base_execution_gate",
+    "formal_memory_gate": "base_memory_gate"
+  },
+  "gate_flags": [
+    "anomaly_escalate_confirm",
+    "followup_task_write_confirm",
+    "owner_notice_send_confirm",
+    "formal_memory_confirm"
+  ],
+  "receipt_policy": {
+    "ledger_group": "project_watch",
+    "append_only": true,
+    "requires_witness": true
+  },
+  "person_strategy": {
+    "summary": "判人策略：project_watcher 与 exception_challenger 均为 Proposer，只能产出项目关注候选、异常事项候选、质询意见、通报草稿与处置意图候选。异常升级、跟进任务写回、对外通报发送、正式记忆写入一律回 Owner + Base Gate 裁定；本 Pack 不做任何阈值判定，阈值语义在 truzhenos 05 读模型。",
+    "proposer_roles": [
+      "project_watcher",
+      "exception_challenger"
+    ],
+    "high_risk_actions_return_to_owner": [
+      "anomaly_escalate_confirm",
+      "followup_task_write_confirm",
+      "owner_notice_send_confirm",
+      "formal_memory_confirm"
+    ],
+    "delegation_allowed": false
+  },
+  "formalization_requirement": {
+    "summary": "判事策略：项目关注候选、异常事项候选、质询证据、通报草稿与跟进执行意图全部是 Candidate；正式任务、外部写回、对外发送与正式记忆必须经 Owner 主权确认、Base Gate、受控 Gateway 与可反查 Receipt。读模型不是真相源，候选不是正式记录；真相源是 ERPNext 外部系统，05 只持快照与投影。",
+    "formalizes": [
+      "FormalTask",
+      "ProjectAnomalyRecord",
+      "CommunicationSend",
+      "FollowupTaskWrite",
+      "FormalMemory",
+      "FormalReceipt"
+    ],
+    "decided_by": "owner_plus_base_gate"
+  },
+  "provider_requirements": [
+    {
+      "requirement_id": "frappe_project_snapshot",
+      "capability": "project_external_snapshot",
+      "gateway_class": "execution",
+      "risk_class": "low",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "provider_missing",
+      "provider_family": "frappe",
+      "execution_level": "L1",
+      "runtime_requirement": "local_preferred"
+    },
+    {
+      "requirement_id": "req_project_anomaly_readmodel",
+      "capability": "project_anomaly_readmodel",
+      "gateway_class": "memory",
+      "risk_class": "low",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "not_ready",
+      "provider_family": "readmodel",
+      "execution_level": "L1",
+      "runtime_requirement": "local_required"
+    },
+    {
+      "requirement_id": "frappe_project_followup_task_write_candidate",
+      "capability": "project_followup_task_write_candidate",
+      "gateway_class": "execution",
+      "risk_class": "medium",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "blocked",
+      "provider_family": "frappe",
+      "execution_level": "L1",
+      "runtime_requirement": "local_preferred"
+    },
+    {
+      "requirement_id": "project_watch_notice_draft",
+      "capability": "truzhen.communication.draft",
+      "gateway_class": "communication",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "not_ready",
+      "provider_family": "communication-gateway",
+      "execution_level": "L6",
+      "runtime_requirement": "local_required"
+    },
+    {
+      "requirement_id": "project_watch_followup_execution_intent",
+      "capability": "truzhen.execution.intent",
+      "gateway_class": "execution",
+      "risk_class": "high",
+      "binding": "registry_to_gateway_to_base",
+      "fallback_policy": "not_ready",
+      "provider_family": "execution-gateway",
+      "execution_level": "L6",
+      "runtime_requirement": "local_required"
+    }
+  ],
+  "software_requirements": [],
+  "software_requirements_note": "本 Pack 不引入任何新的底层软件本体：项目异常清单来自 truzhenos 05 对既有 ExternalLink 快照的只读投影，快照通路复用既有 frappe/ERPNext ProviderRequirement（由已装该 Provider 的 Pack 或 Owner 自行提供），本 Pack 不声明 frappe 运行时的版本范围、复用或隔离策略，故 software_requirements 显式为空数组而非省略。",
+  "notification_command_report_routes": {
+    "notification": [
+      "owner_project_watch_inbox",
+      "project_watch_timeline"
+    ],
+    "command_candidate": [
+      "anomaly_escalate_confirm",
+      "followup_task_write_confirm",
+      "owner_notice_send_confirm",
+      "formal_memory_confirm"
+    ],
+    "report": [
+      "project_anomaly_list",
+      "project_watch_timeline",
+      "receipt_ledger"
+    ]
+  },
+  "multi_role_comparison": {
+    "summary": "显式两节点对照：project_watcher 以 advice 节点汇总项目关注候选，exception_challenger 以 challenge 节点逐条质询异常事项候选，对照结果与分歧一并呈给 Owner 裁定；禁止 runtime 内隐藏 agent 回路。",
+    "explicit_nodes": [
+      "project_watcher/advice",
+      "exception_challenger/challenge"
+    ],
+    "hidden_agent_loops_forbidden": true
+  },
+  "moat_justification": {
+    "question": "用户能否一句话让最强模型直接做出同样结果？",
+    "passes_moat": true,
+    "valid_reasons": [
+      "real_system_integration",
+      "auditable_evidence_receipt",
+      "multi_role_compare_sovereign",
+      "transaction_lifecycle_replay"
+    ],
+    "rationale": "项目关注要求：真实 ERPNext 快照通路、05 层可复现的确定性异常投影（带 as_of、policy_applied、snapshot_hash、stale 标记）、异常候选按 anomaly_key 幂等、质询角色显式对照、Owner + Base Gate 与可反查 Receipt。一句话模型只能给一段文字判断，既无外部快照、也无证据可反查、更无幂等与回放。"
+  },
+  "ui_surface_slots": [
+    "pod",
+    "object",
+    "capsule",
+    "candidate",
+    "execution",
+    "receipt",
+    "setting"
+  ],
+  "forbidden_artifacts": [
+    "node_modules",
+    "dist",
+    "build",
+    ".vite",
+    "*.db",
+    "*.sqlite",
+    "*.log",
+    "*.jsonl",
+    "__pycache__",
+    "*.pyc"
+  ]
+}

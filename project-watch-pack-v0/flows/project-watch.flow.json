@@ -1,0 +1,244 @@
+{
+  "flow_id": "project-watch-flow",
+  "title": "项目关注：外部快照 → 异常投影 → 候选 → 质询 → Owner 门 → 回执",
+  "version": "0.1.0",
+  "threshold_policy": {
+    "policy_ref": "project_watch_policy://default",
+    "evaluated_by": "truzhenos 05 project-anomaly 只读投影（GET /v3/business-object/project-anomalies）",
+    "pack_declares_no_conditions": true,
+    "note": "阈值（delay_days / stall_days / payment_overdue_days / payment_critical_days / max_snapshot_age_hours / responsible_key）与分级判定全部在 05 读模型内。本 flow 只引用 policy_ref，不写任何条件表达式、阈值数值或分支判定。"
+  },
+  "candidate_type_note": "candidate_type 一律取 AGENTS.md §4.2 的 8 个候选基类；domain_candidate_type 只是领域特化命名，不新增候选种类，映射表见 README.md。",
+  "nodes": [
+    {
+      "id": "snapshot_refresh",
+      "type": "capability.invoke",
+      "title": "按需刷新项目外部快照",
+      "capability_ref": "project_external_snapshot",
+      "candidate_type": "CapabilityInvocationCandidate",
+      "read_only": true,
+      "truth_source": "ERPNext（外部）；05 只持快照",
+      "fallback_policy": "provider_missing"
+    },
+    {
+      "id": "anomaly_scan",
+      "type": "capability.invoke",
+      "title": "读取 05 项目异常清单只读投影",
+      "capability_ref": "project_anomaly_readmodel",
+      "candidate_type": "CapabilityInvocationCandidate",
+      "read_model": true,
+      "read_model_ref": "GET /v3/business-object/project-anomalies",
+      "policy_ref": "project_watch_policy://default",
+      "read_only": true,
+      "fallback_policy": "not_ready",
+      "note": "只读投影，不是真相源；零快照返回 not_ready，快照过期带 stale 标记。本节点不做任何阈值判定。"
+    },
+    {
+      "id": "progress_watch",
+      "type": "flow.stage_task_candidate",
+      "title": "进度关注候选（承接 delayed / stalled 异常）",
+      "candidate_type": "TaskCandidate",
+      "domain_candidate_type": "ProjectWatchTaskCandidate",
+      "slot_ref": "project_watcher",
+      "anomaly_kinds": [
+        "delayed",
+        "stalled"
+      ],
+      "aggregation": "每项目一条"
+    },
+    {
+      "id": "material_watch",
+      "type": "flow.stage_task_candidate",
+      "title": "物料关注候选（v1 仅承接 Task 类异常）",
+      "candidate_type": "BusinessObjectCandidate",
+      "domain_candidate_type": "ProjectMaterialWatchCandidate",
+      "slot_ref": "project_watcher",
+      "backlog": true,
+      "backlog_reason": "v1 只承接 05 读模型输出的 Task 类异常（stalled 的关联 Task 维度），不做任何物料字段判定，也不照抄 smart-home 的物料 schema；真正的物料口径待真实客户证据后另立（设计稿 D4）。",
+      "anomaly_kinds": [
+        "stalled"
+      ]
+    },
+    {
+      "id": "payment_watch",
+      "type": "flow.stage_task_candidate",
+      "title": "付款节点关注候选（承接 payment_overdue 异常）",
+      "candidate_type": "TaskCandidate",
+      "domain_candidate_type": "ProjectPaymentWatchCandidate",
+      "slot_ref": "project_watcher",
+      "anomaly_kinds": [
+        "payment_overdue"
+      ]
+    },
+    {
+      "id": "anomaly_item_candidate",
+      "type": "object.business_schema",
+      "title": "异常事项候选（每条异常一条）",
+      "candidate_type": "BusinessObjectCandidate",
+      "domain_candidate_type": "ProjectAnomalyCandidate",
+      "idempotency_key_source": "anomaly_key",
+      "evidence_fields": [
+        "link_ref",
+        "snapshot_hash",
+        "snapshot_version",
+        "as_of",
+        "policy_applied"
+      ],
+      "note": "anomaly_key 由 05 读模型确定性生成（kind + link_ref，不含时间戳）；同 anomaly_key + 同 snapshot_hash 不重复铸候选。"
+    },
+    {
+      "id": "challenger_review",
+      "type": "collaboration.challenge",
+      "title": "异常质询与验收证据对照",
+      "slot_ref": "exception_challenger",
+      "candidate_type": "BusinessObjectCandidate",
+      "domain_candidate_type": "AcceptanceEvidenceCandidate",
+      "challenge_structure": "观察点 → 阈值触发 → 影响判断 → 处置候选 → Owner 门"
+    },
+    {
+      "id": "owner_notice_draft",
+      "type": "gateway.communication_draft",
+      "title": "异常通报草稿候选",
+      "candidate_type": "CommunicationDraftCandidate",
+      "capability_ref": "truzhen.communication.draft",
+      "no_real_send": true
+    },
+    {
+      "id": "followup_intent",
+      "type": "capability.invoke",
+      "title": "跟进任务写回 / 处置执行意图候选",
+      "candidate_type": "ExecutionIntentCandidate",
+      "capability_ref": "project_followup_task_write_candidate",
+      "maps_to_capability_catalog": "04 project.create_task_candidate",
+      "fallback_policy": "blocked",
+      "note": "本版本只出执行意图候选，Frappe 写回通路本卡不接。"
+    },
+    {
+      "id": "owner_gate",
+      "type": "policy.gate_config",
+      "title": "Owner/Base 项目关注确认门",
+      "gate_policy": {
+        "required_gate": "project_watch_gate",
+        "pending_owner_confirmation": true
+      },
+      "gate_flags": [
+        "anomaly_escalate_confirm",
+        "followup_task_write_confirm",
+        "owner_notice_send_confirm",
+        "formal_memory_confirm"
+      ]
+    },
+    {
+      "id": "gateway_execution",
+      "type": "gateway.execution_intent",
+      "title": "受控 Gateway 执行（经 Owner 确认后）",
+      "candidate_type": "CapabilityInvocationCandidate",
+      "fallback_policy": "not_ready"
+    },
+    {
+      "id": "project_watch_receipt",
+      "type": "receipt.link",
+      "title": "项目关注回执归档",
+      "note": "回执由 os-03 Receipt Ledger 真实写入；Pack 不自铸 receipt 引用，回执失败即动作失败。"
+    },
+    {
+      "id": "gm_handoff",
+      "type": "integration.candidate_handoff",
+      "title": "候选汇入 GM 队列（仅声明）",
+      "declaration_only": true,
+      "department": "project",
+      "topic": "project_watch",
+      "intake_port": "businessruntime.CandidateIntake.Submit",
+      "intake_endpoint": "POST /v3/business-runtime/candidates/intake",
+      "dedupe_key_source": "project:<kind>:<project_external_id>:<as_of>",
+      "priority_hint": "high",
+      "fallback_policy": "not_ready",
+      "note": "下游 GM 汇入契约（窗口 D 定稿 v1）：本 Pack 只声明送入队列的部门 / 主题 / 去重键口径，不实现汇入、不 stub 冒充 queued；GM 端口未接通时诚实 not_ready。receipt_candidate 引用只许 receipt_candidate:// 前缀，任何带正式回执 / decision / run_id / nonce 的字段一律被 GM 侧拒收。"
+    },
+    {
+      "id": "done",
+      "type": "flow.end",
+      "title": "本轮项目关注收口"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "snapshot_refresh",
+      "target": "anomaly_scan"
+    },
+    {
+      "id": "e2",
+      "source": "anomaly_scan",
+      "target": "progress_watch"
+    },
+    {
+      "id": "e3",
+      "source": "anomaly_scan",
+      "target": "material_watch",
+      "condition": "backlog_task_class_only"
+    },
+    {
+      "id": "e4",
+      "source": "anomaly_scan",
+      "target": "payment_watch"
+    },
+    {
+      "id": "e5",
+      "source": "progress_watch",
+      "target": "anomaly_item_candidate"
+    },
+    {
+      "id": "e6",
+      "source": "material_watch",
+      "target": "anomaly_item_candidate"
+    },
+    {
+      "id": "e7",
+      "source": "payment_watch",
+      "target": "anomaly_item_candidate"
+    },
+    {
+      "id": "e8",
+      "source": "anomaly_item_candidate",
+      "target": "challenger_review"
+    },
+    {
+      "id": "e9",
+      "source": "challenger_review",
+      "target": "owner_notice_draft"
+    },
+    {
+      "id": "e10",
+      "source": "owner_notice_draft",
+      "target": "followup_intent"
+    },
+    {
+      "id": "e11",
+      "source": "followup_intent",
+      "target": "owner_gate"
+    },
+    {
+      "id": "e12",
+      "source": "owner_gate",
+      "target": "gateway_execution",
+      "condition": "approved"
+    },
+    {
+      "id": "e13",
+      "source": "gateway_execution",
+      "target": "project_watch_receipt"
+    },
+    {
+      "id": "e14",
+      "source": "project_watch_receipt",
+      "target": "done"
+    },
+    {
+      "id": "e15",
+      "source": "anomaly_item_candidate",
+      "target": "gm_handoff",
+      "condition": "declaration_only"
+    }
+  ]
+}
