@@ -22,7 +22,7 @@
       "scene_ref": "scene://receivable-management",
       "authority": "reference_only",
       "verification_status": "pending_human_review",
-      "checksum": "sha256:911cfc1ed807ebad26e1f3a64a86053be47fee223e431426971f4326af90281e"
+      "checksum": "sha256:6e6093f2312f161f0e7401097ba0a24246edd523e3d41a20faca9d1c8b02e72b"
     },
     {
       "file": "knowledge/dunning/forbidden-phrases.md",
@@ -33,7 +33,7 @@
       "scene_ref": "scene://receivable-management",
       "authority": "reference_only",
       "verification_status": "pending_human_review",
-      "checksum": "sha256:3e198d2ec208a558af1188e5451721feda356e111406b3f672e39290c5f5fd9f"
+      "checksum": "sha256:f8eaeb90a45a8ff73a3a5a4965acd65653c5083a6f9e5f5792b3f8f18443d3a0"
     }
   ]
 }
