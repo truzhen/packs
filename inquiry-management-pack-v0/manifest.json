@@ -8,7 +8,7 @@
   "lifecycle_status": "设计中",
   "manifest_version": "v3",
   "name": "询盘管理 Pack（零售客户线索到报价）",
-  "template_family": "线索到报价客户获取型",
+  "template_family": "长周期项目交付型",
   "author": "Truzhen Pack Studio",
   "target_industry": "零售装修 / 家装家居 / 渠道分销型零售服务",
   "target_audience": "零售获客负责人、询盘经理、渠道对接人",
@@ -55,21 +55,31 @@
       "owner_party_kind",
       "owner_party_ref",
       "need_summary",
-      "triage",
-      "quotation_party_policy"
+      "triage"
     ],
     "inquiry_source_enum": [
       "channel",
       "direct"
     ],
     "retail_party_semantics": "渠道（设计师 / 工长 / 异业）与业主都是外部 ERP 的客户对象：渠道 = 线索与商机来源，业主 = 服务主体，业主记录链接来源渠道。",
-    "quotation_party_policy": {
-      "default": "owner_party",
-      "configurable": [
-        "owner_party",
-        "channel"
+    "quotation_to_rule": {
+      "quotation_to": "service_party",
+      "summary": "报价单一律发给服务主体（业主），业主付费；无可配置策略。",
+      "resolution": [
+        {
+          "owner_party_kind": "lead",
+          "quotation_to": "lead",
+          "party_name_source": "业主线索"
+        },
+        {
+          "owner_party_kind": "customer",
+          "quotation_to": "customer",
+          "party_name_source": "业主客户"
+        }
       ],
-      "owner_ruling_pending": "Owner 第 15 条未裁定前，channel 策略只可声明不可默认启用；README 已诚实标注。"
+      "channel_party_forbidden": true,
+      "channel_party_note": "来源渠道客户不得作为 quotation_to 或 party_name；渠道只是线索与商机来源，链接挂在业主记录上。",
+      "owner_ruling": "Owner 第 15 条已裁 2026-09-02：报价单发给业主、业主付费。本策略写死，不提供可配置项。"
     },
     "opportunity_doctype_dependency": false,
     "triage_carrier": "分诊结果由外部线索状态 + 询盘 payload.triage 承载，第一版不依赖独立商机对象类型。",

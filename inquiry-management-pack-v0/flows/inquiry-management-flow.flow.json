@@ -24,8 +24,7 @@
         "owner_party_kind",
         "owner_party_ref",
         "need_summary",
-        "triage",
-        "quotation_party_policy"
+        "triage"
       ],
       "truth_note": "对象真相在外部 ERP 线索；本节点只产候选，不在 Pack 层建立第二份客户或线索主数据。"
     },
@@ -80,6 +79,7 @@
       "type": "collaboration.advice",
       "title": "询盘经理事实澄清与下一步建议",
       "slot_ref": "inquiry_manager",
+      "candidate_type": "AdviceCandidate",
       "produces": "proposer_advice_only",
       "formal_authority": "none",
       "advice_note": "角色只提出建议与待确认项，本身不产生正式记录；建议汇入下游分诊候选由 Owner 裁定。"
@@ -116,7 +116,7 @@
       "model_gateway_candidate_type": "DocumentDraft",
       "draft_generation_gateway": "model_gateway",
       "send_gateway": "communication_gateway",
-      "draft_note": "草稿正文必须由模型网关真实生成并带 usage 回执，不得用模板串或节点标题冒充模型输出；本节点只出草稿，不发送。"
+      "draft_note": "草稿正文必须由模型网关真实生成并带 usage 回执，不得用模板串或节点标题冒充模型输出；本节点只出草稿，真实发送在 Owner 门后由 10 沟通网关执行，不在 flow 内建节点。"
     },
     {
       "id": "owner_gate_send",
@@ -126,15 +126,11 @@
         "required_gate": "base_send_gate",
         "gate_flag": "followup_send_confirm",
         "pending_owner_confirmation": true
+      },
+      "params": {
+        "send_execution_note": "Owner 确认后由 10 ControlledExternalSend 执行真实发送并落 03 回执；本 flow 不自带发送节点（制作台词表未注册发送类节点，扩词表属跨仓治理动作）。",
+        "send_scope": "单目标单条；不可观察即 blocked，不得返回 sent。群发额度与催办话术不属本 Pack。"
       }
-    },
-    {
-      "id": "gateway_send",
-      "type": "gateway.communication_send",
-      "title": "受控跟进发送",
-      "candidate_type": "CapabilityInvocationCandidate",
-      "capability_ref": "truzhen.communication.draft",
-      "send_note": "单目标单条发送；不可观察即 blocked，不得返回 sent。群发额度与催办话术不属本 Pack。"
     },
     {
       "id": "followup_receipt",
@@ -166,13 +162,24 @@
       "report_route": {
         "topic": "quotation_followup"
       },
-      "quotation_party_policy": {
-        "default": "owner_party",
-        "configurable": [
-          "owner_party",
-          "channel"
+      "quotation_to_rule": {
+        "quotation_to": "service_party",
+        "summary": "报价单一律发给服务主体（业主），业主付费；无可配置策略。",
+        "resolution": [
+          {
+            "owner_party_kind": "lead",
+            "quotation_to": "lead",
+            "party_name_source": "业主线索"
+          },
+          {
+            "owner_party_kind": "customer",
+            "quotation_to": "customer",
+            "party_name_source": "业主客户"
+          }
         ],
-        "owner_ruling_pending": "Owner 第 15 条未裁定前 channel 策略不得默认启用。"
+        "channel_party_forbidden": true,
+        "channel_party_note": "来源渠道客户不得作为 quotation_to 或 party_name；渠道只是线索与商机来源。",
+        "owner_ruling": "Owner 第 15 条已裁 2026-09-02：报价单发给业主、业主付费。"
       }
     },
     {
@@ -289,47 +296,42 @@
     {
       "id": "e12",
       "source": "owner_gate_send",
-      "target": "gateway_send",
+      "target": "followup_receipt",
       "condition": "approved"
     },
     {
       "id": "e13",
-      "source": "gateway_send",
-      "target": "followup_receipt"
-    },
-    {
-      "id": "e14",
       "source": "followup_receipt",
       "target": "quotation_history_read"
     },
     {
-      "id": "e15",
+      "id": "e14",
       "source": "quotation_history_read",
       "target": "quotation_candidate"
     },
     {
-      "id": "e16",
+      "id": "e15",
       "source": "quotation_candidate",
       "target": "owner_gate_quotation"
     },
     {
-      "id": "e17",
+      "id": "e16",
       "source": "owner_gate_quotation",
       "target": "gateway_execution",
       "condition": "approved"
     },
     {
-      "id": "e18",
+      "id": "e17",
       "source": "gateway_execution",
       "target": "quotation_snapshot_read"
     },
     {
-      "id": "e19",
+      "id": "e18",
       "source": "quotation_snapshot_read",
       "target": "receipt"
     },
     {
-      "id": "e20",
+      "id": "e19",
       "source": "receipt",
       "target": "handoff_to_project"
     }

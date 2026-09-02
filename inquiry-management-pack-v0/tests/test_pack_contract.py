@@ -25,6 +25,30 @@ CANDIDATE_WHITELIST = {
     "PackCandidate",
 }
 
+# 唯一例外：AdviceCandidate 是 contracts 实有类型（truzhen-contracts
+# candidates/advice.go，带 cited_knowledge_refs），属基座 06 collaboration.advice
+# 节点的产出语义，不是 Pack 自行「生成」的候选，故只允许出现在 advice 节点上。
+ADVICE_NODE_CANDIDATE = "AdviceCandidate"
+ADVICE_NODE_TYPES = {"collaboration.advice", "collaboration.challenge", "collaboration.compare_gate"}
+
+# 14 制作台词表（truzhenos backend/internal/packstudio/nodeinfo/nodeinfo.go 固定注册）。
+# 未注册的 type 在 convertCanvasDraftToSceneFlowSpec 会失败；扩词表属跨仓治理动作。
+REGISTERED_NODE_TYPES = {
+    "capability.invoke", "collaboration.advice", "collaboration.challenge",
+    "collaboration.compare_gate", "draft.spec_document", "flow.end",
+    "flow.stage_task_candidate", "gateway.communication_draft", "gateway.execution_intent",
+    "input.user_need", "judgment.ai", "judgment.rule", "object.business_schema",
+    "policy.gate_config", "receipt.link", "simulation.futureshadow", "wait.contact_confirm",
+}
+
+# truzhenos backend/internal/packstudio/softwareproject/template_family.go 的 12 族目录，
+# 由 template_family_matrix_test.go 钉死；Pack 不得自造族名。
+REGISTERED_TEMPLATE_FAMILIES = {
+    "长周期项目交付型", "平台撮合运营型", "工单服务履约型", "关系经营推进型",
+    "合规审查执法证据链型", "内容生产流水线型", "资产库存供应链型", "长期照护长期陪跑型",
+    "软件数字产品交付型", "文书审批办文办会型", "交易合同账款履约型", "经营财务管理会计型",
+}
+
 # 厂商词只允许出现在 manifest 的 provider_family / software_family 值里。
 VENDOR_WORDS = ("frappe", "erpnext", "odoo", "salesforce", "kingdee", "baserow")
 VENDOR_ALLOWED_KEYS = {"provider_family", "software_family"}
@@ -146,8 +170,31 @@ class InquiryManagementPackContractTest(unittest.TestCase):
         for node in self.flow["nodes"]:
             if "candidate_type" not in node:
                 continue
-            self.assertIn(node["candidate_type"], CANDIDATE_WHITELIST,
-                          "%s 使用了白名单外的候选类型 %s" % (node["id"], node["candidate_type"]))
+            candidate_type = node["candidate_type"]
+            if candidate_type == ADVICE_NODE_CANDIDATE:
+                self.assertIn(node["type"], ADVICE_NODE_TYPES,
+                              "AdviceCandidate 只允许出现在 06 collaboration.* 节点：%s" % node["id"])
+                continue
+            self.assertIn(candidate_type, CANDIDATE_WHITELIST,
+                          "%s 使用了白名单外的候选类型 %s" % (node["id"], candidate_type))
+
+    def test_advice_candidate_is_the_only_exception_and_only_on_advice_nodes(self):
+        extras = {node["candidate_type"] for node in self.flow["nodes"]
+                  if node.get("candidate_type") and node["candidate_type"] not in CANDIDATE_WHITELIST}
+        self.assertEqual(extras, {ADVICE_NODE_CANDIDATE},
+                         "八类白名单之外只允许 AdviceCandidate 一个例外（contracts candidates/advice.go）")
+        carriers = {node["id"] for node in self.flow["nodes"]
+                    if node.get("candidate_type") == ADVICE_NODE_CANDIDATE}
+        self.assertEqual(carriers, {"inquiry_manager_advice"})
+
+    def test_node_types_are_registered_in_pack_studio_vocabulary(self):
+        used = {node["type"] for node in self.flow["nodes"]}
+        self.assertTrue(used <= REGISTERED_NODE_TYPES,
+                        "使用了 14 制作台未注册的节点词：%s" % sorted(used - REGISTERED_NODE_TYPES))
+
+    def test_template_family_is_from_the_registered_catalog(self):
+        self.assertIn(self.manifest["template_family"], REGISTERED_TEMPLATE_FAMILIES,
+                      "template_family 必须取自 12 族固定目录，不得自造")
 
     def test_four_business_candidates_use_the_ruled_types(self):
         self.assertEqual(self.nodes["inquiry_object_candidate"]["candidate_type"], "BusinessObjectCandidate")
@@ -158,6 +205,15 @@ class InquiryManagementPackContractTest(unittest.TestCase):
         self.assertEqual(self.nodes["followup_draft"]["candidate_type"], "CommunicationDraftCandidate")
         self.assertEqual(self.nodes["quotation_candidate"]["candidate_type"], "ExecutionIntentCandidate")
         self.assertEqual(self.nodes["quotation_candidate"]["report_route"], {"topic": "quotation_followup"})
+
+    def test_real_send_is_delegated_to_communication_gateway_not_a_flow_node(self):
+        types = {node["type"] for node in self.flow["nodes"]}
+        self.assertNotIn("gateway.communication_send", types,
+                         "制作台词表未注册发送类节点，不得自造")
+        params = self.nodes["owner_gate_send"]["params"]
+        self.assertIn("ControlledExternalSend", params["send_execution_note"])
+        self.assertIn("03", params["send_execution_note"])
+        self.assertIn("群发", params["send_scope"])
 
     def test_followup_draft_goes_through_model_gateway_as_document_draft(self):
         draft = self.nodes["followup_draft"]
@@ -170,7 +226,7 @@ class InquiryManagementPackContractTest(unittest.TestCase):
         self.assertEqual(advice["type"], "collaboration.advice")
         self.assertEqual(advice["slot_ref"], "inquiry_manager")
         self.assertEqual(advice["formal_authority"], "none")
-        self.assertNotIn("candidate_type", advice, "advice 节点不得自带白名单外的候选类型")
+        self.assertEqual(advice["candidate_type"], ADVICE_NODE_CANDIDATE)
 
     def test_owner_gate_then_gateway_then_receipt_is_explicit(self):
         for gate_id in ("owner_gate_inquiry_object", "owner_gate_triage", "owner_gate_send", "owner_gate_quotation"):
@@ -179,11 +235,10 @@ class InquiryManagementPackContractTest(unittest.TestCase):
             self.assertTrue(gate["gate_policy"]["pending_owner_confirmation"])
         for source, target in (("owner_gate_inquiry_object", "inquiry_pool_scan"),
                                ("owner_gate_triage", "followup_draft"),
-                               ("owner_gate_send", "gateway_send"),
+                               ("owner_gate_send", "followup_receipt"),
                                ("owner_gate_quotation", "gateway_execution")):
             self.assertEqual(self.edges[(source, target)].get("condition"), "approved",
                              "%s → %s 必须以 approved 为条件" % (source, target))
-        self.assertIn(("gateway_send", "followup_receipt"), self.edges)
         self.assertIn(("gateway_execution", "quotation_snapshot_read"), self.edges)
         self.assertIn(("quotation_snapshot_read", "receipt"), self.edges)
         self.assertIn(("receipt", "handoff_to_project"), self.edges)
@@ -212,16 +267,35 @@ class InquiryManagementPackContractTest(unittest.TestCase):
             if node.get("capability_operation", "").startswith(("customer.", "selling.get", "selling.list")):
                 self.assertTrue(node.get("read_only"), "%s 触碰外部真相源必须只读" % node["id"])
 
-    def test_inquiry_source_and_quotation_party_policy_follow_the_ruling(self):
+    def test_inquiry_source_and_quotation_to_follow_the_ruling(self):
         declaration = self.manifest["inquiry_object_declaration"]
         self.assertEqual(declaration["object_type"], "inquiry")
         self.assertEqual(declaration["inquiry_source_enum"], ["channel", "direct"])
-        policy = declaration["quotation_party_policy"]
-        self.assertEqual(policy["default"], "owner_party")
-        self.assertEqual(policy["configurable"], ["owner_party", "channel"])
-        self.assertIn("第 15 条", policy["owner_ruling_pending"], "待 Owner 第 15 条必须诚实标注")
         self.assertFalse(declaration["opportunity_doctype_dependency"],
                          "第一版不依赖独立商机对象类型")
+        self.assertNotIn("quotation_party_policy", declaration["declared_fields"],
+                         "Owner 第 15 条已裁：报价抬头不再是可配置的询盘声明字段")
+
+    def test_quotation_to_is_fixed_to_the_service_party(self):
+        """Owner 第 15 条已裁 2026-09-02：报价单发给业主、业主付费，无可配置策略。"""
+        for rule in (self.manifest["inquiry_object_declaration"]["quotation_to_rule"],
+                     self.nodes["quotation_candidate"]["quotation_to_rule"]):
+            self.assertEqual(rule["quotation_to"], "service_party")
+            self.assertTrue(rule["channel_party_forbidden"],
+                            "渠道客户不得作 quotation_to / party_name")
+            self.assertIn("第 15 条已裁", rule["owner_ruling"])
+            self.assertNotIn("configurable", rule, "第 15 条已裁，不得保留可配置策略")
+            resolution = {item["owner_party_kind"]: item["quotation_to"] for item in rule["resolution"]}
+            self.assertEqual(resolution, {"lead": "lead", "customer": "customer"},
+                             "业主为线索时 quotation_to=线索；业主已成客户时 quotation_to=业主客户")
+
+    def test_no_configurable_quotation_party_policy_remains(self):
+        for relative in ("manifest.json", "flows/inquiry-management-flow.flow.json",
+                         "capabilities/capabilities.json", "README.md", "docs/派活卡.md"):
+            raw = (PACK / relative).read_text(encoding="utf-8")
+            self.assertNotIn("quotation_party_policy", raw,
+                             "%s 仍残留已作废的可配置报价抬头策略" % relative)
+            self.assertNotIn("owner_ruling_pending", raw)
 
     def test_pack_boundary_stops_at_quotation_and_declares_handoff(self):
         self.assertEqual(self.manifest["chain_scope"]["in_scope_segments"],

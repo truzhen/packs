@@ -19,12 +19,12 @@ manifest 内部一律用厂商中立表述（`external_truth_source.authority = 
 | 真相源 | 外部 ERPNext 持 Lead / Quotation / Customer；Pack 只持受控快照 | `manifest.external_truth_source`、所有读节点 `read_only: true` |
 | 零售客户口径 | 渠道（设计师 / 工长 / 异业）与业主都是 ERPNext `Customer`；渠道 = 线索与商机来源，业主 = 服务主体，业主记录链接来源渠道 | `manifest.inquiry_object_declaration.retail_party_semantics`、flow `channel_customer_read` |
 | 询盘主锚 | 询盘主锚 = ERPNext `Lead`；`inquiry_source ∈ {channel, direct}` | `inquiry_object_declaration.primary_anchor` / `.inquiry_source_enum`、flow 边 `inquiry_source_channel` / `inquiry_source_direct` |
-| 报价抬头策略 | `quotation_party_policy` 默认 `owner_party`，可配置 `channel`——**待 Owner 第 15 条裁定，未裁定前 channel 不得默认启用** | `inquiry_object_declaration.quotation_party_policy`、flow `quotation_candidate.quotation_party_policy` |
+| 报价抬头（第 15 条） | **Owner 已裁 2026-09-02**：报价单发给业主、业主付费。`quotation_to` = 服务主体，写死无可配置项——业主仍是线索时 `quotation_to = lead`，业主已成客户时 `quotation_to = customer`；来源渠道客户**不得**作 `quotation_to` / `party_name` | `inquiry_object_declaration.quotation_to_rule`、flow `quotation_candidate.quotation_to_rule` |
 | Pack 边界 | 零售 CRM 七段链的段 1-4；「生成合同」是向项目关注 Pack 的交接点；回款 / 开票归应收 Pack | `manifest.chain_scope`、flow `handoff_to_project` |
 | 商机对象 | 第一版不依赖独立 Opportunity doctype；分诊结果由 Lead status + 询盘 `payload.triage` 承载 | `inquiry_object_declaration.opportunity_doctype_dependency = false`、flow `triage_candidate.triage_carrier` |
 | 能力命名（A-6） | `capabilities.json` 用声明层别名；真实读写在 flow 节点显式写 04 契约字段 `capability_domain` + `capability_operation` | `capabilities/capabilities.json` 的 `capability_bindings`、flow 六个能力节点 |
 | 候选类型 | 只用 AGENTS §4.2 白名单八类，全部 `candidate_only` / `non_formal` | `manifest.security_profile`、flow 各 `candidate_type` |
-| 不属本 Pack | 月 4 条企微群发上限与催办话术归私域运营 / 沟通 Pack | `chain_scope.handoff_out`、flow `gateway_send.send_note` |
+| 不属本 Pack | 月 4 条企微群发上限与催办话术归私域运营 / 沟通 Pack | `chain_scope.handoff_out`、flow `owner_gate_send.params.send_scope` |
 
 ## 能力落法（声明层别名 ↔ 04 契约字段）
 
@@ -37,7 +37,7 @@ manifest 内部一律用厂商中立表述（`external_truth_source.authority = 
 | `truzhen.external_snapshot.read` | `quotation_snapshot_read` | `selling` | `selling.get_quotation` |
 | `truzhen.capability.quote` | `quotation_candidate` / `gateway_execution` | `selling` | `selling.create_quotation_candidate` |
 | `truzhen.capability.inquiry_triage` | `triage_candidate` | —（分诊在基座侧，无外部 operation） | — |
-| `truzhen.communication.draft` | `followup_draft` / `gateway_send` | —（草稿经模型网关、发送经沟通网关） | — |
+| `truzhen.communication.draft` | `followup_draft` | —（草稿经 08 模型网关；真实发送在 Owner 门后由 10 沟通网关执行，flow 内不建发送节点） | — |
 
 `truzhen.capability.quote` 与 `truzhen.communication.draft` 沿用与家政荚同源的别名；`truzhen.capability.inquiry_triage` 与 `truzhen.external_snapshot.read` 为本 Pack 新增别名。
 
@@ -47,10 +47,12 @@ manifest 内部一律用厂商中立表述（`external_truth_source.authority = 
 |---|---|---|
 | 询盘对象化 | `BusinessObjectCandidate`（`object_type = inquiry`） | `inquiry_object_confirm` |
 | 价值分诊 | `TaskCandidate`（GM 汇入 `department=inquiry` / `topic=inquiry`） | `triage_confirm` |
-| 跟进候选 | `CommunicationDraftCandidate`（节点另标 `model_gateway_candidate_type = DocumentDraft`，草稿经 08 模型网关真实生成） | `followup_send_confirm` |
+| 跟进候选 | `CommunicationDraftCandidate`（节点另标 `model_gateway_candidate_type = DocumentDraft`，草稿经 08 模型网关真实生成；Owner 确认后由 10 ControlledExternalSend 执行真实发送并落 03 回执） | `followup_send_confirm` |
 | 报价候选 | `ExecutionIntentCandidate`（`topic=quotation_followup`） | `quotation_confirm` |
 
-四道门在 flow 中都是显式节点：`候选 → owner_gate_* → gateway_* → receipt`。`DocumentDraft` 是 08 模型网关侧的草稿类型名，与 §4.2 的候选八类不是同一命名空间，因此以独立字段承载，`candidate_type` 仍守白名单。
+四道门在 flow 中都是显式节点：`候选 → owner_gate_* → （网关）→ receipt`。`DocumentDraft` 是 08 模型网关侧的草稿类型名，与 §4.2 的候选八类不是同一命名空间，因此以独立字段承载，`candidate_type` 仍守白名单。
+
+节点词表全部取自 14 制作台固定注册表（truzhenos `backend/internal/packstudio/nodeinfo/nodeinfo.go`，17 个词），未注册的 type 在 `convertCanvasDraftToSceneFlowSpec` 会失败。因该表**没有发送类节点**，跟进链路收敛为 `followup_draft(gateway.communication_draft) → owner_gate_send → followup_receipt`：真实发送由 10 ControlledExternalSend 在 Owner 确认后执行并落 03 回执，本 flow 不自带发送节点（说明写在 `owner_gate_send.params`）。角色建议节点用 `AdviceCandidate`——它是 contracts 实有类型（`candidates/advice.go`，带 `cited_knowledge_refs`），属基座 06 `collaboration.advice` 节点的产出语义，不是 Pack 自行生成的第九类候选；测试把它锁成唯一例外且只允许挂在 `collaboration.*` 节点上。
 
 ## 完整垂直职业工作台六部分：覆盖 / 缺口（诚实表）
 
@@ -71,8 +73,8 @@ manifest 内部一律用厂商中立表述（`external_truth_source.authority = 
 
 ## 待 Owner 裁定
 
-1. **第 15 条：`quotation_party_policy`**——报价单抬头默认业主（`owner_party`）还是允许按渠道（`channel`）出具。当前实现：默认 `owner_party`，`channel` 只登记为可配置值，未裁定前不得默认启用。
-2. `template_family` 取值 `线索到报价客户获取型`——本 Pack 只覆盖链段 1-4，与 smart-home 的「长周期项目交付型」不同族；若 Owner 要求与项目关注 Pack 归同族，改此一字段即可。
+1. ~~第 15 条：报价抬头~~ **已裁（2026-09-02）**：报价单发给业主、业主付费；`quotation_to` 写死为服务主体，渠道客户不作抬头。本 Pack 已按此收敛，无可配置项。
+2. **`template_family` 建议新增族**。14 制作台的族目录是固定 12 族（truzhenos `backend/internal/packstudio/softwareproject/template_family.go`，由 `template_family_matrix_test.go` 钉死 `len == 12`），其中没有「客户获取 / 销售」类。本版沿用既有族 **`长周期项目交付型`**（与 smart-home 同族，本 Pack 是其前段）。建议新增族「线索到报价客户获取型」，需 14 制作台矩阵扩展，属跨仓治理动作，本窗口不做。第二候选「交易合同账款履约型」未采用：其族语义含「收款对账」，与本 Pack 明确排除的回款 / 开票边界冲突。
 
 ## 不做清单
 
@@ -80,6 +82,7 @@ manifest 内部一律用厂商中立表述（`external_truth_source.authority = 
 - 不依赖独立 Opportunity doctype（第一版）。
 - 不做生成合同、项目交付、回款、开票（分属项目关注 Pack 与应收 Pack）。
 - 不做群发额度、催办话术、自动回复、联系人抓取。
+- 不自造制作台节点词与模板族（词表与族目录的真相在 truzhenos 14 制作台）。
 - 不直连 ERP / 模型 / IM，不实现 Provider，不绕 Gateway，不自铸 `decision_ref` / `run_id` / `nonce` / `receipt_ref`。
 - 不在本仓写入任何真实客户名、手机号或金额。
 
